@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../'))
 
 from config import Config
 from models.schemas import SentimentData, SentimentType
+from utils.cache import TTLCache
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +27,15 @@ class SentimentService:
         self.model = None
         self.tokenizer = None
         self._load_model()
+        self._sentiment_cache = TTLCache(
+            ttl_seconds=Config.SENTIMENT_CACHE_TTL,
+            max_size=Config.CACHE_MAX_SIZE
+        )
         logger.info(f"SentimentService initialized with device: {self.device}")
+
+    def _cache_key(self, text: str) -> str:
+        """Generate cache key for sentiment results."""
+        return text.strip().lower()
     
     def _load_model(self):
         """Load BETO model and tokenizer."""
@@ -57,6 +66,11 @@ class SentimentService:
         if not text or not text.strip():
             return SentimentData(positive=0.33, negative=0.33, neutral=0.34)
         
+        cache_key = self._cache_key(text)
+        cached = self._sentiment_cache.get(cache_key)
+        if cached:
+            return SentimentData(**cached)
+        
         try:
             # Tokenize
             inputs = self.tokenizer(
@@ -75,11 +89,13 @@ class SentimentService:
             
             # Map to sentiment scores
             # Assuming model outputs: [negative, neutral, positive]
-            return SentimentData(
+            sentiment = SentimentData(
                 positive=float(probabilities[2]),
                 negative=float(probabilities[0]),
                 neutral=float(probabilities[1])
             )
+            self._sentiment_cache.set(cache_key, sentiment.dict())
+            return sentiment
             
         except Exception as e:
             logger.error(f"Error analyzing sentiment: {e}", exc_info=True)
@@ -99,11 +115,26 @@ class SentimentService:
         if not texts:
             return []
         
-        results = []
+        sentiments: List[Optional[SentimentData]] = [None] * len(texts)
+        uncached_texts = []
+        uncached_indices = []
+        
+        for idx, text in enumerate(texts):
+            cache_key = self._cache_key(text)
+            cached = self._sentiment_cache.get(cache_key)
+            if cached:
+                sentiments[idx] = SentimentData(**cached)
+            else:
+                uncached_texts.append(text)
+                uncached_indices.append(idx)
+        
+        if not uncached_texts:
+            return [s for s in sentiments if s is not None]
+        
         batch_size = 32
         
-        for i in range(0, len(texts), batch_size):
-            batch = texts[i:i + batch_size]
+        for i in range(0, len(uncached_texts), batch_size):
+            batch = uncached_texts[i:i + batch_size]
             try:
                 # Tokenize batch
                 inputs = self.tokenizer(
@@ -121,19 +152,33 @@ class SentimentService:
                     probabilities = torch.softmax(logits, dim=-1).cpu().numpy()
                 
                 # Process results
-                for prob in probabilities:
-                    results.append(SentimentData(
+                for index_offset, prob in enumerate(probabilities):
+                    sentiment = SentimentData(
                         positive=float(prob[2]),
                         negative=float(prob[0]),
                         neutral=float(prob[1])
-                    ))
+                    )
+                    target_idx = uncached_indices[i + index_offset]
+                    sentiments[target_idx] = sentiment
+                    self._sentiment_cache.set(
+                        self._cache_key(uncached_texts[i + index_offset]),
+                        sentiment.dict()
+                    )
                     
             except Exception as e:
                 logger.error(f"Error in batch sentiment analysis: {e}")
                 # Add neutral fallback for failed items
-                results.extend([SentimentData(positive=0.33, negative=0.33, neutral=0.34)] * len(batch))
+                for index_offset in range(len(batch)):
+                    sentiment = SentimentData(positive=0.33, negative=0.33, neutral=0.34)
+                    target_idx = uncached_indices[i + index_offset]
+                    sentiments[target_idx] = sentiment
         
-        return results
+        # Fill any remaining None entries (shouldn't happen but safe)
+        for idx, value in enumerate(sentiments):
+            if value is None:
+                sentiments[idx] = SentimentData(positive=0.33, negative=0.33, neutral=0.34)
+        
+        return sentiments
     
     def analyze_tweets(self, tweets: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -186,4 +231,3 @@ class SentimentService:
             )
         
         return SentimentData(positive=0.33, negative=0.33, neutral=0.34)
-

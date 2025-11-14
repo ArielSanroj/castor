@@ -6,6 +6,9 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 import logging
 from config import Config
+from utils.rate_limiter import init_rate_limiter
+from utils.cache import init_cache
+from services.background_jobs import init_background_jobs
 
 # Initialize extensions
 cors = CORS()
@@ -36,6 +39,15 @@ def create_app(config_name: str = 'default') -> Flask:
         }
     })
     jwt.init_app(app)
+    
+    # Initialize rate limiting
+    init_rate_limiter(app)
+    
+    # Initialize caching
+    init_cache()
+    
+    # Initialize background jobs
+    init_background_jobs()
     
     # Configure logging
     logging.basicConfig(
@@ -68,4 +80,3 @@ def create_app(config_name: str = 'default') -> Flask:
         return {'error': 'Bad request'}, 400
     
     return app
-

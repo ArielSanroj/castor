@@ -59,6 +59,21 @@ class Config:
     
     # Rate Limiting
     RATE_LIMIT_PER_MINUTE: int = int(os.getenv('RATE_LIMIT_PER_MINUTE', '10'))
+    RATE_LIMIT_STORAGE_URI: str = os.getenv('RATE_LIMIT_STORAGE_URI', 'memory://')
+    
+    # Caching
+    CACHE_MAX_SIZE: int = int(os.getenv('CACHE_MAX_SIZE', '64'))
+    SENTIMENT_CACHE_TTL: int = int(os.getenv('SENTIMENT_CACHE_TTL', '900'))
+    OPENAI_CACHE_TTL: int = int(os.getenv('OPENAI_CACHE_TTL', '1800'))
+    TRENDING_CACHE_TTL: int = int(os.getenv('TRENDING_CACHE_TTL', '600'))
+    TRENDING_CACHE_STALE_TTL: int = int(os.getenv('TRENDING_CACHE_STALE_TTL', '300'))
+    
+    # Caching
+    REDIS_URL: Optional[str] = os.getenv('REDIS_URL')  # e.g., 'redis://localhost:6379/0'
+    CACHE_TTL_TWITTER: int = int(os.getenv('CACHE_TTL_TWITTER', '1800'))  # 30 minutes
+    CACHE_TTL_SENTIMENT: int = int(os.getenv('CACHE_TTL_SENTIMENT', '3600'))  # 1 hour
+    CACHE_TTL_OPENAI: int = int(os.getenv('CACHE_TTL_OPENAI', '7200'))  # 2 hours
+    CACHE_TTL_TRENDING: int = int(os.getenv('CACHE_TTL_TRENDING', '900'))  # 15 minutes
     
     # Logging
     LOG_LEVEL: str = os.getenv('LOG_LEVEL', 'INFO')
@@ -129,4 +144,3 @@ config = {
     'testing': TestingConfig,
     'default': DevelopmentConfig
 }
-

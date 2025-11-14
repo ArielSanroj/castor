@@ -1,3 +1,20 @@
+"""
+⚠️ DEPRECATED: Este archivo está deprecado.
+
+Este es el backend legacy monolítico. Por favor usa el backend modular en su lugar:
+
+    cd backend
+    python run.py
+
+El backend modular incluye:
+- Rate limiting
+- Cacheo de resultados
+- Background jobs
+- Tests completos
+- Arquitectura modular y escalable
+
+Ver MIGRATION_GUIDE.md para más detalles.
+"""
 import logging
 import tweepy
 import time

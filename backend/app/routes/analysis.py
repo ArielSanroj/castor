@@ -15,9 +15,11 @@ from models.schemas import AnalysisRequest, AnalysisResponse
 from services import TwitterService, SentimentService, OpenAIService, TwilioService
 from services.database_service import DatabaseService
 from services.trending_service import TrendingService
+from services.background_jobs import enqueue_analysis_task, get_job_status
 from utils.chart_generator import ChartGenerator
 from utils.validators import validate_location, validate_candidate_name
 from utils.formatters import format_location
+from utils.rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +55,7 @@ def get_services():
 
 
 @analysis_bp.route('/analyze', methods=['POST'])
+@limiter.limit("5 per minute")  # Stricter limit for expensive operations
 @jwt_required(optional=True)  # Optional auth for MVP
 def analyze():
     """

@@ -2,8 +2,10 @@
 OpenAI API service for content generation.
 Handles GPT-4o interactions for reports, speeches, and chat.
 """
+import hashlib
+import json
 import logging
-from typing import Dict, Any, Optional, List
+from typing import Any, Dict, List, Optional, Tuple
 import openai
 import sys
 import os
@@ -16,6 +18,7 @@ from models.schemas import (
     Speech,
     PNDTopicAnalysis
 )
+from utils.cache import TTLCache
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +33,10 @@ class OpenAIService:
         
         self.client = openai.OpenAI(api_key=Config.OPENAI_API_KEY)
         self.model = Config.OPENAI_MODEL
+        self._content_cache = TTLCache(
+            ttl_seconds=Config.OPENAI_CACHE_TTL,
+            max_size=Config.CACHE_MAX_SIZE
+        )
         logger.info(f"OpenAIService initialized with model: {self.model}")
     
     def generate_executive_summary(
@@ -49,6 +56,14 @@ class OpenAIService:
         Returns:
             ExecutiveSummary object
         """
+        analysis_hash = self._build_analysis_hash(topic_analyses)
+        cache_key, cached = self._cache_lookup(
+            'exec_summary',
+            [location.lower(), (candidate_name or '').lower(), analysis_hash]
+        )
+        if cached:
+            return ExecutiveSummary(**cached)
+        
         try:
             # Build context from analyses
             context = self._build_analysis_context(topic_analyses)
@@ -87,11 +102,13 @@ Formato de respuesta JSON:
             import json
             result = json.loads(response.choices[0].message.content)
             
-            return ExecutiveSummary(
+            summary = ExecutiveSummary(
                 overview=result.get('overview', ''),
                 key_findings=result.get('key_findings', []),
                 recommendations=result.get('recommendations', [])
             )
+            self._content_cache.set(cache_key, summary.dict())
+            return summary
             
         except Exception as e:
             logger.error(f"Error generating executive summary: {e}", exc_info=True)
@@ -125,6 +142,14 @@ Formato de respuesta JSON:
         Returns:
             StrategicPlan object
         """
+        analysis_hash = self._build_analysis_hash(topic_analyses)
+        cache_key, cached = self._cache_lookup(
+            'strategic_plan',
+            [location.lower(), (candidate_name or '').lower(), analysis_hash]
+        )
+        if cached:
+            return StrategicPlan(**cached)
+        
         try:
             context = self._build_analysis_context(topic_analyses)
             
@@ -163,12 +188,14 @@ Formato JSON:
             import json
             result = json.loads(response.choices[0].message.content)
             
-            return StrategicPlan(
+            plan = StrategicPlan(
                 objectives=result.get('objectives', []),
                 actions=result.get('actions', []),
                 timeline=result.get('timeline', '3-6 meses'),
                 expected_impact=result.get('expected_impact', 'Mejora en percepción ciudadana')
             )
+            self._content_cache.set(cache_key, plan.dict())
+            return plan
             
         except Exception as e:
             logger.error(f"Error generating strategic plan: {e}", exc_info=True)
@@ -198,6 +225,15 @@ Formato JSON:
         Returns:
             Speech object
         """
+        analysis_hash = self._build_analysis_hash(topic_analyses)
+        trending_hash = self._hash_payload(trending_topic) if trending_topic else "none"
+        cache_key, cached = self._cache_lookup(
+            'speech',
+            [location.lower(), candidate_name.lower(), analysis_hash, trending_hash]
+        )
+        if cached:
+            return Speech(**cached)
+        
         try:
             context = self._build_analysis_context(topic_analyses)
             
@@ -254,12 +290,14 @@ Formato JSON:
             import json
             result = json.loads(response.choices[0].message.content)
             
-            return Speech(
+            generated_speech = Speech(
                 title=result.get('title', f'Discurso para {location}'),
                 content=result.get('content', ''),
                 key_points=result.get('key_points', []),
                 duration_minutes=result.get('duration_minutes', 7)
             )
+            self._content_cache.set(cache_key, generated_speech.dict())
+            return generated_speech
             
         except Exception as e:
             logger.error(f"Error generating speech: {e}", exc_info=True)
@@ -331,3 +369,20 @@ Responde siempre en español, de manera profesional pero cercana."""
             )
         return "\n".join(context_parts)
 
+    def _cache_lookup(self, namespace: str, parts: List[str]) -> Tuple[str, Optional[Dict[str, Any]]]:
+        """Build cache key and return stored value if available."""
+        key = f"{namespace}:{'|'.join(parts)}"
+        return key, self._content_cache.get(key)
+    
+    def _hash_payload(self, payload: Any) -> str:
+        """Return deterministic hash of JSON-serializable payload."""
+        serialized = json.dumps(payload, sort_keys=True, default=str)
+        return hashlib.sha256(serialized.encode('utf-8')).hexdigest()
+    
+    def _build_analysis_hash(self, topic_analyses: List[PNDTopicAnalysis]) -> str:
+        """Hash PND topic analyses for caching."""
+        payload = [
+            analysis.dict() if hasattr(analysis, 'dict') else analysis
+            for analysis in topic_analyses
+        ]
+        return self._hash_payload(payload)

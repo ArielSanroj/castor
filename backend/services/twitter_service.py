@@ -11,6 +11,7 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../'))
 
 from config import Config
+from utils.cache import get_cache_key, get, set
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +34,7 @@ class TwitterService:
         )
         logger.info("TwitterService initialized")
     
-    def search_tweets(
+    def _search_tweets_impl(
         self,
         query: str,
         location: Optional[str] = None,
@@ -115,6 +116,41 @@ class TwitterService:
         except Exception as e:
             logger.error(f"Error in search_tweets: {e}", exc_info=True)
             return []
+    
+    def search_tweets(
+        self,
+        query: str,
+        location: Optional[str] = None,
+        max_results: int = 100,
+        lang: str = 'es',
+        days_back: int = 7
+    ) -> List[Dict[str, Any]]:
+        """
+        Search for tweets with caching.
+        
+        Args:
+            query: Search query string
+            location: Optional location filter
+            max_results: Maximum number of results
+            lang: Language code
+            days_back: Number of days to look back
+            
+        Returns:
+            List of tweet dictionaries
+        """
+        # Check cache first
+        cache_key = get_cache_key("twitter_search", query, location, max_results, lang, days_back)
+        cached_result = get(cache_key)
+        if cached_result is not None:
+            logger.debug(f"Cache hit for Twitter search: {query}")
+            return cached_result
+        
+        # Call implementation
+        result = self._search_tweets_impl(query, location, max_results, lang, days_back)
+        
+        # Cache result
+        set(cache_key, result, Config.CACHE_TTL_TWITTER)
+        return result
     
     def search_by_pnd_topic(
         self,

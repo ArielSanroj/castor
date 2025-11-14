@@ -174,7 +174,7 @@ Verifica estado del servidor.
 
 - ✅ Validación de inputs con Pydantic
 - ✅ Autenticación JWT
-- ✅ Rate limiting (configurable)
+- ✅ Rate limiting activo con Flask-Limiter + caché anti-picos
 - ✅ CORS configurado
 - ✅ Variables de entorno para secretos
 - ✅ Manejo seguro de errores
@@ -211,13 +211,14 @@ pytest --cov=backend backend/tests/
 - ✅ **Logging**: Sistema de logs estructurado
 - ✅ **Validation**: Validación de datos con Pydantic
 - ✅ **Documentation**: Docstrings en todas las funciones
+- ✅ **Caching inteligente**: TTL cache con refresco diferido para trending, BETO y GPT
 
 ## 🐛 Issues Conocidos y Mejoras Pendientes
 
 ### Críticas
 - [ ] Frontend React pendiente de implementación
 - [ ] Tests unitarios incompletos
-- [ ] Rate limiting no implementado (solo configurado)
+- [x] Rate limiting implementado con Flask-Limiter y cachés en servicios críticos
 
 ### Altas
 - [ ] Caché de análisis para evitar duplicados
@@ -249,4 +250,3 @@ Para soporte técnico, contactar al equipo de desarrollo.
 ---
 
 **CASTOR ELECCIONES** - *Campaña Electoral Inteligente*
-

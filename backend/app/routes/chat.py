@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../'))
 
 from models.schemas import ChatRequest, ChatResponse
 from services import OpenAIService
+from utils.rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +31,7 @@ def get_openai_service():
 
 
 @chat_bp.route('/chat', methods=['POST'])
+@limiter.limit("10 per minute")  # Chat can be more frequent
 @jwt_required(optional=True)
 def chat():
     """

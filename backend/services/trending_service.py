@@ -10,7 +10,8 @@ import re
 from services.twitter_service import TwitterService
 from services.sentiment_service import SentimentService
 from services.database_service import DatabaseService
-from models.database import TrendingTopic
+from config import Config
+from utils.cache import TTLCache, background_tasks
 
 logger = logging.getLogger(__name__)
 
@@ -23,13 +24,20 @@ class TrendingService:
         self.twitter_service = TwitterService()
         self.sentiment_service = SentimentService()
         self.db_service = DatabaseService()
+        self._cache = TTLCache(
+            ttl_seconds=Config.TRENDING_CACHE_TTL,
+            stale_ttl_seconds=Config.TRENDING_CACHE_STALE_TTL,
+            max_size=Config.CACHE_MAX_SIZE
+        )
         logger.info("TrendingService initialized")
     
     def detect_trending_topics(
         self,
         location: str,
         hours_back: int = 24,
-        min_tweets: int = 10
+        min_tweets: int = 10,
+        force_refresh: bool = False,
+        use_cache: bool = True
     ) -> List[Dict[str, Any]]:
         """
         Detect trending topics in a location.
@@ -44,102 +52,135 @@ class TrendingService:
         """
         try:
             logger.info(f"Detecting trending topics for {location}")
+            cache_key = location.lower()
             
-            # Search for recent tweets in location
-            # Use broad queries to capture trending topics
-            queries = [
-                f"{location}",
-                f"{location} OR {location.lower()}",
-                f"#{location.replace(' ', '')}"
-            ]
+            if use_cache and not force_refresh:
+                cached, is_stale = self._cache.get_with_meta(cache_key)
+                if cached:
+                    if is_stale:
+                        background_tasks.submit(
+                            self._refresh_cache,
+                            location,
+                            hours_back,
+                            min_tweets
+                        )
+                    return cached
             
-            all_tweets = []
-            for query in queries:
-                tweets = self.twitter_service.search_tweets(
-                    query=query,
-                    location=location,
-                    max_results=200,
-                    days_back=1
-                )
-                all_tweets.extend(tweets)
-            
-            # Remove duplicates
-            seen_ids = set()
-            unique_tweets = []
-            for tweet in all_tweets:
-                if tweet['id'] not in seen_ids:
-                    seen_ids.add(tweet['id'])
-                    unique_tweets.append(tweet)
-            
-            logger.info(f"Found {len(unique_tweets)} unique tweets")
-            
-            # Extract keywords and hashtags
-            keywords = self._extract_keywords(unique_tweets)
-            hashtags = self._extract_hashtags(unique_tweets)
-            
-            # Group tweets by topic
-            topics = self._group_tweets_by_topic(unique_tweets, keywords, hashtags)
-            
-            # Analyze sentiment for each topic
-            trending_topics = []
-            for topic_name, topic_tweets in topics.items():
-                if len(topic_tweets) < min_tweets:
-                    continue
-                
-                # Calculate engagement score
-                engagement = sum(
-                    t.get('public_metrics', {}).get('like_count', 0) +
-                    t.get('public_metrics', {}).get('retweet_count', 0) * 2 +
-                    t.get('public_metrics', {}).get('reply_count', 0)
-                    for t in topic_tweets
-                )
-                
-                # Analyze sentiment
-                texts = [t['text'] for t in topic_tweets]
-                sentiments = self.sentiment_service.analyze_batch(texts)
-                aggregated = self.sentiment_service.aggregate_sentiment(sentiments)
-                
-                # Get sample tweets
-                sorted_tweets = sorted(
-                    topic_tweets,
-                    key=lambda x: (
-                        x.get('public_metrics', {}).get('retweet_count', 0) +
-                        x.get('public_metrics', {}).get('like_count', 0)
-                    ),
-                    reverse=True
-                )
-                sample_tweets = [t['text'][:200] for t in sorted_tweets[:5]]
-                
-                trending_topic = {
-                    'topic': topic_name,
-                    'location': location,
-                    'tweet_count': len(topic_tweets),
-                    'engagement_score': engagement,
-                    'sentiment_positive': aggregated.positive,
-                    'sentiment_negative': aggregated.negative,
-                    'sentiment_neutral': aggregated.neutral,
-                    'keywords': list(keywords.get(topic_name, [])),
-                    'sample_tweets': sample_tweets,
-                    'detected_at': datetime.utcnow(),
-                    'is_active': True
-                }
-                
-                # Save to database
-                topic_id = self.db_service.save_trending_topic(trending_topic)
-                if topic_id:
-                    trending_topic['id'] = topic_id
-                
-                trending_topics.append(trending_topic)
-            
-            # Sort by engagement score
-            trending_topics.sort(key=lambda x: x['engagement_score'], reverse=True)
-            
-            logger.info(f"Detected {len(trending_topics)} trending topics")
-            return trending_topics[:10]  # Return top 10
+            trending_topics = self._compute_trending_topics(location, hours_back, min_tweets)
+            if trending_topics:
+                self._cache.set(cache_key, trending_topics)
+            return trending_topics
             
         except Exception as e:
             logger.error(f"Error detecting trending topics: {e}", exc_info=True)
             return []
+
+    def _refresh_cache(self, location: str, hours_back: int, min_tweets: int) -> None:
+        """Background refresh for cached topics."""
+        try:
+            topics = self._compute_trending_topics(location, hours_back, min_tweets)
+            if topics:
+                self._cache.set(location.lower(), topics)
+        except Exception as exc:
+            logger.error(f"Background trending refresh failed for {location}: {exc}", exc_info=True)
+
+    def _compute_trending_topics(
+        self,
+        location: str,
+        hours_back: int,
+        min_tweets: int
+    ) -> List[Dict[str, Any]]:
+        """Compute trending topics without consulting cache."""
+        # Search for recent tweets in location
+        # Use broad queries to capture trending topics
+        queries = [
+            f"{location}",
+            f"{location} OR {location.lower()}",
+            f"#{location.replace(' ', '')}"
+        ]
+        
+        all_tweets = []
+        for query in queries:
+            tweets = self.twitter_service.search_tweets(
+                query=query,
+                location=location,
+                max_results=200,
+                days_back=1
+            )
+            all_tweets.extend(tweets)
+        
+        # Remove duplicates
+        seen_ids = set()
+        unique_tweets = []
+        for tweet in all_tweets:
+            if tweet['id'] not in seen_ids:
+                seen_ids.add(tweet['id'])
+                unique_tweets.append(tweet)
+        
+        logger.info(f"Found {len(unique_tweets)} unique tweets")
+        
+        # Extract keywords and hashtags
+        keywords = self._extract_keywords(unique_tweets)
+        hashtags = self._extract_hashtags(unique_tweets)
+        
+        # Group tweets by topic
+        topics = self._group_tweets_by_topic(unique_tweets, keywords, hashtags)
+        
+        # Analyze sentiment for each topic
+        trending_topics = []
+        for topic_name, topic_tweets in topics.items():
+            if len(topic_tweets) < min_tweets:
+                continue
+            
+            # Calculate engagement score
+            engagement = sum(
+                t.get('public_metrics', {}).get('like_count', 0) +
+                t.get('public_metrics', {}).get('retweet_count', 0) * 2 +
+                t.get('public_metrics', {}).get('reply_count', 0)
+                for t in topic_tweets
+            )
+            
+            # Analyze sentiment
+            texts = [t['text'] for t in topic_tweets]
+            sentiments = self.sentiment_service.analyze_batch(texts)
+            aggregated = self.sentiment_service.aggregate_sentiment(sentiments)
+            
+            # Get sample tweets
+            sorted_tweets = sorted(
+                topic_tweets,
+                key=lambda x: (
+                    x.get('public_metrics', {}).get('retweet_count', 0) +
+                    x.get('public_metrics', {}).get('like_count', 0)
+                ),
+                reverse=True
+            )
+            sample_tweets = [t['text'][:200] for t in sorted_tweets[:5]]
+            
+            trending_topic = {
+                'topic': topic_name,
+                'location': location,
+                'tweet_count': len(topic_tweets),
+                'engagement_score': engagement,
+                'sentiment_positive': aggregated.positive,
+                'sentiment_negative': aggregated.negative,
+                'sentiment_neutral': aggregated.neutral,
+                'keywords': list(keywords.get(topic_name, [])),
+                'sample_tweets': sample_tweets,
+                'detected_at': datetime.utcnow(),
+                'is_active': True
+            }
+            
+            # Save to database
+            topic_id = self.db_service.save_trending_topic(trending_topic)
+            if topic_id:
+                trending_topic['id'] = topic_id
+            
+            trending_topics.append(trending_topic)
+        
+        # Sort by engagement score
+        trending_topics.sort(key=lambda x: x['engagement_score'], reverse=True)
+        logger.info(f"Detected {len(trending_topics)} trending topics")
+        return trending_topics[:10]
     
     def _extract_keywords(self, tweets: List[Dict[str, Any]]) -> Counter:
         """Extract keywords from tweets."""
@@ -250,4 +291,3 @@ class TrendingService:
         )
         
         return best_topic
-
