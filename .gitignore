@@ -47,6 +47,7 @@ logs/
 
 # OS
 .DS_Store
+static/.DS_Store
 Thumbs.db
 
 # Model files (large)
@@ -69,4 +70,3 @@ dist/
 tmp/
 temp/
 *.tmp
-
