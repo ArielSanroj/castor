@@ -1,39 +1,28 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "templates/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "source": "/static/(.*)",
+      "destination": "/static/$1"
     },
     {
-      "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
-      "dest": "/$1"
+      "source": "/",
+      "destination": "/templates/index.html"
     },
     {
-      "src": "/",
-      "dest": "/templates/index.html"
+      "source": "/webpage",
+      "destination": "/templates/webpage.html"
     },
     {
-      "src": "/webpage",
-      "dest": "/templates/webpage.html"
+      "source": "/media",
+      "destination": "/templates/media.html"
     },
     {
-      "src": "/media",
-      "dest": "/templates/media.html"
+      "source": "/campaign",
+      "destination": "/templates/campaign.html"
     },
     {
-      "src": "/campaign",
-      "dest": "/templates/campaign.html"
-    },
-    {
-      "src": "/forecast",
-      "dest": "/templates/forecast.html"
+      "source": "/forecast",
+      "destination": "/templates/forecast.html"
     }
   ],
   "headers": [
