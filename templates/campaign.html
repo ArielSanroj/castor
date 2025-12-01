@@ -23,8 +23,8 @@
     <meta name="twitter:description" content="Resumen ejecutivo, plan estratégico y discurso personalizado para campañas.">
     
     <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
     
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,11 +32,11 @@
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     
     <!-- Preload critical assets -->
-    <link rel="preload" href="{{ url_for('static', filename='css/styles.css') }}" as="style">
+    <link rel="preload" href="/static/css/styles.css" as="style">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="/static/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Defer non-critical scripts -->
@@ -50,7 +50,7 @@
         <nav class="main-nav" role="navigation" aria-label="Navegación principal">
             <div class="nav-left">
                 <a class="brand" href="/webpage" aria-label="Ir a inicio de Castor Elecciones">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                    <img src="/static/images/logo.png" 
                          alt="Castor Elecciones - Logo" 
                          width="54" 
                          height="54"
