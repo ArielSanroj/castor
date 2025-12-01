@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- SEO Meta Tags -->
+    <title>CASTOR Forecast | Modelado Prospectivo de Conversación Electoral</title>
+    <meta name="description" content="Modelos de proyección y momentum narrativo. Anticipa cómo evoluciona la conversación electoral con ICCE, Momentum Electoral y proyecciones estadísticas.">
+    <meta name="keywords" content="forecast electoral, modelado electoral, momentum electoral, proyección conversación, análisis prospectivo, ICCE">
+    <meta name="author" content="Castor Elecciones">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://castor-elecciones.com/forecast">
+    <meta property="og:title" content="CASTOR Forecast | Modelado Prospectivo Electoral">
+    <meta property="og:description" content="Modelos de proyección y momentum narrativo para anticipar la evolución de la conversación electoral.">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CASTOR Forecast | Modelado Prospectivo Electoral">
+    <meta name="twitter:description" content="Anticipa cómo evoluciona la conversación electoral con modelos estadísticos.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="{{ url_for('static', filename='css/styles.css') }}" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Defer non-critical scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#0A0E1A">
+</head>
+<body class="landing" data-mode="forecast" itemscope itemtype="https://schema.org/WebPage">
+    <header class="main-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+            <div class="nav-left">
+                <a class="brand" href="/webpage" aria-label="Ir a inicio de Castor Elecciones">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                         alt="Castor Elecciones - Logo" 
+                         width="54" 
+                         height="54"
+                         loading="eager">
+                    <div>
+                        <strong>Castor Elecciones</strong>
+                        <small>Inteligencia Electoral</small>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-center">
+                <a href="/media">Para medios</a>
+                <a href="/campaign">Para campañas</a>
+                <a href="/forecast" class="active">Forecast</a>
+                <a href="/webpage#pipeline">Arquitectura & Metodología</a>
+            </div>
+            <!-- Mobile menu button -->
+            <button class="mobile-menu-toggle" 
+                    aria-label="Abrir menú de navegación" 
+                    aria-expanded="false"
+                    aria-controls="mobile-menu"
+                    type="button">
+                <span class="hamburger-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Skip to main content link for accessibility -->
+        <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+        
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero__content">
+                <p class="eyebrow" role="doc-subtitle">CASTOR FORECAST · MODELADO PROSPECTIVO · ANTICIPACIÓN ESTRATÉGICA</p>
+                <h1 id="hero-title">El pulso adelantado de la campaña</h1>
+                <p class="lead">
+                    CASTOR Forecast muestra hacia dónde va la conversación electoral: qué candidato está ganando terreno, quién lo está perdiendo y qué temas dominarán la agenda en los próximos días.
+                </p>
+                <p class="hero-microcopy">
+                    <strong>Para medios:</strong> Muestra cómo evoluciona el clima electoral y qué temas están por volverse noticia.<br>
+                    <strong>Para campañas:</strong> Te dice si estás ganando o perdiendo la narrativa esta semana, por qué, y qué viene.
+                </p>
+            </div>
+        </section>
+
+        <!-- Forecast Features Section -->
+        <section class="panel" aria-labelledby="forecast-features-title">
+            <div class="section-header">
+                <h2 id="forecast-features-title">Componentes de CASTOR Forecast</h2>
+                <p class="subtitle">Herramientas avanzadas de modelado para entender y anticipar la conversación electoral.</p>
+            </div>
+            
+            <div class="forecast-grid">
+                <!-- Índice Compuesto -->
+                <article class="forecast-card">
+                    <div class="forecast-icon">📊</div>
+                    <h3>Índice Compuesto de Conversación Electoral (ICCE)</h3>
+                    <p>
+                        El ICCE resume la conversación diaria de cada candidato combinando volumen, sentimiento neto y cuota de conversación dentro del ecosistema digital. 
+                        Un valor alto indica atención pública creciente con tono positivo o neutro; un valor bajo refleja erosión narrativa o predominio negativo.
+                    </p>
+                    <ul class="forecast-list">
+                        <li>Volumen de menciones normalizado</li>
+                        <li>Sentimiento BETO ponderado</li>
+                        <li>Cuota de conversación frente a rivales</li>
+                        <li>Índice compuesto 0-100</li>
+                    </ul>
+                </article>
+                
+                <!-- Momentum -->
+                <article class="forecast-card">
+                    <div class="forecast-icon">📈</div>
+                    <h3>Momentum Electoral de Conversación (MEC)</h3>
+                    <p>
+                        El Momentum muestra si un candidato está ganando o perdiendo tracción en la conversación. Se calcula con medias móviles y análisis de variaciones diarias del ICCE.
+                        Es ideal para detectar crisis, rebotes, efectos post-debate y momentos de oportunidad.
+                    </p>
+                    <ul class="forecast-list">
+                        <li>Identificación de caídas y picos narrativos</li>
+                        <li>Lectura del clima narrativo semanal</li>
+                        <li>Señales tempranas de desgaste o crecimiento</li>
+                        <li>Comparación de momentum entre candidatos</li>
+                    </ul>
+                </article>
+                
+                <!-- Forecast -->
+                <article class="forecast-card">
+                    <div class="forecast-icon">🔮</div>
+                    <h3>Proyección de Conversación (7–14 días)</h3>
+                    <p>
+                        CASTOR utiliza modelos estadísticos de series de tiempo (Prophet, Holt-Winters, ARIMA) para proyectar cómo podría evolucionar la conversación en horizontes cortos.
+                        Esto ayuda a prever ciclos mediáticos, anticipar agendas y planear intervenciones estratégicas.
+                    </p>
+                    <ul class="forecast-list">
+                        <li>Modelos Prophet / Holt-Winters / ARIMA</li>
+                        <li>Curvas de tendencia con intervalos de confianza</li>
+                        <li>Proyecciones por candidato y por tema ciudadano</li>
+                        <li>Análisis de estacionalidad y tendencias</li>
+                    </ul>
+                </article>
+                
+                <!-- Escenarios -->
+                <article class="forecast-card">
+                    <div class="forecast-icon">🎯</div>
+                    <h3>Simulador de Escenarios</h3>
+                    <p>
+                        Permite explorar cómo podría reaccionar la conversación ante distintos eventos: anuncios, debates, crisis o nuevas narrativas.
+                        Los escenarios NO predicen voto; modelan posibles cambios en conversación basados en patrones históricos.
+                    </p>
+                    <ul class="forecast-list">
+                        <li>Impacto estimado de anuncios estratégicos</li>
+                        <li>Simulación de crisis comunicacionales</li>
+                        <li>Comparación entre candidatos bajo distintos contextos</li>
+                        <li>Análisis de sensibilidad narrativa</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Value Proposition Section -->
+        <section class="panel">
+            <div class="section-header">
+                <h2>¿Por qué CASTOR Forecast?</h2>
+                <p class="subtitle">Capacidades únicas para equipos de campaña y medios de comunicación.</p>
+            </div>
+            
+            <div class="cards-grid">
+                <article class="product-card">
+                    <div class="product-badge">Anticipación</div>
+                    <h3>Detecta cambios antes que los medios</h3>
+                    <p class="product-description">
+                        CASTOR Forecast identifica cambios en momentum y tendencias narrativas antes de que se conviertan en noticia. Esto permite anticipar crisis y oportunidades.
+                    </p>
+                </article>
+                <article class="product-card">
+                    <div class="product-badge">Decisiones basadas en datos</div>
+                    <h3>Reemplaza la intuición con evidencia</h3>
+                    <p class="product-description">
+                        Los modelos estadísticos de CASTOR Forecast proporcionan evidencia objetiva para decisiones estratégicas, reduciendo la dependencia de percepciones subjetivas.
+                    </p>
+                </article>
+                <article class="product-card featured-card">
+                    <div class="product-badge featured">Estrategia</div>
+                    <h3>Optimiza el timing de intervenciones</h3>
+                    <p class="product-description">
+                        Con proyecciones de conversación y simuladores de escenarios, puedes identificar el momento óptimo para anuncios, debates o cambios narrativos.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Use Cases Section -->
+        <section class="panel">
+            <div class="section-header">
+                <h2>Casos de uso</h2>
+                <p class="subtitle">Cómo equipos de campaña y medios utilizan CASTOR Forecast.</p>
+            </div>
+            
+            <div class="forecast-use-cases">
+                <article class="use-case-card">
+                    <h3>❓ "¿Vamos ganando o perdiendo narrativa?"</h3>
+                    <p><strong>CASTOR responde con:</strong> Momentum Electoral (MEC)</p>
+                    <p>Un valor positivo indica ganando la semana; negativo indica erosión de apoyo. Permite detectar cambios antes de que se reflejen en encuestas.</p>
+                </article>
+                
+                <article class="use-case-card">
+                    <h3>❓ "¿Qué tema nos conviene tocar esta semana?"</h3>
+                    <p><strong>CASTOR responde con:</strong> Forecast de temas</p>
+                    <p>Proyecciones indican qué temas van a subir o caer en conversación. Esto permite alinear la agenda estratégica con tendencias emergentes.</p>
+                </article>
+                
+                <article class="use-case-card">
+                    <h3>❓ "¿Qué dijo la gente después del debate?"</h3>
+                    <p><strong>CASTOR responde con:</strong> ICCE antes/después</p>
+                    <p>Comparación del índice compuesto antes y después del evento permite medir el impacto narrativo inmediato.</p>
+                </article>
+                
+                <article class="use-case-card">
+                    <h3>❓ "¿Cuándo va a explotar una crisis?"</h3>
+                    <p><strong>CASTOR responde con:</strong> Detección de picos negativos</p>
+                    <p>Los modelos identifican patrones que preceden crisis comunicacionales, permitiendo preparación anticipada.</p>
+                </article>
+                
+                <article class="use-case-card">
+                    <h3>❓ "¿Cuál será el efecto de anunciar X medida?"</h3>
+                    <p><strong>CASTOR responde con:</strong> Simulador de escenarios</p>
+                    <p>Modelado de impacto estimado permite evaluar diferentes opciones estratégicas antes de implementarlas.</p>
+                </article>
+                
+                <article class="use-case-card">
+                    <h3>❓ "¿Qué están haciendo los rivales?"</h3>
+                    <p><strong>CASTOR responde con:</strong> Comparación de momentum</p>
+                    <p>Análisis comparativo de cuota de conversación y momentum entre candidatos permite entender el panorama competitivo.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Forecast Dashboard Section -->
+        <section class="panel" aria-labelledby="forecast-dashboard-title">
+            <div class="section-header">
+                <h2 id="forecast-dashboard-title">¿Cómo está la conversación electoral?</h2>
+                <p class="subtitle">Descubre quién está ganando terreno, quién lo está perdiendo y qué temas dominarán la agenda.</p>
+            </div>
+            
+            <div class="card" style="max-width: 1200px; margin: 0 auto;">
+                <form id="forecast-form">
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-location" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Ubicación *</label>
+                            <input id="forecast-location" name="location" type="text" placeholder="Bogotá, Colombia..." required 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-candidate" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Candidato (opcional)</label>
+                            <input id="forecast-candidate" name="candidate_name" type="text" placeholder="Juan Pérez" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-days-back" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días hacia atrás</label>
+                            <input id="forecast-days-back" name="days_back" type="number" min="7" max="90" value="30" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-days-ahead" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días a proyectar</label>
+                            <input id="forecast-days-ahead" name="forecast_days" type="number" min="7" max="30" value="14" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                    </div>
+                    <div class="form-field" style="align-self: flex-end; display: flex; gap: 0.5rem;">
+                        <button type="button" onclick="testForecastWithMockup()" class="ghost-btn" style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: transparent; color: #374151;">Prueba con un ejemplo</button>
+                        <button type="submit" id="forecast-submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Generar Forecast</button>
+                    </div>
+                    <div id="forecast-error" class="error" style="display:none; color: #b91c1c; font-size: 0.9rem; margin-top: 0.5rem;"></div>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div id="forecast-results" style="display: none; margin-top: 3rem;">
+                <div class="card" style="max-width: 1200px; margin: 0 auto;">
+                    
+                    <!-- Summary Cards at Top -->
+                    <div id="forecast-summary" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                        <!-- Estado Actual -->
+                        <div id="current-status-card" style="padding: 1.5rem; background: var(--panel-alt); border-radius: 12px; border-left: 4px solid var(--accent-blue);">
+                            <p style="color: var(--muted); margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600;">🔵 ESTADO ACTUAL</p>
+                            <p id="current-status-text" style="font-size: 1.1rem; line-height: 1.6; color: var(--text);">-</p>
+                        </div>
+                        
+                        <!-- Momentum -->
+                        <div id="momentum-status-card" style="padding: 1.5rem; background: var(--panel-alt); border-radius: 12px; border-left: 4px solid var(--accent);">
+                            <p style="color: var(--muted); margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600;">🟠 MOMENTUM</p>
+                            <p id="momentum-status-text" style="font-size: 1.1rem; line-height: 1.6; color: var(--text);">-</p>
+                        </div>
+                        
+                        <!-- Proyección -->
+                        <div id="projection-status-card" style="padding: 1.5rem; background: var(--panel-alt); border-radius: 12px; border-left: 4px solid var(--success);">
+                            <p style="color: var(--muted); margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600;">🟣 PROYECCIÓN</p>
+                            <p id="projection-status-text" style="font-size: 1.1rem; line-height: 1.6; color: var(--text);">-</p>
+                        </div>
+                    </div>
+
+                    <!-- Position Narrative Card -->
+                    <div id="position-narrative-card" style="padding: 2rem; background: linear-gradient(135deg, var(--panel-alt), var(--panel)); border-radius: 12px; margin-bottom: 2rem; border: 1px solid var(--border);">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--text);">⭐ Posición Narrativa del Candidato</h3>
+                        <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                            <div>
+                                <p id="position-value" style="font-size: 3rem; font-weight: 700; color: var(--accent); margin: 0;">-</p>
+                                <p id="position-label" style="color: var(--muted); margin-top: 0.5rem; font-size: 0.9rem;">-</p>
+                            </div>
+                            <div style="flex: 1; min-width: 200px;">
+                                <p id="position-interpretation" style="font-size: 1.1rem; line-height: 1.6; color: var(--text); margin-bottom: 0.5rem;">-</p>
+                                <p id="position-risk" style="color: var(--muted); font-size: 0.9rem;">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs for Detailed Views -->
+                    <div class="tabs" style="display: flex; border-bottom: 1px solid #e5e7eb; margin-bottom: 2rem; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="tab active" data-tab="overview" style="padding: 0.75rem 1.25rem; border-radius: 8px 8px 0 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; border-bottom: 2px solid var(--accent); background: transparent; color: var(--accent);">Resumen</button>
+                        <button class="tab" data-tab="trends" style="padding: 0.75rem 1.25rem; border-radius: 8px 8px 0 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; border-bottom: 2px solid transparent; background: transparent; color: var(--muted);">Tendencias</button>
+                        <button class="tab" data-tab="opportunities" style="padding: 0.75rem 1.25rem; border-radius: 8px 8px 0 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; border-bottom: 2px solid transparent; background: transparent; color: var(--muted);">Oportunidades</button>
+                        <button class="tab" data-tab="risks" style="padding: 0.75rem 1.25rem; border-radius: 8px 8px 0 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; border-bottom: 2px solid transparent; background: transparent; color: var(--muted);">Riesgos</button>
+                    </div>
+
+                    <!-- Tab: Overview -->
+                    <div id="tab-overview" class="tab-content active" style="display: block;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                            <div>
+                                <h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">📊 Dominio Narrativo</h4>
+                                <div id="share-of-voice-display" style="padding: 1rem; background: var(--panel-alt); border-radius: 8px;">
+                                    <p style="color: var(--muted); font-size: 0.9rem;">-</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">💬 Tono de la Conversación</h4>
+                                <div id="sentiment-display" style="padding: 1rem; background: var(--panel-alt); border-radius: 8px;">
+                                    <p style="color: var(--muted); font-size: 0.9rem;">-</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 2rem;">
+                            <canvas id="forecast-chart" height="80"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Tab: Trends -->
+                    <div id="tab-trends" class="tab-content" style="display: none;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                            <div>
+                                <h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">📈 Evolución Histórica</h4>
+                                <canvas id="icce-chart" height="200"></canvas>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">📊 Momentum</h4>
+                                <canvas id="momentum-chart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab: Opportunities -->
+                    <div id="tab-opportunities" class="tab-content" style="display: none;">
+                        <div id="opportunities-list" style="display: grid; gap: 1rem;">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Tab: Risks -->
+                    <div id="tab-risks" class="tab-content" style="display: none;">
+                        <div id="risks-list" style="display: grid; gap: 1rem;">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="panel forecast-cta-section">
+            <div class="forecast-cta">
+                <h2>¿Quieres ver CASTOR Forecast aplicado a tu campaña?</h2>
+                <p>Solicita una demo personalizada con datos reales de tu candidato, ciudad o tema.</p>
+                <div class="forecast-cta-buttons">
+                    <button class="primary-btn large" onclick="openDemoModal()">Solicitar demo</button>
+                    <a href="/campaign" class="ghost-btn">Ver CASTOR Campañas →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Castor Elecciones</h3>
+                <p>Plataforma de análisis electoral basada en datos y modelos auditables.</p>
+                <p class="muted">© 2026 CASTOR Elecciones. Todos los derechos reservados.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Productos</h4>
+                <ul>
+                    <li><a href="/media">CASTOR Medios</a></li>
+                    <li><a href="/campaign">CASTOR Campañas</a></li>
+                    <li><a href="/forecast">CASTOR Forecast</a></li>
+                    <li><a href="/docs">Documentación técnica</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Información</h4>
+                <ul>
+                    <li><a href="/webpage#pipeline">Arquitectura</a></li>
+                    <li><a href="/webpage#methodology">Metodología</a></li>
+                    <li><a href="/webpage#features">Características</a></li>
+                    <li><a href="/webpage#origins-title">Orígenes de CASTOR</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal / Políticas</h4>
+                <ul>
+                    <li><a href="#">Uso de datos públicos</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="/contact">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para Solicitar Demo -->
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Solicitar Demo</h2>
+                <button class="modal-close" onclick="closeDemoModal()">&times;</button>
+            </div>
+            <form id="demoForm" class="modal-form">
+                <div class="form-row">
+                    <label>
+                        Nombre *
+                        <input type="text" name="first_name" required placeholder="Juan">
+                    </label>
+                    <label>
+                        Apellido *
+                        <input type="text" name="last_name" required placeholder="Pérez">
+                    </label>
+                </div>
+                <label>
+                    Tipo de candidatura *
+                    <select name="candidacy_type" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="congreso">Congreso</option>
+                        <option value="regionales">Regionales</option>
+                        <option value="presidencia">Presidencia</option>
+                    </select>
+                </label>
+                <label>
+                    Correo electrónico *
+                    <input type="email" name="email" required placeholder="juan.perez@example.com">
+                </label>
+                <label>
+                    Teléfono *
+                    <input type="tel" name="phone" required placeholder="+57 300 123 4567">
+                </label>
+                <div class="form-actions">
+                    <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>
+                    <button type="submit" class="primary-btn">Enviar solicitud</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- API Configuration: Set API_BASE_URL from environment variable -->
+    <script>
+        // Set API base URL from environment variable or use ngrok URL
+        // For Vercel: Set NEXT_PUBLIC_API_BASE_URL in Vercel environment variables
+        // For ngrok: Use https://castorelecciones.ngrok.app
+        // For Flask local development: Uses url_for, falls back to ngrok
+        window.API_BASE_URL = (function() {
+            // Check if Flask url_for is available (local development)
+            {% if url_for %}
+            try {
+                var flaskUrl = '{{ url_for("index", _external=True).rstrip("/") }}';
+                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '') {
+                    return flaskUrl;
+                }
+            } catch(e) {}
+            {% endif %}
+            // Check for Vercel environment variable (injected at build time)
+            if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
+                return process.env.NEXT_PUBLIC_API_BASE_URL;
+            }
+            // Default: ngrok URL for production
+            return 'https://castorelecciones.ngrok.app';
+        })();
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/performance.js" defer></script>
+    <script src="/static/js/landing.js" defer></script>
+    <script src="/static/js/forecast_human.js"></script>
+    <script src="/static/js/forecast.js"></script>
+</body>
+</html>
+

@@ -68,12 +68,17 @@ class Config:
     TRENDING_CACHE_TTL: int = int(os.getenv('TRENDING_CACHE_TTL', '600'))
     TRENDING_CACHE_STALE_TTL: int = int(os.getenv('TRENDING_CACHE_STALE_TTL', '300'))
     
-    # Caching
+    # Caching (Optimizado para Twitter Free tier - 100 posts/mes)
     REDIS_URL: Optional[str] = os.getenv('REDIS_URL')  # e.g., 'redis://localhost:6379/0'
-    CACHE_TTL_TWITTER: int = int(os.getenv('CACHE_TTL_TWITTER', '1800'))  # 30 minutes
-    CACHE_TTL_SENTIMENT: int = int(os.getenv('CACHE_TTL_SENTIMENT', '3600'))  # 1 hour
-    CACHE_TTL_OPENAI: int = int(os.getenv('CACHE_TTL_OPENAI', '7200'))  # 2 hours
-    CACHE_TTL_TRENDING: int = int(os.getenv('CACHE_TTL_TRENDING', '900'))  # 15 minutes
+    CACHE_TTL_TWITTER: int = int(os.getenv('CACHE_TTL_TWITTER', '86400'))  # 24 hours (agresivo para conservar rate limit)
+    CACHE_TTL_SENTIMENT: int = int(os.getenv('CACHE_TTL_SENTIMENT', '86400'))  # 24 hours
+    CACHE_TTL_OPENAI: int = int(os.getenv('CACHE_TTL_OPENAI', '43200'))  # 12 hours
+    CACHE_TTL_TRENDING: int = int(os.getenv('CACHE_TTL_TRENDING', '21600'))  # 6 hours
+    
+    # Twitter Free Tier Limits (100 posts per month)
+    TWITTER_MAX_TWEETS_PER_REQUEST: int = int(os.getenv('TWITTER_MAX_TWEETS_PER_REQUEST', '15'))  # Máximo por análisis
+    TWITTER_DAILY_TWEET_LIMIT: int = int(os.getenv('TWITTER_DAILY_TWEET_LIMIT', '3'))  # ~100/30 días = 3 por día
+    TWITTER_MONTHLY_LIMIT: int = 100  # Free tier limit
     
     # Logging
     LOG_LEVEL: str = os.getenv('LOG_LEVEL', 'INFO')

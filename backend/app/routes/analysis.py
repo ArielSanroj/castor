@@ -3,13 +3,11 @@ Analysis endpoint routes.
 Main endpoint for generating political analysis reports.
 """
 import logging
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, url_for
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from pydantic import ValidationError
-
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../'))
+import tweepy
+from sqlalchemy.exc import SQLAlchemyError
 
 from models.schemas import AnalysisRequest, AnalysisResponse
 from services import TwitterService, SentimentService, OpenAIService, TwilioService
@@ -54,6 +52,46 @@ def get_services():
     return twitter_service, sentiment_service, openai_service, twilio_service, db_service, trending_service
 
 
+def _parse_analysis_request(req_data):
+    """Validate and normalize incoming analysis request."""
+    try:
+        analysis_req = AnalysisRequest(**req_data)
+    except ValidationError as e:
+        logger.warning(f"Validation error: {e}")
+        return None, (jsonify({
+            'success': False,
+            'error': 'Invalid request data',
+            'details': e.errors()
+        }), 400)
+    
+    if not validate_location(analysis_req.location):
+        return None, (jsonify({
+            'success': False,
+            'error': 'Invalid location format'
+        }), 400)
+    
+    if analysis_req.candidate_name and not validate_candidate_name(analysis_req.candidate_name):
+        return None, (jsonify({
+            'success': False,
+            'error': 'Invalid candidate name format'
+        }), 400)
+    
+    return analysis_req, None
+
+
+def _get_initialized_services():
+    """Return initialized services or a JSON error response if config is missing."""
+    try:
+        return get_services(), None
+    except ValueError as e:
+        logger.error(f"Service configuration error: {e}")
+        return None, (jsonify({
+            'success': False,
+            'error': 'Service configuration error',
+            'details': str(e)
+        }), 503)
+
+
 @analysis_bp.route('/analyze', methods=['POST'])
 @limiter.limit("5 per minute")  # Stricter limit for expensive operations
 @jwt_required(optional=True)  # Optional auth for MVP
@@ -74,33 +112,15 @@ def analyze():
         AnalysisResponse with full report
     """
     try:
-        # Get services
-        twitter_svc, sentiment_svc, openai_svc, twilio_svc, db_svc, trending_svc = get_services()
+        # Validate request first to avoid hitting external services for bad input
+        analysis_req, error_response = _parse_analysis_request(request.get_json() or {})
+        if error_response:
+            return error_response
         
-        # Validate request
-        try:
-            req_data = request.get_json() or {}
-            analysis_req = AnalysisRequest(**req_data)
-        except ValidationError as e:
-            logger.warning(f"Validation error: {e}")
-            return jsonify({
-                'success': False,
-                'error': 'Invalid request data',
-                'details': e.errors()
-            }), 400
-        
-        # Additional validations
-        if not validate_location(analysis_req.location):
-            return jsonify({
-                'success': False,
-                'error': 'Invalid location format'
-            }), 400
-        
-        if analysis_req.candidate_name and not validate_candidate_name(analysis_req.candidate_name):
-            return jsonify({
-                'success': False,
-                'error': 'Invalid candidate name format'
-            }), 400
+        services, error_response = _get_initialized_services()
+        if error_response:
+            return error_response
+        twitter_svc, sentiment_svc, openai_svc, twilio_svc, db_svc, trending_svc = services
         
         logger.info(f"Starting analysis for {analysis_req.location}, theme: {analysis_req.theme}")
         
@@ -220,18 +240,106 @@ def analyze():
             logger.warning(f"Could not send WhatsApp: {e}")
         
         # Add trending topic info to response
-        if trending_topic:
+        if trending_topic and isinstance(trending_topic, dict):
             response.metadata['trending_topic'] = trending_topic.get('topic')
             response.metadata['trending_engagement'] = trending_topic.get('engagement_score', 0)
         
         return jsonify(response.dict()), 200
         
+    except ValidationError as e:
+        logger.warning(f"Validation error in analyze endpoint: {e}")
+        return jsonify({
+            'success': False,
+            'error': 'Invalid request data',
+            'details': e.errors() if hasattr(e, 'errors') else [{'msg': str(e)}]
+        }), 400
+    except ValueError as e:
+        logger.error(f"Configuration error in analyze endpoint: {e}")
+        return jsonify({
+            'success': False,
+            'error': 'Service configuration error',
+            'message': str(e)
+        }), 503
+    except tweepy.TooManyRequests:
+        logger.warning("Twitter rate limit exceeded in analyze endpoint")
+        return jsonify({
+            'success': False,
+            'error': 'Twitter API rate limit exceeded. Please try again later.'
+        }), 429
+    except SQLAlchemyError as e:
+        logger.error(f"Database error in analyze endpoint: {e}", exc_info=True)
+        return jsonify({
+            'success': False,
+            'error': 'Database error'
+        }), 500
     except Exception as e:
-        logger.error(f"Error in analyze endpoint: {e}", exc_info=True)
+        logger.error(f"Unexpected error in analyze endpoint: {e}", exc_info=True)
+        return jsonify({
+            'success': False,
+            'error': 'Internal server error'
+        }), 500
+
+
+@analysis_bp.route('/analyze/async', methods=['POST'])
+@limiter.limit("3 per minute")
+@jwt_required(optional=True)
+def analyze_async():
+    """Kick off analysis as a background job."""
+    try:
+        analysis_req, error_response = _parse_analysis_request(request.get_json() or {})
+        if error_response:
+            return error_response
+        
+        job_id = enqueue_analysis_task(
+            location=analysis_req.location,
+            theme=analysis_req.theme,
+            candidate_name=analysis_req.candidate_name,
+            politician=analysis_req.politician,
+            max_tweets=analysis_req.max_tweets,
+            user_id=get_jwt_identity()
+        )
+        
+        if not job_id:
+            return jsonify({
+                'success': False,
+                'error': 'Background queue unavailable'
+            }), 503
+        
+        status_url = url_for('analysis.get_analysis_status', job_id=job_id, _external=False)
+        return jsonify({
+            'success': True,
+            'job_id': job_id,
+            'status_url': status_url
+        }), 202
+    except Exception as e:
+        logger.error(f"Error enqueueing async analysis: {e}", exc_info=True)
         return jsonify({
             'success': False,
             'error': 'Internal server error',
             'message': str(e)
+        }), 500
+
+
+@analysis_bp.route('/analyze/status/<job_id>', methods=['GET'])
+def get_analysis_status(job_id):
+    """Return status of an async analysis job."""
+    try:
+        status = get_job_status(job_id)
+        if not status:
+            return jsonify({
+                'success': False,
+                'error': 'Job not found or background jobs disabled'
+            }), 404
+        
+        return jsonify({
+            'success': True,
+            **status
+        }), 200
+    except Exception as e:
+        logger.error(f"Error getting job status for {job_id}: {e}", exc_info=True)
+        return jsonify({
+            'success': False,
+            'error': 'Internal server error'
         }), 500
 
 
@@ -325,4 +433,3 @@ def _get_topic_keywords(topic: str) -> str:
         'Infraestructura': 'infraestructura OR vías OR carreteras OR transporte'
     }
     return keywords_map.get(topic, topic)
-

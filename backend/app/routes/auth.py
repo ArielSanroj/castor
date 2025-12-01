@@ -1,14 +1,10 @@
 """
 Authentication endpoints.
-Handles user registration and login via Supabase.
+Handles user registration and login via database service.
 """
 import logging
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../'))
 
 from services.database_service import DatabaseService
 from utils.validators import validate_email, validate_phone_number
@@ -178,11 +174,11 @@ def login():
         
     except Exception as e:
         logger.error(f"Error in login endpoint: {e}", exc_info=True)
+        # Don't expose internal error details to client
         return jsonify({
             'success': False,
-            'error': 'Invalid credentials',
-            'message': str(e)
-        }), 401
+            'error': 'Internal server error'
+        }), 500
 
 
 @auth_bp.route('/auth/me', methods=['GET'])

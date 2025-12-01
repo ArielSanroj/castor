@@ -1,0 +1,22 @@
+# Files to ignore in Vercel deployment
+backend/
+*.py
+*.pyc
+__pycache__/
+venv/
+env/
+.env
+.env.local
+*.log
+*.md
+!README.md
+!VERCEL_DEPLOYMENT.md
+test_*.py
+tests/
+*.sh
+!prepare-vercel.sh
+Makefile
+*.sql
+*.db
+*.sqlite
+

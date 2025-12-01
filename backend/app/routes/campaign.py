@@ -3,16 +3,25 @@ Campaign agent endpoints.
 Endpoints for vote-winning strategies and signature collection.
 """
 import logging
+from typing import Optional
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from pydantic import ValidationError
 
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../'))
+from datetime import datetime
 
 from services.campaign_agent import CampaignAgent
 from services.database_service import DatabaseService
+from services.openai_service import OpenAIService
 from utils.validators import validate_location
+from utils.rate_limiter import limiter
+from app.schemas.campaign import (
+    CampaignAnalysisRequest,
+    CampaignAnalysisResponse,
+    CampaignMetadata,
+)
+from app.services.analysis_core import AnalysisCorePipeline
+from models.schemas import PNDTopicAnalysis, SentimentData
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +40,16 @@ def get_services():
     if db_service is None:
         db_service = DatabaseService()
     return campaign_agent, db_service
+
+
+def _get_pipeline() -> Optional[AnalysisCorePipeline]:
+    from flask import current_app
+    return current_app.extensions.get("analysis_core_pipeline")
+
+
+def _get_openai_service() -> Optional[OpenAIService]:
+    from flask import current_app
+    return current_app.extensions.get("openai_service")
 
 
 @campaign_bp.route('/campaign/analyze-votes', methods=['POST'])
@@ -305,3 +324,104 @@ def get_trending_topics():
             'message': str(e)
         }), 500
 
+
+@campaign_bp.route('/campaign/analyze', methods=['POST'])
+@limiter.limit("5 per minute")  # Rate limit for expensive operations
+@jwt_required(optional=True)
+def campaign_analyze_product():
+    """
+    Product B: full campaign analysis (exec summary + plan + speech).
+    """
+    try:
+        payload = request.get_json(force=True, silent=False) or {}
+    except Exception as e:
+        logger.warning(f"Invalid JSON in campaign analyze: {e}")
+        return jsonify({"success": False, "error": "Invalid JSON payload"}), 400
+    
+    try:
+        req = CampaignAnalysisRequest(**payload)
+    except ValidationError as e:
+        logger.warning(f"Validation error in campaign analyze: {e}")
+        return jsonify({
+            "success": False,
+            "error": "Invalid request data",
+            "details": e.errors() if hasattr(e, 'errors') else str(e)
+        }), 400
+
+    pipeline = _get_pipeline()
+    openai_svc = _get_openai_service()
+
+    if not pipeline or not openai_svc:
+        return jsonify({
+            "success": False,
+            "error": "Servicios de análisis no disponibles",
+        }), 503
+
+    core_result = pipeline.run_core_pipeline(
+        location=req.location,
+        topic=req.theme,
+        candidate_name=req.candidate_name,
+        politician=req.politician,
+        max_tweets=req.max_tweets,
+        time_window_days=7,
+        language=req.language,
+    )
+
+    # Adapt new topics to legacy schema expected by existing OpenAI prompts
+    legacy_topics = []
+    for topic in core_result.topics:
+        legacy_topics.append(
+            PNDTopicAnalysis(
+                topic=topic.topic,
+                sentiment=SentimentData(
+                    positive=topic.sentiment.positive,
+                    negative=topic.sentiment.negative,
+                    neutral=topic.sentiment.neutral,
+                ),
+                tweet_count=topic.tweet_count,
+                key_insights=[],
+                sample_tweets=[],
+            )
+        )
+
+    executive_summary = openai_svc.generate_executive_summary(
+        location=req.location,
+        topic_analyses=legacy_topics,
+        candidate_name=req.candidate_name,
+    )
+
+    strategic_plan = openai_svc.generate_strategic_plan(
+        location=req.location,
+        topic_analyses=legacy_topics,
+        candidate_name=req.candidate_name,
+    )
+
+    speech = openai_svc.generate_speech(
+        location=req.location,
+        topic_analyses=legacy_topics,
+        candidate_name=req.candidate_name or "el candidato",
+        trending_topic={"topic": core_result.trending_topic} if core_result.trending_topic else None,
+    )
+
+    metadata = CampaignMetadata(
+        tweets_analyzed=core_result.tweets_analyzed,
+        location=req.location,
+        theme=req.theme,
+        candidate_name=req.candidate_name,
+        politician=req.politician,
+        generated_at=datetime.utcnow(),
+        trending_topic=core_result.trending_topic,
+        raw_query=core_result.raw_query,
+    )
+
+    response_model = CampaignAnalysisResponse(
+        success=True,
+        executive_summary=executive_summary,
+        topic_analyses=core_result.topics,
+        strategic_plan=strategic_plan,
+        speech=speech,
+        chart_data=core_result.chart_data,
+        metadata=metadata,
+    )
+
+    return jsonify(response_model.model_dump()), 200

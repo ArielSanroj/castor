@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- SEO Meta Tags -->
+    <title>CASTOR Campañas | Estrategia Electoral con IA - Resumen, Plan y Discurso</title>
+    <meta name="description" content="Resumen ejecutivo, plan estratégico y discurso personalizado para equipos de campaña. Análisis de sentimiento ciudadano con narrativas estratégicas.">
+    <meta name="keywords" content="estrategia electoral, campañas políticas, análisis de campaña, discurso político, plan estratégico electoral">
+    <meta name="author" content="Castor Elecciones">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://castor-elecciones.com/campaign">
+    <meta property="og:title" content="CASTOR Campañas | Estrategia Electoral con IA">
+    <meta property="og:description" content="Resumen ejecutivo, plan estratégico y discurso personalizado para equipos de campaña.">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CASTOR Campañas | Estrategia Electoral con IA">
+    <meta name="twitter:description" content="Resumen ejecutivo, plan estratégico y discurso personalizado para campañas.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="{{ url_for('static', filename='css/styles.css') }}" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Defer non-critical scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#0A0E1A">
+</head>
+<body class="landing" data-mode="campaign" itemscope itemtype="https://schema.org/WebPage">
+    <header class="main-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+            <div class="nav-left">
+                <a class="brand" href="/webpage" aria-label="Ir a inicio de Castor Elecciones">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                         alt="Castor Elecciones - Logo" 
+                         width="54" 
+                         height="54"
+                         loading="eager">
+                    <div>
+                        <strong>Castor Elecciones</strong>
+                        <small>Inteligencia Electoral</small>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-center">
+                <a href="/media">Para medios</a>
+                <a href="/campaign" class="active">Para campañas</a>
+                <a href="/forecast">Forecast</a>
+                <a href="/webpage#pipeline">Arquitectura & Metodología</a>
+                <a href="/webpage#features">Origen</a>
+            </div>
+            <!-- Mobile menu button -->
+            <button class="mobile-menu-toggle" 
+                    aria-label="Abrir menú de navegación" 
+                    aria-expanded="false"
+                    aria-controls="mobile-menu"
+                    type="button">
+                <span class="hamburger-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Skip to main content link for accessibility -->
+        <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+        
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero__content">
+                <p class="eyebrow" role="doc-subtitle">CASTOR CAMPAÑAS · ESTRATEGIA ELECTORAL · NARRATIVAS INTELIGENTES</p>
+                <h1 id="hero-title">Estrategia electoral basada en lo que realmente preocupa a la ciudadanía</h1>
+                <p class="lead">
+                    Resumen ejecutivo, plan estratégico y discurso personalizado. Toma los mismos datos del motor central y construye planes, prioridades y discursos alineados con los temas que realmente preocupan a la ciudadanía.
+                </p>
+                <p class="hero-microcopy">
+                    CASTOR Campañas expande el análisis con narrativas estratégicas para equipos políticos. Diseñado para consultores políticos, estrategas de comunicación y equipos de campaña.
+                </p>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="panel" aria-labelledby="analysis-form-title">
+            <div class="section-header">
+                <h2 id="analysis-form-title">Generar análisis de campaña</h2>
+                <p class="subtitle">Configura los parámetros para generar un resumen ejecutivo, plan estratégico y discurso personalizado.</p>
+            </div>
+            
+            <div class="card" style="max-width: 960px; margin: 0 auto;">
+                <form id="analysis-form">
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="location" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Ubicación *</label>
+                            <input id="location" name="location" type="text" placeholder="Colombia, Bogotá..." required 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="theme" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Tema PND / eje *</label>
+                            <input id="theme" name="theme" type="text" placeholder="Seguridad, Salud, Educación..." required 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="candidate_name" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Nombre candidato (opcional)</label>
+                            <input id="candidate_name" name="candidate_name" type="text" placeholder="Nombre propio" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="politician" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Usuario X/Twitter (opcional)</label>
+                            <input id="politician" name="politician" type="text" placeholder="@usuario" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="max_tweets" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Máx. tweets</label>
+                            <input id="max_tweets" name="max_tweets" type="number" min="10" max="2000" value="120" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="align-self: flex-end; display: flex; gap: 0.5rem;">
+                            <button type="button" onclick="testWithMockup()" class="ghost-btn" style="border-radius: 0.5rem; border: 1px solid var(--border); padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: transparent; color: var(--text);">Prueba con un ejemplo</button>
+                            <button type="submit" id="submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Generar análisis</button>
+                        </div>
+                    </div>
+                    <div id="form-error" class="error" style="display:none; color: #b91c1c; font-size: 0.9rem; margin-top: 0.5rem;"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section" class="panel" style="display:none;">
+            <div class="section-header">
+                <h2>Resultados del análisis</h2>
+                <p class="subtitle">Resumen ejecutivo, plan estratégico y discurso personalizado generados con IA.</p>
+            </div>
+            
+            <div class="card" style="max-width: 960px; margin: 0 auto;">
+                <div class="tabs" style="display: flex; border-bottom: 1px solid var(--border); margin-bottom: 2rem; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="tab active" data-tab="summary" style="padding: 0.75rem 1.25rem; border-radius: 8px 8px 0 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; border-bottom: 2px solid var(--accent); background: transparent; color: var(--accent); transition: all 0.2s ease;">Resumen Ejecutivo</button>
+                    <button class="tab" data-tab="topics" style="padding: 0.75rem 1.25rem; border-radius: 8px 8px 0 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); transition: all 0.2s ease;">Análisis de Datos</button>
+                    <button class="tab" data-tab="plan" style="padding: 0.75rem 1.25rem; border-radius: 8px 8px 0 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); transition: all 0.2s ease;">Plan Estratégico</button>
+                    <button class="tab" data-tab="speech" style="padding: 0.75rem 1.25rem; border-radius: 8px 8px 0 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); transition: all 0.2s ease;">Discurso</button>
+                    <button class="tab" data-tab="charts" style="padding: 0.75rem 1.25rem; border-radius: 8px 8px 0 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); transition: all 0.2s ease;">Gráfico Sugerido</button>
+                </div>
+
+                <div id="tab-summary" class="tab-content active" style="display: block;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text);">Análisis general de la situación política actual</h3>
+                    <div id="campaign-overview" style="line-height: 1.8; margin-bottom: 2rem; color: var(--muted); font-size: 1rem;"></div>
+
+                    <div id="executive-summary-sections" style="display: flex; flex-direction: column; gap: 2rem;">
+                        <div id="general-trends" style="display: none;">
+                            <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: var(--text);">Tendencias generales</h4>
+                            <div id="general-trends-content" style="line-height: 1.8; color: var(--muted);"></div>
+                        </div>
+
+                        <div id="volume-sentiment" style="display: none;">
+                            <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: var(--text);">Volumen y sentimiento global</h4>
+                            <div id="volume-sentiment-content" style="line-height: 1.8; color: var(--muted);"></div>
+                        </div>
+
+                        <div id="context-section" style="display: none;">
+                            <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: var(--text);">Contexto</h4>
+                            <div id="context-content" style="line-height: 1.8; color: var(--muted);"></div>
+                        </div>
+                    </div>
+
+                    <div id="campaign-findings-section" style="margin-top: 2rem; display: none;">
+                        <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: var(--text);">Hallazgos clave</h4>
+                        <ul id="campaign-findings" class="bullet-list" style="padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8; color: var(--muted);">
+                        </ul>
+                    </div>
+
+                    <div id="campaign-recommendations-section" style="margin-top: 2rem; display: none;">
+                        <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: var(--text);">Recomendaciones</h4>
+                        <ul id="campaign-recommendations" class="bullet-list" style="padding-left: 1.5rem; line-height: 1.8; color: var(--muted);">
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="tab-topics" class="tab-content" style="display: none;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; color: var(--text);">Análisis de Datos</h3>
+                    <div id="campaign-topics-container" style="display: flex; flex-direction: column; gap: 2rem;"></div>
+                </div>
+
+                <div id="tab-plan" class="tab-content" style="display: none;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; color: var(--text);">Plan Estratégico</h3>
+                    <div id="campaign-plan-container" style="display: flex; flex-direction: column; gap: 2.5rem;"></div>
+                </div>
+
+                <div id="tab-speech" class="tab-content" style="display: none;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text);">Discurso</h3>
+                    <div id="speech-title-container" style="margin-bottom: 1rem; display: none;">
+                        <p><strong id="speech-title" style="font-size: 1.2rem; color: var(--text);"></strong></p>
+                    </div>
+                    <div id="speech-keypoints-container" style="margin-bottom: 1.5rem; display: none;">
+                        <ul id="speech-keypoints" class="bullet-list" style="padding-left: 1.5rem; line-height: 1.8; color: var(--muted);">
+                        </ul>
+                    </div>
+                    <p class="muted" id="speech-meta" style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; display: none;"></p>
+                    <textarea id="speech-content" readonly style="width: 100%; min-height: 400px; border-radius: 12px; border: 1px solid var(--border); padding: 1.25rem; font-size: 1rem; resize: vertical; font-family: inherit; line-height: 1.8; background: var(--panel-alt); color: var(--text);"></textarea>
+                    <p style="margin-top: 1.5rem;">
+                        <button type="button" id="copy-speech-btn" class="primary-btn" style="border-radius: 8px; border: none; padding: 0.75rem 1.5rem; font-weight: 600; cursor: pointer; background: var(--accent); color: white; transition: all 0.2s ease;">Copiar discurso</button>
+                        <span id="copy-speech-status" class="muted" style="color: var(--muted); font-size: 0.9rem; margin-left: 0.75rem;"></span>
+                    </p>
+                </div>
+
+                <div id="tab-charts" class="tab-content" style="display: none;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; color: var(--text);">Gráfico Sugerido</h3>
+                    <div style="background: var(--panel-alt); border-radius: 12px; padding: 2rem; border: 1px solid var(--border);">
+                        <canvas id="main-chart" height="140"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Info Section -->
+        <section class="panel">
+            <div class="section-header">
+                <h2>Ideal para equipos de campaña</h2>
+                <p class="subtitle">CASTOR Campañas está diseñado específicamente para profesionales de estrategia electoral.</p>
+            </div>
+            <div class="cards-grid">
+                <article class="product-card">
+                    <div class="product-badge">Equipos de campaña</div>
+                    <h3>Resumen ejecutivo</h3>
+                    <p class="product-description">
+                        Visión general del clima político actual con hallazgos clave y recomendaciones estratégicas prioritarias.
+                    </p>
+                </article>
+                <article class="product-card">
+                    <div class="product-badge">Consultores políticos</div>
+                    <h3>Plan estratégico</h3>
+                    <p class="product-description">
+                        Objetivos estratégicos claros, acciones concretas con prioridades y timeline propuesto para tu campaña.
+                    </p>
+                </article>
+                <article class="product-card featured-card">
+                    <div class="product-badge featured">Estrategas</div>
+                    <h3>Discurso personalizado</h3>
+                    <p class="product-description">
+                        Discurso completo y copy narrativo alineado con los temas que realmente preocupan a la ciudadanía, listo para usar.
+                    </p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Castor Elecciones</h3>
+                <p>Plataforma de análisis electoral basada en datos y modelos auditables.</p>
+                <p class="muted">© 2026 CASTOR Elecciones. Todos los derechos reservados.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Productos</h4>
+                <ul>
+                    <li><a href="/media">CASTOR Medios</a></li>
+                    <li><a href="/campaign">CASTOR Campañas</a></li>
+                    <li><a href="/docs">Documentación técnica</a></li>
+                    <li><a href="#" onclick="openDemoModal()">Solicitar demo</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Información</h4>
+                <ul>
+                    <li><a href="/webpage#pipeline">Arquitectura</a></li>
+                    <li><a href="/webpage#methodology">Metodología</a></li>
+                    <li><a href="/webpage#features">Características</a></li>
+                    <li><a href="/webpage#origins-title">Orígenes de CASTOR</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal / Políticas</h4>
+                <ul>
+                    <li><a href="#">Uso de datos públicos</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="/contact">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para Solicitar Demo -->
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Solicitar Demo</h2>
+                <button class="modal-close" onclick="closeDemoModal()">&times;</button>
+            </div>
+            <form id="demoForm" class="modal-form">
+                <div class="form-row">
+                    <label>
+                        Nombre *
+                        <input type="text" name="first_name" required placeholder="Juan">
+                    </label>
+                    <label>
+                        Apellido *
+                        <input type="text" name="last_name" required placeholder="Pérez">
+                    </label>
+                </div>
+                <label>
+                    Tipo de candidatura *
+                    <select name="candidacy_type" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="congreso">Congreso</option>
+                        <option value="regionales">Regionales</option>
+                        <option value="presidencia">Presidencia</option>
+                    </select>
+                </label>
+                <label>
+                    Correo electrónico *
+                    <input type="email" name="email" required placeholder="juan.perez@example.com">
+                </label>
+                <label>
+                    Teléfono *
+                    <input type="tel" name="phone" required placeholder="+57 300 123 4567">
+                </label>
+                <div class="form-actions">
+                    <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>
+                    <button type="submit" class="primary-btn">Enviar solicitud</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- API Configuration: Set API_BASE_URL from environment variable -->
+    <script>
+        // Set API base URL from environment variable or use ngrok URL
+        // For Vercel: Set NEXT_PUBLIC_API_BASE_URL in Vercel environment variables
+        // For ngrok: Use https://castorelecciones.ngrok.app
+        // For Flask local development: Uses url_for, falls back to ngrok
+        window.API_BASE_URL = (function() {
+            // Check if Flask url_for is available (local development)
+            {% if url_for %}
+            try {
+                var flaskUrl = '{{ url_for("index", _external=True).rstrip("/") }}';
+                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '') {
+                    return flaskUrl;
+                }
+            } catch(e) {}
+            {% endif %}
+            // Check for Vercel environment variable (injected at build time)
+            if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
+                return process.env.NEXT_PUBLIC_API_BASE_URL;
+            }
+            // Default: ngrok URL for production
+            return 'https://castorelecciones.ngrok.app';
+        })();
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/performance.js" defer></script>
+    <script src="/static/js/landing.js" defer></script>
+</body>
+</html>

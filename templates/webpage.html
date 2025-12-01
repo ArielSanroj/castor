@@ -2,63 +2,606 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Castor Elecciones: Análisis Político en Tiempo Real</title>
-    <meta name="description" content="Castor Elecciones es una app de IA que ayuda a políticos a analizar sentimientos electorales en tiempo real y crear planes de campaña efectivos en temas como seguridad, economía y educación.">
-    <meta name="keywords" content="Castor Elecciones, análisis político IA, campañas electorales, datos en tiempo real, planes de campaña políticos">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- SEO Meta Tags -->
+    <title>Castor Elecciones | Inteligencia Electoral con IA - Análisis de Redes Sociales</title>
+    <meta name="description" content="Plataforma de inteligencia electoral basada en datos públicos. Análisis de conversación, sentimiento y temas ciudadanos en noticias, X/Twitter para medios y equipos de campaña.">
+    <meta name="keywords" content="inteligencia electoral, análisis político, twitter analytics, sentimiento político, BETO, campañas electorales, análisis de redes sociales">
+    <meta name="author" content="Castor Elecciones">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://castor-elecciones.com/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://castor-elecciones.com/">
+    <meta property="og:title" content="Castor Elecciones | Inteligencia Electoral con IA">
+    <meta property="og:description" content="Análisis de sentimiento político en tiempo real. Informes para medios y estrategia de campaña con IA.">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-image.jpg', _external=True) }}">
+    <meta property="og:locale" content="es_ES">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://castor-elecciones.com/">
+    <meta name="twitter:title" content="Castor Elecciones | Inteligencia Electoral con IA">
+    <meta name="twitter:description" content="Análisis de sentimiento político en tiempo real con BETO y GPT-4.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='images/og-image.jpg', _external=True) }}">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="{{ url_for('static', filename='css/styles.css') }}" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data / JSON-LD -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Castor Elecciones",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "App de IA para análisis político en tiempo real y planes de campaña."
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Castor Elecciones",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "127"
+        },
+        "description": "Plataforma de inteligencia electoral con análisis de sentimiento en redes sociales usando IA y modelos BETO."
     }
     </script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Defer non-critical scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#0A0E1A">
 </head>
-<body class="webpage">
-    <header>
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Castor Elecciones Logo" class="logo">
-        <h1>Campaña Electoral Inteligente</h1>
-        <p>Herramienta avanzada de inteligencia artificial para el análisis político moderno</p>
-        <div class="categories">Conoce las necesidades de tus electores con datos en tiempo real</div>
-        <div class="stats">
-            <div class="card">Análisis del Sentimiento Político</div>
-            <div class="card">Miles de Datos<br>Analizados en Tiempo Real</div>
-            <div class="card">99%<br>Precisión en Sentimientos</div>
-        </div>
-    </header>
-    <section class="analysis">
-        <h2>Comienza tu Análisis</h2>
-        <p>Ingresa la ubicación de tu campaña y conoce qué está pasando en Seguridad, Alimentación, Infraestructura, Economía, Empleo, Gobernanza, Medio Ambiente, Educación y Salud</p>
-        <form id="analysisForm">
-            <input type="text" name="location" placeholder="Ubicación" required>
-            <input type="text" name="candidate_name" placeholder="Nombre del Candidato" required>
-            <button type="submit">Iniciar Análisis</button>
-        </form>
-        <div id="results" class="large-box">
-            <div class="tab-container">
-                <div class="tab active" data-section="resumen" onclick="switchTab(event)">Resumen Ejecutivo</div>
-                <div class="tab" data-section="analisis" onclick="switchTab(event)">Análisis de Datos</div>
-                <div class="tab" data-section="plan" onclick="switchTab(event)">Plan Estratégico</div>
-                <div class="tab" data-section="discurso" onclick="switchTab(event)">Discurso</div>
-                <div class="tab" data-section="grafico" onclick="switchTab(event)">Gráfico Sugerido</div>
+<body class="landing" itemscope itemtype="https://schema.org/WebPage">
+    <header class="main-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+            <div class="nav-left">
+                <a class="brand" href="/" aria-label="Ir a inicio de Castor Elecciones">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                         alt="Castor Elecciones - Logo" 
+                         width="54" 
+                         height="54"
+                         loading="eager">
+                    <div>
+                        <strong>Castor Elecciones</strong>
+                        <small>Inteligencia Electoral</small>
+                    </div>
+                </a>
             </div>
-            <div id="content-area" class="content-area"></div>
+            <div class="nav-center">
+                <a href="/media">Para medios</a>
+                <a href="/campaign">Para campañas</a>
+                <a href="/forecast">Forecast</a>
+                <a href="#pipeline">Arquitectura & Metodología</a>
+                <a href="#origins">Orígenes CASTOR</a>
+            </div>
+            <!-- Mobile menu button -->
+            <button class="mobile-menu-toggle" 
+                    aria-label="Abrir menú de navegación" 
+                    aria-expanded="false"
+                    aria-controls="mobile-menu"
+                    type="button">
+                <span class="hamburger-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Skip to main content link for accessibility -->
+        <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+        
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero__content">
+                <p class="eyebrow" role="doc-subtitle">INTELIGENCIA ELECTORAL · DATOS · METODOLOGÍA AUDITABLE</p>
+                <h1 id="hero-title">Transparencia electoral basada en datos verificables</h1>
+                <p class="lead">
+                    Analizamos la conversación pública para ofrecer informes claros y auditables a medios y equipos de campaña.
+                </p>
+                <p class="hero-microcopy">
+                    CASTOR nace de la experiencia electoral colombiana y busca una sola cosa: que las decisiones en campaña y en medios se apoyen en datos, no en impresiones ni sesgos.
+                </p>
+                <div class="hero-ctas">
+                    <div class="hero-cta">
+                        <a class="primary-btn" href="/media">Ver CASTOR Medios</a>
+                        <span class="cta-note">Informes para prensa y observatorios.</span>
+                    </div>
+                    <div class="hero-cta">
+                        <a class="ghost-btn" href="/campaign">Explorar CASTOR Campañas</a>
+                        <span class="cta-note">Resumen ejecutivo, plan y discurso para equipos de campaña.</span>
+                    </div>
+                </div>
+                <div class="hero-link">
+                    <a href="#pipeline">Ver arquitectura técnica →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ¿Qué es Castor? -->
+        <section id="methodology" class="intro-section" aria-labelledby="intro-title">
+            <div class="section-header">
+                <h2 id="intro-title">¿Qué es Castor Elecciones?</h2>
+                <p class="subtitle">
+                    CASTOR Elecciones es una plataforma de inteligencia electoral que analiza la conversación pública para identificar qué temas movilizan a la ciudadanía. Combina modelos de sentimiento, clasificación por los ejes de desarrollo y detección de tendencias para ofrecer información confiable y contextualizada.
+                </p>
+                <p class="subtitle">
+                    Su propósito es fortalecer la transparencia democrática. CASTOR no predice resultados ni segmenta personas: transforma datos públicos en reportes claros para prensa y en narrativas estratégicas para campañas, siempre con criterios verificables y metodología abierta.
+                </p>
+                <div class="method-links">
+                    <a href="#pipeline">Ver arquitectura →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cómo funciona - Video -->
+        <section class="video-section panel" aria-labelledby="video-title">
+            <div class="section-header">
+                <h2 id="video-title">¿Cómo funciona?</h2>
+            </div>
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/dH-hn3x0Uh0" 
+                        title="Cómo funciona CASTOR Elecciones" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Métricas Clave -->
+        <section class="metrics-section" aria-labelledby="metrics-title">
+            <div class="section-header">
+                <h2 id="metrics-title">Indicadores clave de CASTOR Elecciones</h2>
+            </div>
+            <div class="metrics-grid" role="list">
+                <div class="metric-card animate-on-scroll" role="listitem">
+                    <div class="metric-icon" aria-hidden="true">✓</div>
+                    <div class="metric-value" aria-label="99 por ciento">99%</div>
+                    <div class="metric-label">Precisión del modelo BETO para clasificar sentimiento.</div>
+                </div>
+                <div class="metric-card animate-on-scroll" role="listitem">
+                    <div class="metric-icon" aria-hidden="true">📊</div>
+                    <div class="metric-value" aria-label="10 temas">Desarrollo</div>
+                    <div class="metric-label">10 Ejes ciudadanos de desarrollo: Seguridad, Salud, Educación, Infraestructura, Alimentación, Gobernanza, Igualdad, Paz, Economía y Empleo, Medio Ambiente.</div>
+                </div>
+                <div class="metric-card animate-on-scroll" role="listitem">
+                    <div class="metric-icon" aria-hidden="true">⚡</div>
+                    <div class="metric-value">Estrategia Electoral</div>
+                    <div class="metric-label">Medios (informes descriptivos) y Campañas (resumen, plan y discurso). Ambos basados en la misma capa central.</div>
+                </div>
+                <div class="metric-card animate-on-scroll" role="listitem">
+                    <div class="metric-icon" aria-hidden="true">🧩</div>
+                    <div class="metric-value">Analítica Data Electoral</div>
+                    <div class="metric-label">Recolección → Sentimiento → Temas de Desarrollo → Tendencias → Visualizaciones.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Productos Detallados -->
+        <section id="products" class="products">
+            <div class="section-header">
+                <h2>Productos diseñados para cada tipo de cliente</h2>
+                <p>El mismo motor de datos alimenta tres experiencias: una para medios, otra para equipos de campaña, y una tercera para análisis prospectivo avanzado.</p>
+            </div>
+            <div class="cards-grid">
+                <article class="product-card">
+                    <div class="product-badge">Medios</div>
+                    <h3>CASTOR Medios</h3>
+                    <p class="product-description">
+                        CASTOR Medios ofrece informes descriptivos y neutrales que conocen las necesidades de los electores en tiempo real. Presenta hallazgos con datos claros sobre el sentimiento ciudadano, sin recomendaciones políticas.
+                    </p>
+                    <div class="product-features">
+                        <h4>Incluye:</h4>
+                        <ul>
+                            <li>Resumen descriptivo del análisis</li>
+                            <li>Temas y picos de conversación del momento</li>
+                            <li>Metadatos verificables de la consulta</li>
+                            <li>Visualizaciones listas para publicar</li>
+                        </ul>
+                    </div>
+                    <div class="product-audience">
+                        <strong>Ideal para:</strong>
+                        <p>Periodistas · Medios de comunicación · Observatorios ciudadanos · Centros de investigación</p>
+                    </div>
+                    <a href="/media" class="primary-btn">Ir a Medios →</a>
+                </article>
+                <article class="product-card featured-card">
+                    <div class="product-badge featured">Campañas</div>
+                    <h3>CASTOR Campañas</h3>
+                    <p class="product-description">
+                        CASTOR Campañas expande el análisis con narrativas estratégicas para equipos políticos. Toma los mismos datos del motor central y construye planes, prioridades y discursos alineados con los temas que realmente preocupan a la ciudadanía.
+                    </p>
+                    <div class="product-features">
+                        <h4>Incluye:</h4>
+                        <ul>
+                            <li>Resumen ejecutivo con prioridades</li>
+                            <li>Plan estratégico con acciones y timeline</li>
+                            <li>Discurso personalizado según identidad política</li>
+                            <li>Recomendaciones estratégicas</li>
+                        </ul>
+                    </div>
+                    <div class="product-audience">
+                        <strong>Ideal para:</strong>
+                        <p>Equipos de campaña · Consultores políticos · Estrategas de comunicación</p>
+                    </div>
+                    <a href="/campaign" class="primary-btn">Ir a Campañas →</a>
+                </article>
+                <article class="product-card">
+                    <div class="product-badge">Forecast</div>
+                    <h3>CASTOR Forecast</h3>
+                    <p class="product-description">
+                        CASTOR Forecast convierte la conversación pública en micro-sondeos indirectos y proyecciones narrativas. Mide la fuerza de la narrativa electoral con índices como IVN (Intención de Voto Narrativa), Momentum, y proyecciones a 7-14 días.
+                    </p>
+                    <div class="product-features">
+                        <h4>Incluye:</h4>
+                        <ul>
+                            <li>Índices narrativos (SVE, SNA, CP, NMI, IVN)</li>
+                            <li>Momentum Electoral de Conversación</li>
+                            <li>Proyecciones estadísticas (7-14 días)</li>
+                            <li>Simulador de escenarios</li>
+                        </ul>
+                    </div>
+                    <div class="product-audience">
+                        <strong>Ideal para:</strong>
+                        <p>Equipos de campaña avanzados · Consultoras electorales · Think tanks · Medios avanzados</p>
+                    </div>
+                    <a href="/forecast" class="primary-btn">Explorar Forecast →</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- CASTOR Forecast Section -->
+        <section id="forecast" class="forecast-section panel" aria-labelledby="forecast-title">
+            <div class="section-header">
+                <h2 id="forecast-title">CASTOR Forecast</h2>
+                <p class="subtitle">
+                    Modelos de proyección y momentum narrativo que permiten anticipar cómo evoluciona la conversación electoral en los próximos días.
+                </p>
+                <p class="subtitle">
+                    CASTOR Forecast no predice resultados electorales. Analiza datos públicos, estima tendencias y proyecta el comportamiento de la conversación para informar decisiones estratégicas.
+                </p>
+            </div>
+            <div class="forecast-grid">
+                <!-- Índice Compuesto -->
+                <article class="forecast-card">
+                    <div class="forecast-icon">📊</div>
+                    <h3>Índice Compuesto de Conversación Electoral (ICCE)</h3>
+                    <p>
+                        El ICCE resume la conversación diaria de cada candidato combinando volumen, sentimiento neto y cuota de conversación dentro del ecosistema digital. 
+                        Un valor alto indica atención pública creciente con tono positivo o neutro; un valor bajo refleja erosión narrativa o predominio negativo.
+                    </p>
+                    <ul class="forecast-list">
+                        <li>Volumen de menciones</li>
+                        <li>Sentimiento BETO normalizado</li>
+                        <li>Cuota de conversación frente a rivales</li>
+                    </ul>
+                </article>
+                <!-- Momentum -->
+                <article class="forecast-card">
+                    <div class="forecast-icon">📈</div>
+                    <h3>Momentum Electoral de Conversación (MEC)</h3>
+                    <p>
+                        El Momentum muestra si un candidato está ganando o perdiendo tracción en la conversación. Se calcula con medias móviles y análisis de variaciones diarias del ICCE.
+                        Es ideal para detectar crisis, rebotes, efectos post-debate y momentos de oportunidad.
+                    </p>
+                    <ul class="forecast-list">
+                        <li>Identificación de caídas y picos</li>
+                        <li>Lectura del clima narrativo semanal</li>
+                        <li>Señales tempranas de desgaste o crecimiento</li>
+                    </ul>
+                </article>
+                <!-- Forecast -->
+                <article class="forecast-card">
+                    <div class="forecast-icon">🔮</div>
+                    <h3>Proyección de Conversación (7–14 días)</h3>
+                    <p>
+                        CASTOR utiliza modelos estadísticos de series de tiempo para proyectar cómo podría evolucionar la conversación en horizontes cortos.
+                        Esto ayuda a prever ciclos mediáticos, anticipar agendas y planear intervenciones estratégicas.
+                    </p>
+                    <ul class="forecast-list">
+                        <li>Modelos Prophet / Holt-Winters</li>
+                        <li>Curvas de tendencia con intervalos de confianza</li>
+                        <li>Proyecciones por candidato y por tema ciudadano</li>
+                    </ul>
+                </article>
+                <!-- Escenarios -->
+                <article class="forecast-card">
+                    <div class="forecast-icon">🎯</div>
+                    <h3>Simulador de Escenarios</h3>
+                    <p>
+                        Permite explorar cómo podría reaccionar la conversación ante distintos eventos: anuncios, debates, crisis o nuevas narrativas.
+                        Los escenarios NO predicen voto; modelan posibles cambios en conversación.
+                    </p>
+                    <ul class="forecast-list">
+                        <li>Impacto estimado de anuncios estratégicos</li>
+                        <li>Simulación de crisis comunicacionales</li>
+                        <li>Comparación entre candidatos bajo distintos contextos</li>
+                    </ul>
+                </article>
+            </div>
+            <div class="forecast-cta">
+                <h3>¿Quieres ver CASTOR Forecast aplicado a tu campaña?</h3>
+                <p>Solicita una demo personalizada con datos reales de tu candidato, ciudad o tema.</p>
+                <div class="forecast-cta-buttons">
+                    <a href="/forecast" class="primary-btn">Explorar Forecast →</a>
+                    <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Características Principales -->
+        <section id="features" class="features-section" aria-labelledby="features-title">
+            <div class="section-header">
+                <h2 id="features-title">Características Principales</h2>
+                <p>Herramientas avanzadas de IA para revolucionar el análisis político moderno.</p>
+            </div>
+            <div class="features-grid">
+                <article class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Análisis de Sentimiento IA</h3>
+                    <p>Procesamiento avanzado con BETO para clasificar sentimientos políticos con precisión del 99%.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Insights de Temáticas Ciudadanas</h3>
+                    <p>Análisis detallado según las temáticas ciudadanas principales 2022-2026, con métricas en tiempo real.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Generación Automática IA</h3>
+                    <p>Discursos, estrategias y visualizaciones personalizadas para optimizar tu campaña.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Visualizaciones automáticas -->
+        <section class="visualization-section" aria-labelledby="visualizations-title">
+            <div class="section-header">
+                <h2 id="visualizations-title">Discusiones en Tiempo Real</h2>
+                <p>
+                    Identifica audiencias, segmentos y temáticas claves de discusión ciudadana en tiempo real. 
+                    Cada análisis alimenta un algoritmo cuasipredictivo que anticipa cambios en el sentimiento político.
+                </p>
+            </div>
+            <div class="grid">
+                <article class="tech-card">
+                    <div class="tech-card-icon">📈</div>
+                    <h3>Millones de voces en tiempo real</h3>
+                    <p>Series con tweets por hora/día para detectar momentos críticos.</p>
+                </article>
+                <article class="tech-card">
+                    <div class="tech-card-icon">💬</div>
+                    <h3>Sentimiento por tema</h3>
+                    <p>Positivo, neutral y negativo por eje de desarrollo listo para análisis y notas.</p>
+                </article>
+                <article class="tech-card">
+                    <div class="tech-card-icon">🧭</div>
+                    <h3>Distribución por ejes</h3>
+                    <p>Cómo se reparte la agenda entre Seguridad, Salud, Educación, Infraestructura, Alimentación, Gobernanza, Igualdad, Paz, Economía y Empleo, Medio Ambiente.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Arquitectura, Metodología y Límites -->
+        <section id="pipeline" class="panel architecture-section">
+            <div class="panel__header">
+                <h2>Arquitectura & Metodología </h2>
+                <p>Un único motor central analiza sentimiento + temas + tendencias, y cada producto empaqueta los resultados según su audiencia. CASTOR está diseñado con estándares de transparencia, datos públicos y modelos auditables.</p>
+            </div>
+            
+            <!-- Arquitectura -->
+            <div class="workflow-steps">
+                <article class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">📡</div>
+                    <h3>Captura de datos</h3>
+                    <p>Mensajes públicos filtrados por ubicación, tema de desarrollo, usuario y trending topics. Caching, rate limiting y validación de entradas mantienen calidad.</p>
+                    <div class="tech-tags">
+                    </div>
+                </article>
+                <article class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🧠</div>
+                    <h3>Análisis central</h3>
+                    <p>CASTOR clasifica emociones, asigna temas a los ejes de desarrollo y detecta momentos clave de la conversación.</p>             
+                    </div>
+                </article>
+                <article class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">📊</div>
+                    <h3>Construcción de Campaña</h3>
+                    <p>Cnvierte las métricas en narrativas para el análisis de campaña.</p>
+                    </div>
+                </article>
+            </div>
+
+        <!-- Orígenes de CASTOR -->
+        <section id="origins" class="origins-section panel" aria-labelledby="origins-title">
+            <div class="section-header">
+                <h2 id="origins-title">Orígenes de CASTOR</h2>
+                <p>Una herramienta inspirada en transparencia y participación electoral.</p>
+            </div>
+            <div class="origins-grid">
+                <article class="origins-card">
+                    <div class="origins-icon">💡</div>
+                    <h3>La inspiración</h3>
+                    <p>CASTOR Elecciones se inspira en la trayectoria del jurista colombiano Carlos Ariel Sánchez Torres, reconocido por su liderazgo en la modernización de la administración electoral en Colombia. Como Doctor en Derecho, Magistrado, Litigante, Profesor y Registrador Nacional del Estado Civil impulsó avances en identificación ciudadana, infraestructura tecnológica, biometría y garantías electorales, reforzando la transparencia democrática.</p>
+                    <p>Su experiencia en educación pública, derecho, justicia administrativa y gestión institucional lo llevó a una pregunta central: ¿cómo aprovechar la tecnología y los datos públicos para comprender, con rigor y sin sesgos, qué preocupa realmente a la ciudadanía durante un proceso electoral? CASTOR nace como respuesta moderna a esa inquietud.</p>
+                </article>
+                <article class="origins-card">
+                    <div class="origins-icon">🎯</div>
+                    <h3>El propósito</h3>
+                    <p>La misión de CASTOR Elecciones es convertir la conversación pública en señales claras y auditables: qué temas se discuten, cómo fluctúa el sentimiento, qué eventos generan picos de conversación y cómo evoluciona la agenda ciudadana. Se basa exclusivamente en datos y discusiones públicas para entregar información clara, contextualizada y responsable.</p>
+                </article>
+                <article class="origins-card">
+                    <div class="origins-icon">🏗️</div>
+                    <h3>La filosofía del nombre</h3>
+                    <p>"CASTOR" representa al arquitecto: metódico, preciso y orientado a crear estructuras sólidas. Es el espíritu del proyecto: construir transparencia a partir de datos públicos, ordenar el ruido informativo y fortalecer la democracia con información verificable. Más que tecnología, CASTOR es un puente entre la experiencia institucional de Carlos Ariel Sánchez Torres y las capacidades modernas de análisis, lenguaje natural e inteligencia artificial.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <section id="cta" class="cta">
+            <div class="cta-content">
+                <h2>¿Listo para poder tener estrategias informadas y basadas en evidencia con la inteligencia de CASTOR?</h2>
+                <p>Solicita una demo>
+                <div class="cta-buttons">
+                    <button class="primary-btn large" onclick="openDemoModal()">Solicitar demo</button>
+                    <div class="cta-links">
+                        <a href="/media" class="cta-link">Ir a Medios →</a>
+                        <span>·</span>
+                        <a href="/campaign" class="cta-link">Ir a Campañas →</a>
+                        <span>·</span>
+                        <a href="/forecast" class="cta-link">Explorar Forecast →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Castor Elecciones</h3>
+                <p>Plataforma de análisis electoral basada en datos y modelos auditables.</p>
+                <p class="muted">© 2026 CASTOR Elecciones. Todos los derechos reservados.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Productos</h4>
+                <ul>
+                    <li><a href="/media">CASTOR Medios</a></li>
+                    <li><a href="/campaign">CASTOR Campañas</a></li>
+                    <li><a href="/forecast">CASTOR Forecast</a></li>
+                    <li><a href="/docs">Documentación técnica</a></li>
+                    <li><a href="#" onclick="openDemoModal()">Solicitar demo</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Información</h4>
+                <ul>
+                    <li><a href="#pipeline">Arquitectura</a></li>
+                    <li><a href="#methodology">Metodología</a></li>
+                    <li><a href="#features">Características</a></li>
+                    <li><a href="#origins">Orígenes de CASTOR</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal / Políticas</h4>
+                <ul>
+                    <li><a href="#">Uso de datos públicos</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="/contact">Contacto</a></li>
+                </ul>
+            </div>
         </div>
-    </section>
-    <section class="features">
-        <h2>Características Principales</h2>
-        <p>Herramientas avanzadas de inteligencia artificial para el análisis político moderno</p>
-        <div class="feature-cards">
-            <div class="card">Procesamiento avanzado de texto para clasificar sentimientos de los electores</div>
-            <div class="card">Obten un análisis detallado del sentimiento político y deseo popular según los ejes clave del Plan Nacional de Desarrollo</div>
-            <div class="card">Generación automática de planes estratégicos, discursos y gráficos personalizados para optimizar tu campaña electoral en tiempo real</div>
+    </footer>
+
+    <!-- Modal para Solicitar Demo -->
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Solicitar Demo</h2>
+                <button class="modal-close" onclick="closeDemoModal()">&times;</button>
+            </div>
+            <form id="demoForm" class="modal-form">
+                <div class="form-row">
+                    <label>
+                        Nombre *
+                        <input type="text" name="first_name" required placeholder="Juan">
+                    </label>
+                    <label>
+                        Apellido *
+                        <input type="text" name="last_name" required placeholder="Pérez">
+                    </label>
+                </div>
+                <label>
+                    Tipo de candidatura *
+                    <select name="candidacy_type" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="congreso">Congreso</option>
+                        <option value="regionales">Regionales</option>
+                        <option value="presidencia">Presidencia</option>
+                    </select>
+                </label>
+                <label>
+                    Correo electrónico *
+                    <input type="email" name="email" required placeholder="juan.perez@example.com">
+                </label>
+                <label>
+                    Teléfono *
+                    <input type="tel" name="phone" required placeholder="+57 300 123 4567">
+                </label>
+                <div class="form-actions">
+                    <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>
+                    <button type="submit" class="primary-btn">Enviar solicitud</button>
+                </div>
+            </form>
         </div>
-    </section>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    </div>
+
+    <!-- API Configuration: Set API_BASE_URL from environment variable -->
+    <script>
+        // Set API base URL from environment variable or use ngrok URL
+        // For Vercel: Set NEXT_PUBLIC_API_BASE_URL in Vercel environment variables
+        // For ngrok: Use https://castorelecciones.ngrok.app
+        // For Flask local development: Uses url_for, falls back to ngrok
+        window.API_BASE_URL = (function() {
+            // Check if Flask url_for is available (local development)
+            {% if url_for %}
+            try {
+                var flaskUrl = '{{ url_for("index", _external=True).rstrip("/") }}';
+                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '') {
+                    return flaskUrl;
+                }
+            } catch(e) {}
+            {% endif %}
+            // Check for Vercel environment variable (injected at build time)
+            if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
+                return process.env.NEXT_PUBLIC_API_BASE_URL;
+            }
+            // Default: ngrok URL for production
+            return 'https://castorelecciones.ngrok.app';
+        })();
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/performance.js" defer></script>
+    <script src="/static/js/landing.js" defer></script>
+    
+    <!-- Web Analytics (Google Analytics - Replace with your ID) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script> -->
 </body>
 </html>

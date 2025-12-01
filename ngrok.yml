@@ -1,0 +1,13 @@
+# Ngrok configuration file for Castor Elecciones backend
+# Usage: ngrok http --config=ngrok.yml 80
+
+version: "2"
+authtoken: 2mtkS18m9XOwl8cFgBxpWHyXgio_4wLygqUmXu7Fqz43DhN2w
+
+tunnels:
+  castor-backend:
+    proto: http
+    addr: 80
+    subdomain: castorelecciones
+    inspect: false
+

@@ -9,6 +9,14 @@ from config import Config
 from utils.rate_limiter import init_rate_limiter
 from utils.cache import init_cache
 from services.background_jobs import init_background_jobs
+from app.services.analysis_core import AnalysisCorePipeline
+from app.services.topic_classifier_service import TopicClassifierService
+from app.services.chart_service import ChartService
+from services.twitter_service import TwitterService
+from services.sentiment_service import SentimentService
+from services.trending_service import TrendingService
+from services.database_service import DatabaseService
+from services.openai_service import OpenAIService
 
 # Initialize extensions
 cors = CORS()
@@ -25,7 +33,26 @@ def create_app(config_name: str = 'default') -> Flask:
     Returns:
         Flask application instance
     """
-    app = Flask(__name__)
+    # Determine template and static folders
+    # Check if templates exist in parent directory (root of project)
+    import os
+    # __file__ is backend/app/__init__.py
+    # os.path.dirname(__file__) = backend/app/
+    # os.path.dirname(os.path.dirname(__file__)) = backend/
+    # os.path.dirname(os.path.dirname(os.path.dirname(__file__))) = project root
+    backend_dir = os.path.dirname(os.path.dirname(__file__))  # backend/
+    project_root = os.path.dirname(backend_dir)  # project root
+    parent_templates = os.path.join(project_root, 'templates')
+    parent_static = os.path.join(project_root, 'static')
+    
+    template_folder = parent_templates if os.path.exists(parent_templates) else 'templates'
+    static_folder = parent_static if os.path.exists(parent_static) else 'static'
+    
+    app = Flask(
+        __name__,
+        template_folder=template_folder,
+        static_folder=static_folder
+    )
     
     # Load configuration
     app.config.from_object(Config)
@@ -58,13 +85,51 @@ def create_app(config_name: str = 'default') -> Flask:
         ]
     )
     
+    # Initialize shared pipeline (best-effort, non-fatal)
+    try:
+        topic_classifier = TopicClassifierService()
+        chart_service = ChartService()
+        twitter_service = TwitterService()
+        sentiment_service = SentimentService()
+        trending_service = TrendingService()
+        db_service = DatabaseService()
+        analysis_core = AnalysisCorePipeline(
+            twitter_service=twitter_service,
+            sentiment_service=sentiment_service,
+            trending_service=trending_service,
+            topic_classifier_service=topic_classifier,
+            chart_service=chart_service,
+            db_service=db_service
+        )
+        app.extensions["analysis_core_pipeline"] = analysis_core
+        app.extensions["twitter_service"] = twitter_service
+        app.extensions["sentiment_service"] = sentiment_service
+        app.extensions["database_service"] = db_service
+        
+        # Initialize OpenAI separately to catch specific errors
+        try:
+            openai_service = OpenAIService()
+            app.extensions["openai_service"] = openai_service
+        except Exception as openai_exc:
+            logging.warning(f"OpenAI service not initialized: {openai_exc}")
+            app.extensions["openai_service"] = None
+            
+    except Exception as exc:
+        logging.warning(f"Core analysis services not fully initialized: {exc}")
+        app.extensions["analysis_core_pipeline"] = None
+        app.extensions["openai_service"] = None
+
     # Register blueprints
-    from app.routes import analysis_bp, chat_bp, health_bp, auth_bp, campaign_bp
+    from app.routes import analysis_bp, chat_bp, health_bp, auth_bp, campaign_bp, web_bp, leads_bp, media_bp, forecast_bp
+    app.register_blueprint(web_bp)  # No prefix for web routes
     app.register_blueprint(analysis_bp, url_prefix='/api')
+    app.register_blueprint(media_bp, url_prefix='/api/media')
     app.register_blueprint(chat_bp, url_prefix='/api')
     app.register_blueprint(health_bp, url_prefix='/api')
     app.register_blueprint(auth_bp, url_prefix='/api')
     app.register_blueprint(campaign_bp, url_prefix='/api')
+    app.register_blueprint(leads_bp, url_prefix='/api')
+    app.register_blueprint(forecast_bp, url_prefix='/api/forecast')
     
     # Register error handlers
     @app.errorhandler(404)
