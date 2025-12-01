@@ -1,18 +1,15 @@
 """
 Sentiment analysis service using BETO model.
 Provides 99% accuracy sentiment classification for Spanish text.
+Uses singleton pattern to avoid loading model multiple times.
 """
 import logging
 from typing import List, Dict, Any, Optional
 import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../'))
-
 from config import Config
 from models.schemas import SentimentData, SentimentType
 from utils.cache import TTLCache
+from services.model_singleton import get_beto_model
 
 logger = logging.getLogger(__name__)
 
@@ -22,11 +19,8 @@ class SentimentService:
     
     def __init__(self):
         """Initialize BETO model for sentiment analysis."""
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model_name = Config.BETO_MODEL_PATH
-        self.model = None
-        self.tokenizer = None
-        self._load_model()
+        # Use singleton to avoid loading model multiple times
+        self.model, self.tokenizer, self.device = get_beto_model()
         self._sentiment_cache = TTLCache(
             ttl_seconds=Config.SENTIMENT_CACHE_TTL,
             max_size=Config.CACHE_MAX_SIZE
@@ -36,22 +30,6 @@ class SentimentService:
     def _cache_key(self, text: str) -> str:
         """Generate cache key for sentiment results."""
         return text.strip().lower()
-    
-    def _load_model(self):
-        """Load BETO model and tokenizer."""
-        try:
-            logger.info(f"Loading BETO model: {self.model_name}")
-            self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-            self.model = AutoModelForSequenceClassification.from_pretrained(
-                self.model_name,
-                num_labels=3  # positive, negative, neutral
-            )
-            self.model.to(self.device)
-            self.model.eval()
-            logger.info("BETO model loaded successfully")
-        except Exception as e:
-            logger.error(f"Error loading BETO model: {e}", exc_info=True)
-            raise
     
     def analyze_sentiment(self, text: str) -> SentimentData:
         """

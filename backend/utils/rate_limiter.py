@@ -12,9 +12,13 @@ def get_rate_limit_key():
     Get rate limit key based on user authentication.
     Uses user ID if authenticated, otherwise IP address.
     """
-    user_id = get_jwt_identity()
-    if user_id:
-        return f"user:{user_id}"
+    try:
+        user_id = get_jwt_identity()
+        if user_id:
+            return f"user:{user_id}"
+    except RuntimeError:
+        # No JWT token in request, use IP address
+        pass
     return get_remote_address()
 
 

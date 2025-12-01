@@ -7,9 +7,6 @@ import json
 import logging
 from typing import Any, Dict, List, Optional, Tuple
 import openai
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../'))
 
 from config import Config
 from models.schemas import (
@@ -17,6 +14,14 @@ from models.schemas import (
     StrategicPlan,
     Speech,
     PNDTopicAnalysis
+)
+from app.schemas.core import CoreAnalysisResult
+from app.schemas.media import MediaAnalysisSummary
+from app.schemas.campaign import (
+    CampaignAnalysisRequest as NewCampaignRequest,
+    ExecutiveSummary as NewExecutiveSummary,
+    StrategicPlan as NewStrategicPlan,
+    Speech as NewSpeech,
 )
 from utils.cache import TTLCache
 
@@ -301,12 +306,87 @@ Formato JSON:
             
         except Exception as e:
             logger.error(f"Error generating speech: {e}", exc_info=True)
-            return Speech(
-                title=f"Discurso para {location}",
-                content=f"Queridos ciudadanos de {location}, hoy hablamos de nuestras necesidades y propuestas...",
-                key_points=["Compromiso con la comunidad", "Trabajo conjunto"],
-                duration_minutes=5
+        return Speech(
+            title=f"Discurso para {location}",
+            content=f"Queridos ciudadanos de {location}, hoy hablamos de nuestras necesidades y propuestas...",
+            key_points=["Compromiso con la comunidad", "Trabajo conjunto"],
+            duration_minutes=5
+        )
+
+    # ------------------------------------------------------------------
+    # New product-specific helpers
+    # ------------------------------------------------------------------
+    def generate_media_summary(self, core_result: CoreAnalysisResult) -> Dict[str, Any]:
+        """
+        Generate a neutral, descriptive summary for media product.
+        """
+        stats_context = {
+            "tweets_analyzed": core_result.tweets_analyzed,
+            "location": core_result.location,
+            "topic": core_result.topic,
+            "sentiment_overview": core_result.sentiment_overview.dict(),
+            "topics": [t.dict() for t in core_result.topics],
+            "time_window_from": core_result.time_window_from.isoformat(),
+            "time_window_to": core_result.time_window_to.isoformat(),
+            "trending_topic": core_result.trending_topic,
+        }
+
+        system_prompt = (
+            "Eres un analista de datos para un medio de comunicación. "
+            "Resumes conversación en X/Twitter de forma descriptiva, neutral y no partidista. "
+            "No des recomendaciones de acción ni lenguaje prescriptivo."
+        )
+        user_prompt = (
+            "Genera un JSON con la forma "
+            '{"overview": "...", "key_stats": ["..."], "key_findings": ["..."]} '
+            "solo con descripción de lo que ocurrió.\n"
+            f"Datos:\n{json.dumps(stats_context, ensure_ascii=False, indent=2)}"
+        )
+
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.4,
+                response_format={"type": "json_object"},
             )
+            result = json.loads(response.choices[0].message.content)
+            summary = MediaAnalysisSummary(**result)
+            return summary.dict()
+        except Exception as exc:
+            logger.error(f"Error generating media summary: {exc}", exc_info=True)
+            fallback = MediaAnalysisSummary(
+                overview="Resumen no disponible por el momento.",
+                key_stats=[],
+                key_findings=[],
+            )
+            return fallback.dict()
+
+    # The following adapters are placeholders to align with new schemas.
+    # They intentionally raise until you supply prompts/logic.
+    def generate_executive_summary_new(
+        self,
+        core_result: CoreAnalysisResult,
+        request: NewCampaignRequest,
+    ) -> NewExecutiveSummary:
+        raise NotImplementedError("Implementa generate_executive_summary_new según tu lógica")
+
+    def generate_strategic_plan_new(
+        self,
+        core_result: CoreAnalysisResult,
+        request: NewCampaignRequest,
+    ) -> NewStrategicPlan:
+        raise NotImplementedError("Implementa generate_strategic_plan_new según tu lógica")
+
+    def generate_speech_new(
+        self,
+        core_result: CoreAnalysisResult,
+        request: NewCampaignRequest,
+    ) -> NewSpeech:
+        raise NotImplementedError("Implementa generate_speech_new según tu lógica")
     
     def chat(
         self,

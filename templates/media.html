@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- SEO Meta Tags -->
+    <title>CASTOR Medios | Análisis Electoral para Prensa y Observatorios</title>
+    <meta name="description" content="Informes descriptivos y visualizaciones listas para publicar. Análisis de conversación ciudadana con datos claros sobre volumen, sentimiento y temas.">
+    <meta name="keywords" content="análisis electoral, periodismo de datos, análisis de redes sociales, sentimiento político, informes periodísticos">
+    <meta name="author" content="Castor Elecciones">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://castor-elecciones.com/media">
+    <meta property="og:title" content="CASTOR Medios | Análisis Electoral para Prensa">
+    <meta property="og:description" content="Informes descriptivos y visualizaciones listas para publicar sobre conversación ciudadana.">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CASTOR Medios | Análisis Electoral para Prensa">
+    <meta name="twitter:description" content="Informes descriptivos sobre conversación ciudadana en redes sociales.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="{{ url_for('static', filename='css/styles.css') }}" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Defer non-critical scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#0A0E1A">
+</head>
+<body class="landing" data-mode="media" itemscope itemtype="https://schema.org/WebPage">
+    <header class="main-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+            <div class="nav-left">
+                <a class="brand" href="/webpage" aria-label="Ir a inicio de Castor Elecciones">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                         alt="Castor Elecciones - Logo" 
+                         width="54" 
+                         height="54"
+                         loading="eager">
+                    <div>
+                        <strong>Castor Elecciones</strong>
+                        <small>Inteligencia Electoral</small>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-center">
+                <a href="/media" class="active">Para medios</a>
+                <a href="/campaign">Para campañas</a>
+                <a href="/forecast">Forecast</a>
+                <a href="/webpage#pipeline">Arquitectura</a>
+                <a href="/webpage#methodology">Metodología</a>
+                <a href="/webpage#features">Características</a>
+            </div>
+            <div class="nav-right">
+                <a class="ghost-btn" href="/docs">Documentación técnica</a>
+                <button type="button" class="primary-btn" onclick="openDemoModal()">Solicitar demo</button>
+            </div>
+            <!-- Mobile menu button -->
+            <button class="mobile-menu-toggle" 
+                    aria-label="Abrir menú de navegación" 
+                    aria-expanded="false"
+                    aria-controls="mobile-menu"
+                    type="button">
+                <span class="hamburger-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Skip to main content link for accessibility -->
+        <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+        
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero__content">
+                <p class="eyebrow" role="doc-subtitle">CASTOR MEDIOS · INFORMES DESCRIPTIVOS · DATOS VERIFICABLES</p>
+                <h1 id="hero-title">Análisis de conversación ciudadana para cobertura periodística</h1>
+                <p class="lead">
+                    Informes descriptivos y visualizaciones listas para publicar. Presenta hallazgos con datos claros sobre volumen, sentimiento y temas ciudadanos.
+                </p>
+                <p class="hero-microcopy">
+                    CASTOR Medios ofrece análisis neutrales y descriptivos de la conversación pública, diseñados para periodistas, medios de comunicación y observatorios ciudadanos.
+                </p>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="panel" aria-labelledby="analysis-form-title">
+            <div class="section-header">
+                <h2 id="analysis-form-title">Generar análisis de medios</h2>
+                <p class="subtitle">Configura los parámetros para generar un informe descriptivo de la conversación ciudadana.</p>
+            </div>
+            
+            <div class="card" style="max-width: 960px; margin: 0 auto;">
+                <form id="analysis-form">
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="location" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Ubicación *</label>
+                            <input id="location" name="location" type="text" placeholder="Colombia, Bogotá..." required 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="topic" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Tema (opcional)</label>
+                            <input id="topic" name="topic" type="text" placeholder="Seguridad, Salud, Educación..." 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="candidate_name" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Nombre persona (opcional)</label>
+                            <input id="candidate_name" name="candidate_name" type="text" placeholder="Nombre propio" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="politician" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Usuario X/Twitter (opcional)</label>
+                            <input id="politician" name="politician" type="text" placeholder="@usuario" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="max_tweets" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Máx. tweets</label>
+                            <input id="max_tweets" name="max_tweets" type="number" min="5" max="20" value="15" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="time_window_days" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días hacia atrás</label>
+                            <input id="time_window_days" name="time_window_days" type="number" min="1" max="30" value="7" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="align-self: flex-end; display: flex; gap: 0.5rem;">
+                            <button type="button" onclick="testMediaWithMockup()" class="ghost-btn" style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: transparent; color: #374151;">Prueba con un ejemplo</button>
+                            <button type="submit" id="submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Generar análisis</button>
+                        </div>
+                    </div>
+                    <div id="form-error" class="error" style="display:none; color: #b91c1c; font-size: 0.9rem; margin-top: 0.5rem;"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section" class="panel" style="display:none;">
+            <div class="section-header">
+                <h2>Resultados del análisis</h2>
+                <p class="subtitle">Informe descriptivo de la conversación ciudadana analizada.</p>
+            </div>
+            
+            <div class="card" style="max-width: 960px; margin: 0 auto;">
+                <div class="tabs" style="display: flex; border-bottom: 1px solid #e5e7eb; margin-bottom: 1rem; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="tab active" data-tab="summary" style="padding: 0.4rem 0.8rem; border-radius: 9999px; font-size: 0.85rem; cursor: pointer; border: 1px solid transparent; background: #111827; color: #f9fafb;">Resumen</button>
+                    <button class="tab" data-tab="topics" style="padding: 0.4rem 0.8rem; border-radius: 9999px; font-size: 0.85rem; cursor: pointer; border: 1px solid transparent; background: transparent; color: #4b5563;">Temas</button>
+                    <button class="tab" data-tab="charts" style="padding: 0.4rem 0.8rem; border-radius: 9999px; font-size: 0.85rem; cursor: pointer; border: 1px solid transparent; background: transparent; color: #4b5563;">Gráficos</button>
+                    <button class="tab" data-tab="methodology" style="padding: 0.4rem 0.8rem; border-radius: 9999px; font-size: 0.85rem; cursor: pointer; border: 1px solid transparent; background: transparent; color: #4b5563;">Metodología</button>
+                </div>
+
+                <div id="tab-summary" class="tab-content active" style="display: block;">
+                    <h3>Resumen ejecutivo</h3>
+                    <p id="summary-overview" style="line-height: 1.6; margin-bottom: 1.5rem;"></p>
+
+                    <h4>Datos clave</h4>
+                    <ul id="summary-stats" class="stat-list" style="padding-left: 1.1rem; margin-bottom: 1.5rem;">
+                    </ul>
+
+                    <h4>Hallazgos descriptivos</h4>
+                    <ul id="summary-findings" class="bullet-list" style="padding-left: 1.1rem;">
+                    </ul>
+                </div>
+
+                <div id="tab-topics" class="tab-content" style="display: none;">
+                    <h3>Temas principales</h3>
+                    <div id="topics-container"></div>
+                </div>
+
+                <div id="tab-charts" class="tab-content" style="display: none;">
+                    <h3>Visualizaciones</h3>
+                    <canvas id="main-chart" height="140"></canvas>
+                    <p class="muted" style="color: #6b7280; font-size: 0.85rem; margin-top: 1rem;">
+                        Configuración de chart generada desde el backend (Chart.js).
+                    </p>
+                </div>
+
+                <div id="tab-methodology" class="tab-content" style="display: none;">
+                    <h3>Metodología</h3>
+                    <p class="muted" style="color: #6b7280; font-size: 0.9rem; line-height: 1.6;">
+                        Los datos provienen de publicaciones públicas en X (Twitter), filtradas por
+                        ubicación, tema y parámetros configurados en CASTOR ELECCIONES. Se aplica
+                        un modelo de análisis de sentimiento en español y se agrupan los mensajes
+                        por ejes temáticos. Este informe describe la conversación y no mide intención de voto.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Info Section -->
+        <section class="panel">
+            <div class="section-header">
+                <h2>Ideal para periodistas y medios</h2>
+                <p class="subtitle">CASTOR Medios está diseñado específicamente para profesionales de la comunicación.</p>
+            </div>
+            <div class="cards-grid">
+                <article class="product-card">
+                    <div class="product-badge">Periodistas</div>
+                    <h3>Informes listos para publicar</h3>
+                    <p class="product-description">
+                        Resúmenes descriptivos y visualizaciones que puedes usar directamente en tus notas y reportajes.
+                    </p>
+                </article>
+                <article class="product-card">
+                    <div class="product-badge">Medios</div>
+                    <h3>Datos verificables</h3>
+                    <p class="product-description">
+                        Metadatos completos de cada consulta: ubicación, tema, número de tweets analizados y ventana temporal.
+                    </p>
+                </article>
+                <article class="product-card">
+                    <div class="product-badge">Observatorios</div>
+                    <h3>Análisis neutral</h3>
+                    <p class="product-description">
+                        Informes descriptivos sin recomendaciones de acción. Solo datos y hallazgos sobre la conversación pública.
+                    </p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Castor Elecciones</h3>
+                <p>Plataforma de análisis electoral basada en datos y modelos auditables.</p>
+                <p class="muted">© 2026 CASTOR Elecciones. Todos los derechos reservados.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Productos</h4>
+                <ul>
+                    <li><a href="/media">CASTOR Medios</a></li>
+                    <li><a href="/campaign">CASTOR Campañas</a></li>
+                    <li><a href="/docs">Documentación técnica</a></li>
+                    <li><a href="#" onclick="openDemoModal()">Solicitar demo</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Información</h4>
+                <ul>
+                    <li><a href="/webpage#pipeline">Arquitectura</a></li>
+                    <li><a href="/webpage#methodology">Metodología</a></li>
+                    <li><a href="/webpage#features">Características</a></li>
+                    <li><a href="/webpage#origins-title">Orígenes de CASTOR</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal / Políticas</h4>
+                <ul>
+                    <li><a href="#">Uso de datos públicos</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="/contact">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para Solicitar Demo -->
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Solicitar Demo</h2>
+                <button class="modal-close" onclick="closeDemoModal()">&times;</button>
+            </div>
+            <form id="demoForm" class="modal-form">
+                <div class="form-row">
+                    <label>
+                        Nombre *
+                        <input type="text" name="first_name" required placeholder="Juan">
+                    </label>
+                    <label>
+                        Apellido *
+                        <input type="text" name="last_name" required placeholder="Pérez">
+                    </label>
+                </div>
+                <label>
+                    Tipo de candidatura *
+                    <select name="candidacy_type" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="congreso">Congreso</option>
+                        <option value="regionales">Regionales</option>
+                        <option value="presidencia">Presidencia</option>
+                    </select>
+                </label>
+                <label>
+                    Correo electrónico *
+                    <input type="email" name="email" required placeholder="juan.perez@example.com">
+                </label>
+                <label>
+                    Teléfono *
+                    <input type="tel" name="phone" required placeholder="+57 300 123 4567">
+                </label>
+                <div class="form-actions">
+                    <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>
+                    <button type="submit" class="primary-btn">Enviar solicitud</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- API Configuration: Set API_BASE_URL from environment variable -->
+    <script>
+        // Set API base URL from environment variable or use ngrok URL
+        // For Vercel: Set NEXT_PUBLIC_API_BASE_URL in Vercel environment variables
+        // For ngrok: Use https://castorelecciones.ngrok.app
+        // For Flask local development: Uses url_for, falls back to ngrok
+        window.API_BASE_URL = (function() {
+            // Check if Flask url_for is available (local development)
+            {% if url_for %}
+            try {
+                var flaskUrl = '{{ url_for("index", _external=True).rstrip("/") }}';
+                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '') {
+                    return flaskUrl;
+                }
+            } catch(e) {}
+            {% endif %}
+            // Check for Vercel environment variable (injected at build time)
+            if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
+                return process.env.NEXT_PUBLIC_API_BASE_URL;
+            }
+            // Default: ngrok URL for production
+            return 'https://castorelecciones.ngrok.app';
+        })();
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/performance.js" defer></script>
+    <script src="/static/js/landing.js" defer></script>
+</body>
+</html>

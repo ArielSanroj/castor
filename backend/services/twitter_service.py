@@ -6,12 +6,10 @@ import logging
 import tweepy
 from typing import List, Dict, Optional, Any
 from datetime import datetime, timedelta
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../'))
 
 from config import Config
 from utils.cache import get_cache_key, get, set
+from utils.twitter_rate_tracker import can_make_twitter_request, record_twitter_usage
 
 logger = logging.getLogger(__name__)
 
@@ -55,11 +53,28 @@ class TwitterService:
         Returns:
             List of tweet dictionaries
         """
+        # Check rate limit before making request (Twitter Free tier: 100 posts/month)
+        # Adjust max_results to respect daily limit (3 tweets/day)
+        from config import Config
+        daily_limit = Config.TWITTER_DAILY_TWEET_LIMIT
+        adjusted_max = min(max_results, daily_limit)
+        
+        can_proceed, reason = can_make_twitter_request(adjusted_max)
+        if not can_proceed:
+            logger.warning(f"Twitter rate limit check failed: {reason}")
+            return []
+        
+        # Use adjusted max_results for the actual request
+        max_results = adjusted_max
+        
         try:
             # Build query string
-            search_query = f"{query} lang:{lang}"
+            # Note: place: operator requires paid Twitter API plan
+            # Using location as text search instead for Free tier compatibility
+            search_query = f"{query} lang:{lang} -is:retweet"
             if location:
-                search_query += f" -is:retweet place:{location}"
+                # Include location as text in query instead of place: operator
+                search_query = f"{location} {query} lang:{lang} -is:retweet"
             
             # Calculate date range
             start_time = (datetime.utcnow() - timedelta(days=days_back)).isoformat() + 'Z'
@@ -109,6 +124,10 @@ class TwitterService:
                 except Exception as e:
                     logger.error(f"Error searching tweets: {e}")
                     break
+            
+            # Record usage for rate limiting
+            if tweets:
+                record_twitter_usage(len(tweets))
             
             logger.info(f"Retrieved {len(tweets)} tweets for query: {query}")
             return tweets[:max_results]
