@@ -563,40 +563,57 @@ def get_dashboard():
                 "error": "No data available"
             }), 404
         
-        momentum_values = forecast_service.calculate_momentum(icce_values) if len(icce_values) >= 8 else []
+        # Calculate momentum and smoothed values
+        momentum_values = forecast_service.calculate_momentum(icce_values) if len(icce_values) >= 2 else []
+        smoothed_values = forecast_service.calculate_ema_smooth(icce_values) if icce_values else []
         forecast_points = forecast_service.forecast_icce(icce_values, forecast_days) if len(icce_values) >= 7 else []
         
-        # Build responses
-        icce_response = ICCEResponse(
-            success=True,
-            candidate_name=candidate_name,
-            location=location,
-            current_icce=icce_values[-1].value if icce_values else 0.0,
-            historical_values=icce_values,
-            metadata={"days_back": days_back}
-        )
+        # Build JSON response matching exact structure from example
+        # Structure: { candidate, series: { dates, icce, icce_smooth, momentum }, forecast: { dates, icce_pred, pred_low, pred_high } }
         
-        momentum_response = MomentumResponse(
-            success=True,
-            candidate_name=candidate_name,
-            location=location,
-            current_momentum=momentum_values[-1].momentum if momentum_values else 0.0,
-            historical_momentum=momentum_values,
-            trend=momentum_values[-1].trend if momentum_values else "stable",
-            metadata={"days_back": days_back}
-        )
+        # Prepare series data (convert ICCE from 0-100 scale to 0-1 scale to match example)
+        series_dates = [v.date.strftime("%Y-%m-%d") for v in icce_values]
+        icce_raw = [v.value / 100.0 for v in icce_values]  # Convert to [0,1] scale
+        icce_smooth = smoothed_values if smoothed_values else icce_raw
+        # Momentum series - pad with None/0 for first day (momentum starts from day 2)
+        momentum_series = [0.0] + [m.momentum for m in momentum_values] if momentum_values else []
+        # Ensure all arrays have same length
+        if len(momentum_series) < len(icce_raw):
+            momentum_series.extend([0.0] * (len(icce_raw) - len(momentum_series)))
         
-        forecast_response = ForecastResponse(
-            success=True,
-            candidate_name=candidate_name,
-            location=location,
-            forecast_points=forecast_points,
-            model_type="holt_winters",
-            metadata={"forecast_days": forecast_days}
-        )
+        # Prepare forecast data
+        forecast_dates = [p.date.strftime("%Y-%m-%d") for p in forecast_points]
+        icce_pred = [p.projected_value / 100.0 for p in forecast_points]  # Convert to [0,1] scale
+        pred_low = [p.lower_bound / 100.0 for p in forecast_points]
+        pred_high = [p.upper_bound / 100.0 for p in forecast_points]
         
-        # Get narrative metrics if candidate_name provided
-        narrative_metrics_data = None
+        # Build response matching example structure
+        response_data = {
+            "success": True,
+            "candidate": politician or candidate_name or "unknown",
+            "candidate_name": candidate_name,
+            "location": location,
+            "series": {
+                "dates": series_dates,
+                "icce": icce_raw,
+                "icce_smooth": icce_smooth,
+                "momentum": momentum_series[:len(icce_raw)]  # Ensure same length
+            },
+            "forecast": {
+                "dates": forecast_dates,
+                "icce_pred": icce_pred,
+                "pred_low": pred_low,
+                "pred_high": pred_high
+            },
+            "metadata": {
+                "calculated_at": datetime.utcnow().isoformat(),
+                "days_back": days_back,
+                "forecast_days": forecast_days,
+                "model_type": "holt_winters"
+            }
+        }
+        
+        # Also include narrative metrics if available
         if candidate_name:
             try:
                 from app.services.analysis_core import AnalysisCorePipeline
@@ -612,27 +629,11 @@ def get_dashboard():
                         language="es"
                     )
                     if core_result.narrative_metrics:
-                        narrative_metrics_data = core_result.narrative_metrics
+                        response_data["metadata"]["narrative_metrics"] = core_result.narrative_metrics
             except Exception as e:
                 logger.warning(f"Could not get narrative metrics for dashboard: {e}")
         
-        metadata = {
-            "calculated_at": datetime.utcnow().isoformat()
-        }
-        if narrative_metrics_data:
-            metadata["narrative_metrics"] = narrative_metrics_data
-        
-        dashboard = ForecastDashboardResponse(
-            success=True,
-            candidate_name=candidate_name,
-            location=location,
-            icce=icce_response,
-            momentum=momentum_response,
-            forecast=forecast_response,
-            metadata=metadata
-        )
-        
-        return jsonify(dashboard.model_dump()), 200
+        return jsonify(response_data), 200
         
     except Exception as e:
         logger.error(f"Error generating dashboard: {e}", exc_info=True)

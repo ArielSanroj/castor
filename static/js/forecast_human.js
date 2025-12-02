@@ -32,69 +32,156 @@ function translateIVNToHumanLanguage(ivnScore, interpretation, riskLevel) {
 }
 
 /**
- * Traduce el momentum a lenguaje humano
+ * Traduce momentum a "Tendencia Semanal" con interpretación estratégica
  */
-function translateMomentumToHumanLanguage(momentum, trend, candidateName) {
-    const absMomentum = Math.abs(momentum);
+function translateWeeklyTrend(momentum, trend, candidateName, momentumHistory = []) {
+    let direction = "";
+    let change = "";
+    let explanation = "";
     
-    if (trend === "up") {
-        if (absMomentum > 2) {
-            return `${candidateName || "El candidato"} está ganando terreno significativamente en los últimos días. La narrativa está subiendo.`;
+    // Analizar patrón histórico si está disponible
+    const hasRecentDrop = momentumHistory.length >= 3 && 
+        momentumHistory.slice(-3).some(m => m < -0.01);
+    const hasRecentRecovery = momentumHistory.length >= 2 && 
+        momentumHistory[momentumHistory.length - 1] > 0.01 &&
+        momentumHistory[momentumHistory.length - 2] < -0.01;
+    
+    if (trend === "up" || momentum > 0.01) {
+        direction = "subiendo";
+        if (hasRecentRecovery) {
+            change = "recuperación tras caída";
+            explanation = `${candidateName || "El candidato"} está recuperando terreno tras una caída reciente. La narrativa muestra signos de recuperación.`;
         } else {
-            return `${candidateName || "El candidato"} está recuperando terreno gradualmente. La narrativa muestra una tendencia positiva.`;
+            change = "crecimiento sostenido";
+            explanation = `${candidateName || "El candidato"} está ganando terreno de forma sostenida. La narrativa está en tendencia positiva.`;
         }
-    } else if (trend === "down") {
-        if (absMomentum > 2) {
-            return `${candidateName || "El candidato"} está perdiendo terreno significativamente. La narrativa está cayendo y requiere atención.`;
+    } else if (trend === "down" || momentum < -0.01) {
+        direction = "bajando fuerte";
+        change = "pérdida de terreno";
+        if (hasRecentDrop) {
+            explanation = `${candidateName || "El candidato"} está perdiendo terreno significativamente. La narrativa está cayendo y requiere atención inmediata.`;
         } else {
-            return `${candidateName || "El candidato"} muestra una ligera pérdida de terreno. La narrativa está en declive moderado.`;
+            explanation = `${candidateName || "El candidato"} muestra una pérdida de terreno. La narrativa está en declive.`;
         }
     } else {
-        return `${candidateName || "El candidato"} se ha mantenido estable esta semana. La narrativa no muestra cambios significativos.`;
+        direction = "estable";
+        if (hasRecentDrop) {
+            change = "estabilidad tras caída";
+            explanation = `${candidateName || "El candidato"} se ha estabilizado tras una caída a mitad de semana. La narrativa requiere monitoreo constante.`;
+        } else {
+            change = "sin cambios relevantes";
+            explanation = `${candidateName || "El candidato"} se ha mantenido estable esta semana. La narrativa no muestra cambios significativos.`;
+        }
     }
+    
+    return {
+        direction: direction,
+        change: change,
+        explanation: explanation
+    };
+}
+
+/**
+ * Traduce el momentum a lenguaje humano (compatibilidad)
+ */
+function translateMomentumToHumanLanguage(momentum, trend, candidateName) {
+    const trendData = translateWeeklyTrend(momentum, trend, candidateName);
+    return trendData.explanation;
+}
+
+/**
+ * Traduce ICCE a "Fuerza Narrativa" con interpretación estratégica
+ */
+function translateNarrativeStrength(icce, candidateName, location) {
+    let score = Math.round(icce);
+    let label = "";
+    let interpretation = "";
+    
+    if (icce >= 70) {
+        label = "dominante";
+        interpretation = `${candidateName || "El candidato"} tiene una narrativa fuerte y dominante. La conversación es mayoritariamente positiva, con crecimiento sostenido y proyección favorable.`;
+    } else if (icce >= 50) {
+        label = "competitiva";
+        interpretation = `${candidateName || "El candidato"} tiene una narrativa competitiva. La conversación está mezclada pero con potencial de crecimiento.`;
+    } else if (icce >= 30) {
+        label = "débil";
+        interpretation = `${candidateName || "El candidato"} tiene una narrativa débil. La conversación está marcada por críticas y requiere atención estratégica.`;
+    } else {
+        label = "crisis severa";
+        interpretation = `${candidateName || "El candidato"} está en crisis narrativa severa. La conversación está casi completamente dominada por críticas y alarma pública.`;
+    }
+    
+    return {
+        score: score,
+        label: label,
+        interpretation: interpretation
+    };
 }
 
 /**
  * Traduce el estado actual (ICCE) a lenguaje humano
  */
 function translateCurrentStatusToHumanLanguage(icce, sentimentOverview, location, topic) {
-    let statusText = "";
-    
-    if (icce >= 70) {
-        statusText = `La conversación sobre ${topic || "el tema"} en ${location} está muy activa y positiva. El candidato tiene una presencia narrativa fuerte.`;
-    } else if (icce >= 50) {
-        if (sentimentOverview && sentimentOverview.negative > 0.4) {
-            statusText = `La conversación sobre ${topic || "el tema"} en ${location} está activa pero con tono negativo. La narrativa requiere atención estratégica.`;
-        } else {
-            statusText = `La conversación sobre ${topic || "el tema"} en ${location} está moderadamente activa. La narrativa está en territorio competitivo.`;
-        }
-    } else {
-        statusText = `La conversación sobre ${topic || "el tema"} en ${location} está baja o con predominio negativo. La narrativa está débil.`;
-    }
-    
-    return statusText;
+    const narrativeStrength = translateNarrativeStrength(icce, null, location);
+    return narrativeStrength.interpretation;
 }
 
 /**
- * Traduce la proyección a lenguaje humano
+ * Traduce forecast a "Pronóstico de Conversación" con interpretación estratégica
  */
-function translateProjectionToHumanLanguage(forecastPoints, currentICCE, candidateName) {
+function translateConversationForecast(forecastPoints, currentICCE, candidateName) {
     if (!forecastPoints || forecastPoints.length === 0) {
-        return "No hay proyección disponible en este momento.";
+        return {
+            outlook: "no disponible",
+            trend_next_days: "sin datos",
+            explanation: "No hay proyección disponible en este momento."
+        };
     }
     
     const firstProjection = forecastPoints[0];
     const lastProjection = forecastPoints[forecastPoints.length - 1];
     const change = lastProjection.projected_value - currentICCE;
-    const percentChange = ((change / currentICCE) * 100).toFixed(1);
+    const avgProjection = forecastPoints.reduce((sum, p) => sum + p.projected_value, 0) / forecastPoints.length;
     
-    if (change > 3) {
-        return `Se proyecta un aumento del ${Math.abs(percentChange)}% en la conversación positiva sobre ${candidateName || "el candidato"} en los próximos ${forecastPoints.length} días. La narrativa está en tendencia alcista.`;
-    } else if (change < -3) {
-        return `Se proyecta una disminución del ${Math.abs(percentChange)}% en la conversación sobre ${candidateName || "el candidato"} en los próximos ${forecastPoints.length} días. La narrativa está en riesgo de deterioro.`;
+    let outlook = "";
+    let trend_next_days = "";
+    let explanation = "";
+    
+    if (change > 5) {
+        outlook = "crecimiento moderado";
+        trend_next_days = "aumento sostenido";
+        explanation = `La conversación seguirá subiendo y se mantendrá positiva en los próximos ${forecastPoints.length} días. La narrativa está en tendencia alcista.`;
+    } else if (change > 2) {
+        outlook = "recuperación leve";
+        trend_next_days = "mejora gradual";
+        explanation = `Se proyecta una recuperación lenta pero sostenida en los próximos ${forecastPoints.length} días. No se proyecta una crisis inmediata, pero tampoco un crecimiento fuerte.`;
+    } else if (change < -5) {
+        outlook = "caída continua";
+        trend_next_days = "deterioro";
+        explanation = `Se proyecta una caída continua en la conversación. El impacto se sostendrá al menos ${forecastPoints.length} días más. Se requiere acción inmediata.`;
+    } else if (change < -2) {
+        outlook = "riesgo de deterioro";
+        trend_next_days = "disminución";
+        explanation = `Se proyecta una disminución en la conversación sobre ${candidateName || "el candidato"} en los próximos ${forecastPoints.length} días. La narrativa está en riesgo de deterioro.`;
     } else {
-        return `Se proyecta que la conversación sobre ${candidateName || "el candidato"} se mantendrá estable en los próximos ${forecastPoints.length} días, con variaciones menores.`;
+        outlook = "estable";
+        trend_next_days = "sin cambios significativos";
+        explanation = `La conversación se mantendrá estable en los próximos ${forecastPoints.length} días, con variaciones menores. Se espera una recuperación gradual si se mantienen mensajes claros.`;
     }
+    
+    return {
+        outlook: outlook,
+        trend_next_days: trend_next_days,
+        explanation: explanation
+    };
+}
+
+/**
+ * Traduce la proyección a lenguaje humano (compatibilidad)
+ */
+function translateProjectionToHumanLanguage(forecastPoints, currentICCE, candidateName) {
+    const forecastData = translateConversationForecast(forecastPoints, currentICCE, candidateName);
+    return forecastData.explanation;
 }
 
 /**

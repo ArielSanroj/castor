@@ -49,7 +49,7 @@
     <header class="main-header" role="banner">
         <nav class="main-nav" role="navigation" aria-label="Navegación principal">
             <div class="nav-left">
-                <a class="brand" href="/webpage" aria-label="Ir a inicio de Castor Elecciones">
+                <a class="brand" href="/" aria-label="Ir a inicio de Castor Elecciones">
                     <img src="/static/images/logo.png" 
                          alt="Castor Elecciones - Logo" 
                          width="54" 
@@ -66,6 +66,7 @@
                 <a href="/campaign">Para campañas</a>
                 <a href="/forecast" class="active">Forecast</a>
                 <a href="/webpage#pipeline">Arquitectura & Metodología</a>
+                <a href="/webpage#origins">Orígenes CASTOR</a>
             </div>
             <!-- Mobile menu button -->
             <button class="mobile-menu-toggle" 
@@ -94,6 +95,62 @@
                     <strong>Para medios:</strong> Muestra cómo evoluciona el clima electoral y qué temas están por volverse noticia.<br>
                     <strong>Para campañas:</strong> Te dice si estás ganando o perdiendo la narrativa esta semana, por qué, y qué viene.
                 </p>
+            </div>
+        </section>
+
+         <!-- Forecast Dashboard Section -->
+         <section class="panel" aria-labelledby="forecast-dashboard-title">
+            <div class="section-header">
+                <h2 id="forecast-dashboard-title">¿Cómo está la conversación electoral?</h2>
+                <p class="subtitle">Descubre quién está ganando terreno, quién lo está perdiendo y qué temas dominarán la agenda.</p>
+            </div>
+            
+            <div class="card" style="max-width: 1200px; margin: 0 auto;">
+                <form id="forecast-form">
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-location" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Ubicación *</label>
+                            <input id="forecast-location" name="location" type="text" placeholder="Colombia, Bogotá..." required 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-topic" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Tema (opcional)</label>
+                            <input id="forecast-topic" name="topic" type="text" placeholder="Seguridad, Salud, Educación..." 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-candidate" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Nombre candidato (opcional)</label>
+                            <input id="forecast-candidate" name="candidate_name" type="text" placeholder="Nombre propio" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-politician" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Usuario X/Twitter (opcional)</label>
+                            <input id="forecast-politician" name="politician" type="text" placeholder="@usuario" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-days-back" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días hacia atrás</label>
+                            <input id="forecast-days-back" name="days_back" type="number" min="7" max="90" value="30" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="forecast-days-ahead" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días a proyectar</label>
+                            <input id="forecast-days-ahead" name="forecast_days" type="number" min="7" max="30" value="14" 
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
+                        </div>
+                        <div class="form-field" style="align-self: flex-end; display: flex; gap: 0.5rem;">
+                            <button type="button" onclick="testForecastWithMockup()" class="ghost-btn" style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: transparent; color: #374151;">Prueba con un ejemplo</button>
+                            <button type="submit" id="forecast-submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Generar Forecast</button>
+                        </div>
+                    </div>
+                    <div id="forecast-error" class="error" style="display:none; color: #b91c1c; font-size: 0.9rem; margin-top: 0.5rem;"></div>
+                </form>
             </div>
         </section>
 
@@ -249,46 +306,8 @@
             </div>
         </section>
 
-        <!-- Forecast Dashboard Section -->
-        <section class="panel" aria-labelledby="forecast-dashboard-title">
-            <div class="section-header">
-                <h2 id="forecast-dashboard-title">¿Cómo está la conversación electoral?</h2>
-                <p class="subtitle">Descubre quién está ganando terreno, quién lo está perdiendo y qué temas dominarán la agenda.</p>
-            </div>
-            
-            <div class="card" style="max-width: 1200px; margin: 0 auto;">
-                <form id="forecast-form">
-                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
-                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
-                            <label for="forecast-location" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Ubicación *</label>
-                            <input id="forecast-location" name="location" type="text" placeholder="Bogotá, Colombia..." required 
-                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
-                        </div>
-                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
-                            <label for="forecast-candidate" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Candidato (opcional)</label>
-                            <input id="forecast-candidate" name="candidate_name" type="text" placeholder="Juan Pérez" 
-                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
-                        </div>
-                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
-                            <label for="forecast-days-back" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días hacia atrás</label>
-                            <input id="forecast-days-back" name="days_back" type="number" min="7" max="90" value="30" 
-                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
-                        </div>
-                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
-                            <label for="forecast-days-ahead" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días a proyectar</label>
-                            <input id="forecast-days-ahead" name="forecast_days" type="number" min="7" max="30" value="14" 
-                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;" />
-                        </div>
-                    </div>
-                    <div class="form-field" style="align-self: flex-end; display: flex; gap: 0.5rem;">
-                        <button type="button" onclick="testForecastWithMockup()" class="ghost-btn" style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: transparent; color: #374151;">Prueba con un ejemplo</button>
-                        <button type="submit" id="forecast-submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Generar Forecast</button>
-                    </div>
-                    <div id="forecast-error" class="error" style="display:none; color: #b91c1c; font-size: 0.9rem; margin-top: 0.5rem;"></div>
-                </form>
-            </div>
 
-            <!-- Results Section -->
+        <!-- Results Section -->
             <div id="forecast-results" style="display: none; margin-top: 3rem;">
                 <div class="card" style="max-width: 1200px; margin: 0 auto;">
                     
@@ -326,6 +345,12 @@
                                 <p id="position-risk" style="color: var(--muted); font-size: 0.9rem;">-</p>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Strategic Recommendation Card -->
+                    <div id="strategic-recommendation-card" style="padding: 2rem; background: linear-gradient(135deg, rgba(66, 214, 151, 0.1), rgba(66, 214, 151, 0.05)); border-radius: 12px; margin-bottom: 2rem; border-left: 4px solid var(--success); display: none;">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--text);">🎯 Recomendación Estratégica</h3>
+                        <p id="strategic-recommendation" style="font-size: 1.1rem; line-height: 1.8; color: var(--text);">-</p>
                     </div>
 
                     <!-- Tabs for Detailed Views -->
@@ -488,20 +513,25 @@
         // For ngrok: Use https://castorelecciones.ngrok.app
         // For Flask local development: Uses url_for, falls back to ngrok
         window.API_BASE_URL = (function() {
-            // Check if Flask url_for is available (local development)
-            {% if url_for %}
-            try {
-                var flaskUrl = '{{ url_for("index", _external=True).rstrip("/") }}';
-                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '') {
-                    return flaskUrl;
-                }
-            } catch(e) {}
-            {% endif %}
             // Check for Vercel environment variable (injected at build time)
             if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
                 return process.env.NEXT_PUBLIC_API_BASE_URL;
             }
-            // Default: ngrok URL for production
+            // Try to use Flask url_for if available (local development)
+            {% if url_for %}
+            try {
+                var flaskUrl = '{{ url_for("web.index", _external=True).rstrip("/") }}';
+                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '' && !flaskUrl.includes('error') && !flaskUrl.includes('Could not build')) {
+                    return flaskUrl;
+                }
+            } catch(e) {
+                // Fall through to default
+            }
+            {% endif %}
+            // Default: ngrok URL for production or use current origin
+            if (typeof window !== 'undefined' && window.location) {
+                return window.location.origin;
+            }
             return 'https://castorelecciones.ngrok.app';
         })();
     </script>

@@ -49,7 +49,7 @@
     <header class="main-header" role="banner">
         <nav class="main-nav" role="navigation" aria-label="Navegación principal">
             <div class="nav-left">
-                <a class="brand" href="/webpage" aria-label="Ir a inicio de Castor Elecciones">
+                <a class="brand" href="/" aria-label="Ir a inicio de Castor Elecciones">
                     <img src="/static/images/logo.png" 
                          alt="Castor Elecciones - Logo" 
                          width="54" 
@@ -66,7 +66,7 @@
                 <a href="/campaign" class="active">Para campañas</a>
                 <a href="/forecast">Forecast</a>
                 <a href="/webpage#pipeline">Arquitectura & Metodología</a>
-                <a href="/webpage#features">Origen</a>
+                <a href="/webpage#origins">Orígenes CASTOR</a>
             </div>
             <!-- Mobile menu button -->
             <button class="mobile-menu-toggle" 
@@ -356,7 +356,7 @@
             // Check if Flask url_for is available (local development)
             {% if url_for %}
             try {
-                var flaskUrl = '{{ url_for("index", _external=True).rstrip("/") }}';
+                var flaskUrl = '{{ url_for("web.index", _external=True).rstrip("/") }}';
                 if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '') {
                     return flaskUrl;
                 }

@@ -90,3 +90,4 @@ tracker._save_usage(new_data)
 
 **Última actualización:** 30 de Noviembre, 2025
 
+

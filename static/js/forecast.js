@@ -23,7 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData(form);
         const payload = {
             location: formData.get("location"),
+            topic: formData.get("topic") || null,
             candidate_name: formData.get("candidate_name") || null,
+            politician: formData.get("politician") || null,
             days_back: parseInt(formData.get("days_back") || 30),
             forecast_days: parseInt(formData.get("forecast_days") || 14)
         };
@@ -91,18 +93,86 @@ function setupForecastTabs() {
 }
 
 function renderForecastDashboard(data) {
+    // Handle new API structure (series/forecast) or old structure (icce/momentum/forecast)
+    let seriesData, forecastData, icceData, momentumData;
+    
+    if (data.series && data.forecast) {
+        // New structure from API
+        seriesData = data.series;
+        forecastData = data.forecast;
+        
+        // Convert to old structure for compatibility
+        icceData = {
+            success: true,
+            candidate_name: data.candidate_name || data.candidate,
+            location: data.location,
+            current_icce: (seriesData.icce[seriesData.icce.length - 1] || 0) * 100, // Convert to 0-100
+            historical_values: seriesData.dates.map((date, i) => ({
+                date: new Date(date),
+                value: seriesData.icce[i] * 100, // Convert to 0-100
+                volume: 0,
+                sentiment_score: 0,
+                conversation_share: 0
+            })),
+            metadata: data.metadata || {}
+        };
+        
+        momentumData = {
+            success: true,
+            candidate_name: data.candidate_name || data.candidate,
+            location: data.location,
+            current_momentum: seriesData.momentum[seriesData.momentum.length - 1] || 0,
+            historical_momentum: seriesData.dates.slice(1).map((date, i) => ({
+                date: new Date(date),
+                momentum: seriesData.momentum[i + 1] || 0,
+                change: seriesData.momentum[i + 1] || 0,
+                trend: (seriesData.momentum[i + 1] || 0) > 0.01 ? "up" : 
+                       (seriesData.momentum[i + 1] || 0) < -0.01 ? "down" : "stable"
+            })),
+            trend: (seriesData.momentum[seriesData.momentum.length - 1] || 0) > 0.01 ? "up" : 
+                   (seriesData.momentum[seriesData.momentum.length - 1] || 0) < -0.01 ? "down" : "stable",
+            metadata: data.metadata || {}
+        };
+        
+        // Convert forecast data
+        const forecastPoints = forecastData.dates.map((date, i) => ({
+            date: new Date(date),
+            projected_value: forecastData.icce_pred[i] * 100, // Convert to 0-100
+            lower_bound: forecastData.pred_low[i] * 100,
+            upper_bound: forecastData.pred_high[i] * 100,
+            confidence: 0.95
+        }));
+        
+        data.forecast = {
+            success: true,
+            candidate_name: data.candidate_name || data.candidate,
+            location: data.location,
+            forecast_points: forecastPoints,
+            model_type: data.metadata?.model_type || "holt_winters",
+            metadata: data.metadata || {}
+        };
+        
+        // Store smoothed values for chart rendering
+        data.icce_smooth = seriesData.icce_smooth;
+    } else {
+        // Old structure (backward compatibility)
+        icceData = data.icce;
+        momentumData = data.momentum;
+        forecastData = data.forecast;
+    }
+    
     // Render human-readable summaries first
     renderHumanReadableSummaries(data);
     
     // Render detailed charts
-    if (data.icce) {
-        renderICCE(data.icce);
+    if (icceData) {
+        renderICCE(icceData, data.icce_smooth);
     }
-    if (data.momentum) {
-        renderMomentum(data.momentum);
+    if (momentumData) {
+        renderMomentum(momentumData);
     }
     if (data.forecast) {
-        renderForecast(data.forecast, data.icce);
+        renderForecast(data.forecast, icceData, data.icce_smooth);
     }
     
     // Render opportunities and risks
@@ -115,7 +185,7 @@ function renderForecastDashboard(data) {
     }
 }
 
-function renderICCE(icceData) {
+function renderICCE(icceData, smoothedValues = null) {
     const currentEl = document.getElementById("icce-value");
     if (currentEl) {
         currentEl.textContent = icceData.current_icce.toFixed(1);
@@ -129,23 +199,43 @@ function renderICCE(icceData) {
     }
 
     const labels = icceData.historical_values.map(v => {
-        const date = new Date(v.date);
+        const date = v.date instanceof Date ? v.date : new Date(v.date);
         return date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' });
     });
     const values = icceData.historical_values.map(v => v.value);
+    
+    // Convert smoothed values to 0-100 scale if provided
+    const smoothed = smoothedValues ? smoothedValues.map(v => v * 100) : null;
+
+    const datasets = [{
+        label: "ICCE Raw",
+        data: values,
+        borderColor: "rgb(255, 106, 61)",
+        backgroundColor: "rgba(255, 106, 61, 0.1)",
+        tension: 0.4,
+        fill: false,
+        borderDash: [5, 5],
+        pointRadius: 3
+    }];
+    
+    // Add smoothed line if available
+    if (smoothed && smoothed.length === values.length) {
+        datasets.push({
+            label: "ICCE Suavizado (EMA)",
+            data: smoothed,
+            borderColor: "rgb(66, 214, 151)",
+            backgroundColor: "rgba(66, 214, 151, 0.1)",
+            tension: 0.4,
+            fill: false,
+            pointRadius: 4
+        });
+    }
 
     forecastCharts.icce = new Chart(ctx, {
         type: "line",
         data: {
             labels: labels,
-            datasets: [{
-                label: "ICCE",
-                data: values,
-                borderColor: "rgb(255, 106, 61)",
-                backgroundColor: "rgba(255, 106, 61, 0.1)",
-                tension: 0.4,
-                fill: true
-            }]
+            datasets: datasets
         },
         options: {
             responsive: true,
@@ -156,7 +246,7 @@ function renderICCE(icceData) {
                 },
                 title: {
                     display: true,
-                    text: "Evolución del ICCE"
+                    text: "Evolución del ICCE (Raw y Suavizado)"
                 }
             },
             scales: {
@@ -243,7 +333,7 @@ function renderMomentum(momentumData) {
     });
 }
 
-function renderForecast(forecastData, icceData) {
+function renderForecast(forecastData, icceData, smoothedValues = null) {
     const ctx = document.getElementById("forecast-chart");
     if (!ctx) return;
 
@@ -251,15 +341,18 @@ function renderForecast(forecastData, icceData) {
         forecastCharts.forecast.destroy();
     }
 
-    // Combine historical and forecast data
+    // Use smoothed values if available, otherwise raw
+    const historicalValues = smoothedValues ? 
+        smoothedValues.map(v => v * 100) : 
+        icceData.historical_values.map(v => v.value);
+
     const historicalLabels = icceData.historical_values.map(v => {
-        const date = new Date(v.date);
+        const date = v.date instanceof Date ? v.date : new Date(v.date);
         return date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' });
     });
-    const historicalValues = icceData.historical_values.map(v => v.value);
 
     const forecastLabels = forecastData.forecast_points.map(p => {
-        const date = new Date(p.date);
+        const date = p.date instanceof Date ? p.date : new Date(p.date);
         return date.toLocaleDateString('es-ES', { month: 'short', day: 'numeric' });
     });
     const forecastValues = forecastData.forecast_points.map(p => p.projected_value);
@@ -278,7 +371,7 @@ function renderForecast(forecastData, icceData) {
             labels: allLabels,
             datasets: [
                 {
-                    label: "ICCE Histórico",
+                    label: smoothedValues ? "ICCE Suavizado (Histórico)" : "ICCE Histórico",
                     data: historicalData,
                     borderColor: "rgb(255, 106, 61)",
                     backgroundColor: "rgba(255, 106, 61, 0.1)",
@@ -322,7 +415,7 @@ function renderForecast(forecastData, icceData) {
                 },
                 title: {
                     display: true,
-                    text: "Proyección de ICCE"
+                    text: "Proyección de ICCE (7-14 días)"
                 }
             },
             scales: {
@@ -401,71 +494,132 @@ function renderNarrativeMetrics(metrics) {
 // Human-readable rendering functions
 function renderHumanReadableSummaries(data) {
     console.log("renderHumanReadableSummaries called with data:", data);
-    const candidateName = data.candidate_name || "El candidato";
+    const candidateName = data.candidate_name || data.candidate || "El candidato";
     const location = data.location || "";
     const metrics = data.metadata?.narrative_metrics;
     
-    console.log("Candidate:", candidateName, "Location:", location, "Metrics:", metrics);
+    // Extract ICCE and momentum values (handle both old and new structure)
+    let currentICCE, currentMomentum, momentumTrend, forecastPoints;
     
-    // Estado Actual
+    if (data.series) {
+        // New structure
+        const lastICCE = data.series.icce[data.series.icce.length - 1] || 0;
+        currentICCE = lastICCE * 100; // Convert to 0-100 scale
+        currentMomentum = data.series.momentum[data.series.momentum.length - 1] || 0;
+        momentumTrend = currentMomentum > 0.01 ? "up" : currentMomentum < -0.01 ? "down" : "stable";
+        forecastPoints = data.forecast ? data.forecast.icce_pred.map((val, i) => ({
+            date: new Date(data.forecast.dates[i]),
+            projected_value: val * 100
+        })) : [];
+    } else {
+        // Old structure
+        currentICCE = data.icce?.current_icce || 0;
+        currentMomentum = data.momentum?.current_momentum || 0;
+        momentumTrend = data.momentum?.trend || "stable";
+        forecastPoints = data.forecast?.forecast_points || [];
+    }
+    
+    // Fuerza Narrativa (Estado Actual) - Usar traducción estratégica
     const currentStatusEl = document.getElementById("current-status-text");
-    console.log("current-status-text element:", currentStatusEl);
-    if (currentStatusEl && data.icce) {
+    if (currentStatusEl) {
         try {
-            const statusText = translateCurrentStatusToHumanLanguage(
-                data.icce.current_icce,
-                data.icce.sentiment_overview || null,
-                location,
-                data.topic || "el tema"
-            );
-            console.log("Status text:", statusText);
-            currentStatusEl.textContent = statusText;
+            if (typeof translateNarrativeStrength === 'function') {
+                const narrativeStrength = translateNarrativeStrength(currentICCE, candidateName, location);
+                // Actualizar también el título de la tarjeta si existe
+                const cardTitle = document.querySelector("#current-status-card h3, #current-status-card p:first-child");
+                if (cardTitle && cardTitle.textContent.includes("ESTADO ACTUAL")) {
+                    cardTitle.innerHTML = `🔵 FUERZA NARRATIVA — ${narrativeStrength.score} puntos (${narrativeStrength.label})`;
+                }
+                currentStatusEl.textContent = narrativeStrength.interpretation;
+            } else if (typeof translateCurrentStatusToHumanLanguage === 'function') {
+                const statusText = translateCurrentStatusToHumanLanguage(
+                    currentICCE,
+                    null,
+                    location,
+                    "el tema"
+                );
+                currentStatusEl.textContent = statusText;
+            } else {
+                currentStatusEl.textContent = `Fuerza narrativa: ${currentICCE.toFixed(0)} puntos. La conversación sobre ${candidateName} en ${location} muestra una narrativa ${currentICCE >= 70 ? "dominante" : currentICCE >= 50 ? "competitiva" : currentICCE >= 30 ? "débil" : "en crisis"}.`;
+            }
         } catch (error) {
-            console.error("Error translating current status:", error);
-            currentStatusEl.textContent = `ICCE actual: ${data.icce.current_icce.toFixed(1)}`;
+            console.error("Error translating narrative strength:", error);
+            currentStatusEl.textContent = `Fuerza narrativa: ${currentICCE.toFixed(0)} puntos`;
         }
-    } else {
-        console.warn("currentStatusEl not found or data.icce missing");
     }
     
-    // Momentum
+    // Tendencia Semanal (Momentum) - Usar traducción estratégica
     const momentumStatusEl = document.getElementById("momentum-status-text");
-    console.log("momentum-status-text element:", momentumStatusEl);
-    if (momentumStatusEl && data.momentum) {
+    if (momentumStatusEl) {
         try {
-            const momentumText = translateMomentumToHumanLanguage(
-                data.momentum.current_momentum,
-                data.momentum.trend,
-                candidateName
-            );
-            console.log("Momentum text:", momentumText);
-            momentumStatusEl.textContent = momentumText;
+            const momentumHistory = data.series?.momentum || [];
+            if (typeof translateWeeklyTrend === 'function') {
+                const trendData = translateWeeklyTrend(currentMomentum, momentumTrend, candidateName, momentumHistory);
+                // Actualizar título de tarjeta
+                const cardTitle = document.querySelector("#momentum-status-card h3, #momentum-status-card p:first-child");
+                if (cardTitle && cardTitle.textContent.includes("MOMENTUM")) {
+                    cardTitle.innerHTML = `🟠 TENDENCIA SEMANAL — ${trendData.direction}`;
+                }
+                momentumStatusEl.textContent = trendData.explanation;
+            } else if (typeof translateMomentumToHumanLanguage === 'function') {
+                const momentumText = translateMomentumToHumanLanguage(
+                    currentMomentum,
+                    momentumTrend,
+                    candidateName
+                );
+                momentumStatusEl.textContent = momentumText;
+            } else {
+                const momentumDesc = currentMomentum > 0.01 ? "ganando terreno" : 
+                                    currentMomentum < -0.01 ? "perdiendo terreno" : "estable";
+                momentumStatusEl.textContent = `Tendencia: ${momentumDesc}. ${candidateName} está ${momentumDesc} en la conversación.`;
+            }
         } catch (error) {
-            console.error("Error translating momentum:", error);
-            momentumStatusEl.textContent = `Momentum: ${data.momentum.current_momentum > 0 ? '+' : ''}${data.momentum.current_momentum.toFixed(2)}`;
+            console.error("Error translating weekly trend:", error);
+            momentumStatusEl.textContent = `Tendencia: ${momentumTrend}`;
         }
-    } else {
-        console.warn("momentumStatusEl not found or data.momentum missing");
     }
     
-    // Proyección
+    // Pronóstico de Conversación (Forecast) - Usar traducción estratégica
     const projectionStatusEl = document.getElementById("projection-status-text");
-    console.log("projection-status-text element:", projectionStatusEl);
-    if (projectionStatusEl && data.forecast && data.icce) {
+    if (projectionStatusEl && forecastPoints.length > 0) {
         try {
-            const projectionText = translateProjectionToHumanLanguage(
-                data.forecast.forecast_points,
-                data.icce.current_icce,
-                candidateName
-            );
-            console.log("Projection text:", projectionText);
-            projectionStatusEl.textContent = projectionText;
+            if (typeof translateConversationForecast === 'function') {
+                const forecastData = translateConversationForecast(forecastPoints, currentICCE, candidateName);
+                // Actualizar título de tarjeta
+                const cardTitle = document.querySelector("#projection-status-card h3, #projection-status-card p:first-child");
+                if (cardTitle && cardTitle.textContent.includes("PROYECCIÓN")) {
+                    cardTitle.innerHTML = `🟣 PRONÓSTICO A ${forecastPoints.length} DÍAS — ${forecastData.outlook}`;
+                }
+                projectionStatusEl.textContent = forecastData.explanation;
+            } else if (typeof translateProjectionToHumanLanguage === 'function') {
+                const projectionText = translateProjectionToHumanLanguage(
+                    forecastPoints,
+                    currentICCE,
+                    candidateName
+                );
+                projectionStatusEl.textContent = projectionText;
+            } else {
+                const lastProjected = forecastPoints[forecastPoints.length - 1]?.projected_value || currentICCE;
+                const change = lastProjected - currentICCE;
+                const trendDesc = change > 2 ? "creciente" : change < -2 ? "decreciente" : "estable";
+                projectionStatusEl.textContent = `Pronóstico a ${forecastPoints.length} días: tendencia ${trendDesc}. Se proyecta una conversación ${trendDesc}.`;
+            }
         } catch (error) {
-            console.error("Error translating projection:", error);
-            projectionStatusEl.textContent = `Proyección: ${data.forecast.forecast_points.length} días`;
+            console.error("Error translating forecast:", error);
+            projectionStatusEl.textContent = `Pronóstico: ${forecastPoints.length} días`;
         }
-    } else {
-        console.warn("projectionStatusEl not found or data missing");
+    }
+    
+    // Mostrar Recomendación Estratégica si está disponible
+    if (data.metadata?.strategic_recommendation) {
+        const recommendationEl = document.getElementById("strategic-recommendation");
+        const recommendationCard = document.getElementById("strategic-recommendation-card");
+        if (recommendationEl) {
+            recommendationEl.textContent = data.metadata.strategic_recommendation;
+        }
+        if (recommendationCard) {
+            recommendationCard.style.display = "block";
+        }
     }
     
     // Posición Narrativa
@@ -525,7 +679,21 @@ function renderHumanReadableSummaries(data) {
 }
 
 function renderOpportunities(data) {
-    const opportunities = generateOpportunities(data);
+    // Use metadata opportunities if available, otherwise generate
+    let opportunities = [];
+    
+    if (data.metadata?.opportunities && Array.isArray(data.metadata.opportunities)) {
+        // Use provided opportunities from metadata
+        opportunities = data.metadata.opportunities.map(opp => ({
+            title: typeof opp === 'string' ? "Oportunidad" : opp.title || "Oportunidad",
+            description: typeof opp === 'string' ? opp : opp.description || opp,
+            icon: "✅"
+        }));
+    } else {
+        // Generate opportunities using function
+        opportunities = generateOpportunities(data);
+    }
+    
     const container = document.getElementById("opportunities-list");
     
     if (!container) return;
@@ -538,9 +706,9 @@ function renderOpportunities(data) {
     container.innerHTML = opportunities.map(opp => `
         <div style="padding: 1.5rem; background: var(--panel-alt); border-radius: 12px; border-left: 4px solid var(--success);">
             <div style="display: flex; align-items: start; gap: 1rem;">
-                <span style="font-size: 1.5rem;">${opp.icon}</span>
+                <span style="font-size: 1.5rem;">${opp.icon || "✅"}</span>
                 <div style="flex: 1;">
-                    <h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text);">${opp.title}</h4>
+                    ${opp.title ? `<h4 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text);">${opp.title}</h4>` : ''}
                     <p style="color: var(--muted); line-height: 1.6;">${opp.description}</p>
                 </div>
             </div>
@@ -549,7 +717,22 @@ function renderOpportunities(data) {
 }
 
 function renderRisks(data) {
-    const risks = generateRisks(data);
+    // Use metadata risks if available, otherwise generate
+    let risks = [];
+    
+    if (data.metadata?.risks && Array.isArray(data.metadata.risks)) {
+        // Use provided risks from metadata
+        risks = data.metadata.risks.map(risk => ({
+            title: typeof risk === 'string' ? "Riesgo" : risk.title || "Riesgo",
+            description: typeof risk === 'string' ? risk : risk.description || risk,
+            severity: risk.severity || "medio",
+            icon: "⚠️"
+        }));
+    } else {
+        // Generate risks using function
+        risks = generateRisks(data);
+    }
+    
     const container = document.getElementById("risks-list");
     
     if (!container) return;
@@ -572,12 +755,12 @@ function renderRisks(data) {
         return `
             <div style="padding: 1.5rem; background: var(--panel-alt); border-radius: 12px; border-left: 4px solid ${borderColor};">
                 <div style="display: flex; align-items: start; gap: 1rem;">
-                    <span style="font-size: 1.5rem;">${risk.icon}</span>
+                    <span style="font-size: 1.5rem;">${risk.icon || "⚠️"}</span>
                     <div style="flex: 1;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        ${risk.title ? `<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
                             <h4 style="font-size: 1.1rem; font-weight: 600; color: var(--text);">${risk.title}</h4>
-                            <span style="font-size: 0.85rem; padding: 0.25rem 0.5rem; background: ${borderColor}20; color: ${borderColor}; border-radius: 4px; font-weight: 600;">${risk.severity}</span>
-                        </div>
+                            ${risk.severity ? `<span style="font-size: 0.85rem; padding: 0.25rem 0.5rem; background: ${borderColor}20; color: ${borderColor}; border-radius: 4px; font-weight: 600;">${risk.severity}</span>` : ''}
+                        </div>` : ''}
                         <p style="color: var(--muted); line-height: 1.6;">${risk.description}</p>
                     </div>
                 </div>
@@ -592,132 +775,125 @@ function renderDetailedMetrics(metrics, data) {
 }
 
 // ====================
-// MOCKUP DATA FOR TESTING
+// MOCKUP DATA FOR TESTING - Three scenarios: Good, Bad, Crisis
 // ====================
-function generateForecastMockupData() {
+function generateForecastMockupData(scenario = "bad") {
     const now = new Date();
-    const historicalDates = [];
-    const forecastDates = [];
     
-    // Generate historical dates (last 30 days)
-    for (let i = 29; i >= 0; i--) {
+    // Generate dates for last 7 days
+    const historicalDates = [];
+    for (let i = 6; i >= 0; i--) {
         const date = new Date(now);
         date.setDate(date.getDate() - i);
-        historicalDates.push(date.toISOString());
+        historicalDates.push(date.toISOString().split('T')[0]);
     }
     
-    // Generate forecast dates (next 14 days)
-    for (let i = 1; i <= 14; i++) {
+    // Generate forecast dates (next 7 days)
+    const forecastDates = [];
+    for (let i = 1; i <= 7; i++) {
         const date = new Date(now);
         date.setDate(date.getDate() + i);
-        forecastDates.push(date.toISOString());
+        forecastDates.push(date.toISOString().split('T')[0]);
     }
     
-    // Generate historical ICCE values (trending upward)
-    const historicalValues = historicalDates.map((date, i) => {
-        const baseValue = 58 + (i * 0.25) + (Math.random() * 4 - 2);
-        return {
-            date: date,
-            value: Math.max(0, Math.min(100, baseValue)),
-            volume: 40 + Math.floor(Math.random() * 20),
-            sentiment_score: 0.1 + (Math.random() * 0.2),
-            conversation_share: 0.35 + (Math.random() * 0.1)
-        };
-    });
+    let icceRaw, icceSmooth, momentum, iccePred, predLow, predHigh;
+    let candidateName, location, narrativeMetrics, risks, opportunities, strategicRecommendation;
     
-    // Generate historical momentum values
-    const historicalMomentum = historicalDates.slice(7).map((date, i) => {
-        const momentum = 0.5 + (Math.random() * 1.5 - 0.75);
-        return {
-            date: date,
-            momentum: momentum,
-            change: momentum - (i > 0 ? historicalMomentum[i - 1]?.momentum || 0.5 : 0.5),
-            trend: momentum > 1.0 ? "up" : momentum < 0.0 ? "down" : "stable"
+    if (scenario === "good") {
+        // 🟢 BUENO - Narrativa dominante
+        candidateName = "María López";
+        location = "Medellín";
+        icceRaw = [0.65, 0.68, 0.71, 0.74, 0.76, 0.78, 0.79];
+        icceSmooth = [0.65, 0.67, 0.69, 0.71, 0.73, 0.75, 0.77];
+        momentum = [0.0, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02];
+        iccePred = [0.80, 0.81, 0.82, 0.83, 0.84, 0.85, 0.86];
+        predLow = [0.75, 0.76, 0.77, 0.78, 0.79, 0.80, 0.81];
+        predHigh = [0.85, 0.86, 0.87, 0.88, 0.89, 0.90, 0.91];
+        narrativeMetrics = {
+            sve: 0.65,
+            sna: 0.35,
+            cp: 0.72,
+            nmi: 0.45,
+            ivn: { ivn: 0.79, interpretation: "Narrativa dominante", risk_level: "bajo" }
         };
-    });
-    
-    // Generate forecast points
-    const lastICCEValue = historicalValues[historicalValues.length - 1].value;
-    const forecastPoints = forecastDates.map((date, i) => {
-        const projectedValue = lastICCEValue + (i * 0.3) + (Math.random() * 2 - 1);
-        return {
-            date: date,
-            projected_value: Math.max(0, Math.min(100, projectedValue)),
-            lower_bound: Math.max(0, projectedValue - 5 - Math.random() * 3),
-            upper_bound: Math.min(100, projectedValue + 5 + Math.random() * 3),
-            confidence: 0.95 - (i * 0.01)
+        risks = ["Críticas menores a ejecución de propuestas"];
+        opportunities = ["Tema Empleo muy favorable", "Engagement alto con jóvenes"];
+        strategicRecommendation = "Reforzar anuncios programáticos en Empleo y capitalizar el engagement con jóvenes para comunicar educación + trabajo.";
+    } else if (scenario === "crisis") {
+        // 🔴 CRISIS - Narrativa colapsada
+        candidateName = "Ricardo Gómez";
+        location = "Cali";
+        icceRaw = [0.45, 0.35, 0.25, 0.20, 0.18, 0.19, 0.18];
+        icceSmooth = [0.45, 0.41, 0.35, 0.29, 0.25, 0.22, 0.20];
+        momentum = [0.0, -0.04, -0.06, -0.06, -0.04, -0.03, -0.02];
+        iccePred = [0.17, 0.16, 0.15, 0.14, 0.13, 0.12, 0.11];
+        predLow = [0.10, 0.09, 0.08, 0.07, 0.06, 0.05, 0.04];
+        predHigh = [0.24, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18];
+        narrativeMetrics = {
+            sve: 0.15,
+            sna: -0.45,
+            cp: 0.25,
+            nmi: -0.30,
+            ivn: { ivn: 0.18, interpretation: "Crisis severa", risk_level: "alto" }
         };
-    });
+        risks = ["Crisis activa por escándalo", "Narrativa dominada por corrupción", "Pérdida de apoyo probable"];
+        opportunities = ["Solo si hay respuesta clara y contundente"];
+        strategicRecommendation = "Responder con evidencia contundente y vocería fuerte. Mitigar crisis con transparencia total.";
+    } else {
+        // 🟡 MALO - Narrativa débil pero recuperable (default)
+        candidateName = "Juan Pérez";
+        location = "Bogotá";
+        icceRaw = [0.358, 0.370, 0.310, 0.298, 0.315, 0.360, 0.330];
+        icceSmooth = [0.358, 0.364, 0.340, 0.324, 0.322, 0.335, 0.334];
+        momentum = [0.0, 0.006, -0.024, -0.016, -0.002, 0.013, -0.001];
+        iccePred = [0.336, 0.338, 0.340, 0.343, 0.345, 0.347, 0.348];
+        predLow = [0.320, 0.322, 0.324, 0.326, 0.328, 0.329, 0.330];
+        predHigh = [0.350, 0.354, 0.356, 0.358, 0.360, 0.364, 0.365];
+        narrativeMetrics = {
+            sve: 0.42,
+            sna: 0.15,
+            cp: 0.58,
+            nmi: 0.22,
+            ivn: { ivn: 0.45, interpretation: "Narrativa débil", risk_level: "medio-bajo" }
+        };
+        risks = ["Críticas sostenidas en Seguridad", "Caída fuerte a mitad de semana"];
+        opportunities = ["Tema Empleo en tono positivo", "Buen rebote post-debate"];
+        strategicRecommendation = "Posicionar mensajes en Empleo y mitigar críticas en Seguridad con propuestas claras y datos verificables.";
+    }
     
+    // Build response matching new API structure
     return {
         success: true,
-        candidate_name: "Juan Pérez",
-        location: "Bogotá",
-        icce: {
-            success: true,
-            candidate_name: "Juan Pérez",
-            location: "Bogotá",
-            current_icce: lastICCEValue,
-            historical_values: historicalValues,
-            sentiment_overview: {
-                positive: 0.35,
-                negative: 0.30,
-                neutral: 0.35,
-                total_tweets: 150
-            },
-            metadata: {
-                days_back: 30,
-                data_points: historicalValues.length
-            }
-        },
-        momentum: {
-            success: true,
-            candidate_name: "Juan Pérez",
-            location: "Bogotá",
-            current_momentum: historicalMomentum[historicalMomentum.length - 1]?.momentum || 1.2,
-            historical_momentum: historicalMomentum,
-            trend: historicalMomentum[historicalMomentum.length - 1]?.trend || "stable",
-            metadata: {
-                days_back: 30,
-                data_points: historicalMomentum.length
-            }
+        candidate: candidateName,
+        candidate_name: candidateName,
+        location: location,
+        series: {
+            dates: historicalDates,
+            icce: icceRaw,
+            icce_smooth: icceSmooth,
+            momentum: momentum
         },
         forecast: {
-            success: true,
-            candidate_name: "Juan Pérez",
-            location: "Bogotá",
-            forecast_points: forecastPoints,
-            model_type: "holt_winters",
-            metadata: {
-                forecast_days: 14,
-                historical_points: historicalValues.length
-            }
+            dates: forecastDates,
+            icce_pred: iccePred,
+            pred_low: predLow,
+            pred_high: predHigh
         },
         metadata: {
             calculated_at: now.toISOString(),
-            narrative_metrics: {
-                sve: 0.42,
-                sna: 0.15,
-                cp: 0.58,
-                nmi: 0.22,
-                ivn: {
-                    ivn: 0.65,
-                    interpretation: "Competitivo con sesgo positivo",
-                    risk_level: "medio-bajo",
-                    components: {
-                        sve: 0.42,
-                        sna: 0.575,
-                        cp: 0.58,
-                        nmi: 0.61
-                    }
-                }
-            }
+            days_back: 7,
+            forecast_days: 7,
+            model_type: "holt_winters",
+            narrative_metrics: narrativeMetrics,
+            risks: risks,
+            opportunities: opportunities,
+            strategic_recommendation: strategicRecommendation
         }
     };
 }
 
 // Function to test forecast with mockup data
-window.testForecastWithMockup = function() {
+window.testForecastWithMockup = function(scenario = "bad") {
     try {
         const resultsSection = document.getElementById("forecast-results");
         if (!resultsSection) {
@@ -726,22 +902,27 @@ window.testForecastWithMockup = function() {
             return;
         }
         
-        // Fill form with example values
+        // Generate mockup data for selected scenario
+        const mockupData = generateForecastMockupData(scenario);
+        
+        // Fill form with example values from mockup
         const locationInput = document.getElementById("forecast-location");
+        const topicInput = document.getElementById("forecast-topic");
         const candidateInput = document.getElementById("forecast-candidate");
+        const politicianInput = document.getElementById("forecast-politician");
         const daysBackInput = document.getElementById("forecast-days-back");
         const daysAheadInput = document.getElementById("forecast-days-ahead");
         
-        if (locationInput) locationInput.value = "Bogotá";
-        if (candidateInput) candidateInput.value = "Juan Pérez";
+        if (locationInput) locationInput.value = mockupData.location;
+        if (topicInput) topicInput.value = "";
+        if (candidateInput) candidateInput.value = mockupData.candidate_name;
+        if (politicianInput) politicianInput.value = "";
         if (daysBackInput) daysBackInput.value = "30";
         if (daysAheadInput) daysAheadInput.value = "14";
         
         // Show results section first
         resultsSection.style.display = "block";
         
-        // Generate mockup data
-        const mockupData = generateForecastMockupData();
         console.log("Mockup data generated:", mockupData);
         
         // Verify required functions exist
@@ -749,26 +930,6 @@ window.testForecastWithMockup = function() {
             console.error("renderForecastDashboard function not found");
             alert("Error: Función de renderizado no encontrada");
             return;
-        }
-        
-        // Check if translation functions are available
-        const requiredFunctions = [
-            'translateCurrentStatusToHumanLanguage',
-            'translateMomentumToHumanLanguage',
-            'translateProjectionToHumanLanguage',
-            'translateIVNToHumanLanguage',
-            'translateShareOfVoice',
-            'translateSentiment',
-            'generateOpportunities',
-            'generateRisks'
-        ];
-        
-        const missingFunctions = requiredFunctions.filter(fn => typeof window[fn] !== 'function');
-        if (missingFunctions.length > 0) {
-            console.error("Missing functions:", missingFunctions);
-            console.log("Available functions:", Object.keys(window).filter(k => k.startsWith('translate') || k.startsWith('generate')));
-            // Continue anyway, but log the issue
-            console.warn("Some translation functions are missing, but continuing anyway...");
         }
         
         // Wait a bit for DOM to be ready, then render

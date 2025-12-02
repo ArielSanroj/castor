@@ -34,39 +34,65 @@ class ForecastService:
         candidate_name: Optional[str] = None,
         politician: Optional[str] = None,
         days_back: int = 30,
+        alpha: float = 0.5
     ) -> List[ICCEValue]:
         """
-        Calculate Índice Compuesto de Conversación Electoral (ICCE) for historical period.
+        Calculate Índice Compuesto de Conversación Electoral (ICCE) according to theoretical model.
         
-        ICCE = (Volume_Normalized * 0.4) + (Sentiment_Score * 0.4) + (Conversation_Share * 0.2)
+        Model:
+        - ISN (Índice de Sentimiento Neto) = P - N  (range: [-1, 1])
+        - ISN' (normalized) = (ISN + 1) / 2  (range: [0, 1])
+        - ICR (Índice de Conversación Relativa) = V_c / V_total  (range: [0, 1])
+        - ICCE = α * ISN' + (1-α) * ICR  (default α=0.5)
+        
+        Args:
+            location: Location filter
+            candidate_name: Optional candidate name filter
+            politician: Optional Twitter handle filter
+            days_back: Number of days to look back
+            alpha: Weight for ISN' in ICCE calculation (default 0.5)
         
         Returns:
-            List of ICCE values per day
+            List of ICCE values per day with ISN, ICR, and ICCE
         """
         try:
             # Get historical tweets
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days_back)
             
-            # Group tweets by day
-            daily_data = defaultdict(lambda: {
+            # Group tweets by day for candidate
+            daily_candidate_data = defaultdict(lambda: {
                 'tweets': [],
-                'total_volume': 0,
-                'sentiment_sum': 0.0,
-                'count': 0
+                'positive_count': 0,
+                'negative_count': 0,
+                'neutral_count': 0,
+                'total_count': 0,
+                'sentiment_sum': 0.0
             })
             
-            # Fetch tweets (simplified - in production would fetch historical data)
-            tweets = self.twitter_service.search_by_pnd_topic(
+            # Group tweets by day for TOTAL conversation (all candidates)
+            daily_total_data = defaultdict(lambda: {'total_count': 0})
+            
+            # Fetch tweets for candidate
+            candidate_tweets = self.twitter_service.search_by_pnd_topic(
                 topic=None,
                 location=location,
                 candidate_name=candidate_name,
                 politician=politician,
-                max_results=min(days_back * 10, 300),  # Limit for performance
+                max_results=min(days_back * 10, 300),
             )
             
-            # Process tweets and group by day
-            for tweet in tweets:
+            # Fetch tweets for TOTAL conversation (without candidate filter)
+            total_tweets = self.twitter_service.search_by_pnd_topic(
+                topic=None,
+                location=location,
+                candidate_name=None,
+                politician=None,
+                max_results=min(days_back * 20, 500),  # More tweets for total
+            )
+            
+            # Process candidate tweets
+            for tweet in candidate_tweets:
                 tweet_date = tweet.get('created_at', datetime.utcnow())
                 if isinstance(tweet_date, str):
                     try:
@@ -79,37 +105,80 @@ class ForecastService:
                 
                 # Analyze sentiment
                 sentiment = self.sentiment_service.analyze_sentiment(text)
+                
+                # Count by sentiment
+                if sentiment.positive > sentiment.negative:
+                    daily_candidate_data[day_key]['positive_count'] += 1
+                elif sentiment.negative > sentiment.positive:
+                    daily_candidate_data[day_key]['negative_count'] += 1
+                else:
+                    daily_candidate_data[day_key]['neutral_count'] += 1
+                
+                # Calculate net sentiment
                 net_sentiment = sentiment.positive - sentiment.negative  # -1 to 1
                 
-                daily_data[day_key]['tweets'].append(tweet)
-                daily_data[day_key]['count'] += 1
-                daily_data[day_key]['sentiment_sum'] += net_sentiment
+                daily_candidate_data[day_key]['tweets'].append(tweet)
+                daily_candidate_data[day_key]['total_count'] += 1
+                daily_candidate_data[day_key]['sentiment_sum'] += net_sentiment
             
-            # Calculate ICCE for each day
+            # Process total tweets (for ICR calculation)
+            for tweet in total_tweets:
+                tweet_date = tweet.get('created_at', datetime.utcnow())
+                if isinstance(tweet_date, str):
+                    try:
+                        tweet_date = datetime.fromisoformat(tweet_date.replace('Z', '+00:00'))
+                    except:
+                        tweet_date = datetime.utcnow()
+                
+                day_key = tweet_date.date()
+                daily_total_data[day_key]['total_count'] += 1
+            
+            # Calculate ICCE for each day according to theoretical model
             icce_values = []
-            max_volume = max((d['count'] for d in daily_data.values()), default=1)
             
-            for day, data in sorted(daily_data.items()):
-                volume_normalized = (data['count'] / max_volume) * 100 if max_volume > 0 else 0
-                avg_sentiment = data['sentiment_sum'] / data['count'] if data['count'] > 0 else 0
-                sentiment_score = (avg_sentiment + 1) * 50  # Convert -1,1 to 0,100
+            for day in sorted(set(list(daily_candidate_data.keys()) + list(daily_total_data.keys()))):
+                candidate_data = daily_candidate_data.get(day, {
+                    'total_count': 0,
+                    'positive_count': 0,
+                    'negative_count': 0,
+                    'neutral_count': 0,
+                    'sentiment_sum': 0.0
+                })
+                total_data = daily_total_data.get(day, {'total_count': 1})  # Avoid division by zero
                 
-                # Conversation share (simplified - would compare with total conversation)
-                conversation_share = min(data['count'] / 10.0, 1.0) * 100  # Normalized
+                V_c = candidate_data['total_count']
+                V_total = max(total_data['total_count'], V_c)  # Ensure V_total >= V_c
                 
-                # Calculate ICCE
-                icce = (
-                    volume_normalized * 0.4 +
-                    sentiment_score * 0.4 +
-                    conversation_share * 0.2
-                )
+                # Calculate ISN (Índice de Sentimiento Neto)
+                if V_c > 0:
+                    P_c = candidate_data['positive_count'] / V_c
+                    N_c = candidate_data['negative_count'] / V_c
+                    ISN = P_c - N_c  # Range: [-1, 1]
+                else:
+                    ISN = 0.0
+                
+                # Normalize ISN to [0, 1]
+                ISN_normalized = (ISN + 1) / 2  # Range: [0, 1]
+                
+                # Calculate ICR (Índice de Conversación Relativa)
+                ICR = V_c / V_total if V_total > 0 else 0.0  # Range: [0, 1]
+                
+                # Calculate ICCE according to theoretical model
+                # ICCE = α * ISN' + (1-α) * ICR
+                ICCE = alpha * ISN_normalized + (1 - alpha) * ICR
+                
+                # Convert to 0-100 scale for compatibility
+                ICCE_scaled = ICCE * 100
+                
+                # Average sentiment score for metadata
+                avg_sentiment = candidate_data['sentiment_sum'] / V_c if V_c > 0 else 0.0
                 
                 icce_values.append(ICCEValue(
                     date=datetime.combine(day, datetime.min.time()),
-                    value=icce,
-                    volume=data['count'],
-                    sentiment_score=avg_sentiment,
-                    conversation_share=conversation_share / 100.0
+                    value=ICCE_scaled,  # Store as 0-100 for compatibility
+                    volume=V_c,
+                    sentiment_score=ISN,  # Store raw ISN [-1, 1]
+                    conversation_share=ICR  # Store ICR [0, 1]
                 ))
             
             # Fill missing days with interpolated values
@@ -123,52 +192,86 @@ class ForecastService:
             logger.error(f"Error calculating ICCE: {e}", exc_info=True)
             return []
 
-    def calculate_momentum(
+    def calculate_ema_smooth(
         self,
         icce_values: List[ICCEValue],
-        window: int = 7
-    ) -> List[MomentumValue]:
+        lambda_param: float = 0.3
+    ) -> List[float]:
         """
-        Calculate Momentum Electoral de Conversación (MEC) from ICCE values.
+        Calculate Exponential Moving Average (EMA) smoothing for ICCE values.
         
-        Momentum = Moving average difference + rate of change
+        EMA formula: S_t = λ * ICCE_t + (1-λ) * S_{t-1}
         
         Args:
             icce_values: Historical ICCE values
-            window: Moving average window in days
+            lambda_param: Smoothing parameter (default 0.3)
+            
+        Returns:
+            List of smoothed ICCE values
+        """
+        if not icce_values:
+            return []
+        
+        smoothed = []
+        values = [v.value / 100.0 for v in icce_values]  # Convert to [0,1] scale
+        
+        # Initialize first value
+        smoothed.append(values[0])
+        
+        # Calculate EMA for remaining values
+        for i in range(1, len(values)):
+            ema_value = lambda_param * values[i] + (1 - lambda_param) * smoothed[i-1]
+            smoothed.append(ema_value)
+        
+        return smoothed
+
+    def calculate_momentum(
+        self,
+        icce_values: List[ICCEValue],
+        lambda_param: float = 0.3
+    ) -> List[MomentumValue]:
+        """
+        Calculate Momentum Electoral de Conversación (MEC) using EMA smoothing.
+        
+        Model:
+        - EMA smoothing: S_t = λ * ICCE_t + (1-λ) * S_{t-1}
+        - Momentum: MEC_t = S_t - S_{t-1}
+        
+        Args:
+            icce_values: Historical ICCE values
+            lambda_param: EMA smoothing parameter (default 0.3)
             
         Returns:
             List of momentum values
         """
-        if len(icce_values) < window + 1:
+        if len(icce_values) < 2:
             return []
+        
+        # Calculate EMA smoothed values
+        smoothed_values = self.calculate_ema_smooth(icce_values, lambda_param)
         
         momentum_values = []
         
-        for i in range(window, len(icce_values)):
-            # Calculate moving averages
-            recent_avg = np.mean([v.value for v in icce_values[i-window:i]])
-            previous_avg = np.mean([v.value for v in icce_values[i-window-1:i-1]]) if i > window else recent_avg
+        # Calculate momentum as difference of EMA
+        for i in range(1, len(icce_values)):
+            momentum = smoothed_values[i] - smoothed_values[i-1]
             
-            # Momentum = change in moving average
-            momentum = recent_avg - previous_avg
-            
-            # Rate of change
-            current_value = icce_values[i].value
-            previous_value = icce_values[i-1].value if i > 0 else current_value
+            # Also calculate raw change for reference
+            current_value = icce_values[i].value / 100.0  # Convert to [0,1]
+            previous_value = icce_values[i-1].value / 100.0
             change = current_value - previous_value
             
-            # Determine trend
-            if momentum > 2:
+            # Determine trend based on momentum
+            if momentum > 0.01:  # Threshold for "up"
                 trend = "up"
-            elif momentum < -2:
-                trend = "down"
+            elif momentum < -0.01:  # Threshold for "down"
+                trend = "stable"
             else:
                 trend = "stable"
             
             momentum_values.append(MomentumValue(
                 date=icce_values[i].date,
-                momentum=momentum,
+                momentum=momentum,  # Keep in [0,1] scale for consistency
                 change=change,
                 trend=trend
             ))
@@ -179,15 +282,21 @@ class ForecastService:
         self,
         icce_values: List[ICCEValue],
         forecast_days: int = 14,
-        model_type: str = "holt_winters"
+        model_type: str = "holt_winters",
+        use_smoothed: bool = True,
+        lambda_param: float = 0.3
     ) -> List[ForecastPoint]:
         """
         Forecast ICCE values using time series models.
         
+        By default, forecasts on EMA-smoothed values for better trend detection.
+        
         Args:
             icce_values: Historical ICCE values
             forecast_days: Number of days to forecast
-            model_type: 'holt_winters', 'prophet', or 'arima'
+            model_type: 'holt_winters', 'prophet', or 'simple_trend'
+            use_smoothed: If True, forecast on EMA-smoothed values (default True)
+            lambda_param: EMA smoothing parameter if use_smoothed=True
             
         Returns:
             List of forecast points with confidence intervals
@@ -196,8 +305,14 @@ class ForecastService:
             return []
         
         try:
-            # Extract time series
-            values = [v.value for v in icce_values]
+            # Use smoothed values for forecasting (better trend detection)
+            if use_smoothed:
+                smoothed_values = self.calculate_ema_smooth(icce_values, lambda_param)
+                # Convert back to 0-100 scale for forecasting
+                values = [v * 100.0 for v in smoothed_values]
+            else:
+                values = [v.value for v in icce_values]
+            
             dates = [v.date for v in icce_values]
             
             if model_type == "holt_winters":
