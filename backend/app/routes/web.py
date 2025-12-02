@@ -59,13 +59,25 @@ def campaign():
 
 
 @web_bp.route('/forecast')
+@web_bp.route('/forecast/')
 def forecast():
     """Serve CASTOR Forecast page."""
     try:
+        from flask import current_app
+        # Ensure url_for is available in template context
         return render_template('forecast.html')
     except Exception as e:
+        import traceback
+        from flask import current_app
+        error_details = traceback.format_exc()
+        is_debug = False
+        try:
+            is_debug = current_app.config.get('DEBUG', False)
+        except:
+            pass
         return {
-            'error': 'Template not found',
+            'error': 'Template rendering error',
             'message': 'Forecast template not available',
-            'details': str(e)
+            'details': str(e),
+            'traceback': error_details if is_debug else None
         }, 404
