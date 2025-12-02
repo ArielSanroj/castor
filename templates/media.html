@@ -56,8 +56,7 @@
                          height="54"
                          loading="eager">
                     <div>
-                        <strong>Castor Elecciones</strong>
-                        <small>Inteligencia Electoral</small>
+                        <strong>Inteligencia Electoral</strong>
                     </div>
                 </a>
             </div>
@@ -65,8 +64,13 @@
                 <a href="/media" class="active">Para medios</a>
                 <a href="/campaign">Para campañas</a>
                 <a href="/forecast">Forecast</a>
-                <a href="/webpage#pipeline">Arquitectura & Metodología</a>
-                <a href="/webpage#origins">Orígenes CASTOR</a>
+                <a href="/webpage#pipeline">Arquitectura</a>
+                <a href="/webpage#methodology">Metodología</a>
+                <a href="/webpage#features">Características</a>
+                <a href="/docs">Documentación técnica</a>
+            </div>
+            <div class="nav-right">
+                <button class="primary-btn" onclick="openDemoModal()" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Solicitar demo</button>
             </div>
             <!-- Mobile menu button -->
             <button class="mobile-menu-toggle" 
@@ -286,29 +290,33 @@
                 <div class="form-row">
                     <label>
                         Nombre *
-                        <input type="text" name="first_name" required placeholder="Juan">
+                        <input type="text" name="first_name" id="demo-first-name" required placeholder="Juan">
                     </label>
                     <label>
                         Apellido *
-                        <input type="text" name="last_name" required placeholder="Pérez">
+                        <input type="text" name="last_name" id="demo-last-name" required placeholder="Pérez">
                     </label>
                 </div>
                 <label>
-                    Tipo de candidatura *
-                    <select name="candidacy_type" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="congreso">Congreso</option>
-                        <option value="regionales">Regionales</option>
-                        <option value="presidencia">Presidencia</option>
-                    </select>
-                </label>
-                <label>
                     Correo electrónico *
-                    <input type="email" name="email" required placeholder="juan.perez@example.com">
+                    <input type="email" name="email" id="demo-email" required placeholder="juan.perez@example.com">
                 </label>
                 <label>
                     Teléfono *
-                    <input type="tel" name="phone" required placeholder="+57 300 123 4567">
+                    <input type="tel" name="phone" id="demo-phone" required placeholder="+57 300 123 4567">
+                </label>
+                <label>
+                    ¿Qué te interesa? *
+                    <select name="interest" id="demo-interest" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="forecast">Forecast</option>
+                        <option value="campañas">Campañas</option>
+                        <option value="medios">Medios</option>
+                    </select>
+                </label>
+                <label>
+                    Ubicación (Ciudad) *
+                    <input type="text" name="location" id="demo-location" required placeholder="Bogotá, Medellín, Cali...">
                 </label>
                 <div class="form-actions">
                     <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>

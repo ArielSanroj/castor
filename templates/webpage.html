@@ -84,8 +84,7 @@
                          height="54"
                          loading="eager">
                     <div>
-                        <strong>Castor Elecciones</strong>
-                        <small>Inteligencia Electoral</small>
+                        <strong>Inteligencia Electoral</strong>
                     </div>
                 </a>
             </div>
@@ -93,8 +92,13 @@
                 <a href="/media">Para medios</a>
                 <a href="/campaign">Para campañas</a>
                 <a href="/forecast">Forecast</a>
-                <a href="#pipeline">Arquitectura & Metodología</a>
-                <a href="#origins">Orígenes CASTOR</a>
+                <a href="#pipeline">Arquitectura</a>
+                <a href="#methodology">Metodología</a>
+                <a href="#features">Características</a>
+                <a href="/docs">Documentación técnica</a>
+            </div>
+            <div class="nav-right">
+                <button class="primary-btn" onclick="openDemoModal()" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Solicitar demo</button>
             </div>
             <!-- Mobile menu button -->
             <button class="mobile-menu-toggle" 
@@ -124,15 +128,15 @@
                 </p>
                 <div class="hero-ctas">
                     <div class="hero-cta">
-                        <a class="primary-btn" href="/media">Ver CASTOR Medios</a>
+                        <button class="primary-btn" onclick="openDemoModal('medios')">Ver CASTOR Medios</button>
                         <span class="cta-note">Informes para prensa y observatorios.</span>
                     </div>
                     <div class="hero-cta">
-                        <a class="ghost-btn" href="/campaign">Ver CASTOR Campañas</a>
+                        <button class="ghost-btn" onclick="openDemoModal('campañas')">Ver CASTOR Campañas</button>
                         <span class="cta-note">Resumen ejecutivo, plan y discurso para equipos de campaña.</span>
                     </div>
                     <div class="hero-cta">
-                        <a class="ghost-btn" href="/forecast">Probar CASTOR Forecast</a>
+                        <button class="ghost-btn" onclick="openDemoModal('forecast')">Probar CASTOR Forecast</button>
                         <span class="cta-note">Modelos de proyección y momentum narrativo que permiten anticipar cómo evoluciona la conversación electoral en los próximos días.</span>
                     </div>
                 </div>
@@ -164,15 +168,19 @@
                 <h2 id="video-title">¿Cómo funciona?</h2>
             </div>
             <div class="video-container">
-                <div class="video-wrapper">
+                <div class="video-wrapper" style="position: relative; cursor: pointer;" onclick="openDemoModal()">
                     <iframe 
                         src="https://www.youtube.com/embed/dH-hn3x0Uh0" 
                         title="Cómo funciona CASTOR Elecciones" 
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         allowfullscreen
-                        loading="lazy">
+                        loading="lazy"
+                        style="pointer-events: none;">
                     </iframe>
+                    <div class="video-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; transition: opacity 0.3s, background 0.3s; z-index: 10; opacity: 0.7;">
+                        <p style="color: white; font-weight: 600; background: var(--accent, #ff6a3d); padding: 0.75rem 1.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); pointer-events: none;">Haz clic para probar CASTOR</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -520,29 +528,33 @@
                 <div class="form-row">
                     <label>
                         Nombre *
-                        <input type="text" name="first_name" required placeholder="Juan">
+                        <input type="text" name="first_name" id="demo-first-name" required placeholder="Juan">
                     </label>
                     <label>
                         Apellido *
-                        <input type="text" name="last_name" required placeholder="Pérez">
+                        <input type="text" name="last_name" id="demo-last-name" required placeholder="Pérez">
                     </label>
                 </div>
                 <label>
-                    Tipo de candidatura *
-                    <select name="candidacy_type" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="congreso">Congreso</option>
-                        <option value="regionales">Regionales</option>
-                        <option value="presidencia">Presidencia</option>
-                    </select>
-                </label>
-                <label>
                     Correo electrónico *
-                    <input type="email" name="email" required placeholder="juan.perez@example.com">
+                    <input type="email" name="email" id="demo-email" required placeholder="juan.perez@example.com">
                 </label>
                 <label>
                     Teléfono *
-                    <input type="tel" name="phone" required placeholder="+57 300 123 4567">
+                    <input type="tel" name="phone" id="demo-phone" required placeholder="+57 300 123 4567">
+                </label>
+                <label>
+                    ¿Qué te interesa? *
+                    <select name="interest" id="demo-interest" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="forecast">Forecast</option>
+                        <option value="campañas">Campañas</option>
+                        <option value="medios">Medios</option>
+                    </select>
+                </label>
+                <label>
+                    Ubicación (Ciudad) *
+                    <input type="text" name="location" id="demo-location" required placeholder="Bogotá, Medellín, Cali...">
                 </label>
                 <div class="form-actions">
                     <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>
