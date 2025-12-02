@@ -63,9 +63,22 @@
     // ====================
     // MODAL ACCESSIBILITY
     // ====================
-    window.openDemoModal = function() {
+    window.openDemoModal = function(interest) {
         const modal = document.getElementById('demoModal');
         if (!modal) return;
+
+        // Pre-select interest if provided
+        if (interest) {
+            const interestMap = {
+                'forecast': 'forecast',
+                'campañas': 'campañas',
+                'medios': 'medios'
+            };
+            const interestSelect = document.getElementById('demo-interest');
+            if (interestSelect && interestMap[interest]) {
+                interestSelect.value = interestMap[interest];
+            }
+        }
 
         modal.classList.add('show');
         modal.setAttribute('aria-hidden', 'false');
@@ -105,6 +118,11 @@
                 }
             }
         };
+        
+        // Remove existing handler if any
+        if (modal.dataset.keydownHandler === 'attached') {
+            modal.removeEventListener('keydown', handleKeyDown);
+        }
         
         modal.addEventListener('keydown', handleKeyDown);
         modal.dataset.keydownHandler = 'attached';
@@ -248,17 +266,40 @@
 
         try {
             const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+            const data = {
+                first_name: formData.get('first_name'),
+                last_name: formData.get('last_name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                interest: formData.get('interest'),
+                location: formData.get('location')
+            };
 
-            // Simulate API call (replace with actual endpoint)
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Get API base URL
+            const apiBaseUrl = window.API_BASE_URL || window.location.origin;
+            const endpoint = `${apiBaseUrl}/api/demo-request`;
 
-            // Success
-            showMessage('¡Solicitud enviada exitosamente! Nos pondremos en contacto pronto.', 'success');
-            form.reset();
-            setTimeout(() => closeDemoModal(), 2000);
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                showMessage('¡Solicitud enviada exitosamente! Nos pondremos en contacto pronto.', 'success');
+                form.reset();
+                setTimeout(() => closeDemoModal(), 2000);
+            } else {
+                const errorMsg = result.error || result.message || 'Error al enviar la solicitud';
+                showMessage(`Error: ${errorMsg}`, 'error');
+            }
 
         } catch (error) {
+            console.error('Error submitting form:', error);
             showMessage('Hubo un error al enviar la solicitud. Por favor intente nuevamente.', 'error');
         } finally {
             submitButton.disabled = false;

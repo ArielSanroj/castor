@@ -279,6 +279,47 @@
     }
 
     // ====================
+    // VIDEO OVERLAY INTERACTION
+    // ====================
+    function initVideoOverlay() {
+        const videoWrapper = document.querySelector('.video-wrapper');
+        if (!videoWrapper) return;
+
+        const overlay = videoWrapper.querySelector('.video-overlay');
+        if (!overlay) return;
+
+        // Prevent iframe from capturing clicks
+        const iframe = videoWrapper.querySelector('iframe');
+        if (iframe) {
+            iframe.style.pointerEvents = 'none';
+        }
+
+        // Show overlay on hover
+        videoWrapper.addEventListener('mouseenter', function() {
+            overlay.style.opacity = '1';
+            overlay.style.background = 'rgba(0,0,0,0.5)';
+        });
+
+        videoWrapper.addEventListener('mouseleave', function() {
+            overlay.style.opacity = '0.7';
+            overlay.style.background = 'rgba(0,0,0,0.3)';
+        });
+
+        // Ensure overlay is visible by default on mobile
+        if (window.innerWidth <= 768) {
+            overlay.style.opacity = '0.8';
+        }
+
+        // Handle click on overlay
+        overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (typeof window.openDemoModal === 'function') {
+                window.openDemoModal();
+            }
+        });
+    }
+
+    // ====================
     // INITIALIZATION
     // ====================
     document.addEventListener('DOMContentLoaded', function() {
@@ -290,6 +331,7 @@
         initCardEffects();
         initLazyAnimations();
         initBackToTop();
+        initVideoOverlay();
         
         // Only enable parallax on desktop
         if (window.innerWidth > 768) {

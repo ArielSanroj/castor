@@ -35,7 +35,9 @@ class DemoRequest(BaseModel):
     last_name: str = Field(..., min_length=1, max_length=100)
     email: EmailStr
     phone: str = Field(..., min_length=7, max_length=20)
-    candidacy_type: str = Field(..., pattern="^(congreso|regionales|presidencia)$")
+    interest: str = Field(..., pattern="^(forecast|campañas|medios)$")
+    location: str = Field(..., min_length=1, max_length=120)
+    candidacy_type: Optional[str] = Field(None, pattern="^(congreso|regionales|presidencia)$")
 
 
 @leads_bp.route('/demo-request', methods=['POST'])
@@ -49,7 +51,9 @@ def create_demo_request():
         "last_name": "Pérez",
         "email": "juan@example.com",
         "phone": "+573001234567",
-        "candidacy_type": "congreso"
+        "interest": "forecast",
+        "location": "Bogotá",
+        "candidacy_type": "congreso" (opcional)
     }
     
     Returns:
@@ -77,6 +81,8 @@ def create_demo_request():
             last_name=demo_req.last_name,
             email=demo_req.email,
             phone=demo_req.phone,
+            interest=demo_req.interest,
+            location=demo_req.location,
             candidacy_type=demo_req.candidacy_type
         )
         
