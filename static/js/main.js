@@ -39,8 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       let payload;
       let url;
-
-      let url;
       if (currentMode === "media") {
         url = (window.API_CONFIG?.apiUrl("/api/media/analyze")) || "/api/media/analyze";
         payload = {
@@ -229,14 +227,15 @@ function renderMediaResults(data) {
     title.textContent = `${topic.topic} (${topic.tweet_count} mensajes)`;
     card.appendChild(title);
 
-    const sentiments = document.createElement("div");
-    sentiments.className = "muted";
-    sentiments.innerHTML = `
-      Positivo: ${(topic.sentiment.positive * 100).toFixed(1)}% ·
-      Neutro: ${(topic.sentiment.neutral * 100).toFixed(1)}% ·
-      Negativo: ${(topic.sentiment.negative * 100).toFixed(1)}%
+    // Temperatura narrativa en lugar de sentimiento técnico
+    const narrative = document.createElement("div");
+    narrative.className = "muted";
+    narrative.innerHTML = `
+      Narrativa favorable: ${(topic.sentiment.positive * 100).toFixed(1)}% ·
+      Narrativa neutra: ${(topic.sentiment.neutral * 100).toFixed(1)}% ·
+      Narrativa crítica: ${(topic.sentiment.negative * 100).toFixed(1)}%
     `;
-    card.appendChild(sentiments);
+    card.appendChild(narrative);
 
     topicsContainer.appendChild(card);
   });
@@ -255,7 +254,16 @@ function renderMediaChart(data) {
     mainChartInstance.destroy();
   }
 
-  mainChartInstance = new Chart(ctx, chartDataCfg);
+      // Ajustar etiquetas de la leyenda para temperatura narrativa
+      if (chartDataCfg?.data?.datasets) {
+        chartDataCfg.data.datasets.forEach((ds) => {
+          if (ds.label === "Positivo") ds.label = "Narrativa favorable";
+          if (ds.label === "Negativo") ds.label = "Narrativa crítica";
+          if (ds.label === "Neutral") ds.label = "Narrativa neutra";
+        });
+      }
+
+      mainChartInstance = new Chart(ctx, chartDataCfg);
 }
 
 function renderCampaignResults(data) {
@@ -315,7 +323,7 @@ function renderCampaignResults(data) {
     
     const title = document.createElement("strong");
     title.style.cssText = "font-size: 1.1rem; color: var(--text); display: block; margin-bottom: 0.5rem;";
-    title.textContent = `${topic.topic} (${topic.tweet_count} tweets, Sentimientos: Positivo ${Math.round(topic.sentiment.positive * topic.tweet_count)}, Negativo ${Math.round(topic.sentiment.negative * topic.tweet_count)}, Neutral ${Math.round(topic.sentiment.neutral * topic.tweet_count)}):`;
+    title.textContent = `${topic.topic} (${topic.tweet_count} tweets, Temperatura narrativa: favorable ${Math.round(topic.sentiment.positive * topic.tweet_count)}, crítica ${Math.round(topic.sentiment.negative * topic.tweet_count)}, neutra ${Math.round(topic.sentiment.neutral * topic.tweet_count)}):`;
     header.appendChild(title);
 
     // Emoji and key insight
@@ -334,7 +342,7 @@ function renderCampaignResults(data) {
     const posPct = (topic.sentiment.positive * 100).toFixed(1);
     const negPct = (topic.sentiment.negative * 100).toFixed(1);
     const neuPct = (topic.sentiment.neutral * 100).toFixed(1);
-    sentimentDiv.innerHTML = `Positivo ${posPct}%, Negativo ${negPct}%, Neutral ${neuPct}% ${parseFloat(negPct) > 50 ? `(${negPct}% negativo)` : ''}`;
+    sentimentDiv.innerHTML = `Narrativa favorable ${posPct}%, crítica ${negPct}%, neutra ${neuPct}% ${parseFloat(negPct) > 50 ? `(${negPct}% crítica)` : ''}`;
     topicCard.appendChild(sentimentDiv);
 
     // Sample tweets if available
@@ -357,7 +365,7 @@ function renderCampaignResults(data) {
 
         const sentimentBadge = document.createElement("span");
         sentimentBadge.style.cssText = "display: inline-block; margin-top: 0.5rem; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; background: var(--panel-alt); color: var(--muted);";
-        sentimentBadge.textContent = tweet.sentiment === 'positive' ? 'Positivo' : tweet.sentiment === 'negative' ? 'Negativo' : 'Neutral';
+        sentimentBadge.textContent = tweet.sentiment === 'positive' ? 'Narrativa favorable' : tweet.sentiment === 'negative' ? 'Narrativa crítica' : 'Narrativa neutra';
         tweetDiv.appendChild(sentimentBadge);
 
         topicCard.appendChild(tweetDiv);
@@ -408,18 +416,18 @@ function renderCampaignResults(data) {
         
         const sentimientosTitle = document.createElement("strong");
         sentimientosTitle.style.cssText = "display: block; font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem;";
-        sentimientosTitle.textContent = "Sentimientos:";
+        sentimientosTitle.textContent = "Temperatura narrativa:";
         sentimientosDiv.appendChild(sentimientosTitle);
 
         const sentimientosText = document.createElement("div");
-        sentimientosText.style.cssText = "color: var(--muted); line-height: 1.7; font-size: 0.95rem;";
+        sentimientosText.styleCssText = "color: var(--muted); line-height: 1.7; font-size: 0.95rem;";
         const pos = Math.round(topicData.sentiment.positive * topicData.tweet_count);
         const neg = Math.round(topicData.sentiment.negative * topicData.tweet_count);
         const neu = Math.round(topicData.sentiment.neutral * topicData.tweet_count);
         const posPct = (topicData.sentiment.positive * 100).toFixed(1);
         const negPct = (topicData.sentiment.negative * 100).toFixed(1);
         const neuPct = (topicData.sentiment.neutral * 100).toFixed(1);
-        sentimientosText.textContent = `Positivo ${pos} (${posPct}%), Negativo ${neg} (${negPct}%), Neutral ${neu} (${neuPct}%) ${parseFloat(negPct) > 50 ? `(${negPct}% negativo)` : ''}`;
+        sentimientosText.textContent = `Narrativa favorable ${pos} (${posPct}%), crítica ${neg} (${negPct}%), neutra ${neu} (${neuPct}%) ${parseFloat(negPct) > 50 ? `(${negPct}% crítica)` : ''}`;
         sentimientosDiv.appendChild(sentimientosText);
 
         planCard.appendChild(sentimientosDiv);

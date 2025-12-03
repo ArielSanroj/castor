@@ -503,14 +503,27 @@ function renderHumanReadableSummaries(data) {
     
     if (data.series) {
         // New structure
-        const lastICCE = data.series.icce[data.series.icce.length - 1] || 0;
+        const lastICCE = Array.isArray(data.series.icce) && data.series.icce.length
+            ? data.series.icce[data.series.icce.length - 1]
+            : 0;
         currentICCE = lastICCE * 100; // Convert to 0-100 scale
-        currentMomentum = data.series.momentum[data.series.momentum.length - 1] || 0;
+        const momentumSeries = Array.isArray(data.series.momentum) ? data.series.momentum : [];
+        currentMomentum = momentumSeries.length ? momentumSeries[momentumSeries.length - 1] : 0;
         momentumTrend = currentMomentum > 0.01 ? "up" : currentMomentum < -0.01 ? "down" : "stable";
-        forecastPoints = data.forecast ? data.forecast.icce_pred.map((val, i) => ({
-            date: new Date(data.forecast.dates[i]),
-            projected_value: val * 100
-        })) : [];
+        
+        // Build forecast points only if structure is present and valid
+        if (
+            data.forecast &&
+            Array.isArray(data.forecast.icce_pred) &&
+            Array.isArray(data.forecast.dates)
+        ) {
+            forecastPoints = data.forecast.icce_pred.map((val, i) => ({
+                date: new Date(data.forecast.dates[i]),
+                projected_value: val * 100
+            }));
+        } else {
+            forecastPoints = [];
+        }
     } else {
         // Old structure
         currentICCE = data.icce?.current_icce || 0;
