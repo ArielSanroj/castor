@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitBtn = document.getElementById("forecast-submit-btn");
     const errorBox = document.getElementById("forecast-error");
     const resultsSection = document.getElementById("forecast-results");
+    const loadingBox = document.getElementById("forecast-loading");
 
     if (!form) return;
 
@@ -19,10 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
         errorBox.style.display = "none";
         errorBox.textContent = "";
+        if (loadingBox) {
+            loadingBox.style.display = "flex";
+        }
 
         const formData = new FormData(form);
         const payload = {
-            location: formData.get("location"),
+            location: (formData.get("location") || "").trim(),
             topic: formData.get("topic") || null,
             candidate_name: formData.get("candidate_name") || null,
             politician: formData.get("politician") || null,
@@ -30,16 +34,41 @@ document.addEventListener("DOMContentLoaded", () => {
             forecast_days: parseInt(formData.get("forecast_days") || 14)
         };
 
+        // Client-side guardrails to avoid wasting requests
+        if (!payload.location) {
+            errorBox.textContent = "La ubicación es obligatoria.";
+            errorBox.style.display = "block";
+            if (loadingBox) loadingBox.style.display = "none";
+            return;
+        }
+        if (payload.days_back < 7 || payload.days_back > 90) {
+            errorBox.textContent = "Días hacia atrás debe estar entre 7 y 90.";
+            errorBox.style.display = "block";
+            if (loadingBox) loadingBox.style.display = "none";
+            return;
+        }
+        if (payload.forecast_days < 7 || payload.forecast_days > 30) {
+            errorBox.textContent = "Días a proyectar debe estar entre 7 y 30.";
+            errorBox.style.display = "block";
+            if (loadingBox) loadingBox.style.display = "none";
+            return;
+        }
+
         submitBtn.disabled = true;
         submitBtn.textContent = "Generando...";
 
         try {
             const url = (window.API_CONFIG?.apiUrl("/api/forecast/dashboard")) || "/api/forecast/dashboard";
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 25000);
+
             const res = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
+                signal: controller.signal
             });
+            clearTimeout(timeout);
 
             if (!res.ok) {
                 const text = await res.text();
@@ -62,6 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = "Generar Forecast";
+            if (loadingBox) {
+                loadingBox.style.display = "none";
+            }
         }
     });
 });

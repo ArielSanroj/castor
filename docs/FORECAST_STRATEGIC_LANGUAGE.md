@@ -150,3 +150,14 @@ testForecastWithMockup("bad")    // Juan Pérez - Narrativa débil (default)
 testForecastWithMockup("crisis") // Ricardo Gómez - Crisis severa
 ```
 
+
+
+
+
+
+
+
+
+
+
+

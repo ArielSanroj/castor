@@ -59,25 +59,52 @@ def campaign():
 
 
 @web_bp.route('/forecast')
-@web_bp.route('/forecast/')
 def forecast():
     """Serve CASTOR Forecast page."""
     try:
-        from flask import current_app
-        # Ensure url_for is available in template context
         return render_template('forecast.html')
     except Exception as e:
-        import traceback
-        from flask import current_app
-        error_details = traceback.format_exc()
-        is_debug = False
-        try:
-            is_debug = current_app.config.get('DEBUG', False)
-        except:
-            pass
         return {
-            'error': 'Template rendering error',
+            'error': 'Template not found',
             'message': 'Forecast template not available',
-            'details': str(e),
-            'traceback': error_details if is_debug else None
+            'details': str(e)
+        }, 404
+
+
+@web_bp.route('/dashboard')
+def unified_dashboard():
+    """Serve unified analytics dashboard."""
+    try:
+        return render_template('unified_dashboard.html')
+    except Exception as e:
+        return {
+            'error': 'Template not found',
+            'message': 'Unified dashboard template not available',
+            'details': str(e)
+        }, 404
+
+
+@web_bp.route('/analytics')
+def analytics_dashboard():
+    """Serve CASTOR Analytics dashboard."""
+    try:
+        return render_template('analytics_dashboard.html')
+    except Exception as e:
+        return {
+            'error': 'Template not found',
+            'message': 'Analytics dashboard template not available',
+            'details': str(e)
+        }, 404
+
+
+@web_bp.route('/dashboard-old')
+def old_dashboard():
+    """Serve old unified dashboard (legacy)."""
+    try:
+        return render_template('unified_dashboard.html')
+    except Exception as e:
+        return {
+            'error': 'Template not found',
+            'message': 'Old dashboard template not available',
+            'details': str(e)
         }, 404

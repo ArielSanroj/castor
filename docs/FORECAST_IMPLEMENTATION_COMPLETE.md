@@ -199,3 +199,14 @@ MEC_2 = S_2 - S_1 = 0.364 - 0.358 = +0.006
 - El parámetro `alpha` es configurable (default 0.5)
 - El parámetro `lambda` para EMA es configurable (default 0.3)
 
+
+
+
+
+
+
+
+
+
+
+

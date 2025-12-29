@@ -64,10 +64,7 @@
                 <a href="/media" class="active">Para medios</a>
                 <a href="/campaign">Para campañas</a>
                 <a href="/forecast">Forecast</a>
-                <a href="/webpage#pipeline">Arquitectura</a>
-                <a href="/webpage#methodology">Metodología</a>
-                <a href="/webpage#features">Características</a>
-                <a href="/docs">Documentación técnica</a>
+                <a href="/dashboard" class="nav-highlight">Analytics</a>
             </div>
             <div class="nav-right">
                 <button class="primary-btn" onclick="openDemoModal()" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Solicitar demo</button>
@@ -350,8 +347,62 @@
             return 'https://castorelecciones.ngrok.app';
         })();
     </script>
+    <!-- Define testMediaWithMockup early to ensure it's available -->
+    <script>
+        // Define testMediaWithMockup function immediately
+        // It will use functions from main.js if available, or wait for them to load
+        window.testMediaWithMockup = function() {
+            const resultsSection = document.getElementById("results-section");
+            if (!resultsSection) {
+                console.error("Results section not found");
+                alert("Error: No se encontró la sección de resultados.");
+                return;
+            }
+            
+            // Check if dependencies are available
+            if (typeof generateMediaMockupData === 'function' && typeof renderMediaResults === 'function') {
+                try {
+                    resultsSection.style.display = "block";
+                    const mockupData = generateMediaMockupData();
+                    if (typeof window.lastResponse !== 'undefined') {
+                        window.lastResponse = mockupData;
+                    }
+                    renderMediaResults(mockupData);
+                    resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                } catch (error) {
+                    console.error("Error in testMediaWithMockup:", error);
+                    alert("Error al generar el ejemplo: " + error.message);
+                }
+            } else {
+                // Wait a bit for main.js to load, then retry
+                console.log("Waiting for main.js to load...");
+                setTimeout(function() {
+                    if (typeof generateMediaMockupData === 'function' && typeof renderMediaResults === 'function') {
+                        try {
+                            resultsSection.style.display = "block";
+                            const mockupData = generateMediaMockupData();
+                            if (typeof window.lastResponse !== 'undefined') {
+                                window.lastResponse = mockupData;
+                            }
+                            renderMediaResults(mockupData);
+                            resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                        } catch (error) {
+                            console.error("Error in testMediaWithMockup (retry):", error);
+                            alert("Error al generar el ejemplo: " + error.message);
+                        }
+                    } else {
+                        console.error("Required functions not available:", {
+                            generateMediaMockupData: typeof generateMediaMockupData,
+                            renderMediaResults: typeof renderMediaResults
+                        });
+                        alert("Error: El script principal no se cargó correctamente. Por favor, recarga la página.");
+                    }
+                }, 500);
+            }
+        };
+    </script>
     <script src="/static/js/config.js"></script>
-    <script src="/static/js/main.js"></script>
+    <script src="/static/js/main.js" onerror="console.error('Failed to load main.js')"></script>
     <script src="/static/js/performance.js" defer></script>
     <script src="/static/js/landing.js" defer></script>
 </body>

@@ -8,24 +8,24 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 
 from services.database_service import DatabaseService
 from utils.validators import validate_email, validate_phone_number
+from utils.rate_limiter import limiter
+from utils.response_helpers import (
+    success_response, error_response, internal_error,
+    service_factory, handle_exceptions
+)
 
 logger = logging.getLogger(__name__)
 
 auth_bp = Blueprint('auth', __name__)
 
-# Initialize service
-db_service = None
-
 
 def get_db_service():
-    """Lazy initialization of database service."""
-    global db_service
-    if db_service is None:
-        db_service = DatabaseService()
-    return db_service
+    """Thread-safe lazy initialization of database service."""
+    return service_factory.get_or_create('db_service', DatabaseService)
 
 
 @auth_bp.route('/auth/register', methods=['POST'])
+@limiter.limit("5 per minute; 30 per hour")
 def register():
     """
     User registration endpoint.
@@ -123,6 +123,7 @@ def register():
 
 
 @auth_bp.route('/auth/login', methods=['POST'])
+@limiter.limit("8 per minute; 50 per hour")
 def login():
     """
     User login endpoint.
@@ -223,4 +224,3 @@ def get_current_user():
             'success': False,
             'error': 'Internal server error'
         }), 500
-
