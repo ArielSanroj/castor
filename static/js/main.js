@@ -420,7 +420,7 @@ function renderCampaignResults(data) {
         sentimientosDiv.appendChild(sentimientosTitle);
 
         const sentimientosText = document.createElement("div");
-        sentimientosText.styleCssText = "color: var(--muted); line-height: 1.7; font-size: 0.95rem;";
+        sentimientosText.style.cssText = "color: var(--muted); line-height: 1.7; font-size: 0.95rem;";
         const pos = Math.round(topicData.sentiment.positive * topicData.tweet_count);
         const neg = Math.round(topicData.sentiment.negative * topicData.tweet_count);
         const neu = Math.round(topicData.sentiment.neutral * topicData.tweet_count);

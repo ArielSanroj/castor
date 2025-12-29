@@ -10,5 +10,17 @@ from .web import web_bp
 from .leads import leads_bp
 from .media import media_bp
 from .forecast import forecast_bp
+from .advisor import advisor_bp
 
-__all__ = ['analysis_bp', 'chat_bp', 'health_bp', 'auth_bp', 'campaign_bp', 'web_bp', 'leads_bp', 'media_bp', 'forecast_bp']
+__all__ = [
+    'analysis_bp',
+    'chat_bp',
+    'health_bp',
+    'auth_bp',
+    'campaign_bp',
+    'web_bp',
+    'leads_bp',
+    'media_bp',
+    'forecast_bp',
+    'advisor_bp',
+]

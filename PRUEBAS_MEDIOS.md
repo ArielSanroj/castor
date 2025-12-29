@@ -201,3 +201,14 @@ curl -X POST http://localhost:5001/api/media/analyze \
 **Última actualización:** 30 de Noviembre, 2025
 
 
+
+
+
+
+
+
+
+
+
+
+

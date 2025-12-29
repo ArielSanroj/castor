@@ -9,7 +9,12 @@ from datetime import datetime, timedelta
 
 from config import Config
 from utils.cache import get_cache_key, get, set
-from utils.twitter_rate_tracker import can_make_twitter_request, record_twitter_usage
+from utils.twitter_rate_tracker import can_make_twitter_request, record_twitter_usage, get_twitter_usage_stats
+from utils.circuit_breaker import (
+    get_twitter_circuit_breaker,
+    exponential_backoff,
+    CircuitBreakerOpenError
+)
 
 logger = logging.getLogger(__name__)
 
@@ -22,15 +27,57 @@ class TwitterService:
         if not Config.TWITTER_BEARER_TOKEN:
             raise ValueError("TWITTER_BEARER_TOKEN not configured")
         
-        self.client = tweepy.Client(
-            bearer_token=Config.TWITTER_BEARER_TOKEN,
-            consumer_key=Config.TWITTER_API_KEY,
-            consumer_secret=Config.TWITTER_API_SECRET,
-            access_token=Config.TWITTER_ACCESS_TOKEN,
-            access_token_secret=Config.TWITTER_ACCESS_TOKEN_SECRET,
-            wait_on_rate_limit=True
-        )
+        # Build client kwargs - some tweepy versions don't support timeout
+        client_kwargs = {
+            'bearer_token': Config.TWITTER_BEARER_TOKEN,
+            'consumer_key': Config.TWITTER_API_KEY,
+            'consumer_secret': Config.TWITTER_API_SECRET,
+            'access_token': Config.TWITTER_ACCESS_TOKEN,
+            'access_token_secret': Config.TWITTER_ACCESS_TOKEN_SECRET,
+            'wait_on_rate_limit': True,
+        }
+
+        # Only add timeout if supported by this tweepy version
+        try:
+            import inspect
+            client_init_params = inspect.signature(tweepy.Client.__init__).parameters
+            if 'timeout' in client_init_params:
+                client_kwargs['timeout'] = Config.TWITTER_TIMEOUT_SECONDS
+        except Exception:
+            pass  # If we can't check, skip timeout parameter
+
+        self.client = tweepy.Client(**client_kwargs)
+        self._circuit_breaker = get_twitter_circuit_breaker()
         logger.info("TwitterService initialized")
+    
+    @exponential_backoff(
+        max_retries=3,
+        initial_delay=2.0,
+        max_delay=60.0,
+        exceptions=(tweepy.TooManyRequests, tweepy.BadRequest, tweepy.Unauthorized, Exception)
+    )
+    def _call_twitter_api(self, call_func):
+        """
+        Execute Twitter API call with circuit breaker and retry logic.
+        
+        Args:
+            call_func: Function that makes the Twitter API call
+            
+        Returns:
+            API response
+            
+        Raises:
+            CircuitBreakerOpenError: If circuit breaker is open
+            Exception: Original exception from API call
+        """
+        try:
+            return self._circuit_breaker.call(call_func)
+        except CircuitBreakerOpenError:
+            logger.error("Twitter circuit breaker is OPEN, rejecting request")
+            raise
+        except (tweepy.TooManyRequests, tweepy.BadRequest, tweepy.Unauthorized) as e:
+            logger.warning(f"Twitter API error: {e}")
+            raise
     
     def _search_tweets_impl(
         self,
@@ -54,18 +101,43 @@ class TwitterService:
             List of tweet dictionaries
         """
         # Check rate limit before making request (Twitter Free tier: 100 posts/month)
-        # Adjust max_results to respect daily limit (3 tweets/day)
+        # Adjust max_results to respect daily limit, but ensure minimum of 10 (Twitter API requirement)
         from config import Config
         daily_limit = Config.TWITTER_DAILY_TWEET_LIMIT
-        adjusted_max = min(max_results, daily_limit)
         
-        can_proceed, reason = can_make_twitter_request(adjusted_max)
-        if not can_proceed:
-            logger.warning(f"Twitter rate limit check failed: {reason}")
-            return []
+        # Twitter API requires min 10 results per request
+        TWITTER_MIN_RESULTS = 10
         
-        # Use adjusted max_results for the actual request
-        max_results = adjusted_max
+        # If daily limit is less than minimum, we need to request minimum but will only use what's available
+        if daily_limit < TWITTER_MIN_RESULTS:
+            logger.info(f"Daily limit ({daily_limit}) is below Twitter minimum ({TWITTER_MIN_RESULTS}). Will request minimum but only use {daily_limit}.")
+            # Check if we have any remaining quota (even if less than minimum)
+            can_proceed, reason = can_make_twitter_request(TWITTER_MIN_RESULTS)
+            logger.info(f"Rate limit check for {TWITTER_MIN_RESULTS} tweets: can_proceed={can_proceed}, reason={reason}")
+            if not can_proceed:
+                # If we can't make the minimum request, check if we have ANY quota left
+                stats = get_twitter_usage_stats()
+                remaining = stats["today"]["remaining"]
+                logger.info(f"Checking remaining quota: {remaining} tweets available")
+                if remaining <= 0:
+                    logger.warning(f"Twitter rate limit check failed: {reason}")
+                    return []
+                # If we have some quota but less than minimum, log warning but proceed
+                logger.warning(f"Daily quota ({remaining}) is less than Twitter minimum ({TWITTER_MIN_RESULTS}), but attempting anyway to verify connection.")
+            # Use minimum required by Twitter, but respect the daily limit by only processing that many
+            adjusted_max = TWITTER_MIN_RESULTS
+            actual_limit = min(daily_limit, max_results)  # We'll only process this many from the results
+            logger.info(f"Proceeding with request: adjusted_max={adjusted_max}, actual_limit={actual_limit}")
+        else:
+            adjusted_max = min(max_results, daily_limit)
+            actual_limit = adjusted_max
+            can_proceed, reason = can_make_twitter_request(adjusted_max)
+            if not can_proceed:
+                logger.warning(f"Twitter rate limit check failed: {reason}")
+                return []
+        
+        # Use adjusted max_results for the actual request (must be >= 10)
+        max_results = max(adjusted_max, TWITTER_MIN_RESULTS)
         
         try:
             # Build query string
@@ -88,13 +160,16 @@ class TwitterService:
                 current_max = min(remaining, 100)  # API limit per request
                 
                 try:
-                    response = self.client.search_recent_tweets(
-                        query=search_query,
-                        max_results=current_max,
-                        start_time=start_time,
-                        tweet_fields=['created_at', 'author_id', 'public_metrics', 'lang', 'geo'],
-                        next_token=pagination_token
-                    )
+                    def _make_api_call():
+                        return self.client.search_recent_tweets(
+                            query=search_query,
+                            max_results=current_max,
+                            start_time=start_time,
+                            tweet_fields=['created_at', 'author_id', 'public_metrics', 'lang', 'geo'],
+                            next_token=pagination_token
+                        )
+                    
+                    response = self._call_twitter_api(_make_api_call)
                     
                     if not response.data:
                         break
@@ -125,12 +200,16 @@ class TwitterService:
                     logger.error(f"Error searching tweets: {e}")
                     break
             
-            # Record usage for rate limiting
+            # Record usage for rate limiting (only count what we actually use)
             if tweets:
-                record_twitter_usage(len(tweets))
+                # If we had to request more than daily limit, only return and count what we use
+                tweets_to_use = tweets[:actual_limit]
+                record_twitter_usage(len(tweets_to_use))
+                logger.info(f"Retrieved {len(tweets)} tweets for query: {query}, using {len(tweets_to_use)}")
+                return tweets_to_use
             
             logger.info(f"Retrieved {len(tweets)} tweets for query: {query}")
-            return tweets[:max_results]
+            return tweets
             
         except Exception as e:
             logger.error(f"Error in search_tweets: {e}", exc_info=True)
@@ -230,12 +309,14 @@ class TwitterService:
     def get_tweet_metrics(self, tweet_id: str) -> Optional[Dict[str, Any]]:
         """Get metrics for a specific tweet."""
         try:
-            tweet = self.client.get_tweet(
-                tweet_id,
-                tweet_fields=['public_metrics']
-            )
+            def _make_api_call():
+                return self.client.get_tweet(
+                    tweet_id,
+                    tweet_fields=['public_metrics']
+                )
+            
+            tweet = self._call_twitter_api(_make_api_call)
             return tweet.data.public_metrics if tweet.data else None
         except Exception as e:
             logger.error(f"Error getting tweet metrics: {e}")
             return None
-

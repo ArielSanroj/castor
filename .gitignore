@@ -70,3 +70,7 @@ dist/
 tmp/
 temp/
 *.tmp
+.env.bak
+.env
+test_openai_key.py
+verify_services.py

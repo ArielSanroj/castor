@@ -70,7 +70,7 @@ def test_media_endpoint(base_url: str = "http://localhost:5001"):
     
     try:
         print_info("Enviando solicitud...")
-        response = requests.post(url, json=payload, timeout=120)
+        response = requests.post(url, json=payload, timeout=300)  # 5 minutos para dar tiempo a rate limits
         
         print_info(f"Status Code: {response.status_code}")
         
@@ -153,7 +153,7 @@ def test_campaign_endpoint(base_url: str = "http://localhost:5001"):
     
     try:
         print_info("Enviando solicitud...")
-        response = requests.post(url, json=payload, timeout=120)
+        response = requests.post(url, json=payload, timeout=300)  # 5 minutos para dar tiempo a rate limits
         
         print_info(f"Status Code: {response.status_code}")
         

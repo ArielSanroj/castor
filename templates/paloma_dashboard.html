@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASTOR · Monitoreo Paloma Valencia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    <style>
+        :root {
+            --bg: #050915;
+            --panel: #0b1224;
+            --card: #0f172a;
+            --border: #1f2937;
+            --accent: #5eead4;
+            --accent-2: #a855f7;
+            --muted: #94a3b8;
+            --muted-2: #cbd5e1;
+            --danger: #f43f5e;
+            --good: #22c55e;
+        }
+        body {
+            background: radial-gradient(circle at 20% 20%, rgba(94,234,212,0.06), transparent 30%),
+                        radial-gradient(circle at 80% 0%, rgba(168,85,247,0.08), transparent 28%),
+                        var(--bg);
+            color: #e2e8f0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            padding: 0 1rem 3rem;
+        }
+        .nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,9,21,0.8); backdrop-filter: blur(12px); z-index: 5; }
+        .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #e2e8f0; }
+        .brand img { height: 36px; width: 36px; }
+        .nav-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-weight: 600; padding: 0.35rem 0.7rem; border-radius: 999px; }
+        .nav-links a.active, .nav-links a:hover { background: var(--accent); color: var(--bg); }
+        .hero { margin: 2rem auto; max-width: 1200px; display: grid; gap: 1rem; }
+        .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--muted); font-size: 0.85rem; }
+        .hero h1 { font-size: clamp(2rem, 4vw, 2.9rem); margin: 0.3rem 0; }
+        .lead { color: var(--muted); max-width: 900px; line-height: 1.6; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+        .card { background: linear-gradient(135deg, rgba(94,234,212,0.08), rgba(15,23,42,0.7)); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem; box-shadow: 0 14px 45px rgba(0,0,0,0.32); }
+        .kpi { font-size: 2rem; font-weight: 800; }
+        .pill { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.75rem; border-radius: 999px; background: rgba(94,234,212,0.15); color: var(--accent); font-weight: 700; font-size: 0.9rem; }
+        .section-title { margin: 2.25rem 0 0.75rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.2rem; letter-spacing: 0.01em; }
+        .badge { background: rgba(148,163,184,0.2); padding: 0.2rem 0.6rem; border-radius: 10px; color: var(--muted-2); border: 1px solid var(--border); font-size: 0.85rem; }
+        .list { display: grid; gap: 0.4rem; padding-left: 1.2rem; color: var(--muted); margin: 0; }
+        .topic { border: 1px solid var(--border); border-radius: 12px; padding: 1rem; background: rgba(15,23,42,0.7); }
+        .plan-card { border: 1px solid var(--border); border-radius: 14px; padding: 1rem; background: rgba(94,234,212,0.05); }
+        .alert { border-left: 4px solid var(--danger); padding-left: 0.75rem; color: var(--muted); }
+        canvas { width: 100%; height: 260px; }
+        @media (max-width: 720px) { .nav { flex-direction: column; align-items: flex-start; gap: 0.5rem; } }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a class="brand" href="/">
+            <img src="/static/images/logo.png" alt="Castor">
+            <div>
+                <div style="font-weight: 800;">CASTOR</div>
+                <small style="color: var(--muted);">Inteligencia Electoral</small>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="/campaign">Campañas</a>
+            <a href="/media">Medios</a>
+            <a href="/forecast">Forecast</a>
+            <a href="/webpage#pipeline">Arquitectura</a>
+            <a href="#" class="active">Caso Paloma</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div>
+            <div class="eyebrow">Monitoreo continuo · Paloma Valencia</div>
+            <h1>Panel narrativo y de alertas CASTOR</h1>
+            <p class="lead">Mock con datos simulados para visualizar el dashboard continuo: KPIs, series, temas, narrativas y alertas en un solo vistazo.</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="pill">Volumen diario</div>
+                <div class="kpi" id="kpi-volume">--</div>
+                <div style="color: var(--muted);">Tweets últimos 24h (simulado)</div>
+            </div>
+            <div class="card">
+                <div class="pill">Share of Voice</div>
+                <div class="kpi" id="kpi-sov">--</div>
+                <div style="color: var(--muted);">Vs. principales rivales</div>
+            </div>
+            <div class="card">
+                <div class="pill">Sentimiento neto</div>
+                <div class="kpi" id="kpi-sentiment">--</div>
+                <div style="color: var(--muted);">Positivo - Negativo</div>
+            </div>
+            <div class="card">
+                <div class="pill">Momentum</div>
+                <div class="kpi" id="kpi-momentum">--</div>
+                <div style="color: var(--muted);">Tendencia 7d</div>
+            </div>
+            <div class="card">
+                <div class="pill">Polarización</div>
+                <div class="kpi" id="kpi-polarization">--</div>
+                <div style="color: var(--muted);">0 = baja · 1 = alta</div>
+            </div>
+        </div>
+    </header>
+
+    <main style="max-width: 1200px; margin: 0 auto;">
+        <section class="grid">
+            <div class="card">
+                <div class="section-title">Timeline · Volumen y SOV</div>
+                <canvas id="chart-volume"></canvas>
+            </div>
+            <div class="card">
+                <div class="section-title">Sentimiento y momentum</div>
+                <canvas id="chart-sentiment"></canvas>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">Temas y narrativas</div>
+            <div class="grid" id="topics-grid"></div>
+        </section>
+
+        <section class="grid">
+            <div class="card">
+                <div class="section-title" style="margin-bottom:0.5rem;">Alertas</div>
+                <ul id="alerts" class="list"></ul>
+            </div>
+            <div class="card">
+                <div class="section-title" style="margin-bottom:0.5rem;">Tema emergente</div>
+                <div id="emerging-topic" style="color: var(--muted); line-height:1.6;"></div>
+                <div style="margin-top:1rem;">
+                    <span class="badge" id="emerging-sentiment"></span>
+                    <span class="badge" id="emerging-share"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid">
+            <div class="card">
+                <div class="section-title" style="margin-bottom:0.5rem;">Resumen ejecutivo</div>
+                <h3 id="exec-overview"></h3>
+                <div class="grid" style="margin-top:1rem;">
+                    <div>
+                        <h4>Hallazgos</h4>
+                        <ul id="exec-findings" class="list"></ul>
+                    </div>
+                    <div>
+                        <h4>Recomendaciones</h4>
+                        <ul id="exec-recs" class="list"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="section-title" style="margin-bottom:0.5rem;">Plan estratégico</div>
+                <div id="plan-grid" class="grid"></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="section-title" style="margin-bottom:0.5rem;">Discurso sugerido</div>
+            <h3 id="speech-title"></h3>
+            <div class="badge" style="margin: 0.5rem 0 1rem;">5 min</div>
+            <div style="border-left:4px solid var(--accent); padding-left:1rem; color:var(--muted);" id="speech-content"></div>
+            <div style="margin-top:1rem;">
+                <strong>Puntos clave</strong>
+                <ul id="speech-points" class="list"></ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const mock = {
+            kpis: { volume: 920, sov: 28, sentiment_net: 22, momentum: '+8', polarization: 0.58 },
+            volumeSeries: {
+                labels: ['D-7','D-6','D-5','D-4','D-3','D-2','D-1','Hoy'],
+                volume: [480,520,610,580,640,700,860,920],
+                sov: [23,24,24,25,26,27,28,28]
+            },
+            sentimentSeries: {
+                labels: ['D-7','D-6','D-5','D-4','D-3','D-2','D-1','Hoy'],
+                positive: [48,49,50,51,52,54,55,56],
+                neutral: [22,22,21,21,20,19,19,18],
+                negative: [30,29,29,28,28,27,26,26]
+            },
+            topics: [
+                { topic: 'Seguridad', sentiment: { positive: 0.62, negative: 0.30, neutral: 0.08 }, tweet_count: 48, key_insights: ['Apoyo a FFMM y rechazo a debilitamiento militar.', 'Casos Bello/Girardota impulsan engagement.', 'Contraste con “paz total” percibida como débil.'] },
+                { topic: 'Economía y empleo', sentiment: { positive: 0.55, negative: 0.28, neutral: 0.17 }, tweet_count: 28, key_insights: ['Interés en cotización flexible para informales.', 'Temor a impuestos; aclarar plan fiscal.', 'Historias de emprendedores elevan empatía.'] },
+                { topic: 'Unidad opositora', sentiment: { positive: 0.48, negative: 0.22, neutral: 0.30 }, tweet_count: 22, key_insights: ['Consulta de marzo genera expectativa.', 'Riesgo de fragmentación si no hay acuerdo rápido.', 'Aliados locales y empresariales listos para sumar.'] },
+                { topic: 'Salud', sentiment: { positive: 0.52, negative: 0.34, neutral: 0.14 }, tweet_count: 18, key_insights: ['Críticas a crisis actual elevan volumen.', 'Propuestas de eficiencia reciben apoyo base.', 'Espacio para cifras comparativas.'] }
+            ],
+            alerts: [
+                'Spike de volumen +32% vs. promedio 7d (discurso seguridad).',
+                'Incremento de negatividad en Salud (+8pp) por controversia EPS.',
+                'Tema emergente: “Consulta opositora” sube a 12% del share en 48h.',
+                'Evento viral: clip en Bello supera 30k views en 6h.'
+            ],
+            emerging: {
+                sentiment: 'Mixto positivo (56/18/26)',
+                share: '12% del volumen total en 48h',
+                detail: 'Consulta opositora: narrativa de unidad y orden; oportunidad para liderar el marco de seguridad.'
+            },
+            executive_summary: {
+                overview: 'La narrativa de Paloma Valencia se fortalece en seguridad y transparencia, con tracción alta en Antioquia y Bogotá; tono propositivo y de orden con apertura moderada al centro.',
+                key_findings: [
+                    'Seguridad domina (42% menciones), sentimiento neto +0.32.',
+                    'Economía/empleo mantiene interés; dudas fiscales en clase media.',
+                    'Unidad opositora eleva engagement (+18%) al mencionarse consulta.'
+                ],
+                recommendations: [
+                    'Enmarcar orden/FFMM con casos locales (Bello, Soacha).',
+                    'Explicar formalización flexible con cifras claras.',
+                    'CTA a participación en la Consulta para consolidar momentum.'
+                ]
+            },
+            plan: [
+                { name: 'Dominar narrativa de seguridad', description: 'Anclar orden y protección en 5 ciudades clave.', actions: ['Giras con testimonios de víctimas.', 'Infografías diarias de cifras de seguridad.', 'Live semanal con FFMM retirados.'], kpis: ['Engagement seguridad +25%', 'Share seguridad >45%'] },
+                { name: 'Convertir momentum en apoyo en la Consulta', description: 'Motivar participación y adhesión centro-derecha.', actions: ['CTA a registrarse para la Consulta.', 'Mensajes de unidad con figuras aliadas.', 'Segmentación digital regiones uribistas.'], kpis: ['CTR a landing +30%', 'Menciones positivas unidad +20%'] },
+                { name: 'Confianza económica', description: 'Reducir temores fiscales y subir credibilidad pro-empleo.', actions: ['Caso de éxito semanal de formalización.', 'Comparativa de impuestos vs. rivales.', 'Vocería de expertos aliados.'], kpis: ['Sentimiento economía >55%', 'Rechazo fiscal < -15%'] }
+            ],
+            speech: {
+                title: 'Unir a Colombia con Orden y Empleo Digno',
+                content: 'Queridos colombianos, hoy decimos sí al orden que protege y al empleo que dignifica. La seguridad es la base de la libertad; cuidaremos cada barrio, cada familia. A los informales les ofreceremos un camino real para cotizar y tener pensión, sin asfixiar su ingreso. Y construiremos unidad, porque solo juntos podremos frenar el continuismo y abrir un futuro de orden y prosperidad.',
+                key_points: ['Seguridad como base de la libertad.', 'Empleo flexible y pensión justa para informales.', 'Unidad para ganar en marzo y frenar el continuismo.']
+            }
+        };
+
+        function setKPIs() {
+            document.getElementById('kpi-volume').textContent = mock.kpis.volume;
+            document.getElementById('kpi-sov').textContent = mock.kpis.sov + '%';
+            document.getElementById('kpi-sentiment').textContent = '+' + mock.kpis.sentiment_net;
+            document.getElementById('kpi-momentum').textContent = mock.kpis.momentum;
+            document.getElementById('kpi-polarization').textContent = mock.kpis.polarization.toFixed(2);
+        }
+
+        function renderCharts() {
+            const volCtx = document.getElementById('chart-volume').getContext('2d');
+            new Chart(volCtx, {
+                type: 'line',
+                data: {
+                    labels: mock.volumeSeries.labels,
+                    datasets: [
+                        { label: 'Volumen', data: mock.volumeSeries.volume, borderColor: '#5eead4', backgroundColor: 'rgba(94,234,212,0.2)', tension: 0.35, fill: true },
+                        { label: 'Share of Voice', data: mock.volumeSeries.sov, borderColor: '#a855f7', borderDash: [6,4], tension: 0.35, yAxisID: 'y1' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.08)' } },
+                        y1: { beginAtZero: true, position: 'right', grid: { display: false } }
+                    },
+                    plugins: { legend: { labels: { color: '#e2e8f0' } } }
+                }
+            });
+
+            const sentCtx = document.getElementById('chart-sentiment').getContext('2d');
+            new Chart(sentCtx, {
+                type: 'line',
+                data: {
+                    labels: mock.sentimentSeries.labels,
+                    datasets: [
+                        { label: 'Positivo %', data: mock.sentimentSeries.positive, borderColor: '#22c55e', tension: 0.35, fill: false },
+                        { label: 'Neutral %', data: mock.sentimentSeries.neutral, borderColor: '#cbd5e1', tension: 0.35, fill: false },
+                        { label: 'Negativo %', data: mock.sentimentSeries.negative, borderColor: '#f43f5e', tension: 0.35, fill: false }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.08)' } } },
+                    plugins: { legend: { labels: { color: '#e2e8f0' } } }
+                }
+            });
+        }
+
+        function renderTopics() {
+            const grid = document.getElementById('topics-grid');
+            grid.innerHTML = '';
+            mock.topics.forEach(topic => {
+                const pos = Math.round(topic.sentiment.positive * 100);
+                const neg = Math.round(topic.sentiment.negative * 100);
+                const neu = Math.round(topic.sentiment.neutral * 100);
+                const el = document.createElement('div');
+                el.className = 'topic';
+                el.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h4 style="margin:0;">${topic.topic}</h4>
+                        <span class="badge">${topic.tweet_count} menciones</span>
+                    </div>
+                    <div style="display:flex; gap:0.5rem; color:var(--muted); font-size:0.9rem; margin:0.35rem 0;">
+                        <span>😊 ${pos}%</span><span>😐 ${neu}%</span><span>☹️ ${neg}%</span>
+                    </div>
+                    <ul class="list" style="margin-top:0.5rem;">
+                        ${topic.key_insights.map(i => `<li>${i}</li>`).join('')}
+                    </ul>
+                `;
+                grid.appendChild(el);
+            });
+        }
+
+        function renderAlerts() {
+            const ul = document.getElementById('alerts');
+            ul.innerHTML = mock.alerts.map(a => `<li class="alert">${a}</li>`).join('');
+            document.getElementById('emerging-topic').textContent = mock.emerging.detail;
+            document.getElementById('emerging-sentiment').textContent = mock.emerging.sentiment;
+            document.getElementById('emerging-share').textContent = mock.emerging.share;
+        }
+
+        function renderExecutive() {
+            document.getElementById('exec-overview').textContent = mock.executive_summary.overview;
+            document.getElementById('exec-findings').innerHTML = mock.executive_summary.key_findings.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('exec-recs').innerHTML = mock.executive_summary.recommendations.map(i => `<li>${i}</li>`).join('');
+        }
+
+        function renderPlan() {
+            const grid = document.getElementById('plan-grid');
+            grid.innerHTML = '';
+            mock.plan.forEach(obj => {
+                const el = document.createElement('div');
+                el.className = 'plan-card';
+                el.innerHTML = `
+                    <h4 style="margin:0 0 0.25rem;">${obj.name}</h4>
+                    <p style="color:var(--muted); margin:0 0 0.75rem;">${obj.description}</p>
+                    <strong>Acciones</strong>
+                    <ul class="list">${obj.actions.map(a => `<li>${a}</li>`).join('')}</ul>
+                    <div style="margin-top:0.75rem; display:flex; gap:0.35rem; flex-wrap:wrap;">
+                        ${obj.kpis.map(k => `<span class="badge">${k}</span>`).join('')}
+                    </div>
+                `;
+                grid.appendChild(el);
+            });
+        }
+
+        function renderSpeech() {
+            document.getElementById('speech-title').textContent = mock.speech.title;
+            document.getElementById('speech-content').textContent = mock.speech.content;
+            document.getElementById('speech-points').innerHTML = mock.speech.key_points.map(p => `<li>${p}</li>`).join('');
+        }
+
+        setKPIs();
+        renderCharts();
+        renderTopics();
+        renderAlerts();
+        renderExecutive();
+        renderPlan();
+        renderSpeech();
+    </script>
+</body>
+</html>

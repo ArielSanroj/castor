@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>CASTOR Analytics | Dashboard de Inteligencia Electoral</title>
+    <meta name="description" content="Dashboard unificado de inteligencia electoral. Analiza medios, campañas y forecast en una sola interfaz.">
+    <meta name="keywords" content="dashboard electoral, inteligencia electoral, análisis de medios, forecast electoral, análisis de campaña">
+    <meta name="author" content="Castor Elecciones">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://castor-elecciones.com/analytics">
+    <meta property="og:title" content="CASTOR Analytics | Dashboard de Inteligencia Electoral">
+    <meta property="og:description" content="Analiza la conversación electoral con inteligencia artificial.">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CASTOR Analytics | Dashboard de Inteligencia Electoral">
+    <meta name="twitter:description" content="Dashboard unificado de inteligencia electoral.">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <link rel="preload" href="/static/css/styles.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+
+    <meta name="theme-color" content="#0A0E1A">
+
+    <style>
+        /* Analytics Dashboard Specific Styles */
+        .analytics-header {
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .analytics-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .analytics-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .analytics-brand img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .analytics-brand strong {
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        .analytics-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .analytics-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .analytics-links a:hover {
+            color: var(--text);
+        }
+
+        /* Form Section */
+        .analytics-form-section {
+            background: linear-gradient(180deg, var(--panel) 0%, var(--bg) 100%);
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .analytics-form-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .analytics-form-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .analytics-form-title h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .analytics-form-title p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .analytics-form {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.6rem 0.9rem;
+            font-size: 0.95rem;
+            color: var(--text);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 106, 61, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: var(--muted);
+            opacity: 0.6;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-analyze {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-analyze:hover {
+            background: var(--accent-strong);
+            transform: translateY(-1px);
+        }
+
+        .btn-analyze:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-demo {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .btn-demo:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .form-error {
+            background: rgba(255, 107, 129, 0.1);
+            border: 1px solid rgba(255, 107, 129, 0.3);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #ff6b81;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .form-loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            color: var(--muted);
+        }
+
+        .form-loading .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Results Section */
+        .analytics-results {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .analytics-results.active {
+            display: block;
+        }
+
+        /* KPI Cards */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .kpi-card.positive::before { background: var(--success); }
+        .kpi-card.negative::before { background: #ff6b81; }
+        .kpi-card.neutral::before { background: var(--muted); }
+
+        .kpi-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .kpi-meta {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Module Tabs */
+        .module-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0;
+            overflow-x: auto;
+        }
+
+        .module-tab {
+            background: transparent;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+            transition: color 0.2s;
+        }
+
+        .module-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: transparent;
+            transition: background 0.2s;
+        }
+
+        .module-tab:hover {
+            color: var(--text);
+        }
+
+        .module-tab.active {
+            color: var(--accent);
+        }
+
+        .module-tab.active::after {
+            background: var(--accent);
+        }
+
+        .module-content {
+            display: none;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        /* Analytics Cards */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .analytics-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .analytics-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analytics-card h3 .icon {
+            font-size: 1.2rem;
+        }
+
+        .analytics-card-content {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .analytics-card-content ul {
+            padding-left: 1.25rem;
+            margin: 0;
+        }
+
+        .analytics-card-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Full Width Card */
+        .analytics-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Sentiment Bars */
+        .sentiment-bar-container {
+            margin-top: 1rem;
+        }
+
+        .sentiment-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.35rem;
+            font-size: 0.85rem;
+        }
+
+        .sentiment-bar {
+            height: 8px;
+            background: var(--bg);
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            margin-bottom: 0.75rem;
+        }
+
+        .sentiment-bar .positive {
+            background: var(--success);
+            transition: width 0.5s ease;
+        }
+
+        .sentiment-bar .neutral {
+            background: var(--muted);
+            transition: width 0.5s ease;
+        }
+
+        .sentiment-bar .negative {
+            background: #ff6b81;
+            transition: width 0.5s ease;
+        }
+
+        /* Topic Cards */
+        .topic-card {
+            background: var(--panel-alt);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .topic-count {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 1rem;
+        }
+
+        /* Forecast Cards */
+        .forecast-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .forecast-metric:last-child {
+            border-bottom: none;
+        }
+
+        .forecast-metric-label {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .forecast-metric-value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .forecast-metric-value.up {
+            color: var(--success);
+        }
+
+        .forecast-metric-value.down {
+            color: #ff6b81;
+        }
+
+        /* Strategic Recommendation */
+        .recommendation-card {
+            background: linear-gradient(135deg, rgba(66, 214, 151, 0.1), rgba(66, 214, 151, 0.05));
+            border: 1px solid rgba(66, 214, 151, 0.2);
+            border-left: 4px solid var(--success);
+        }
+
+        .recommendation-card h3 {
+            color: var(--success);
+        }
+
+        /* Speech Section */
+        .speech-container {
+            background: var(--panel-alt);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .speech-content {
+            width: 100%;
+            min-height: 200px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            resize: vertical;
+        }
+
+        .speech-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .btn-copy {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Context Bar */
+        .context-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .context-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            background: var(--bg);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text);
+        }
+
+        .chip-label {
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        /* KPI Enhancements */
+        .kpi-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+        }
+
+        .kpi-info {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--border);
+            color: var(--muted);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: help;
+            transition: all 0.2s;
+        }
+
+        .kpi-info:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .kpi-explainer {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+            line-height: 1.4;
+            opacity: 0.8;
+        }
+
+        /* TL;DR Section */
+        .tldr-section {
+            margin-bottom: 1rem;
+        }
+
+        .tldr-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .tldr-text {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .bullets-section {
+            margin-bottom: 0.75rem;
+        }
+
+        .bullets-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .bullets-list {
+            margin: 0;
+            padding-left: 1.25rem;
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .bullets-list li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Count Labels */
+        .count-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        /* Action Checklist */
+        .action-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--panel-alt);
+            border-radius: 8px;
+        }
+
+        .action-type {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .action-type.monitor {
+            background: rgba(255, 222, 119, 0.2);
+            color: var(--warning);
+        }
+
+        .action-type.validate {
+            background: rgba(66, 214, 151, 0.2);
+            color: var(--success);
+        }
+
+        .action-type.prepare {
+            background: rgba(136, 146, 176, 0.2);
+            color: var(--muted);
+        }
+
+        .action-text {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* Methodology Footer */
+        .methodology-footer {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--panel-alt);
+            border-radius: 8px;
+            border-left: 3px solid var(--border);
+        }
+
+        .methodology-text {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .methodology-text strong {
+            color: var(--text);
+        }
+
+        .methodology-text em {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .analytics-header {
+                padding: 0.75rem 1rem;
+            }
+
+            .analytics-form-section {
+                padding: 1rem;
+            }
+
+            .analytics-form {
+                padding: 1rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-results {
+                padding: 1rem;
+            }
+
+            .kpi-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module-tabs {
+                justify-content: flex-start;
+            }
+
+            .context-bar {
+                gap: 0.35rem;
+            }
+
+            .context-chip {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="landing" data-mode="analytics" itemscope itemtype="https://schema.org/WebPage">
+
+    <!-- Header -->
+    <header class="analytics-header">
+        <nav class="analytics-nav">
+            <a href="/" class="analytics-brand">
+                <img src="/static/images/logo.png" alt="CASTOR" loading="eager">
+                <strong>CASTOR Analytics</strong>
+            </a>
+            <div class="analytics-links">
+                <a href="/webpage">Landing</a>
+                <a href="/media">Medios</a>
+                <a href="/campaign">Campañas</a>
+                <a href="/forecast">Forecast</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+
+        <!-- Form Section -->
+        <section class="analytics-form-section">
+            <div class="analytics-form-container">
+                <div class="analytics-form-title">
+                    <h1>Analiza la conversación electoral</h1>
+                    <p>Ingresa los parámetros para obtener análisis de medios, estrategia de campaña y proyecciones.</p>
+                </div>
+
+                <form id="analytics-form" class="analytics-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="analytics-location">Ubicación *</label>
+                            <input type="text" id="analytics-location" name="location" placeholder="Colombia, Bogotá..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="analytics-topic">Tema</label>
+                            <input type="text" id="analytics-topic" name="topic" placeholder="Seguridad, Salud...">
+                        </div>
+                        <div class="form-group">
+                            <label for="analytics-candidate">Candidato</label>
+                            <input type="text" id="analytics-candidate" name="candidate_name" placeholder="Nombre del candidato">
+                        </div>
+                        <div class="form-group">
+                            <label for="analytics-politician">Usuario X</label>
+                            <input type="text" id="analytics-politician" name="politician" placeholder="@usuario">
+                        </div>
+                        <div class="form-group">
+                            <label for="analytics-days-back">Días atrás</label>
+                            <input type="number" id="analytics-days-back" name="days_back" value="30" min="7" max="90">
+                        </div>
+                        <div class="form-group">
+                            <label for="analytics-forecast-days">Proyectar</label>
+                            <input type="number" id="analytics-forecast-days" name="forecast_days" value="14" min="7" max="30">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="btn-demo" class="btn-demo">Ver ejemplo</button>
+                        <button type="submit" id="btn-analyze" class="btn-analyze">Analizar conversación</button>
+                    </div>
+
+                    <div id="form-error" class="form-error"></div>
+                    <div id="form-loading" class="form-loading">
+                        <div class="spinner"></div>
+                        <span>Analizando conversación electoral...</span>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="analytics-results" class="analytics-results">
+
+            <!-- Context Bar -->
+            <div class="context-bar" id="context-bar">
+                <div class="context-chip"><span class="chip-label">Ventana:</span> <span id="ctx-window">--</span></div>
+                <div class="context-chip"><span class="chip-label">Muestra:</span> <span id="ctx-sample">--</span></div>
+                <div class="context-chip"><span class="chip-label">Ubicación:</span> <span id="ctx-location">--</span></div>
+                <div class="context-chip"><span class="chip-label">Tema:</span> <span id="ctx-topic">--</span></div>
+                <div class="context-chip"><span class="chip-label">Actualizado:</span> <span id="ctx-updated">--</span></div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-row">
+                <div class="kpi-card" id="kpi-icce-card">
+                    <div class="kpi-header">
+                        <p class="kpi-label">ICCE Actual</p>
+                        <span class="kpi-info" title="Índice (0-100) que resume clima conversacional: volumen, tono y estabilidad. >60 favorable, 40-60 neutro, <40 crítico.">i</span>
+                    </div>
+                    <p class="kpi-value" id="kpi-icce">--</p>
+                    <p class="kpi-explainer">Índice 0-100 del clima conversacional. >60 favorable, 40-60 neutro.</p>
+                    <p class="kpi-meta" id="kpi-icce-meta">--</p>
+                </div>
+                <div class="kpi-card" id="kpi-momentum-card">
+                    <div class="kpi-header">
+                        <p class="kpi-label">Momentum</p>
+                        <span class="kpi-info" title="Velocidad de cambio del ICCE. Positivo = narrativa acelerando. Negativo = enfriando. Cerca de 0 = estable.">i</span>
+                    </div>
+                    <p class="kpi-value" id="kpi-momentum">--</p>
+                    <p class="kpi-explainer">Velocidad de cambio. Cerca de 0 = estable.</p>
+                    <p class="kpi-meta" id="kpi-momentum-meta">--</p>
+                </div>
+                <div class="kpi-card" id="kpi-sentiment-card">
+                    <div class="kpi-header">
+                        <p class="kpi-label">Sentiment Neto</p>
+                        <span class="kpi-info" title="Balance de tono: (% Favorable - % Crítica). No incluye neutral. Positivo = más menciones favorables.">i</span>
+                    </div>
+                    <p class="kpi-value" id="kpi-sentiment">--</p>
+                    <p class="kpi-explainer">Favorable - Crítica (no incluye neutral).</p>
+                    <p class="kpi-meta" id="kpi-sentiment-meta">--</p>
+                </div>
+                <div class="kpi-card" id="kpi-volume-card">
+                    <div class="kpi-header">
+                        <p class="kpi-label">Volumen</p>
+                        <span class="kpi-info" title="Tamaño de muestra analizada en la ventana seleccionada. Solo datos públicos, tweets originales.">i</span>
+                    </div>
+                    <p class="kpi-value" id="kpi-volume">--</p>
+                    <p class="kpi-explainer">Tweets analizados (datos públicos).</p>
+                    <p class="kpi-meta" id="kpi-volume-meta">--</p>
+                </div>
+            </div>
+
+            <!-- Module Tabs -->
+            <div class="module-tabs">
+                <button class="module-tab active" data-module="overview">Resumen</button>
+                <button class="module-tab" data-module="media">Medios</button>
+                <button class="module-tab" data-module="campaign">Campaña</button>
+                <button class="module-tab" data-module="forecast">Forecast</button>
+                <button class="module-tab" data-module="charts">Gráficos</button>
+            </div>
+
+            <!-- Overview Module -->
+            <div id="module-overview" class="module-content active">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3><span class="icon">📊</span> Estado de la Narrativa</h3>
+                        <div class="analytics-card-content">
+                            <!-- TL;DR format -->
+                            <div class="tldr-section">
+                                <p class="tldr-label">Qué está pasando:</p>
+                                <p class="tldr-text" id="narrative-tldr">-</p>
+                            </div>
+                            <div class="bullets-section">
+                                <p class="bullets-label">Drivers:</p>
+                                <ul class="bullets-list" id="narrative-drivers"></ul>
+                            </div>
+                            <div class="bullets-section">
+                                <p class="bullets-label">Riesgos:</p>
+                                <ul class="bullets-list" id="narrative-risks"></ul>
+                            </div>
+                            <div class="bullets-section">
+                                <p class="bullets-label">Vigilar:</p>
+                                <ul class="bullets-list" id="narrative-watch"></ul>
+                            </div>
+                            <!-- Sentiment with counts -->
+                            <div class="sentiment-bar-container" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                                <div class="sentiment-bar-label">
+                                    <span>Favorable</span>
+                                    <span><span id="sentiment-positive-pct">0%</span> <span class="count-label" id="sentiment-positive-count">(0)</span></span>
+                                </div>
+                                <div class="sentiment-bar">
+                                    <div class="positive" id="sentiment-positive-bar" style="width: 0%"></div>
+                                </div>
+                                <div class="sentiment-bar-label">
+                                    <span>Neutral</span>
+                                    <span><span id="sentiment-neutral-pct">0%</span> <span class="count-label" id="sentiment-neutral-count">(0)</span></span>
+                                </div>
+                                <div class="sentiment-bar">
+                                    <div class="neutral" id="sentiment-neutral-bar" style="width: 0%"></div>
+                                </div>
+                                <div class="sentiment-bar-label">
+                                    <span>Crítica</span>
+                                    <span><span id="sentiment-negative-pct">0%</span> <span class="count-label" id="sentiment-negative-count">(0)</span></span>
+                                </div>
+                                <div class="sentiment-bar">
+                                    <div class="negative" id="sentiment-negative-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3><span class="icon">📈</span> Proyección</h3>
+                        <div class="analytics-card-content">
+                            <div class="forecast-metric">
+                                <span class="forecast-metric-label">Horizonte</span>
+                                <span class="forecast-metric-value" id="forecast-horizon">14 días</span>
+                            </div>
+                            <div class="forecast-metric">
+                                <span class="forecast-metric-label">Dirección</span>
+                                <span class="forecast-metric-value" id="forecast-direction">-</span>
+                            </div>
+                            <div class="forecast-metric">
+                                <span class="forecast-metric-label">Confianza</span>
+                                <span class="forecast-metric-value" id="forecast-confidence">-</span>
+                            </div>
+                            <div class="forecast-metric">
+                                <span class="forecast-metric-label">Rango esperado</span>
+                                <span class="forecast-metric-value" id="forecast-range">-</span>
+                            </div>
+                            <div class="forecast-metric">
+                                <span class="forecast-metric-label">Riesgo narrativo</span>
+                                <span class="forecast-metric-value" id="forecast-risk">-</span>
+                            </div>
+                            <div class="forecast-metric">
+                                <span class="forecast-metric-label">Posición</span>
+                                <span class="forecast-metric-value" id="forecast-position">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card recommendation-card full-width">
+                        <h3><span class="icon">🎯</span> Acciones Recomendadas</h3>
+                        <div class="analytics-card-content">
+                            <div class="action-checklist">
+                                <div class="action-item">
+                                    <span class="action-type monitor">Monitorear</span>
+                                    <span class="action-text" id="action-monitor">-</span>
+                                </div>
+                                <div class="action-item">
+                                    <span class="action-type validate">Validar</span>
+                                    <span class="action-text" id="action-validate">-</span>
+                                </div>
+                                <div class="action-item">
+                                    <span class="action-type prepare">Preparar</span>
+                                    <span class="action-text" id="action-prepare">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Methodology footer -->
+                    <div class="methodology-footer full-width">
+                        <p class="methodology-text">
+                            <strong>Metodología:</strong> Datos públicos de X → clasificación de sentimiento (BETO) → temas (PND) → agregación → síntesis IA. <em>No mide intención de voto.</em>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Module -->
+            <div id="module-media" class="module-content">
+                <div class="analytics-grid">
+                    <div class="analytics-card full-width">
+                        <h3><span class="icon">📰</span> Resumen Descriptivo</h3>
+                        <div class="analytics-card-content">
+                            <p id="media-overview">-</p>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3><span class="icon">🔑</span> Datos Clave</h3>
+                        <div class="analytics-card-content">
+                            <ul id="media-stats"></ul>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3><span class="icon">💡</span> Hallazgos</h3>
+                        <div class="analytics-card-content">
+                            <ul id="media-findings"></ul>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card full-width">
+                        <h3><span class="icon">🏷️</span> Temas Identificados</h3>
+                        <div class="analytics-card-content" id="media-topics"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaign Module -->
+            <div id="module-campaign" class="module-content">
+                <div class="analytics-grid">
+                    <div class="analytics-card full-width">
+                        <h3><span class="icon">📋</span> Resumen Ejecutivo</h3>
+                        <div class="analytics-card-content">
+                            <p id="campaign-overview">-</p>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3><span class="icon">🎯</span> Hallazgos Estratégicos</h3>
+                        <div class="analytics-card-content">
+                            <ul id="campaign-findings"></ul>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3><span class="icon">💼</span> Recomendaciones</h3>
+                        <div class="analytics-card-content">
+                            <ul id="campaign-recommendations"></ul>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card full-width">
+                        <h3><span class="icon">📝</span> Plan Estratégico</h3>
+                        <div class="analytics-card-content" id="campaign-plan"></div>
+                    </div>
+
+                    <div class="analytics-card full-width">
+                        <h3><span class="icon">🎤</span> Discurso Generado</h3>
+                        <div class="speech-container">
+                            <textarea id="speech-content" class="speech-content" readonly></textarea>
+                            <div class="speech-actions">
+                                <button type="button" id="btn-copy-speech" class="btn-copy">Copiar discurso</button>
+                                <span id="copy-status" style="color: var(--success); font-size: 0.85rem;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forecast Module -->
+            <div id="module-forecast" class="module-content">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3><span class="icon">📊</span> ICCE Histórico</h3>
+                        <div class="analytics-card-content">
+                            <div class="chart-container">
+                                <canvas id="icce-history-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3><span class="icon">📈</span> Momentum</h3>
+                        <div class="analytics-card-content">
+                            <div class="chart-container">
+                                <canvas id="momentum-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3><span class="icon">🔮</span> Proyección 14 días</h3>
+                        <div class="analytics-card-content">
+                            <div class="chart-container">
+                                <canvas id="forecast-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3><span class="icon">⚠️</span> Alertas Narrativas</h3>
+                        <div class="analytics-card-content">
+                            <ul id="forecast-alerts"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Module -->
+            <div id="module-charts" class="module-content">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3><span class="icon">🥧</span> Distribución de Sentimiento</h3>
+                        <div class="analytics-card-content">
+                            <div class="chart-container">
+                                <canvas id="sentiment-pie-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3><span class="icon">📊</span> Sentimiento por Tema</h3>
+                        <div class="analytics-card-content">
+                            <div class="chart-container">
+                                <canvas id="topics-bar-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card full-width">
+                        <h3><span class="icon">📈</span> Evolución ICCE + Forecast</h3>
+                        <div class="analytics-card-content">
+                            <div class="chart-container" style="height: 350px;">
+                                <canvas id="combined-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer style="background: var(--panel); border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; color: var(--muted); font-size: 0.85rem;">
+        <p>© 2026 CASTOR Elecciones. Inteligencia electoral basada en datos públicos.</p>
+    </footer>
+
+    <!-- API Configuration -->
+    <script>
+        window.API_BASE_URL = (function() {
+            if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
+                return process.env.NEXT_PUBLIC_API_BASE_URL;
+            }
+            {% if url_for %}
+            try {
+                var flaskUrl = '{{ url_for("web.index", _external=True).rstrip("/") }}';
+                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '' && !flaskUrl.includes('error') && !flaskUrl.includes('Could not build')) {
+                    return flaskUrl;
+                }
+            } catch(e) {}
+            {% endif %}
+            if (typeof window !== 'undefined' && window.location) {
+                return window.location.origin;
+            }
+            return 'https://castorelecciones.ngrok.app';
+        })();
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/analytics_dashboard.js"></script>
+</body>
+</html>

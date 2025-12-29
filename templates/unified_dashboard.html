@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>CASTOR Pulse | Dashboard Unificado de Narrativas</title>
+    <meta name="description" content="Dashboard unificado de medios, campaña y forecast. Unifica métricas narrativas, momentum y geografía de conversación.">
+    <meta name="keywords" content="dashboard electoral, narrativa política, forecast electoral, análisis de medios, analytics político">
+    <meta name="author" content="Castor Elecciones">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://castor-elecciones.com/dashboard">
+    <meta property="og:title" content="CASTOR Pulse | Dashboard Unificado">
+    <meta property="og:description" content="Unifica señales narrativas, forecast y conversación geográfica en un solo panel.">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CASTOR Pulse | Dashboard Unificado">
+    <meta name="twitter:description" content="Lectura en tiempo real de narrativa política con visión geográfica.">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <link rel="preload" href="/static/css/styles.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+
+    <meta name="theme-color" content="#0A0E1A">
+</head>
+<body class="landing" data-mode="unified" itemscope itemtype="https://schema.org/WebPage">
+    <header class="main-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Navegacion principal">
+            <div class="nav-left">
+                <a class="brand" href="/" aria-label="Ir a inicio de Castor Elecciones">
+                    <img src="/static/images/logo.png"
+                         alt="Castor Elecciones - Logo"
+                         width="54"
+                         height="54"
+                         loading="eager">
+                    <div>
+                        <strong>CASTOR Pulse</strong>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="/webpage" class="ghost-btn" style="padding: 0.5rem 1.25rem; font-size: 0.9rem; text-decoration: none; display: inline-block;">Salir</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+        <section class="panel dashboard-intro" aria-labelledby="hero-title">
+            <div class="section-header">
+                <p class="eyebrow" role="doc-subtitle">CASTOR PULSE · MEDIOS · CAMPAÑA · FORECAST</p>
+                <h1 id="hero-title">Dashboard unificado</h1>
+                <p class="subtitle">KPIs, narrativa, forecast y geografia en una sola interfaz.</p>
+            </div>
+        </section>
+
+        <section class="panel" aria-labelledby="dashboard-form-title">
+            <div class="section-header">
+                <h2 id="dashboard-form-title">Filtros</h2>
+                <p class="subtitle">Define ubicacion, tema y horizonte temporal.</p>
+            </div>
+
+            <div class="card compact-card" style="max-width: 1200px; margin: 0 auto;">
+                <form id="unified-form">
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-location" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Ubicacion *</label>
+                            <input id="unified-location" name="location" type="text" placeholder="Colombia, Bogota..." required
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-topic" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Tema (opcional)</label>
+                            <input id="unified-topic" name="topic" type="text" placeholder="Seguridad, Paz, Alimentos..."
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-candidate" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Candidato (opcional)</label>
+                            <input id="unified-candidate" name="candidate_name" type="text" placeholder="Ej: Paloma Valencia"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-politician" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Usuario X/Twitter (opcional)</label>
+                            <input id="unified-politician" name="politician" type="text" placeholder="Ej: @PalomaValenciaL"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-days-back" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Dias hacia atras</label>
+                            <input id="unified-days-back" name="days_back" type="number" min="7" max="90" value="30"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-forecast-days" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Dias a proyectar</label>
+                            <input id="unified-forecast-days" name="forecast_days" type="number" min="7" max="30" value="14"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                        <div class="form-field" style="align-self: flex-end; display: flex; gap: 0.5rem;">
+                            <button type="button" class="ghost-btn" id="unified-mock-btn" style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: transparent; color: #374151;">Demo: Paloma Valencia</button>
+                            <button type="submit" id="unified-submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Ejecutar analisis</button>
+                        </div>
+                    </div>
+                    <div id="unified-error" class="error" style="display:none; color: #b91c1c; font-size: 0.9rem; margin-top: 0.5rem;"></div>
+                    <div id="unified-loading" style="display:none; margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem; align-items: center; gap: 0.5rem;">
+                        <span class="spinner" aria-hidden="true"></span>
+                        <span>Sincronizando flujos de datos...</span>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="unified-results" class="panel" style="display: none;">
+            <div class="section-header">
+                <h2>Pulseboard unificado</h2>
+                <p class="subtitle">Lectura en 60 segundos. Sin repeticion.</p>
+            </div>
+
+            <div class="tabs dashboard-tabs">
+                <button class="tab active" data-tab="summary">Lectura rapida</button>
+                <button class="tab" data-tab="evidence">Evidencia</button>
+                <button class="tab" data-tab="actions">Acciones</button>
+                <button class="tab" data-tab="vigilance">Vigilancia</button>
+                <button class="tab" data-tab="geo">Geografia</button>
+                <button class="tab" data-tab="explore">Exploracion</button>
+                <button class="tab" data-tab="methodology">Metodologia</button>
+            </div>
+
+            <!-- TAB 1: LECTURA RAPIDA (60 segundos) -->
+            <div id="tab-summary" class="tab-content active" style="display: block;">
+                <div class="context-bar" id="context-bar">
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;">
+                        <span id="context-params">Ventana: - dias | Muestra: - tweets | Ubicacion: - | Tema: -</span>
+                        <span id="context-timestamp" style="font-size: 0.8rem; opacity: 0.7;">Ultima actualizacion: -</span>
+                    </div>
+                </div>
+
+                <!-- KPIs -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <p class="kpi-label">Indice de Clima (ICCE) <span class="tooltip-icon" title="Escala 0-100. Combina volumen + tono.">i</span></p>
+                        <p id="kpi-icce" class="kpi-value">-</p>
+                        <p id="kpi-icce-note" class="kpi-meta">-</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="kpi-label">Momentum (7D) <span class="tooltip-icon" title="Velocidad de cambio semanal.">i</span></p>
+                        <p id="kpi-momentum" class="kpi-value">-</p>
+                        <p id="kpi-momentum-note" class="kpi-meta">-</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="kpi-label">Balance de tono <span class="tooltip-icon" title="Favorable - Critico (en puntos).">i</span></p>
+                        <p id="kpi-sentiment" class="kpi-value">-</p>
+                        <p id="kpi-sentiment-note" class="kpi-meta">-</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="kpi-label">Muestra analizada <span class="tooltip-icon" title="Tweets en ventana de tiempo.">i</span></p>
+                        <p id="kpi-volume" class="kpi-value">-</p>
+                        <p id="kpi-volume-note" class="kpi-meta">-</p>
+                    </div>
+                </div>
+
+                <!-- DIAGNOSTICO EN 3 TARJETAS -->
+                <div class="card dashboard-card diagnosis-card">
+                    <h3 id="narrative-title">Como esta la conversacion hoy</h3>
+                    <div class="diagnosis-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 1rem;">
+                        <div class="insight-card" style="background: rgba(255,255,255,0.02); border-radius: 0.5rem; padding: 1rem; border-left: 3px solid var(--accent);">
+                            <p class="insight-label" style="font-size: 0.75rem; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Que domina</p>
+                            <p id="diagnosis-domina" class="insight-value" style="font-size: 1rem; color: var(--text); font-weight: 500; margin-bottom: 0.5rem;">-</p>
+                            <p id="diagnosis-domina-context" class="insight-context" style="font-size: 0.8rem; color: #8892B0;">-</p>
+                        </div>
+                        <div class="insight-card" style="background: rgba(255,255,255,0.02); border-radius: 0.5rem; padding: 1rem; border-left: 3px solid #42d697;">
+                            <p class="insight-label" style="font-size: 0.75rem; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Como se percibe</p>
+                            <p id="diagnosis-percibe" class="insight-value" style="font-size: 1rem; color: var(--text); font-weight: 500; margin-bottom: 0.5rem;">-</p>
+                            <p id="diagnosis-percibe-context" class="insight-context" style="font-size: 0.8rem; color: #8892B0;">-</p>
+                        </div>
+                        <div class="insight-card" style="background: rgba(255,255,255,0.02); border-radius: 0.5rem; padding: 1rem; border-left: 3px solid #F5B800;">
+                            <p class="insight-label" style="font-size: 0.75rem; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Que implica</p>
+                            <p id="diagnosis-implica" class="insight-value" style="font-size: 1rem; color: var(--text); font-weight: 500; margin-bottom: 0.5rem;">-</p>
+                            <p id="diagnosis-implica-context" class="insight-context" style="font-size: 0.8rem; color: #8892B0;">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCION CLARA -->
+                <div class="dashboard-grid" style="grid-template-columns: 2fr 1fr; gap: 1.25rem;">
+                    <div class="card dashboard-card action-card">
+                        <h3>Decision sugerida <span class="badge-urgency" id="action-urgency" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 3px; margin-left: 0.5rem;">-</span></h3>
+                        <p id="action-recommendation" class="action-text" style="font-size: 1.05rem; line-height: 1.5; margin-bottom: 1rem;">-</p>
+                        <div class="action-meta" style="display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: #8892B0;">
+                            <span><strong>Horizonte:</strong> <span id="action-horizon">Proximas 72h</span></span>
+                            <span><strong>Confianza:</strong> <span id="action-confidence">-</span></span>
+                        </div>
+                    </div>
+                    <div class="card dashboard-card alerts-card">
+                        <h3>Alertas activas</h3>
+                        <ul id="active-alerts" class="alerts-list" style="list-style: none; padding: 0; margin: 0;">
+                            <li class="alert-item" style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">Sin alertas criticas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- TOP 3 HALLAZGOS -->
+                <div class="card dashboard-card" style="margin-top: 1.25rem;">
+                    <h3>Patrones detectados <span class="tooltip-icon" title="Maximo 3 hallazgos clave. Para evidencia completa, ver tab Evidencia.">i</span></h3>
+                    <div id="top-findings" class="findings-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 0.75rem;"></div>
+                </div>
+
+                <!-- PROYECCION RESUMIDA -->
+                <div class="card dashboard-card" style="margin-top: 1.25rem;">
+                    <h3>Hacia donde va (proyeccion <span id="forecast-days-label">14</span> dias)</h3>
+                    <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                        <div class="projection-indicator" style="display: flex; align-items: center; gap: 0.75rem;">
+                            <span id="projection-arrow" class="projection-arrow" style="font-size: 2rem;">-</span>
+                            <div>
+                                <p id="projection-delta" style="font-size: 1.25rem; font-weight: 600; margin: 0;">-</p>
+                                <p id="projection-label" style="font-size: 0.85rem; color: #8892B0; margin: 0;">-</p>
+                            </div>
+                        </div>
+                        <p id="projection-context" style="flex: 1; font-size: 0.9rem; color: #8892B0; min-width: 200px;">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: EVIDENCIA (Solo datos, sin estrategia) -->
+            <div id="tab-evidence" class="tab-content" style="display: none;">
+                <div class="section-intro" style="margin-bottom: 1.5rem;">
+                    <h3>Que se esta diciendo en redes</h3>
+                    <p class="dashboard-subtitle">Evidencia y contexto. Sin interpretacion estrategica.</p>
+                </div>
+
+                <div class="card dashboard-card" style="margin-bottom: 1.25rem;">
+                    <h4>Muestra y alcance</h4>
+                    <div class="data-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 0.75rem;">
+                        <div><p class="data-label" style="font-size: 0.75rem; color: #6B7280;">Tweets analizados</p><p id="evidence-tweets" class="data-value" style="font-size: 1.25rem; font-weight: 600;">-</p></div>
+                        <div><p class="data-label" style="font-size: 0.75rem; color: #6B7280;">Ventana temporal</p><p id="evidence-window" class="data-value" style="font-size: 1.25rem; font-weight: 600;">-</p></div>
+                        <div><p class="data-label" style="font-size: 0.75rem; color: #6B7280;">Ubicacion</p><p id="evidence-location" class="data-value" style="font-size: 1.25rem; font-weight: 600;">-</p></div>
+                        <div><p class="data-label" style="font-size: 0.75rem; color: #6B7280;">Idioma</p><p id="evidence-language" class="data-value" style="font-size: 1.25rem; font-weight: 600;">Espanol</p></div>
+                    </div>
+                </div>
+
+                <div class="card dashboard-card" style="margin-bottom: 1.25rem;">
+                    <h4>Distribucion de tono (unica fuente de verdad)</h4>
+                    <div class="sentiment-breakdown" style="margin-top: 0.75rem;">
+                        <div class="sentiment-bar-full" style="display: flex; height: 24px; border-radius: 4px; overflow: hidden; margin-bottom: 0.75rem;">
+                            <div id="sent-bar-pos" style="background: #42d697; transition: width 0.3s;"></div>
+                            <div id="sent-bar-neu" style="background: rgba(255,255,255,0.3); transition: width 0.3s;"></div>
+                            <div id="sent-bar-neg" style="background: #FF6A3D; transition: width 0.3s;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                            <span style="color: #42d697;"><span id="sent-pct-pos">-</span>% Favorable</span>
+                            <span style="color: #8892B0;"><span id="sent-pct-neu">-</span>% Neutral</span>
+                            <span style="color: #FF6A3D;"><span id="sent-pct-neg">-</span>% Critico</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card dashboard-card" style="margin-bottom: 1.25rem;">
+                    <h4>Agenda en redes (Top temas)</h4>
+                    <p class="dashboard-subtitle" style="font-size: 0.8rem; margin-bottom: 0.5rem;">Haz clic en un tema para explorar que se dice.</p>
+                    <div id="topics-evidence" class="topics-table" style="margin-top: 0.75rem;"></div>
+                </div>
+
+                <!-- RAG Chat for topic exploration -->
+                <div class="card dashboard-card" id="topic-chat-card" style="margin-bottom: 1.25rem; border: 1px solid rgba(255,106,61,0.3);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                        <h4 style="margin: 0;">Explorar tema</h4>
+                        <span id="chat-topic-badge" style="font-size: 0.75rem; padding: 0.25rem 0.5rem; background: rgba(255,106,61,0.2); color: #FF8C5A; border-radius: 4px;">Selecciona un tema</span>
+                    </div>
+                    <div id="chat-messages" style="max-height: 250px; overflow-y: auto; margin-bottom: 0.75rem; padding: 0.75rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        <div class="chat-welcome" style="text-align: center; color: #8892B0; padding: 1rem;">
+                            <p style="margin: 0 0 0.5rem;">Pregunta sobre cualquier tema detectado</p>
+                            <p style="font-size: 0.8rem; margin: 0;">Ej: "Que dicen sobre reforma pensional?" o "Cual es la critica principal?"</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="chat-input" placeholder="Escribe tu pregunta sobre el tema..."
+                               style="flex: 1; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #F5F7FA; font-size: 0.9rem;"
+                               onkeypress="if(event.key==='Enter') sendTopicQuestion()">
+                        <button onclick="sendTopicQuestion()" style="padding: 0.75rem 1.25rem; background: var(--accent); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer;">
+                            Preguntar
+                        </button>
+                    </div>
+                    <div id="chat-suggestions" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem;">
+                        <button class="chat-suggestion" onclick="askSuggestion('Que criticas hay?')" style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #8892B0; font-size: 0.8rem; cursor: pointer;">Que criticas hay?</button>
+                        <button class="chat-suggestion" onclick="askSuggestion('Cual es el tono general?')" style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #8892B0; font-size: 0.8rem; cursor: pointer;">Cual es el tono general?</button>
+                        <button class="chat-suggestion" onclick="askSuggestion('Que oportunidades hay?')" style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #8892B0; font-size: 0.8rem; cursor: pointer;">Que oportunidades hay?</button>
+                    </div>
+                </div>
+
+                <div class="card dashboard-card">
+                    <h4>Patrones detectados (evidencia completa)</h4>
+                    <ul id="evidence-findings" class="dashboard-list" style="margin-top: 0.75rem;"></ul>
+                </div>
+            </div>
+
+            <!-- TAB 3: ACCIONES (Sin repetir diagnostico) -->
+            <div id="tab-actions" class="tab-content" style="display: none;">
+                <div class="section-intro" style="margin-bottom: 1.5rem;">
+                    <h3>Plan de accion</h3>
+                    <p class="dashboard-subtitle">Decisiones internas. No repite diagnostico.</p>
+                </div>
+
+                <div class="card dashboard-card" style="margin-bottom: 1.25rem;">
+                    <h4>Brief ejecutivo</h4>
+                    <p class="dashboard-subtitle" style="font-size: 0.8rem; margin-bottom: 0.75rem;">Para direccion. Resumen en 2 oraciones.</p>
+                    <p id="action-brief" class="brief-text" style="font-size: 1rem; line-height: 1.6; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem;">-</p>
+                </div>
+
+                <div class="dashboard-grid" style="margin-bottom: 1.25rem;">
+                    <div class="card dashboard-card">
+                        <h4 style="color: #42d697;">Oportunidades</h4>
+                        <ul id="action-opportunities" class="dashboard-list" style="margin-top: 0.5rem;"></ul>
+                    </div>
+                    <div class="card dashboard-card">
+                        <h4 style="color: #FF6A3D;">Fricciones</h4>
+                        <ul id="action-frictions" class="dashboard-list" style="margin-top: 0.5rem;"></ul>
+                    </div>
+                </div>
+
+                <div class="card dashboard-card" style="margin-bottom: 1.25rem;">
+                    <h4>Acciones internas</h4>
+                    <div id="action-items" class="action-items-grid" style="margin-top: 0.75rem;"></div>
+                </div>
+
+                <div class="card dashboard-card" style="margin-bottom: 1.25rem;">
+                    <h4>Plan por tema</h4>
+                    <p class="dashboard-subtitle" style="font-size: 0.8rem; margin-bottom: 0.75rem;">Objetivo - Acciones - Senal esperada (NO "+X puntos en intencion de voto")</p>
+                    <div id="action-plan-by-topic" class="plan-grid" style="margin-top: 0.75rem;"></div>
+                </div>
+
+                <details class="card dashboard-card accordion-details" style="margin-bottom: 1.25rem;">
+                    <summary style="cursor: pointer; font-weight: 600; padding: 0.75rem 0;">Borrador de discurso (IA)</summary>
+                    <div style="padding: 1rem 0;">
+                        <p class="disclaimer" style="font-size: 0.8rem; color: #F5B800; margin-bottom: 0.75rem;">Generado con IA. Revision humana recomendada.</p>
+                        <p id="action-speech" class="speech-text" style="font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap;">-</p>
+                    </div>
+                </details>
+            </div>
+
+            <!-- TAB 4: VIGILANCIA (Riesgos y forecast) -->
+            <div id="tab-vigilance" class="tab-content" style="display: none;">
+                <div class="section-intro" style="margin-bottom: 1.5rem;">
+                    <h3>Que vigilar</h3>
+                    <p class="dashboard-subtitle">Riesgos, proyecciones y escenarios. No repite diagnostico actual.</p>
+                </div>
+
+                <div class="card dashboard-card" style="margin-bottom: 1.25rem;">
+                    <h4>Proyeccion ICCE <span id="vigilance-forecast-days">14</span> dias</h4>
+                    <p class="dashboard-subtitle" style="font-size: 0.8rem; margin-bottom: 0.75rem;">Linea solida = historico | Linea punteada = proyeccion</p>
+                    <canvas id="unified-series-chart" height="160"></canvas>
+                    <p id="chart-series-context" style="font-size: 0.8rem; color: #8892B0; margin-top: 0.75rem;"></p>
+                </div>
+
+                <div class="dashboard-grid" style="margin-bottom: 1.25rem;">
+                    <div class="card dashboard-card scenario-card">
+                        <h4 style="color: #42d697;">Si sube</h4>
+                        <p id="scenario-up" style="font-size: 0.9rem; color: #8892B0;">-</p>
+                    </div>
+                    <div class="card dashboard-card scenario-card">
+                        <h4 style="color: #FF6A3D;">Si baja</h4>
+                        <p id="scenario-down" style="font-size: 0.9rem; color: #8892B0;">-</p>
+                    </div>
+                </div>
+
+                <div class="card dashboard-card" style="margin-bottom: 1.25rem;">
+                    <h4>Alertas narrativas</h4>
+                    <ul id="forecast-alerts-list" class="alerts-list dashboard-list" style="margin-top: 0.75rem;"></ul>
+                </div>
+
+                <div class="card dashboard-card">
+                    <h4>Senales de riesgo</h4>
+                    <div class="risk-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 0.75rem;">
+                        <div><p class="risk-label" style="font-size: 0.75rem; color: #6B7280;">Momentum</p><p id="risk-momentum" class="risk-value" style="font-size: 1rem; font-weight: 500;">-</p></div>
+                        <div><p class="risk-label" style="font-size: 0.75rem; color: #6B7280;">Volatilidad</p><p id="risk-volatility" class="risk-value" style="font-size: 1rem; font-weight: 500;">-</p></div>
+                        <div><p class="risk-label" style="font-size: 0.75rem; color: #6B7280;">Criticos activos</p><p id="risk-critics" class="risk-value" style="font-size: 1rem; font-weight: 500;">-</p></div>
+                        <div><p class="risk-label" style="font-size: 0.75rem; color: #6B7280;">Confianza forecast</p><p id="risk-confidence" class="risk-value" style="font-size: 1rem; font-weight: 500;">-</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: GEOGRAFIA (Donde se habla) -->
+            <div id="tab-geo" class="tab-content" style="display: none;">
+                <div class="section-intro" style="margin-bottom: 1.5rem;">
+                    <h3>Donde se habla</h3>
+                    <p class="dashboard-subtitle">Distribucion geografica en Colombia. Identifica regiones clave.</p>
+                </div>
+
+                <div class="geo-panel" style="margin-bottom: 1.25rem;">
+                    <div class="geo-map-card">
+                        <div class="geo-map-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h4>Mapa de Colombia</h4>
+                            <span class="geo-badge" style="font-size: 0.75rem; padding: 0.25rem 0.5rem; background: rgba(255,255,255,0.1); border-radius: 4px;">Distribucion por ciudad</span>
+                        </div>
+                        <div id="geo-map" class="geo-map colombia-map" style="height: 400px; position: relative;" aria-label="Mapa de Colombia con distribucion de conversacion">
+                            <!-- SVG Map of Colombia -->
+                            <svg viewBox="0 0 400 500" style="width: 100%; height: 100%;" id="colombia-svg">
+                                <!-- Colombia outline simplified -->
+                                <defs>
+                                    <linearGradient id="mapGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1a2332;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#0f1620;stop-opacity:1" />
+                                    </linearGradient>
+                                    <filter id="glow">
+                                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <!-- Colombia country shape -->
+                                <path id="colombia-shape" d="M180,20 L220,25 L260,40 L290,35 L320,50 L350,70 L370,100 L380,140 L375,180 L360,220 L340,250 L350,290 L340,330 L310,360 L280,380 L250,400 L220,420 L190,450 L160,470 L130,480 L100,470 L80,440 L60,400 L50,350 L40,300 L35,250 L45,200 L60,160 L80,130 L100,100 L130,70 L160,40 Z"
+                                      fill="url(#mapGradient)" stroke="#2a3a4a" stroke-width="2"/>
+                                <!-- Department boundaries (simplified) -->
+                                <path d="M200,100 L250,120 L280,180 L250,220 L200,200 L170,150 Z" fill="none" stroke="#2a3a4a" stroke-width="1" opacity="0.5"/>
+                                <path d="M100,200 L150,180 L200,200 L180,260 L130,280 L90,250 Z" fill="none" stroke="#2a3a4a" stroke-width="1" opacity="0.5"/>
+                                <path d="M200,200 L250,220 L270,280 L230,320 L180,300 L180,260 Z" fill="none" stroke="#2a3a4a" stroke-width="1" opacity="0.5"/>
+                                <!-- City markers will be added dynamically -->
+                                <g id="city-markers"></g>
+                                <!-- City labels -->
+                                <g id="city-labels" font-family="Inter, sans-serif" font-size="10" fill="#8892B0"></g>
+                            </svg>
+                            <!-- Legend -->
+                            <div style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); padding: 8px 12px; border-radius: 6px; font-size: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                    <span style="width: 12px; height: 12px; border-radius: 50%; background: #FF6A3D;"></span>
+                                    <span style="color: #8892B0;">Alta actividad</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,106,61,0.5);"></span>
+                                    <span style="color: #8892B0;">Actividad media</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="geo-footnote" style="font-size: 0.8rem; color: #6B7280; margin-top: 0.75rem;">Basado en menciones geograficas y patrones de ubicacion en X/Twitter.</p>
+                    </div>
+                    <div class="geo-list-card">
+                        <h4>Top ciudades</h4>
+                        <ol id="geo-list" class="geo-list" style="margin-top: 0.75rem;"></ol>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card dashboard-card">
+                        <h4>Contexto geografico</h4>
+                        <div style="margin-top: 0.75rem;">
+                            <div style="margin-bottom: 0.75rem;"><p style="font-size: 0.75rem; color: #6B7280;">Concentracion</p><p id="geo-concentration" style="font-size: 0.95rem;">-</p></div>
+                            <div style="margin-bottom: 0.75rem;"><p style="font-size: 0.75rem; color: #6B7280;">Region dominante</p><p id="geo-dominant" style="font-size: 0.95rem;">-</p></div>
+                            <div><p style="font-size: 0.75rem; color: #6B7280;">Oportunidad</p><p id="geo-opportunity" style="font-size: 0.95rem;">-</p></div>
+                        </div>
+                    </div>
+                    <div class="card dashboard-card">
+                        <h4>Tono por region</h4>
+                        <p class="dashboard-subtitle" style="font-size: 0.8rem; margin-bottom: 0.75rem;">Detecta regiones criticas.</p>
+                        <div id="geo-sentiment-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: EXPLORACION (Graficos para analistas) -->
+            <div id="tab-explore" class="tab-content" style="display: none;">
+                <div class="section-intro" style="margin-bottom: 1.5rem;">
+                    <h3>Exploracion de datos</h3>
+                    <p class="dashboard-subtitle">Graficos interactivos. Para power users.</p>
+                </div>
+
+                <div class="dashboard-grid" style="margin-bottom: 1.25rem;">
+                    <div class="card dashboard-card">
+                        <h4>Serie temporal ICCE</h4>
+                        <canvas id="explore-icce-chart" height="160"></canvas>
+                    </div>
+                    <div class="card dashboard-card">
+                        <h4>Momentum historico</h4>
+                        <canvas id="explore-momentum-chart" height="160"></canvas>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card dashboard-card">
+                        <h4>Distribucion de tono</h4>
+                        <canvas id="sentiment-chart" height="160"></canvas>
+                        <p id="chart-sentiment-context" style="font-size: 0.75rem; color: #6B7280; margin-top: 0.5rem;"></p>
+                    </div>
+                    <div class="card dashboard-card">
+                        <h4>Temas por volumen</h4>
+                        <div id="topics-table" class="topics-table" style="margin-top: 0.75rem;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 7: METODOLOGIA -->
+            <div id="tab-methodology" class="tab-content" style="display: none;">
+                <div class="card dashboard-card">
+                    <h3>Metodologia y limites</h3>
+                    <p class="dashboard-text" style="margin-bottom: 1.5rem;">
+                        CASTOR integra tweets publicos, clasifica tono con modelos de lenguaje (BETO), y mide fuerza narrativa con ICCE.
+                        Todos los indicadores son agnosticos: funcionan con cualquier candidato/tema.
+                    </p>
+
+                    <div class="methodology-grid" style="display: grid; gap: 1rem;">
+                        <div style="padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem; border-left: 3px solid #FF6A3D;">
+                            <h4 style="margin-bottom: 0.5rem;">ICCE</h4>
+                            <p style="color: #8892B0; font-size: 0.9rem;">Escala 0-100 combinando volumen + tono. Vigilar: < 40 es riesgo.</p>
+                        </div>
+                        <div style="padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem; border-left: 3px solid #42d697;">
+                            <h4 style="margin-bottom: 0.5rem;">Momentum</h4>
+                            <p style="color: #8892B0; font-size: 0.9rem;">Velocidad de cambio (derivada). Negativo < -0.03 es alerta.</p>
+                        </div>
+                        <div style="padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem; border-left: 3px solid #F5B800;">
+                            <h4 style="margin-bottom: 0.5rem;">Forecast</h4>
+                            <p style="color: #8892B0; font-size: 0.9rem;">Proyeccion con series de tiempo. Indicativo, no predictivo.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem;">
+                        <h4 style="margin-bottom: 0.5rem;">Limites importantes</h4>
+                        <ul style="color: #8892B0; font-size: 0.85rem; margin-left: 1.25rem;">
+                            <li>Datos de X (Twitter) no representan electorado completo.</li>
+                            <li>Mayor volumen = mayor confianza estadistica.</li>
+                            <li>Eventos externos pueden alterar proyecciones.</li>
+                            <li>NO predecimos intencion de voto.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Castor Elecciones</h3>
+                <p>Plataforma de analisis electoral basada en datos y modelos auditables.</p>
+                <p class="muted">© 2026 CASTOR Elecciones. Todos los derechos reservados.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Productos</h4>
+                <ul>
+                    <li><a href="/media">CASTOR Medios</a></li>
+                    <li><a href="/campaign">CASTOR Campanas</a></li>
+                    <li><a href="/forecast">CASTOR Forecast</a></li>
+                    <li><a href="/dashboard">Dashboard Unificado</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Informacion</h4>
+                <ul>
+                    <li><a href="/webpage#pipeline">Arquitectura</a></li>
+                    <li><a href="/webpage#methodology">Metodologia</a></li>
+                    <li><a href="/webpage#features">Caracteristicas</a></li>
+                    <li><a href="/webpage#origins-title">Origenes de CASTOR</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal / Politicas</h4>
+                <ul>
+                    <li><a href="#">Uso de datos publicos</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Terminos y condiciones</a></li>
+                    <li><a href="/contact">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Solicitar Demo</h2>
+                <button class="modal-close" onclick="closeDemoModal()">&times;</button>
+            </div>
+            <form id="demoForm" class="modal-form">
+                <div class="form-row">
+                    <label>
+                        Nombre *
+                        <input type="text" name="first_name" id="demo-first-name" required placeholder="Juan">
+                    </label>
+                    <label>
+                        Apellido *
+                        <input type="text" name="last_name" id="demo-last-name" required placeholder="Perez">
+                    </label>
+                </div>
+                <label>
+                    Correo electronico *
+                    <input type="email" name="email" id="demo-email" required placeholder="juan.perez@example.com">
+                </label>
+                <label>
+                    Telefono *
+                    <input type="tel" name="phone" id="demo-phone" required placeholder="+57 300 123 4567">
+                </label>
+                <label>
+                    Que te interesa? *
+                    <select name="interest" id="demo-interest" required>
+                        <option value="">Selecciona una opcion</option>
+                        <option value="forecast">Forecast</option>
+                        <option value="campanas">Campanas</option>
+                        <option value="medios">Medios</option>
+                        <option value="dashboard">Dashboard</option>
+                    </select>
+                </label>
+                <label>
+                    Ubicacion (Ciudad) *
+                    <input type="text" name="location" id="demo-location" required placeholder="Bogota, Medellin, Cali...">
+                </label>
+                <div class="form-actions">
+                    <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>
+                    <button type="submit" class="primary-btn">Enviar solicitud</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        window.API_BASE_URL = (function() {
+            if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
+                return process.env.NEXT_PUBLIC_API_BASE_URL;
+            }
+            {% if url_for %}
+            try {
+                var flaskUrl = '{{ url_for("web.index", _external=True).rstrip("/") }}';
+                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '' && !flaskUrl.includes('error') && !flaskUrl.includes('Could not build')) {
+                    return flaskUrl;
+                }
+            } catch(e) {}
+            {% endif %}
+            if (typeof window !== 'undefined' && window.location) {
+                return window.location.origin;
+            }
+            return 'https://castorelecciones.ngrok.app';
+        })();
+    </script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/performance.js" defer></script>
+    <script src="/static/js/landing.js" defer></script>
+    <script src="/static/js/unified_dashboard.js"></script>
+</body>
+</html>

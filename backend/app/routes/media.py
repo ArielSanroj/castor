@@ -41,7 +41,7 @@ def media_analyze():
     pipeline = _get_pipeline()
     openai_svc = _get_openai_service()
 
-    if not pipeline or not openai_svc:
+    if not pipeline:
         return (
             jsonify(
                 {
@@ -62,8 +62,26 @@ def media_analyze():
         language=req.language,
     )
 
-    media_summary_dict = openai_svc.generate_media_summary(core_result=core_result)
-    summary = MediaAnalysisSummary(**media_summary_dict)
+    # Generate summary with OpenAI if available, otherwise use fallback
+    if openai_svc:
+        try:
+            media_summary_dict = openai_svc.generate_media_summary(core_result=core_result)
+            summary = MediaAnalysisSummary(**media_summary_dict)
+        except Exception as e:
+            logger.warning(f"OpenAI summary generation failed: {e}, using fallback")
+            # Fallback summary without OpenAI
+            summary = MediaAnalysisSummary(
+                overview=f"Análisis de conversación en {req.location}" + (f" sobre {req.topic}" if req.topic else ""),
+                key_stats=[],
+                key_findings=[f"Se analizaron {core_result.tweets_analyzed} tweets" if core_result.tweets_analyzed > 0 else "No se encontraron tweets"]
+            )
+    else:
+        # Fallback summary without OpenAI
+        summary = MediaAnalysisSummary(
+            overview=f"Análisis de conversación en {req.location}" + (f" sobre {req.topic}" if req.topic else ""),
+            key_stats=[],
+            key_findings=[f"Se analizaron {core_result.tweets_analyzed} tweets" if core_result.tweets_analyzed > 0 else "No se encontraron tweets"]
+        )
 
     metadata = MediaAnalysisMetadata(
         tweets_analyzed=core_result.tweets_analyzed,

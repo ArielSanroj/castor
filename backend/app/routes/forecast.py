@@ -85,7 +85,8 @@ def _get_forecast_service() -> ForecastService:
     db_service = current_app.extensions.get("database_service")
     
     if not twitter_service or not sentiment_service:
-        raise RuntimeError("Required services not available")
+        logger.error("Forecast service: Required services not available (twitter_service or sentiment_service)")
+        raise RuntimeError("Required services not available: twitter_service or sentiment_service missing")
     
     return ForecastService(
         twitter_service=twitter_service,
@@ -547,15 +548,29 @@ def get_dashboard():
         candidate_name = payload.get("candidate_name")
         politician = payload.get("politician")
         
-        forecast_service = _get_forecast_service()
+        try:
+            forecast_service = _get_forecast_service()
+        except RuntimeError as e:
+            logger.error(f"Forecast dashboard: Service initialization failed: {e}")
+            return jsonify({
+                "success": False,
+                "error": "Servicios de forecast no disponibles. Verifica la configuración de Twitter y Sentiment services."
+            }), 503
         
         # Get all data
-        icce_values = forecast_service.calculate_icce(
-            location=location,
-            candidate_name=candidate_name,
-            politician=politician,
-            days_back=days_back
-        )
+        try:
+            icce_values = forecast_service.calculate_icce(
+                location=location,
+                candidate_name=candidate_name,
+                politician=politician,
+                days_back=days_back
+            )
+        except Exception as e:
+            logger.error(f"Error calculating ICCE: {e}", exc_info=True)
+            return jsonify({
+                "success": False,
+                "error": f"Error al calcular ICCE: {str(e)}"
+            }), 500
         
         if not icce_values:
             return jsonify({

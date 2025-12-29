@@ -37,10 +37,12 @@ class Config:
     TWITTER_API_SECRET: Optional[str] = os.getenv('TWITTER_API_SECRET')
     TWITTER_ACCESS_TOKEN: Optional[str] = os.getenv('TWITTER_ACCESS_TOKEN')
     TWITTER_ACCESS_TOKEN_SECRET: Optional[str] = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
+    TWITTER_TIMEOUT_SECONDS: int = int(os.getenv('TWITTER_TIMEOUT_SECONDS', '15'))
     
     # OpenAI
     OPENAI_API_KEY: Optional[str] = os.getenv('OPENAI_API_KEY')
     OPENAI_MODEL: str = os.getenv('OPENAI_MODEL', 'gpt-4o')
+    OPENAI_TIMEOUT_SECONDS: int = int(os.getenv('OPENAI_TIMEOUT_SECONDS', '15'))
     
     # Database (PostgreSQL)
     DATABASE_URL: Optional[str] = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost:5432/castor_elecciones')
@@ -51,8 +53,8 @@ class Config:
     # Twilio WhatsApp
     TWILIO_ACCOUNT_SID: Optional[str] = os.getenv('TWILIO_ACCOUNT_SID')
     TWILIO_AUTH_TOKEN: Optional[str] = os.getenv('TWILIO_AUTH_TOKEN')
-    TWILIO_WHATSAPP_FROM: str = os.getenv('TWILIO_WHATSAPP_FROM', 'whatsapp:+34637909472')
-    TWILIO_CONTENT_SID: str = os.getenv('TWILIO_CONTENT_SID', 'HX899df0cc78b682c1a96c5bc83c5b4d3b')
+    TWILIO_WHATSAPP_FROM: Optional[str] = os.getenv('TWILIO_WHATSAPP_FROM')
+    TWILIO_CONTENT_SID: Optional[str] = os.getenv('TWILIO_CONTENT_SID')
     
     # BETO Model
     BETO_MODEL_PATH: str = os.getenv('BETO_MODEL_PATH', 'dccuchile/bert-base-spanish-wwm-uncased')
@@ -100,17 +102,34 @@ class Config:
     
     @classmethod
     def validate(cls) -> bool:
-        """Validate that all required configuration is present."""
+        """
+        Validate that all required configuration is present.
+        
+        Returns:
+            True if validation passes
+            
+        Raises:
+            ValueError: If required configuration is missing
+        """
+        # Core required variables
         required_vars = [
-            'TWITTER_BEARER_TOKEN',
-            'OPENAI_API_KEY',
-            'DATABASE_URL'
+            'DATABASE_URL',
         ]
         
-        missing = [var for var in required_vars if not getattr(cls, var, None)]
+        # External API keys (may be optional in dev, but recommended)
+        api_keys = [
+            'TWITTER_BEARER_TOKEN',
+            'OPENAI_API_KEY',
+        ]
         
-        if missing:
-            raise ValueError(f"Missing required environment variables: {', '.join(missing)}")
+        missing_required = [var for var in required_vars if not getattr(cls, var, None)]
+        missing_api_keys = [var for var in api_keys if not getattr(cls, var, None)]
+        
+        if missing_required:
+            raise ValueError(f"Missing required environment variables: {', '.join(missing_required)}")
+        
+        if missing_api_keys:
+            raise ValueError(f"Missing API keys (may cause service failures): {', '.join(missing_api_keys)}")
         
         return True
 
@@ -128,10 +147,30 @@ class ProductionConfig(Config):
     
     @classmethod
     def validate(cls) -> bool:
-        """Stricter validation for production."""
+        """
+        Stricter validation for production environment.
+        Fails hard if any secrets are missing.
+        """
+        # Validate SECRET_KEY
         if not cls.SECRET_KEY or cls.SECRET_KEY == 'dev-secret-key-change-in-production':
-            raise ValueError("SECRET_KEY must be set in production")
-        return super().validate()
+            raise ValueError("SECRET_KEY must be set to a secure value in production")
+        
+        # Validate JWT_SECRET_KEY
+        if not cls.JWT_SECRET_KEY or cls.JWT_SECRET_KEY == cls.SECRET_KEY == 'dev-secret-key-change-in-production':
+            raise ValueError("JWT_SECRET_KEY must be set in production")
+        
+        # Validate all required secrets
+        required_secrets = [
+            'TWITTER_BEARER_TOKEN',
+            'OPENAI_API_KEY',
+            'DATABASE_URL',
+        ]
+        
+        missing_secrets = [var for var in required_secrets if not getattr(cls, var, None)]
+        if missing_secrets:
+            raise ValueError(f"Missing required secrets in production: {', '.join(missing_secrets)}")
+        
+        return True
 
 
 class TestingConfig(Config):

@@ -5,7 +5,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 import logging
-from config import Config
+from config import Config, config as config_map
 from utils.rate_limiter import init_rate_limiter
 from utils.cache import init_cache
 from services.background_jobs import init_background_jobs
@@ -54,8 +54,18 @@ def create_app(config_name: str = 'default') -> Flask:
         static_folder=static_folder
     )
     
-    # Load configuration
-    app.config.from_object(Config)
+    # Load configuration based on requested environment
+    config_class = config_map.get(config_name, Config)
+    try:
+        config_class.validate()
+    except ValueError as exc:
+        # Allow dev/default to boot with warnings; enforce in other environments
+        is_dev_env = getattr(config_class, "DEBUG", False) or config_name in ('development', 'default')
+        if is_dev_env:
+            logging.warning("Configuration validation warning: %s", exc)
+        else:
+            raise
+    app.config.from_object(config_class)
     
     # Initialize extensions
     cors.init_app(app, resources={
@@ -120,7 +130,7 @@ def create_app(config_name: str = 'default') -> Flask:
         app.extensions["openai_service"] = None
 
     # Register blueprints
-    from app.routes import analysis_bp, chat_bp, health_bp, auth_bp, campaign_bp, web_bp, leads_bp, media_bp, forecast_bp
+    from app.routes import analysis_bp, chat_bp, health_bp, auth_bp, campaign_bp, web_bp, leads_bp, media_bp, forecast_bp, advisor_bp
     app.register_blueprint(web_bp)  # No prefix for web routes
     app.register_blueprint(analysis_bp, url_prefix='/api')
     app.register_blueprint(media_bp, url_prefix='/api/media')
@@ -130,6 +140,7 @@ def create_app(config_name: str = 'default') -> Flask:
     app.register_blueprint(campaign_bp, url_prefix='/api')
     app.register_blueprint(leads_bp, url_prefix='/api')
     app.register_blueprint(forecast_bp, url_prefix='/api/forecast')
+    app.register_blueprint(advisor_bp, url_prefix='/api')
     
     # Register error handlers
     @app.errorhandler(404)

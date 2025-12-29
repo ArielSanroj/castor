@@ -157,3 +157,14 @@ La implementación actual **funciona** pero **no sigue exactamente el modelo te�
 
 **Recomendación:** Refactorizar para alinear con el modelo teórico, especialmente el cálculo de ICR y la fórmula de ICCE, ya que estos son fundamentales para la precisión del modelo.
 
+
+
+
+
+
+
+
+
+
+
+
