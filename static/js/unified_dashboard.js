@@ -1313,17 +1313,23 @@ function renderGameTheoryCharts(gameData, radarCtx, gapCtx, radarContextEl, gapC
   });
 
   if (gameGapChart) gameGapChart.destroy();
+  const gapLabels = gap.labels || [];
+  const gapValues = gap.values || [];
   gameGapChart = new Chart(gapCtx, {
     type: "bar",
     data: {
-      labels: gap.labels || [],
+      labels: gapLabels,
       datasets: [
         {
           label: "Brecha vs rival",
-          data: gap.values || [],
-          backgroundColor: (gap.values || []).map((value) =>
+          data: gapValues,
+          backgroundColor: gapValues.map((value) =>
             value >= 0 ? "rgba(66, 214, 151, 0.75)" : "rgba(255, 106, 61, 0.75)"
-          )
+          ),
+          borderColor: gapValues.map((value) =>
+            value >= 0 ? "#42d697" : "#FF6A3D"
+          ),
+          borderWidth: 1
         }
       ]
     },
@@ -1332,11 +1338,34 @@ function renderGameTheoryCharts(gameData, radarCtx, gapCtx, radarContextEl, gapC
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { display: false }
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const value = context.raw;
+              const absValue = Math.abs(value).toFixed(1);
+              if (value > 0) {
+                return `Tu campana: +${absValue} puntos de ventaja`;
+              } else if (value < 0) {
+                return `Rival: +${absValue} puntos de ventaja`;
+              } else {
+                return "Empate tecnico";
+              }
+            }
+          }
+        }
       },
       scales: {
-        x: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } },
-        y: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } }
+        x: {
+          ticks: { color: "#8892B0" },
+          grid: {
+            color: "rgba(136, 146, 176, 0.15)",
+            lineWidth: (context) => context.tick.value === 0 ? 2 : 1
+          },
+          suggestedMin: -30,
+          suggestedMax: 30
+        },
+        y: { ticks: { color: "#F5F7FA", font: { weight: "bold" } }, grid: { color: "rgba(136, 146, 176, 0.15)" } }
       }
     }
   });
