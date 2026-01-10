@@ -28,6 +28,8 @@ class RAGSource(BaseModel):
     score: float
     type: str
     topic: Optional[str] = None
+    location: Optional[str] = None
+    date: Optional[str] = None
     preview: str
 
 

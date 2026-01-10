@@ -2,6 +2,7 @@
 Forecast endpoints for ICCE, Momentum, and time series projections.
 """
 import logging
+import uuid
 from datetime import datetime
 from flask import Blueprint, request, jsonify, current_app
 from pydantic import ValidationError
@@ -17,6 +18,7 @@ from app.schemas.forecast import (
 )
 from app.schemas.narrative import NarrativeMetricsResponse, NarrativeIndices, IVNResult
 from app.services.forecast_service import ForecastService
+from services.rag_service import get_rag_service
 from services.twitter_service import TwitterService
 from services.sentiment_service import SentimentService
 from services.database_service import DatabaseService
@@ -648,7 +650,44 @@ def get_dashboard():
                         response_data["metadata"]["narrative_metrics"] = core_result.narrative_metrics
             except Exception as e:
                 logger.warning(f"Could not get narrative metrics for dashboard: {e}")
-        
+
+        # Index into RAG (best-effort)
+        try:
+            rag = get_rag_service()
+            icce_now = icce_raw[-1] * 100 if icce_raw else None
+            forecast_last = icce_pred[-1] * 100 if icce_pred else None
+            delta = (forecast_last - icce_now) if (icce_now is not None and forecast_last is not None) else None
+            direction = "sube" if (delta is not None and delta >= 0) else "baja"
+
+            key_findings = []
+            if icce_now is not None:
+                key_findings.append(f"ICCE actual: {icce_now:.1f}")
+            if momentum_series:
+                key_findings.append(f"Momentum actual: {momentum_series[-1]:.3f}")
+            if delta is not None:
+                key_findings.append(f"Forecast {direction} {abs(delta):.1f} pts")
+
+            analysis_payload = {
+                "executive_summary": {
+                    "overview": f"Forecast narrativo en {location} para {candidate_name or 'el candidato'}.",
+                    "key_findings": key_findings,
+                    "recommendations": ["Monitorear cambios de momentum y ajustar narrativa si el ICCE cae >5 pts."]
+                },
+                "metadata": response_data.get("metadata", {})
+            }
+
+            rag.index_analysis(
+                analysis_id=f"forecast_{uuid.uuid4().hex}",
+                analysis_data=analysis_payload,
+                metadata={
+                    "location": location,
+                    "candidate": candidate_name,
+                    "created_at": response_data["metadata"].get("calculated_at"),
+                },
+            )
+        except Exception as e:
+            logger.warning(f"RAG indexing skipped (forecast): {e}")
+
         return jsonify(response_data), 200
         
     except Exception as e:
@@ -658,4 +697,3 @@ def get_dashboard():
             "error": "Internal server error",
             "message": str(e)
         }), 500
-

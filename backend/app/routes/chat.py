@@ -307,8 +307,18 @@ def rag_chat():
             query=req.message,
             conversation_history=req.conversation_history,
             top_k=req.top_k,
-            min_score=req.min_score
+            location_filter=req.filter_location,
+            topic_filter=req.filter_topic
         )
+
+        # If no documents retrieved, fallback to direct chat (OpenAI) with notice
+        if result.get("documents_retrieved", 0) == 0:
+            fallback_response, status = _fallback_to_regular_chat(req.message)
+            if status == 200:
+                payload = fallback_response.get_json()
+                payload["message"] = "No historical context, using direct chat"
+                return jsonify(payload), 200
+            return fallback_response, status
 
         # Build response
         sources = [
@@ -513,3 +523,84 @@ def _fallback_to_regular_chat(message: str) -> tuple:
             "error": "Chat service unavailable"
         }), 503
 
+
+@chat_bp.route('/chat/rag/sync', methods=['POST'])
+@limiter.limit("5 per minute")
+@jwt_required(optional=True)
+def rag_sync():
+    """
+    Sync RAG index with database history.
+    Loads all historical analyses into the vector store.
+
+    Request body (optional):
+    {
+        "limit": 100  // Max analyses to sync
+    }
+    """
+    try:
+        from flask import current_app
+        from services.rag_service import get_rag_service
+
+        payload = request.get_json() or {}
+        limit = payload.get("limit", 100)
+
+        rag = get_rag_service()
+        if rag is None:
+            return jsonify({
+                "success": False,
+                "error": "RAG service unavailable"
+            }), 503
+
+        # Get database service from app extensions
+        db_service = current_app.extensions.get("database_service")
+        if db_service:
+            rag.set_db_service(db_service)
+            count = rag.sync_from_database(limit=limit)
+
+            return jsonify({
+                "success": True,
+                "documents_synced": count,
+                "total_indexed": rag.vector_store.count()
+            }), 200
+        else:
+            return jsonify({
+                "success": False,
+                "error": "Database service not available"
+            }), 503
+
+    except Exception as e:
+        logger.error(f"Error syncing RAG: {e}", exc_info=True)
+        return jsonify({
+            "success": False,
+            "error": "Error syncing with database"
+        }), 500
+
+
+@chat_bp.route('/chat/rag/clear', methods=['POST'])
+@limiter.limit("2 per minute")
+@jwt_required()
+def rag_clear():
+    """Clear the RAG index (admin only)."""
+    try:
+        from services.rag_service import get_rag_service
+
+        rag = get_rag_service()
+        if rag is None:
+            return jsonify({
+                "success": False,
+                "error": "RAG service unavailable"
+            }), 503
+
+        rag.clear_index()
+
+        return jsonify({
+            "success": True,
+            "message": "RAG index cleared"
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Error clearing RAG: {e}", exc_info=True)
+        return jsonify({
+            "success": False,
+            "error": "Error clearing index"
+        }), 500

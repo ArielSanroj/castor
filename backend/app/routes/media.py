@@ -3,6 +3,7 @@ Media product endpoints.
 Provides neutral analysis for press dashboards.
 """
 import logging
+import uuid
 from flask import Blueprint, request, jsonify, current_app
 from pydantic import ValidationError
 
@@ -14,6 +15,7 @@ from app.schemas.media import (
 )
 from app.services.analysis_core import AnalysisCorePipeline
 from services.openai_service import OpenAIService
+from services.rag_service import get_rag_service
 from utils.rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
@@ -102,5 +104,31 @@ def media_analyze():
         chart_data=core_result.chart_data,
         metadata=metadata,
     )
+
+    # Index into RAG (best-effort)
+    try:
+        rag = get_rag_service()
+        analysis_payload = {
+            "executive_summary": {
+                "overview": summary.overview,
+                "key_findings": summary.key_findings,
+                "recommendations": [],
+            },
+            "topics": [t.model_dump() if hasattr(t, "model_dump") else t for t in core_result.topics],
+            "sentiment_overview": core_result.sentiment_overview,
+            "metadata": metadata.model_dump() if hasattr(metadata, "model_dump") else metadata,
+        }
+        rag.index_analysis(
+            analysis_id=f"media_{uuid.uuid4().hex}",
+            analysis_data=analysis_payload,
+            metadata={
+                "location": metadata.location,
+                "candidate": metadata.candidate_name,
+                "created_at": metadata.time_window_to,
+                "topic_name": metadata.topic,
+            },
+        )
+    except Exception as e:
+        logger.warning(f"RAG indexing skipped (media): {e}")
 
     return jsonify(response_model.model_dump()), 200

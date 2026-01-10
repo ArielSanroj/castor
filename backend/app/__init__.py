@@ -146,6 +146,16 @@ def create_app(config_name: str = 'default') -> Flask:
         except Exception as openai_exc:
             logging.warning(f"OpenAI service not initialized: {openai_exc}")
             app.extensions["openai_service"] = None
+
+        # Initialize RAG service with database connection
+        try:
+            from services.rag_service import init_rag_service
+            rag_service = init_rag_service(db_service=db_service)
+            app.extensions["rag_service"] = rag_service
+            logging.info(f"RAG service initialized with {rag_service.vector_store.count()} documents")
+        except Exception as rag_exc:
+            logging.warning(f"RAG service not initialized: {rag_exc}")
+            app.extensions["rag_service"] = None
             
     except Exception as exc:
         logging.warning(f"Core analysis services not fully initialized: {exc}")

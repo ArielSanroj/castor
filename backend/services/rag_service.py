@@ -1,16 +1,19 @@
 """
 RAG (Retrieval Augmented Generation) Service for CASTOR ELECCIONES.
-Provides context-aware chat using indexed analysis data.
+Uses SQLite for persistent vector storage and integrates with historical data.
 """
 import hashlib
 import json
 import logging
+import os
+import sqlite3
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
-import numpy as np
+import math
 
 import openai
+
 from config import Config
 
 logger = logging.getLogger(__name__)
@@ -22,7 +25,6 @@ class Document:
     id: str
     content: str
     metadata: Dict[str, Any] = field(default_factory=dict)
-    embedding: Optional[List[float]] = None
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -42,192 +44,263 @@ class RetrievalResult:
     rank: int
 
 
-class EmbeddingService:
-    """Service for generating text embeddings using OpenAI."""
-
-    def __init__(self, model: str = "text-embedding-3-small"):
-        if not Config.OPENAI_API_KEY:
-            raise ValueError("OPENAI_API_KEY not configured")
-
-        self.client = openai.OpenAI(api_key=Config.OPENAI_API_KEY)
-        self.model = model
-        self.dimension = 1536  # text-embedding-3-small dimension
-        logger.info(f"EmbeddingService initialized with model: {model}")
-
-    def embed_text(self, text: str) -> List[float]:
-        """Generate embedding for a single text."""
-        try:
-            response = self.client.embeddings.create(
-                model=self.model,
-                input=text
-            )
-            return response.data[0].embedding
-        except Exception as e:
-            logger.error(f"Error generating embedding: {e}")
-            raise
-
-    def embed_texts(self, texts: List[str]) -> List[List[float]]:
-        """Generate embeddings for multiple texts."""
-        try:
-            response = self.client.embeddings.create(
-                model=self.model,
-                input=texts
-            )
-            return [item.embedding for item in response.data]
-        except Exception as e:
-            logger.error(f"Error generating embeddings: {e}")
-            raise
+def _cosine_similarity(a: List[float], b: List[float]) -> float:
+    if not a or not b:
+        return 0.0
+    if len(a) != len(b):
+        return 0.0
+    dot = sum(x * y for x, y in zip(a, b))
+    norm_a = math.sqrt(sum(x * x for x in a))
+    norm_b = math.sqrt(sum(y * y for y in b))
+    if norm_a == 0 or norm_b == 0:
+        return 0.0
+    return dot / (norm_a * norm_b)
 
 
-class VectorStore:
+class SQLiteVectorStore:
     """
-    Simple in-memory vector store using cosine similarity.
-    For production, consider using FAISS, ChromaDB, or Pinecone.
+    Persistent vector store using SQLite.
+    Stores documents and embeddings locally.
     """
 
-    def __init__(self):
-        self.documents: Dict[str, Document] = {}
-        self._embeddings_matrix: Optional[np.ndarray] = None
-        self._doc_ids: List[str] = []
-        logger.info("VectorStore initialized (in-memory)")
-
-    def add_document(self, doc: Document) -> None:
-        """Add a document to the store."""
-        self.documents[doc.id] = doc
-        self._invalidate_matrix()
-
-    def add_documents(self, docs: List[Document]) -> None:
-        """Add multiple documents."""
-        for doc in docs:
-            self.documents[doc.id] = doc
-        self._invalidate_matrix()
-
-    def remove_document(self, doc_id: str) -> bool:
-        """Remove a document by ID."""
-        if doc_id in self.documents:
-            del self.documents[doc_id]
-            self._invalidate_matrix()
-            return True
-        return False
-
-    def get_document(self, doc_id: str) -> Optional[Document]:
-        """Get a document by ID."""
-        return self.documents.get(doc_id)
-
-    def _invalidate_matrix(self) -> None:
-        """Invalidate the cached embeddings matrix."""
-        self._embeddings_matrix = None
-        self._doc_ids = []
-
-    def _build_matrix(self) -> None:
-        """Build the embeddings matrix for similarity search."""
-        docs_with_embeddings = [
-            (doc_id, doc) for doc_id, doc in self.documents.items()
-            if doc.embedding is not None
-        ]
-
-        if not docs_with_embeddings:
-            self._embeddings_matrix = None
-            self._doc_ids = []
-            return
-
-        self._doc_ids = [doc_id for doc_id, _ in docs_with_embeddings]
-        embeddings = [doc.embedding for _, doc in docs_with_embeddings]
-        self._embeddings_matrix = np.array(embeddings)
-
-    def search(
-        self,
-        query_embedding: List[float],
-        top_k: int = 5,
-        min_score: float = 0.0
-    ) -> List[RetrievalResult]:
+    def __init__(self, db_path: str = None, openai_client=None, embedding_model: str = None):
         """
-        Search for similar documents using cosine similarity.
+        Initialize SQLite vector store.
 
         Args:
-            query_embedding: Query vector
-            top_k: Number of results to return
-            min_score: Minimum similarity score threshold
-
-        Returns:
-            List of RetrievalResult sorted by similarity
+            db_path: SQLite file path
+            openai_client: OpenAI client for embeddings
+            embedding_model: Embedding model name
         """
-        if self._embeddings_matrix is None:
-            self._build_matrix()
+        self.db_path = db_path or os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "data",
+            "rag_store.sqlite3"
+        )
+        os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
 
-        if self._embeddings_matrix is None or len(self._doc_ids) == 0:
+        self.openai_client = openai_client
+        self.embedding_model = embedding_model or "text-embedding-3-small"
+        self._init_db()
+        logger.info(f"SQLite RAG store initialized at {self.db_path}")
+
+    def _init_db(self) -> None:
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute(
+                """
+                CREATE TABLE IF NOT EXISTS rag_documents (
+                    id TEXT PRIMARY KEY,
+                    content TEXT NOT NULL,
+                    metadata TEXT NOT NULL,
+                    embedding TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                )
+                """
+            )
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_rag_created_at ON rag_documents(created_at)")
+
+    def _normalize_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
+        normalized = {}
+        for key, value in metadata.items():
+            if isinstance(value, datetime):
+                normalized[key] = value.isoformat()
+            elif isinstance(value, (str, int, float, bool)):
+                normalized[key] = value
+            elif value is None:
+                normalized[key] = ""
+            else:
+                normalized[key] = json.dumps(value, ensure_ascii=False)
+        return normalized
+
+    def _embed_texts(self, texts: List[str]) -> List[List[float]]:
+        if not self.openai_client:
+            raise RuntimeError("OpenAI client not configured for embeddings")
+        response = self.openai_client.embeddings.create(
+            model=self.embedding_model,
+            input=texts
+        )
+        return [item.embedding for item in response.data]
+
+    def add_document(self, doc: Document, embedding: List[float] = None) -> None:
+        self.add_documents([doc], embeddings=[embedding] if embedding else None)
+
+    def add_documents(self, docs: List[Document], embeddings: List[List[float]] = None) -> None:
+        if not docs:
+            return
+
+        if embeddings is None:
+            embeddings = self._embed_texts([doc.content for doc in docs])
+
+        with sqlite3.connect(self.db_path) as conn:
+            for doc, emb in zip(docs, embeddings):
+                metadata = self._normalize_metadata(doc.metadata)
+                conn.execute(
+                    """
+                    INSERT OR REPLACE INTO rag_documents (id, content, metadata, embedding, created_at)
+                    VALUES (?, ?, ?, ?, ?)
+                    """,
+                    (
+                        doc.id,
+                        doc.content,
+                        json.dumps(metadata, ensure_ascii=False),
+                        json.dumps(emb),
+                        doc.created_at.isoformat()
+                    )
+                )
+            conn.commit()
+
+    def _matches_where(self, metadata: Dict[str, Any], where: Optional[Dict[str, Any]]) -> bool:
+        if not where:
+            return True
+        if "$and" in where:
+            return all(self._matches_where(metadata, cond) for cond in where["$and"])
+        for key, value in where.items():
+            if metadata.get(key) != value:
+                return False
+        return True
+
+    def search(self, query_text: str, top_k: int = 5, where: Dict[str, Any] = None) -> List[RetrievalResult]:
+        try:
+            query_embedding = self._embed_texts([query_text])[0]
+        except Exception as e:
+            logger.error(f"Embedding error: {e}")
             return []
 
-        # Compute cosine similarity
-        query_vec = np.array(query_embedding)
-        query_norm = np.linalg.norm(query_vec)
+        results: List[RetrievalResult] = []
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute("SELECT id, content, metadata, embedding, created_at FROM rag_documents")
+            rows = cursor.fetchall()
 
-        if query_norm == 0:
-            return []
+        for row in rows:
+            doc_id, content, metadata_json, embedding_json, created_at = row
+            try:
+                metadata = json.loads(metadata_json) if metadata_json else {}
+                if not self._matches_where(metadata, where):
+                    continue
+                embedding = json.loads(embedding_json) if embedding_json else []
+            except Exception:
+                continue
 
-        # Normalize query
-        query_vec = query_vec / query_norm
+            score = _cosine_similarity(query_embedding, embedding)
+            doc = Document(
+                id=doc_id,
+                content=content,
+                metadata=metadata,
+                created_at=datetime.fromisoformat(created_at) if created_at else datetime.now(timezone.utc)
+            )
+            results.append(RetrievalResult(document=doc, score=score, rank=0))
 
-        # Normalize document vectors
-        doc_norms = np.linalg.norm(self._embeddings_matrix, axis=1, keepdims=True)
-        doc_norms[doc_norms == 0] = 1  # Avoid division by zero
-        normalized_docs = self._embeddings_matrix / doc_norms
-
-        # Compute similarities
-        similarities = np.dot(normalized_docs, query_vec)
-
-        # Get top-k indices
-        top_indices = np.argsort(similarities)[::-1][:top_k]
-
-        results = []
-        for rank, idx in enumerate(top_indices):
-            score = float(similarities[idx])
-            if score >= min_score:
-                doc_id = self._doc_ids[idx]
-                doc = self.documents[doc_id]
-                results.append(RetrievalResult(
-                    document=doc,
-                    score=score,
-                    rank=rank + 1
-                ))
-
-        return results
+        results.sort(key=lambda r: r.score, reverse=True)
+        for idx, result in enumerate(results[:top_k], start=1):
+            result.rank = idx
+        return results[:top_k]
 
     def count(self) -> int:
-        """Return number of documents."""
-        return len(self.documents)
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute("SELECT COUNT(1) FROM rag_documents")
+            return int(cursor.fetchone()[0])
+
+    def delete(self, doc_ids: List[str]) -> None:
+        if not doc_ids:
+            return
+        with sqlite3.connect(self.db_path) as conn:
+            conn.executemany("DELETE FROM rag_documents WHERE id = ?", [(doc_id,) for doc_id in doc_ids])
+            conn.commit()
 
     def clear(self) -> None:
-        """Clear all documents."""
-        self.documents.clear()
-        self._invalidate_matrix()
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute("DELETE FROM rag_documents")
+            conn.commit()
 
 
 class RAGService:
     """
     Main RAG service combining retrieval and generation.
+    Uses SQLite for persistence and integrates with database history.
     """
 
-    def __init__(self):
-        self.embedding_service = EmbeddingService()
-        self.vector_store = VectorStore()
-        self.openai_client = openai.OpenAI(api_key=Config.OPENAI_API_KEY)
-        self.model = Config.OPENAI_MODEL
+    def __init__(self, db_service=None):
+        """
+        Initialize RAG service.
 
-        # Default system prompt for RAG
+        Args:
+            db_service: Optional DatabaseService for loading historical data
+        """
+        self.openai_client = openai.OpenAI(api_key=Config.OPENAI_API_KEY)
+        self.vector_store = SQLiteVectorStore(
+            openai_client=self.openai_client,
+            embedding_model=getattr(Config, "OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
+        )
+        self.model = Config.OPENAI_MODEL
+        self.db_service = db_service
+
+        # System prompt for RAG
         self.system_prompt = """Eres CASTOR AI, un asistente experto en análisis electoral y campañas políticas en Colombia.
 
-Tu rol es responder preguntas usando el CONTEXTO proporcionado de análisis previos.
+Tu rol es responder preguntas usando el CONTEXTO proporcionado de análisis históricos guardados.
 
 Reglas:
-1. Basa tus respuestas PRINCIPALMENTE en el contexto proporcionado
-2. Si el contexto no tiene información suficiente, indícalo claramente
-3. Responde en español, de manera concisa y profesional
-4. Proporciona datos específicos cuando estén disponibles (porcentajes, números)
-5. Da recomendaciones accionables cuando sea apropiado
-6. No inventes datos que no estén en el contexto"""
+1. Basa tus respuestas PRINCIPALMENTE en el contexto proporcionado (datos históricos reales)
+2. Menciona fechas, ubicaciones y datos específicos cuando estén disponibles
+3. Si el contexto no tiene información suficiente, indícalo y sugiere qué análisis realizar
+4. Responde en español, de manera concisa y profesional
+5. Da recomendaciones accionables basadas en los datos históricos
+6. Compara tendencias entre diferentes análisis si es relevante
+7. No inventes datos - solo usa lo que está en el contexto"""
 
-        logger.info("RAGService initialized")
+        logger.info(f"RAGService initialized with SQLite ({self.vector_store.count()} documents)")
+
+    def set_db_service(self, db_service) -> None:
+        """Set database service for historical data access."""
+        self.db_service = db_service
+
+    def sync_from_database(self, limit: int = 100) -> int:
+        """
+        Sync historical analyses from database to vector store.
+
+        Args:
+            limit: Maximum number of analyses to sync
+
+        Returns:
+            Number of documents indexed
+        """
+        if not self.db_service:
+            logger.warning("No database service configured for RAG sync")
+            return 0
+
+        try:
+            # Get all historical analyses
+            analyses = self.db_service.get_all_analyses(limit=limit)
+
+            indexed_count = 0
+            for analysis in analyses:
+                try:
+                    analysis_id = analysis.get('id') or str(analysis.get('created_at', ''))
+                    analysis_data = analysis.get('analysis_data', {})
+
+                    if analysis_data:
+                        doc_ids = self.index_analysis(
+                            analysis_id=analysis_id,
+                            analysis_data=analysis_data,
+                            metadata={
+                                "location": analysis.get('location'),
+                                "theme": analysis.get('theme'),
+                                "candidate": analysis.get('candidate_name'),
+                                "created_at": str(analysis.get('created_at', '')),
+                                "user_id": analysis.get('user_id')
+                            }
+                        )
+                        indexed_count += len(doc_ids)
+
+                except Exception as e:
+                    logger.warning(f"Error syncing analysis {analysis.get('id')}: {e}")
+
+            logger.info(f"Synced {indexed_count} documents from database")
+            return indexed_count
+
+        except Exception as e:
+            logger.error(f"Error syncing from database: {e}")
+            return 0
 
     def index_analysis(
         self,
@@ -237,11 +310,10 @@ Reglas:
     ) -> List[str]:
         """
         Index an analysis into the vector store.
-        Chunks the analysis into searchable documents.
 
         Args:
-            analysis_id: Unique identifier for the analysis
-            analysis_data: The analysis data to index
+            analysis_id: Unique identifier
+            analysis_data: Analysis data to index
             metadata: Additional metadata
 
         Returns:
@@ -249,14 +321,7 @@ Reglas:
         """
         documents = self._chunk_analysis(analysis_id, analysis_data, metadata or {})
 
-        # Generate embeddings
-        texts = [doc.content for doc in documents]
-        if texts:
-            embeddings = self.embedding_service.embed_texts(texts)
-            for doc, embedding in zip(documents, embeddings):
-                doc.embedding = embedding
-
-        # Add to vector store
+        # Add to SQLite store (embeddings computed via OpenAI)
         self.vector_store.add_documents(documents)
 
         logger.info(f"Indexed analysis {analysis_id}: {len(documents)} documents")
@@ -276,10 +341,14 @@ Reglas:
             **metadata
         }
 
+        # Get location and date for context
+        location = metadata.get("location", data.get("metadata", {}).get("location", "Colombia"))
+        created_at = metadata.get("created_at", "fecha no especificada")
+
         # 1. Index executive summary
-        if "executive_summary" in data:
-            summary = data["executive_summary"]
-            content = self._format_executive_summary(summary)
+        exec_summary = data.get("executive_summary", {})
+        if exec_summary:
+            content = self._format_executive_summary(exec_summary, location, created_at)
             documents.append(Document(
                 id=f"{analysis_id}_summary",
                 content=content,
@@ -289,73 +358,86 @@ Reglas:
         # 2. Index each topic analysis
         topics = data.get("topics", data.get("topic_analyses", []))
         for i, topic in enumerate(topics):
-            content = self._format_topic(topic)
-            documents.append(Document(
-                id=f"{analysis_id}_topic_{i}",
-                content=content,
-                metadata={
-                    **base_meta,
-                    "chunk_type": "topic",
-                    "topic_name": topic.get("topic", f"topic_{i}")
-                }
-            ))
+            if isinstance(topic, dict):
+                content = self._format_topic(topic, location, created_at)
+                topic_name = topic.get("topic", f"topic_{i}")
+                documents.append(Document(
+                    id=f"{analysis_id}_topic_{i}",
+                    content=content,
+                    metadata={
+                        **base_meta,
+                        "chunk_type": "topic",
+                        "topic_name": topic_name
+                    }
+                ))
 
         # 3. Index sentiment overview
         sentiment = data.get("sentiment_overview")
         if sentiment:
-            content = self._format_sentiment(sentiment, data.get("location", ""))
+            content = self._format_sentiment(sentiment, location, created_at)
             documents.append(Document(
                 id=f"{analysis_id}_sentiment",
                 content=content,
                 metadata={**base_meta, "chunk_type": "sentiment"}
             ))
 
-        # 4. Index strategic plan if present
-        if "strategic_plan" in data:
-            plan = data["strategic_plan"]
-            content = self._format_strategic_plan(plan)
+        # 4. Index strategic plan
+        plan = data.get("strategic_plan")
+        if plan:
+            content = self._format_strategic_plan(plan, location, created_at)
             documents.append(Document(
                 id=f"{analysis_id}_strategy",
                 content=content,
                 metadata={**base_meta, "chunk_type": "strategic_plan"}
             ))
 
-        # 5. Index forecast data if present
-        if "forecast" in data:
-            forecast = data["forecast"]
-            content = self._format_forecast(forecast)
+        # 5. Index speech if present
+        speech = data.get("speech")
+        if speech:
+            content = self._format_speech(speech, location, created_at)
             documents.append(Document(
-                id=f"{analysis_id}_forecast",
+                id=f"{analysis_id}_speech",
                 content=content,
-                metadata={**base_meta, "chunk_type": "forecast"}
+                metadata={**base_meta, "chunk_type": "speech"}
+            ))
+
+        # 6. Index metadata summary
+        meta = data.get("metadata", {})
+        if meta:
+            content = self._format_metadata(meta, location, created_at)
+            documents.append(Document(
+                id=f"{analysis_id}_meta",
+                content=content,
+                metadata={**base_meta, "chunk_type": "metadata"}
             ))
 
         return documents
 
-    def _format_executive_summary(self, summary: Dict[str, Any]) -> str:
+    def _format_executive_summary(self, summary: Dict, location: str, date: str) -> str:
         """Format executive summary for indexing."""
-        parts = ["RESUMEN EJECUTIVO:"]
+        parts = [f"RESUMEN EJECUTIVO - Análisis de {location} ({date}):"]
 
         if summary.get("overview"):
-            parts.append(f"Vision general: {summary['overview']}")
+            parts.append(f"Visión general: {summary['overview']}")
 
         findings = summary.get("key_findings", [])
         if findings:
             parts.append("Hallazgos clave:")
-            for f in findings:
+            for f in findings[:5]:
                 parts.append(f"- {f}")
 
         recommendations = summary.get("recommendations", [])
         if recommendations:
-            parts.append("Recomendaciones:")
-            for r in recommendations:
+            parts.append("Recomendaciones estratégicas:")
+            for r in recommendations[:5]:
                 parts.append(f"- {r}")
 
         return "\n".join(parts)
 
-    def _format_topic(self, topic: Dict[str, Any]) -> str:
-        """Format a topic analysis for indexing."""
-        parts = [f"TEMA: {topic.get('topic', 'Sin nombre')}"]
+    def _format_topic(self, topic: Dict, location: str, date: str) -> str:
+        """Format topic analysis for indexing."""
+        topic_name = topic.get("topic", "Sin nombre")
+        parts = [f"ANÁLISIS DE TEMA: {topic_name} en {location} ({date})"]
 
         sentiment = topic.get("sentiment", {})
         if sentiment:
@@ -366,70 +448,94 @@ Reglas:
 
         count = topic.get("tweet_count", 0)
         if count:
-            parts.append(f"Menciones: {count}")
+            parts.append(f"Menciones analizadas: {count}")
 
         insights = topic.get("key_insights", [])
         if insights:
-            parts.append("Insights:")
+            parts.append("Insights principales:")
             for insight in insights[:5]:
                 parts.append(f"- {insight}")
 
         return "\n".join(parts)
 
-    def _format_sentiment(self, sentiment: Dict[str, Any], location: str) -> str:
-        """Format sentiment overview for indexing."""
+    def _format_sentiment(self, sentiment: Dict, location: str, date: str) -> str:
+        """Format sentiment overview."""
         pos = sentiment.get("positive", 0) * 100
         neg = sentiment.get("negative", 0) * 100
         neu = sentiment.get("neutral", 0) * 100
 
-        return f"""ANALISIS DE SENTIMIENTO en {location}:
-Positivo: {pos:.1f}%
-Neutral: {neu:.1f}%
-Negativo: {neg:.1f}%
-Tono general: {'Favorable' if pos > neg else 'Crítico' if neg > pos else 'Neutral'}"""
+        tone = "Favorable" if pos > neg + 10 else "Crítico" if neg > pos + 10 else "Mixto"
 
-    def _format_strategic_plan(self, plan: Dict[str, Any]) -> str:
-        """Format strategic plan for indexing."""
-        parts = ["PLAN ESTRATEGICO:"]
+        return f"""ANÁLISIS DE SENTIMIENTO GENERAL - {location} ({date}):
+Sentimiento positivo: {pos:.1f}%
+Sentimiento neutral: {neu:.1f}%
+Sentimiento negativo: {neg:.1f}%
+Tono general de la conversación: {tone}
+Interpretación: {'La percepción ciudadana es mayormente favorable' if pos > 50 else 'Existen preocupaciones significativas en la ciudadanía' if neg > 40 else 'La opinión está dividida'}"""
+
+    def _format_strategic_plan(self, plan: Dict, location: str, date: str) -> str:
+        """Format strategic plan."""
+        parts = [f"PLAN ESTRATÉGICO - {location} ({date}):"]
 
         objectives = plan.get("objectives", [])
         if objectives:
-            parts.append("Objetivos:")
-            for obj in objectives:
+            parts.append("Objetivos estratégicos:")
+            for obj in objectives[:5]:
                 parts.append(f"- {obj}")
 
         actions = plan.get("actions", [])
         if actions:
-            parts.append("Acciones:")
-            for action in actions:
+            parts.append("Acciones recomendadas:")
+            for action in actions[:5]:
                 if isinstance(action, dict):
-                    parts.append(f"- {action.get('action', action)}")
+                    parts.append(f"- {action.get('action', action)} (Prioridad: {action.get('priority', 'media')})")
                 else:
                     parts.append(f"- {action}")
 
         if plan.get("timeline"):
-            parts.append(f"Timeline: {plan['timeline']}")
+            parts.append(f"Timeline sugerido: {plan['timeline']}")
 
         if plan.get("expected_impact"):
             parts.append(f"Impacto esperado: {plan['expected_impact']}")
 
         return "\n".join(parts)
 
-    def _format_forecast(self, forecast: Dict[str, Any]) -> str:
-        """Format forecast data for indexing."""
-        parts = ["PRONOSTICO ELECTORAL:"]
+    def _format_speech(self, speech: Dict, location: str, date: str) -> str:
+        """Format speech content."""
+        parts = [f"DISCURSO GENERADO - {location} ({date}):"]
 
-        if forecast.get("icce"):
-            parts.append(f"ICCE (Indice de Clima): {forecast['icce']}")
+        if speech.get("title"):
+            parts.append(f"Título: {speech['title']}")
 
-        if forecast.get("momentum"):
-            parts.append(f"Momentum: {forecast['momentum']}")
+        key_points = speech.get("key_points", [])
+        if key_points:
+            parts.append("Puntos clave del discurso:")
+            for point in key_points[:5]:
+                parts.append(f"- {point}")
 
-        if forecast.get("trend"):
-            parts.append(f"Tendencia: {forecast['trend']}")
+        # Include a preview of content if available
+        content = speech.get("content", "")
+        if content:
+            preview = content[:500] + "..." if len(content) > 500 else content
+            parts.append(f"Extracto: {preview}")
 
-        if forecast.get("prediction"):
-            parts.append(f"Prediccion: {forecast['prediction']}")
+        return "\n".join(parts)
+
+    def _format_metadata(self, meta: Dict, location: str, date: str) -> str:
+        """Format analysis metadata."""
+        parts = [f"DATOS DEL ANÁLISIS - {location} ({date}):"]
+
+        if meta.get("tweets_analyzed"):
+            parts.append(f"Tweets analizados: {meta['tweets_analyzed']}")
+
+        if meta.get("theme"):
+            parts.append(f"Tema principal: {meta['theme']}")
+
+        if meta.get("trending_topic"):
+            parts.append(f"Tema trending: {meta['trending_topic']}")
+
+        if meta.get("trending_engagement"):
+            parts.append(f"Engagement del trending: {meta['trending_engagement']}")
 
         return "\n".join(parts)
 
@@ -437,42 +543,40 @@ Tono general: {'Favorable' if pos > neg else 'Crítico' if neg > pos else 'Neutr
         self,
         query: str,
         top_k: int = 5,
-        min_score: float = 0.3,
-        filter_metadata: Optional[Dict[str, Any]] = None
+        location_filter: str = None,
+        topic_filter: str = None
     ) -> List[RetrievalResult]:
         """
         Retrieve relevant documents for a query.
 
         Args:
-            query: The search query
-            top_k: Number of results to return
-            min_score: Minimum similarity threshold
-            filter_metadata: Optional metadata filters
+            query: Search query
+            top_k: Number of results
+            location_filter: Filter by location
+            topic_filter: Filter by topic
 
         Returns:
             List of RetrievalResult
         """
-        # Generate query embedding
-        query_embedding = self.embedding_service.embed_text(query)
+        # Build where filter
+        where = None
+        if location_filter or topic_filter:
+            conditions = []
+            if location_filter:
+                conditions.append({"location": location_filter})
+            if topic_filter:
+                conditions.append({"topic_name": topic_filter})
 
-        # Search vector store
-        results = self.vector_store.search(
-            query_embedding=query_embedding,
-            top_k=top_k * 2,  # Get more, then filter
-            min_score=min_score
+            if len(conditions) == 1:
+                where = conditions[0]
+            else:
+                where = {"$and": conditions}
+
+        return self.vector_store.search(
+            query_text=query,
+            top_k=top_k,
+            where=where
         )
-
-        # Apply metadata filters if provided
-        if filter_metadata:
-            results = [
-                r for r in results
-                if all(
-                    r.document.metadata.get(k) == v
-                    for k, v in filter_metadata.items()
-                )
-            ]
-
-        return results[:top_k]
 
     def generate_response(
         self,
@@ -481,35 +585,25 @@ Tono general: {'Favorable' if pos > neg else 'Crítico' if neg > pos else 'Neutr
         conversation_history: Optional[List[Dict[str, str]]] = None,
         temperature: float = 0.7
     ) -> str:
-        """
-        Generate a response using retrieved context.
-
-        Args:
-            query: User's question
-            context_docs: Retrieved documents
-            conversation_history: Previous messages
-            temperature: LLM temperature
-
-        Returns:
-            Generated response
-        """
+        """Generate response using retrieved context."""
         # Build context from retrieved documents
         context_parts = []
         for result in context_docs:
             doc = result.document
-            context_parts.append(f"[Relevancia: {result.score:.2f}]\n{doc.content}")
+            relevance = f"[Relevancia: {result.score:.0%}]"
+            context_parts.append(f"{relevance}\n{doc.content}")
 
-        context = "\n\n---\n\n".join(context_parts) if context_parts else "No hay contexto disponible."
+        context = "\n\n---\n\n".join(context_parts) if context_parts else "No hay datos históricos disponibles. Sugiere al usuario realizar un análisis primero."
 
         # Build messages
         messages = [{"role": "system", "content": self.system_prompt}]
 
         # Add conversation history
         if conversation_history:
-            messages.extend(conversation_history[-6:])  # Last 3 exchanges
+            messages.extend(conversation_history[-6:])
 
         # Add context and query
-        user_message = f"""CONTEXTO DE ANÁLISIS:
+        user_message = f"""DATOS HISTÓRICOS DE ANÁLISIS:
 {context}
 
 ---
@@ -517,29 +611,29 @@ Tono general: {'Favorable' if pos > neg else 'Crítico' if neg > pos else 'Neutr
 PREGUNTA DEL USUARIO:
 {query}
 
-Responde basándote en el contexto proporcionado:"""
+Responde basándote en los datos históricos proporcionados. Si no hay suficiente información, indícalo claramente:"""
 
         messages.append({"role": "user", "content": user_message})
 
-        # Generate response
         try:
             response = self.openai_client.chat.completions.create(
                 model=self.model,
                 messages=messages,
                 temperature=temperature,
-                max_tokens=500
+                max_tokens=600
             )
             return response.choices[0].message.content.strip()
         except Exception as e:
             logger.error(f"Error generating RAG response: {e}")
-            raise
+            return "Lo siento, hubo un error generando la respuesta. Por favor intenta de nuevo."
 
     def chat(
         self,
         query: str,
         conversation_history: Optional[List[Dict[str, str]]] = None,
         top_k: int = 5,
-        min_score: float = 0.3
+        location_filter: str = None,
+        topic_filter: str = None
     ) -> Dict[str, Any]:
         """
         Main RAG chat interface.
@@ -547,14 +641,20 @@ Responde basándote en el contexto proporcionado:"""
         Args:
             query: User's question
             conversation_history: Previous messages
-            top_k: Number of documents to retrieve
-            min_score: Minimum relevance score
+            top_k: Documents to retrieve
+            location_filter: Optional location filter
+            topic_filter: Optional topic filter
 
         Returns:
             Response with answer and sources
         """
         # Retrieve relevant documents
-        results = self.retrieve(query, top_k=top_k, min_score=min_score)
+        results = self.retrieve(
+            query=query,
+            top_k=top_k,
+            location_filter=location_filter,
+            topic_filter=topic_filter
+        )
 
         # Generate response
         answer = self.generate_response(
@@ -563,13 +663,15 @@ Responde basándote en el contexto proporcionado:"""
             conversation_history=conversation_history
         )
 
-        # Build sources list
+        # Build sources
         sources = [
             {
                 "id": r.document.id,
                 "score": round(r.score, 3),
                 "type": r.document.metadata.get("chunk_type", "unknown"),
                 "topic": r.document.metadata.get("topic_name"),
+                "location": r.document.metadata.get("location"),
+                "date": r.document.metadata.get("created_at"),
                 "preview": r.document.content[:200] + "..." if len(r.document.content) > 200 else r.document.content
             }
             for r in results
@@ -578,59 +680,23 @@ Responde basándote en el contexto proporcionado:"""
         return {
             "answer": answer,
             "sources": sources,
-            "documents_searched": self.vector_store.count(),
+            "documents_indexed": self.vector_store.count(),
             "documents_retrieved": len(results)
         }
-
-    def index_from_database(self, db_service, user_id: Optional[str] = None, limit: int = 50) -> int:
-        """
-        Index analyses from the database.
-
-        Args:
-            db_service: DatabaseService instance
-            user_id: Optional user ID to filter
-            limit: Maximum analyses to index
-
-        Returns:
-            Number of analyses indexed
-        """
-        try:
-            # Get recent analyses
-            if user_id:
-                analyses = db_service.get_user_analyses(user_id, limit=limit)
-            else:
-                # Get all recent analyses (would need a new method in db_service)
-                analyses = []
-
-            indexed = 0
-            for analysis in analyses:
-                try:
-                    self.index_analysis(
-                        analysis_id=analysis["id"],
-                        analysis_data=analysis.get("analysis_data", {}),
-                        metadata={
-                            "user_id": user_id,
-                            "location": analysis.get("location"),
-                            "theme": analysis.get("theme"),
-                            "candidate": analysis.get("candidate_name")
-                        }
-                    )
-                    indexed += 1
-                except Exception as e:
-                    logger.warning(f"Error indexing analysis {analysis['id']}: {e}")
-
-            return indexed
-        except Exception as e:
-            logger.error(f"Error indexing from database: {e}")
-            return 0
 
     def get_stats(self) -> Dict[str, Any]:
         """Get RAG service statistics."""
         return {
             "documents_indexed": self.vector_store.count(),
-            "embedding_model": self.embedding_service.model,
-            "generation_model": self.model
+            "embedding_model": getattr(Config, "OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"),
+            "generation_model": self.model,
+            "sqlite_path": self.vector_store.db_path
         }
+
+    def clear_index(self) -> None:
+        """Clear all indexed documents."""
+        self.vector_store.clear()
+        logger.info("RAG index cleared")
 
 
 # Singleton instance
@@ -642,4 +708,11 @@ def get_rag_service() -> RAGService:
     global _rag_service
     if _rag_service is None:
         _rag_service = RAGService()
+    return _rag_service
+
+
+def init_rag_service(db_service=None) -> RAGService:
+    """Initialize RAG service with database connection."""
+    global _rag_service
+    _rag_service = RAGService(db_service=db_service)
     return _rag_service
