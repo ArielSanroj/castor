@@ -35,7 +35,7 @@ class DemoRequest(BaseModel):
     last_name: str = Field(..., min_length=1, max_length=100)
     email: EmailStr
     phone: str = Field(..., min_length=7, max_length=20)
-    interest: str = Field(..., pattern="^(forecast|campañas|medios)$")
+    interest: str = Field(..., pattern="^(forecast|campañas|medios|dashboard|estratega|comunicaciones|candidato|analista|otro)$")
     location: str = Field(..., min_length=1, max_length=120)
     candidacy_type: Optional[str] = Field(None, pattern="^(congreso|regionales|presidencia)$")
 

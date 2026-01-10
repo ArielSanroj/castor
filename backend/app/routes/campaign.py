@@ -3,6 +3,7 @@ Campaign agent endpoints.
 Endpoints for vote-winning strategies and signature collection.
 """
 import logging
+import uuid
 from typing import Optional
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -13,6 +14,7 @@ from datetime import datetime
 from services.campaign_agent import CampaignAgent
 from services.database_service import DatabaseService
 from services.openai_service import OpenAIService
+from services.rag_service import get_rag_service
 from utils.validators import validate_location
 from utils.rate_limiter import limiter
 from app.schemas.campaign import (
@@ -427,5 +429,28 @@ def campaign_analyze_product():
         chart_data=core_result.chart_data,
         metadata=metadata,
     )
+
+    # Index into RAG (best-effort)
+    try:
+        rag = get_rag_service()
+        analysis_payload = {
+            "executive_summary": executive_summary.model_dump() if hasattr(executive_summary, "model_dump") else executive_summary,
+            "topics": [t.model_dump() if hasattr(t, "model_dump") else t for t in core_result.topics],
+            "strategic_plan": strategic_plan.model_dump() if hasattr(strategic_plan, "model_dump") else strategic_plan,
+            "speech": speech.model_dump() if hasattr(speech, "model_dump") else speech,
+            "metadata": metadata.model_dump() if hasattr(metadata, "model_dump") else metadata,
+        }
+        rag.index_analysis(
+            analysis_id=f"campaign_{uuid.uuid4().hex}",
+            analysis_data=analysis_payload,
+            metadata={
+                "location": metadata.location,
+                "candidate": metadata.candidate_name,
+                "created_at": metadata.generated_at,
+                "topic_name": metadata.theme,
+            },
+        )
+    except Exception as e:
+        logger.warning(f"RAG indexing skipped (campaign): {e}")
 
     return jsonify(response_model.model_dump()), 200

@@ -51,6 +51,7 @@ class Config:
     # OpenAI
     OPENAI_API_KEY: Optional[str] = os.getenv('OPENAI_API_KEY')
     OPENAI_MODEL: str = os.getenv('OPENAI_MODEL', 'gpt-4o')
+    OPENAI_EMBEDDING_MODEL: str = os.getenv('OPENAI_EMBEDDING_MODEL', 'text-embedding-3-small')
     OPENAI_TIMEOUT_SECONDS: int = int(os.getenv('OPENAI_TIMEOUT_SECONDS', '60'))  # Increased for long content generation
     
     # Database (PostgreSQL)

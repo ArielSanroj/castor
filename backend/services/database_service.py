@@ -185,7 +185,7 @@ class DatabaseService:
         finally:
             session.close()
     
-    def get_user_analyses(self, user_id: str, limit: int = 10) -> List[Dict[str, Any]]:
+    def get_user_analyses(self, user_id: str, limit: int = 10, include_data: bool = False) -> List[Dict[str, Any]]:
         """Get user's analysis history."""
         session = self.get_session()
         try:
@@ -196,20 +196,76 @@ class DatabaseService:
                 .limit(limit)
                 .all()
             )
-            
-            return [
-                {
+
+            result = []
+            for a in analyses:
+                item = {
                     'id': str(a.id),
+                    'user_id': a.user_id,
                     'location': a.location,
                     'theme': a.theme,
                     'candidate_name': a.candidate_name,
-                    'created_at': a.created_at.isoformat()
+                    'created_at': a.created_at.isoformat() if a.created_at else None
+                }
+                if include_data:
+                    item['analysis_data'] = a.analysis_data
+                result.append(item)
+
+            return result
+        except Exception as e:
+            logger.error(f"Error getting user analyses: {e}", exc_info=True)
+            return []
+        finally:
+            session.close()
+
+    def get_all_analyses(self, limit: int = 100) -> List[Dict[str, Any]]:
+        """Get all analyses from database (for RAG indexing)."""
+        session = self.get_session()
+        try:
+            analyses = (
+                session.query(Analysis)
+                .order_by(Analysis.created_at.desc())
+                .limit(limit)
+                .all()
+            )
+
+            return [
+                {
+                    'id': str(a.id),
+                    'user_id': a.user_id,
+                    'location': a.location,
+                    'theme': a.theme,
+                    'candidate_name': a.candidate_name,
+                    'analysis_data': a.analysis_data,
+                    'created_at': a.created_at.isoformat() if a.created_at else None
                 }
                 for a in analyses
             ]
         except Exception as e:
-            logger.error(f"Error getting user analyses: {e}", exc_info=True)
+            logger.error(f"Error getting all analyses: {e}", exc_info=True)
             return []
+        finally:
+            session.close()
+
+    def get_analysis_by_id(self, analysis_id: str) -> Optional[Dict[str, Any]]:
+        """Get a specific analysis by ID."""
+        session = self.get_session()
+        try:
+            analysis = session.query(Analysis).filter(Analysis.id == analysis_id).first()
+            if analysis:
+                return {
+                    'id': str(analysis.id),
+                    'user_id': analysis.user_id,
+                    'location': analysis.location,
+                    'theme': analysis.theme,
+                    'candidate_name': analysis.candidate_name,
+                    'analysis_data': analysis.analysis_data,
+                    'created_at': analysis.created_at.isoformat() if analysis.created_at else None
+                }
+            return None
+        except Exception as e:
+            logger.error(f"Error getting analysis by ID: {e}", exc_info=True)
+            return None
         finally:
             session.close()
     
