@@ -3,54 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    
+
     <!-- SEO Meta Tags -->
-    <title>Castor Elecciones | Narrativa politica en tiempo real</title>
-    <meta name="description" content="La forma mas rapida de entender y anticipar la conversacion politica en Colombia. Señales narrativas en tiempo real para medios, campañas y analistas.">
-    <meta name="keywords" content="narrativa politica, analitica electoral, forecast narrativo, conversacion publica, campañas, medios">
+    <title>CASTOR | IA Electoral - Estrategia politica en tiempo real</title>
+    <meta name="description" content="IA Electoral que analiza la conversacion publica, compara tu posicion vs rivales y recomienda jugadas diarias. Gana la narrativa antes que los demas.">
+    <meta name="keywords" content="IA electoral, estrategia politica, inteligencia electoral, campañas, analisis de rivales, narrativa politica">
     <meta name="author" content="Castor Elecciones">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="https://castor-elecciones.com/">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://castor-elecciones.com/">
-    <meta property="og:title" content="Castor Elecciones | Narrativa politica en tiempo real">
-    <meta property="og:description" content="Entiende quien gana la narrativa politica antes que los demas. Señales narrativas en tiempo real para medios, campañas y analistas.">
+    <meta property="og:title" content="CASTOR | IA Electoral - Gana la narrativa politica">
+    <meta property="og:description" content="IA que compara tu campana vs rivales y recomienda jugadas diarias. Estrategia electoral en tiempo real.">
     <meta property="og:image" content="https://castorelecciones.com/static/images/og-image.jpg">
     <meta property="og:locale" content="es_ES">
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://castor-elecciones.com/">
-    <meta name="twitter:title" content="Castor Elecciones | Narrativa politica en tiempo real">
-    <meta name="twitter:description" content="Entiende quien gana la narrativa politica antes que los demas. Señales narrativas en tiempo real.">
+    <meta name="twitter:title" content="CASTOR | IA Electoral">
+    <meta name="twitter:description" content="Estrategia electoral con IA. Compara vs rivales, recibe jugadas diarias.">
     <meta name="twitter:image" content="https://castorelecciones.com/static/images/og-image.jpg">
-    
+
     <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
-    
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/logo.png">
+    <link rel="shortcut icon" href="/static/images/logo.png">
+
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    
+
     <!-- Preload critical assets -->
     <link rel="preload" href="/static/css/styles.css" as="style">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
-    
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/static/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Structured Data / JSON-LD -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Castor Elecciones",
+        "name": "CASTOR IA Electoral",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "offers": {
@@ -58,51 +59,430 @@
             "price": "0",
             "priceCurrency": "USD"
         },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "127"
-        },
-        "description": "Plataforma de inteligencia electoral con análisis de sentimiento en redes sociales usando IA y modelos BETO."
+        "description": "Plataforma de inteligencia electoral con IA que analiza narrativa politica, compara posicion vs rivales y recomienda estrategias diarias."
     }
     </script>
-    
+
     <!-- Defer non-critical scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-    
+
     <!-- Theme color for mobile browsers -->
     <meta name="theme-color" content="#0A0E1A">
+
+    <style>
+        .hero-electoral {
+            padding: 4rem clamp(1.5rem, 4vw, 4rem) 3rem;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 106, 61, 0.15), transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(66, 214, 151, 0.1), transparent 50%),
+                        linear-gradient(135deg, rgba(10, 37, 64, 0.5), rgba(10, 14, 26, 0.8));
+            border-bottom: 1px solid var(--border);
+        }
+        .hero-electoral .hero__content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            filter: drop-shadow(0 8px 24px rgba(255, 106, 61, 0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .hero-electoral h1 {
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+        }
+        .hero-electoral .lead {
+            font-size: 1.15rem;
+            color: var(--muted);
+            max-width: 650px;
+            margin: 0 auto 2rem;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #ff8c5a);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .hero-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+        }
+        .hero-chart-container {
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        .hero-chart-label {
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .hero-chart-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: var(--success);
+            color: #0A0E1A;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .hero-info-card {
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: left;
+        }
+        .hero-info-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .hero-info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .hero-info-item:last-child {
+            border-bottom: none;
+        }
+        .hero-info-label {
+            color: var(--muted);
+        }
+        .hero-info-value {
+            font-weight: 600;
+            color: var(--text);
+        }
+        .hero-info-value.positive {
+            color: var(--success);
+        }
+        .hero-info-value.negative {
+            color: var(--accent);
+        }
+        @media (max-width: 900px) {
+            .hero-split {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .hero-logo {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .value-card {
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: left;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .value-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+        .value-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+        .value-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .value-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 106, 61, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .rivals-section {
+            background: var(--panel);
+            padding: 4rem clamp(1.5rem, 4vw, 4rem);
+            border-bottom: 1px solid var(--border);
+        }
+        .rivals-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            max-width: 900px;
+            margin: 2rem auto 0;
+        }
+        .rival-chip {
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.25rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            color: var(--text);
+            transition: all 0.2s ease;
+        }
+        .rival-chip:hover {
+            border-color: var(--accent);
+            background: rgba(255, 106, 61, 0.1);
+        }
+        .demo-preview {
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+        .demo-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .demo-preview-header h4 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text);
+        }
+        .demo-preview-badge {
+            background: var(--success);
+            color: #0A0E1A;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .demo-move {
+            background: rgba(66, 214, 151, 0.1);
+            border: 1px solid rgba(66, 214, 151, 0.3);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .demo-move-label {
+            font-size: 0.8rem;
+            color: var(--success);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .demo-move-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .demo-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .demo-metric {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+        }
+        .demo-metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .demo-metric-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+        }
+        .how-section {
+            padding: 5rem clamp(1.5rem, 4vw, 4rem);
+        }
+        .how-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 3rem auto 0;
+        }
+        .how-step {
+            text-align: center;
+            position: relative;
+        }
+        .how-step-number {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent), #ff8c5a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 1rem;
+        }
+        .how-step h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .how-step p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        .outputs-section {
+            background: var(--panel);
+            padding: 5rem clamp(1.5rem, 4vw, 4rem);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .outputs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+        }
+        .output-card {
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
+        }
+        .output-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .output-card ul {
+            margin: 0;
+            padding-left: 1.25rem;
+            color: var(--muted);
+        }
+        .output-card li {
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+        }
+        .cta-electoral {
+            padding: 5rem clamp(1.5rem, 4vw, 4rem);
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 106, 61, 0.12), transparent 60%);
+        }
+        .cta-electoral h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+        .cta-electoral p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .trust-section {
+            padding: 3rem clamp(1.5rem, 4vw, 4rem);
+            border-top: 1px solid var(--border);
+        }
+        .trust-grid {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .trust-item {
+            text-align: center;
+        }
+        .trust-item-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .trust-item p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        @media (max-width: 768px) {
+            .demo-metrics {
+                grid-template-columns: 1fr;
+            }
+            .nav-center {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body class="landing" itemscope itemtype="https://schema.org/WebPage">
     <header class="main-header" role="banner">
-        <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+        <nav class="main-nav" role="navigation" aria-label="Navegacion principal">
             <div class="nav-left">
                 <a class="brand" href="/" aria-label="Ir a inicio de Castor Elecciones">
-                    <img src="/static/images/logo.png" 
-                         alt="Castor Elecciones - Logo" 
-                         width="54" 
+                    <img src="/static/images/logo.png"
+                         alt="Castor Elecciones - Logo"
+                         width="54"
                          height="54"
                          loading="eager">
                     <div>
-                        <strong>Inteligencia Electoral</strong>
+                        <strong>CASTOR</strong>
+                        <small>IA Electoral</small>
                     </div>
                 </a>
             </div>
             <div class="nav-center">
-                <a href="/media">Para medios</a>
-                <a href="/campaign">Para campañas</a>
-                <a href="/forecast">Forecast</a>
-                <a href="#pipeline">Cómo funciona</a>
-                <a href="#features">Características</a>
-                <a href="/dashboard" class="nav-highlight">Analytics</a>
+                <a href="#valor">Propuesta</a>
+                <a href="#como-funciona">Como funciona</a>
+                <a href="#outputs">Que entrega</a>
+                <a href="#metodologia">Metodologia</a>
             </div>
             <div class="nav-right" style="display: flex; gap: 0.75rem; align-items: center;">
-                <a href="/dashboard" class="primary-btn" style="padding: 0.5rem 1.25rem; font-size: 0.9rem; text-decoration: none; display: inline-block;">Ingresa ahora</a>
+                <a href="/dashboard" class="primary-btn" style="padding: 0.5rem 1.25rem; font-size: 0.9rem; text-decoration: none; display: inline-block;">Probar ahora</a>
                 <button class="ghost-btn" onclick="openDemoModal()" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Solicitar demo</button>
             </div>
             <!-- Mobile menu button -->
-            <button class="mobile-menu-toggle" 
-                    aria-label="Abrir menú de navegación" 
+            <button class="mobile-menu-toggle"
+                    aria-label="Abrir menu de navegacion"
                     aria-expanded="false"
                     aria-controls="mobile-menu"
                     type="button">
@@ -114,322 +494,248 @@
     <main id="main-content" role="main">
         <!-- Skip to main content link for accessibility -->
         <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
-        
+
         <!-- Hero Section -->
-        <section class="hero" aria-labelledby="hero-title">
+        <section class="hero-electoral" aria-labelledby="hero-title">
             <div class="hero__content">
-                <p class="eyebrow" role="doc-subtitle">LECTURA NARRATIVA · SEÑALES TEMPRANAS · DECISIONES INFORMADAS</p>
-                <h1 id="hero-title">Entiende quien gana la narrativa politica. Antes que los demas.</h1>
+                <img src="/static/images/logo.png" alt="CASTOR Logo" class="hero-logo">
+                <div class="hero-badge">IA Electoral</div>
+                <h1 id="hero-title">Tu estratega electoral con inteligencia artificial</h1>
                 <p class="lead">
-                    CASTOR analiza la conversacion publica en Colombia para identificar el estado de la narrativa, detectar riesgos y anticipar tendencias politicas en tiempo real.
+                    CASTOR analiza la conversacion publica, compara tu posicion vs rivales reales, y te recomienda la jugada del dia. Estrategia electoral en tiempo real.
                 </p>
-                <p class="hero-microcopy">
-                    Lectura clara. Señales tempranas. Decisiones informadas.
-                </p>
-                <div class="hero-ctas">
-                    <div class="hero-cta">
-                        <a href="/dashboard" class="primary-btn" style="text-decoration: none; display: inline-block;">Ver ejemplo en vivo</a>
-                        <span class="cta-note">Explora el dashboard unificado en tiempo real.</span>
+                <div class="cta-buttons">
+                    <a href="/dashboard" class="primary-btn large" style="text-decoration: none; display: inline-block;">Ver dashboard en vivo</a>
+                    <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo personalizada</button>
+                </div>
+
+                <!-- Demo visual con grafica -->
+                <div class="hero-split">
+                    <div class="hero-chart-container">
+                        <span class="hero-chart-label">Tu campana vs Rival</span>
+                        <span class="hero-chart-badge">En vivo</span>
+                        <canvas id="hero-radar-chart" height="280"></canvas>
                     </div>
-                    <div class="hero-cta">
-                        <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo</button>
-                        <span class="cta-note">Demo personalizada con datos reales.</span>
+                    <div class="hero-info-card">
+                        <h3>Jugada recomendada del dia</h3>
+                        <div style="background: rgba(66, 214, 151, 0.1); border: 1px solid rgba(66, 214, 151, 0.3); border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 0.75rem; color: var(--success); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem;">Jugada principal</div>
+                            <div style="font-weight: 600; color: var(--text);">Contrastar en Seguridad: comunicado + video corto + 3 posts</div>
+                        </div>
+                        <div class="hero-info-item">
+                            <span class="hero-info-label">ICCE actual</span>
+                            <span class="hero-info-value">62.4</span>
+                        </div>
+                        <div class="hero-info-item">
+                            <span class="hero-info-label">Momentum</span>
+                            <span class="hero-info-value positive">+0.012</span>
+                        </div>
+                        <div class="hero-info-item">
+                            <span class="hero-info-label">Ventaja en Seguridad</span>
+                            <span class="hero-info-value positive">+8 pts</span>
+                        </div>
+                        <div class="hero-info-item">
+                            <span class="hero-info-label">Brecha en Economia</span>
+                            <span class="hero-info-value negative">-12 pts</span>
+                        </div>
+                        <div class="hero-info-item">
+                            <span class="hero-info-label">Confianza</span>
+                            <span class="hero-info-value">Alta</span>
+                        </div>
+                        <a href="/dashboard" class="primary-btn" style="display: block; text-align: center; margin-top: 1rem; text-decoration: none;">Ver analisis completo</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ¿Qué es Castor? -->
-        <section id="methodology" class="intro-section" aria-labelledby="intro-title">
+        <!-- Propuesta de Valor -->
+        <section id="valor" class="panel" style="padding: 5rem clamp(1.5rem, 4vw, 4rem);">
             <div class="section-header">
-                <h2 id="intro-title">¿Que es CASTOR?</h2>
-                <p class="subtitle">
-                    CASTOR es inteligencia narrativa para entender el clima politico: que temas dominan la agenda, como se perciben candidatos y causas, y que riesgos narrativos estan emergiendo.
-                </p>
-                <p class="subtitle">
-                    Sin encuestas. Sin opinion editorial. Solo datos publicos, analizados con metodologia transparente.
-                </p>
+                <h2>Una sola plataforma. Toda tu estrategia electoral.</h2>
+                <p class="subtitle">CASTOR unifica analisis de narrativa, comparacion de rivales, alertas tempranas y recomendaciones tacticas.</p>
             </div>
-        </section>
-
-        <!-- Cómo funciona - Video -->
-        <section class="video-section panel" aria-labelledby="video-title">
-            <div class="section-header">
-                <h2 id="video-title">¿Que hace CASTOR?</h2>
-                <p class="subtitle">Una lectura completa de la conversacion politica en un solo dashboard.</p>
-            </div>
-            <div class="features-grid">
-                <article class="feature-card">
-                    <div class="feature-icon">🟦</div>
-                    <h3>Monitoreo</h3>
-                    <p>Que se esta diciendo: volumen, sentimiento, temas y actividad por territorio.</p>
-                </article>
-                <article class="feature-card">
-                    <div class="feature-icon">🟨</div>
-                    <h3>Diagnostico</h3>
-                    <p>Que significa: estado narrativo, riesgos, oportunidades y polarizacion.</p>
-                </article>
-                <article class="feature-card">
-                    <div class="feature-icon">🟩</div>
-                    <h3>Anticipacion</h3>
-                    <p>Que puede pasar: momentum, alertas tempranas y proyeccion narrativa.</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- Métricas Clave -->
-        <section class="metrics-section" aria-labelledby="metrics-title">
-            <div class="section-header">
-                <h2 id="metrics-title">¿Para quien es CASTOR?</h2>
-                <p class="subtitle">Diseñado para quienes necesitan entender el poder del relato.</p>
-            </div>
-            <div class="metrics-grid" role="list">
-                <div class="metric-card animate-on-scroll" role="listitem">
-                    <div class="metric-icon" aria-hidden="true">📰</div>
-                    <div class="metric-value">Medios</div>
-                    <div class="metric-label">Contexto inmediato, graficos listos para publicar y lectura neutral del debate.</div>
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">vs</div>
+                    <h3>Comparacion vs rivales</h3>
+                    <p>Mide tu posicion narrativa contra candidatos reales. Radar de fortalezas por tema: seguridad, economia, salud, paz. Identifica brechas y oportunidades.</p>
                 </div>
-                <div class="metric-card animate-on-scroll" role="listitem">
-                    <div class="metric-icon" aria-hidden="true">🎯</div>
-                    <div class="metric-value">Campanas</div>
-                    <div class="metric-label">Centro de mando narrativo, riesgos tempranos e insumos estrategicos.</div>
+                <div class="value-card">
+                    <div class="value-icon">!</div>
+                    <h3>Jugada del dia</h3>
+                    <p>Recomendacion tactica especifica con formato de ejecucion: comunicado + video + posts. Incluye payoff estimado y nivel de confianza.</p>
                 </div>
-                <div class="metric-card animate-on-scroll" role="listitem">
-                    <div class="metric-icon" aria-hidden="true">🔮</div>
-                    <div class="metric-value">Analistas</div>
-                    <div class="metric-label">Series historicas, comparaciones y modelos auditables.</div>
+                <div class="value-card">
+                    <div class="value-icon">~</div>
+                    <h3>Alertas y triggers</h3>
+                    <p>Define cuando actuar: si el ICCE cae 8 puntos o el sentimiento baja 10%, activar respuesta en 48h. Monitoreo continuo automatizado.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">^</div>
+                    <h3>Forecast narrativo</h3>
+                    <p>Proyeccion de tendencia a 7-14 dias. Anticipa cambios en la conversacion antes que se materialicen. Momentum y direccion clara.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Productos Detallados -->
-        <section id="products" class="products">
+        <!-- Rivales Reales -->
+        <section class="rivals-section">
             <div class="section-header">
-                <h2>¿Que entrega CASTOR?</h2>
-                <p>Outputs claros, accionables y verificables para decidir rapido.</p>
+                <h2>Compite contra rivales reales</h2>
+                <p class="subtitle">CASTOR tiene perfiles de candidatos activos en Colombia. Compara tu narrativa en tiempo real.</p>
             </div>
-            <div class="cards-grid">
-                <article class="product-card">
-                    <div class="product-badge">Outputs</div>
-                    <h3>Resumen ejecutivo</h3>
-                    <p class="product-description">
-                        Lectura clara del estado narrativo con hallazgos clave y contexto.
-                    </p>
-                    <div class="product-features">
-                        <h4>Incluye:</h4>
-                        <ul>
-                            <li>Estado narrativo actual</li>
-                            <li>Riesgos y oportunidades</li>
-                            <li>Resumen verificable</li>
-                        </ul>
+            <div class="rivals-grid">
+                <span class="rival-chip">Vicky Davila</span>
+                <span class="rival-chip">Mauricio Cardenas</span>
+                <span class="rival-chip">David Luna</span>
+                <span class="rival-chip">Juan Manuel Galan</span>
+                <span class="rival-chip">Anibal Gaviria</span>
+                <span class="rival-chip">Juan Daniel Oviedo</span>
+                <span class="rival-chip">Juan Carlos Pinzon</span>
+                <span class="rival-chip">Daniel Palacios</span>
+                <span class="rival-chip">Abelardo de la Espriella</span>
+            </div>
+
+            <!-- Demo Preview -->
+            <div class="demo-preview">
+                <div class="demo-preview-header">
+                    <h4>Ejemplo: Tu campana vs Vicky Davila</h4>
+                    <span class="demo-preview-badge">En vivo</span>
+                </div>
+                <div class="demo-move">
+                    <div class="demo-move-label">Jugada principal recomendada</div>
+                    <div class="demo-move-text">Contrastar en Seguridad: comunicado + video corto + 3 posts con hashtags</div>
+                </div>
+                <div class="demo-metrics">
+                    <div class="demo-metric">
+                        <div class="demo-metric-value">62.4</div>
+                        <div class="demo-metric-label">ICCE actual</div>
                     </div>
-                    <a href="/dashboard" class="primary-btn">Ver en dashboard →</a>
-                </article>
-                <article class="product-card featured-card">
-                    <div class="product-badge featured">Outputs</div>
-                    <h3>Diagnostico narrativo</h3>
-                    <p class="product-description">
-                        Analisis por tema y territorio para entender donde se gana o pierde terreno.
-                    </p>
-                    <div class="product-features">
-                        <h4>Incluye:</h4>
-                        <ul>
-                            <li>Dominio narrativo</li>
-                            <li>Tono de conversacion</li>
-                            <li>Mapa por ciudades</li>
-                        </ul>
+                    <div class="demo-metric">
+                        <div class="demo-metric-value" style="color: var(--success);">+0.012</div>
+                        <div class="demo-metric-label">Momentum</div>
                     </div>
-                    <a href="/dashboard" class="primary-btn">Ver en dashboard →</a>
-                </article>
-                <article class="product-card">
-                    <div class="product-badge">Outputs</div>
-                    <h3>Forecast y alertas</h3>
-                    <p class="product-description">
-                        Proyecciones y alertas tempranas para anticipar cambios narrativos.
-                    </p>
-                    <div class="product-features">
-                        <h4>Incluye:</h4>
-                        <ul>
-                            <li>Momentum narrativo</li>
-                            <li>Proyeccion 7-14 dias</li>
-                            <li>Alertas de riesgo</li>
-                        </ul>
+                    <div class="demo-metric">
+                        <div class="demo-metric-value">Alta</div>
+                        <div class="demo-metric-label">Confianza</div>
                     </div>
-                    <a href="/dashboard" class="primary-btn">Ver en dashboard →</a>
-                </article>
-            </div>
-        </section>
-
-        <!-- CASTOR Forecast Section -->
-        <section id="forecast" class="forecast-section panel" aria-labelledby="forecast-title">
-            <div class="section-header">
-                <h2 id="forecast-title">¿Como funciona?</h2>
-                <p class="subtitle">
-                    Metodologia simple, auditable y etica.
-                </p>
-            </div>
-            <div class="forecast-grid">
-                <article class="forecast-card">
-                    <div class="forecast-icon">1</div>
-                    <h3>Recolectamos conversacion publica relevante</h3>
-                    <p>Filtrado por ubicacion, tema y actores.</p>
-                    <ul class="forecast-list">
-                        <li>Datos publicos agregados</li>
-                    </ul>
-                </article>
-                <article class="forecast-card">
-                    <div class="forecast-icon">2</div>
-                    <h3>Clasificamos tono y temas</h3>
-                    <p>Sentimiento y ejes tematicos por conversacion.</p>
-                    <ul class="forecast-list">
-                        <li>Sentimiento agregado</li>
-                        <li>Temas dominantes</li>
-                    </ul>
-                </article>
-                <article class="forecast-card">
-                    <div class="forecast-icon">3</div>
-                    <h3>Medimos fuerza y posicion narrativa</h3>
-                    <p>Indicadores para entender traccion y riesgo.</p>
-                    <ul class="forecast-list">
-                        <li>ICCE y Momentum</li>
-                        <li>Dominio narrativo</li>
-                    </ul>
-                </article>
-                <article class="forecast-card">
-                    <div class="forecast-icon">4</div>
-                    <h3>Detectamos cambios y proyectamos escenarios</h3>
-                    <p>Alertas tempranas y proyecciones a corto plazo.</p>
-                    <ul class="forecast-list">
-                        <li>Forecast narrativo</li>
-                        <li>Alertas y riesgo</li>
-                    </ul>
-                </article>
-            </div>
-            <div class="forecast-cta">
-                <h3>Pruebalo en vivo</h3>
-                <p>Analiza una conversacion real en segundos.</p>
-                <div class="forecast-cta-buttons">
-                    <a href="/dashboard" class="primary-btn">Ver ejemplo en vivo</a>
-                    <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo</button>
                 </div>
             </div>
-        </section>
 
-        <!-- Características Principales -->
-        <section id="features" class="features-section" aria-labelledby="features-title">
-            <div class="section-header">
-                <h2 id="features-title">¿Que entrega CASTOR?</h2>
-                <p>Outputs claros, accionables y verificables.</p>
-            </div>
-            <div class="features-grid">
-                <article class="feature-card">
-                    <div class="feature-icon">✅</div>
-                    <h3>Resumen ejecutivo</h3>
-                    <p>Estado narrativo con hallazgos clave y contexto.</p>
-                </article>
-                <article class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Graficos y diagnostico</h3>
-                    <p>Evolucion, momentum y tono por tema y territorio.</p>
-                </article>
-                <article class="feature-card">
-                    <div class="feature-icon">⚠️</div>
-                    <h3>Alertas y forecast</h3>
-                    <p>Señales tempranas y proyecciones de corto plazo.</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- Visualizaciones automáticas -->
-        <section class="visualization-section" aria-labelledby="visualizations-title">
-            <div class="section-header">
-                <h2 id="visualizations-title">Etica y cumplimiento</h2>
-                <p>
-                    Datos publicos. Uso responsable. CASTOR describe la conversacion, no perfila personas ni influye en usuarios.
-                </p>
-            </div>
-            <div class="grid">
-                <article class="tech-card">
-                    <div class="tech-card-icon">🛡️</div>
-                    <h3>Solo informacion agregada</h3>
-                    <p>Sin identificacion individual ni segmentacion personal.</p>
-                </article>
-                <article class="tech-card">
-                    <div class="tech-card-icon">📜</div>
-                    <h3>Cumplimiento Ley 1581</h3>
-                    <p>Enfoque descriptivo con trazabilidad de datos publicos.</p>
-                </article>
-                <article class="tech-card">
-                    <div class="tech-card-icon">🔎</div>
-                    <h3>Modelos auditables</h3>
-                    <p>Metodologia clara y verificable para instituciones.</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- Cómo Funciona -->
-        <section id="pipeline" class="panel architecture-section">
-            <div class="panel__header">
-                <h2>Metodologia simple</h2>
-                <p>Recolectamos, clasificamos, medimos fuerza narrativa y proyectamos escenarios.</p>
-            </div>
-            
-            <div class="workflow-steps">
-                <article class="workflow-step">
-                    <div class="step-number">1</div>
-                    <div class="step-icon">📡</div>
-                    <h3>Recolectamos conversacion</h3>
-                    <p>Mensajes publicos filtrados por ubicacion y tema.</p>
-                </article>
-                <article class="workflow-step">
-                    <div class="step-number">2</div>
-                    <div class="step-icon">🧠</div>
-                    <h3>Clasificamos tono y temas</h3>
-                    <p>Sentimiento y ejes tematicos para lectura clara.</p>             
-                </article>
-                <article class="workflow-step">
-                    <div class="step-number">3</div>
-                    <div class="step-icon">📊</div>
-                    <h3>Medimos fuerza narrativa</h3>
-                    <p>ICCE, Momentum y dominio narrativo.</p>
-                </article>
-                <article class="workflow-step">
-                    <div class="step-number">4</div>
-                    <div class="step-icon">⚡</div>
-                    <h3>Detectamos cambios</h3>
-                    <p>Alertas tempranas y quiebres en la conversacion.</p>
-                </article>
-                <article class="workflow-step">
-                    <div class="step-number">5</div>
-                    <div class="step-icon">🔮</div>
-                    <h3>Proyectamos escenarios</h3>
-                    <p>Forecast narrativo de corto plazo.</p>
-                </article>
-            </div>
-            
             <div style="text-align: center; margin-top: 2rem;">
-                <a href="/dashboard" class="primary-btn" style="text-decoration: none; display: inline-block;">Probar ahora</a>
+                <a href="/dashboard" class="primary-btn" style="text-decoration: none;">Ver comparacion completa</a>
             </div>
+        </section>
 
-        <!-- Orígenes de CASTOR -->
-        <section id="origins" class="origins-section panel" aria-labelledby="origins-title">
+        <!-- Como Funciona -->
+        <section id="como-funciona" class="how-section">
             <div class="section-header">
-                <h2 id="origins-title">Etica y cumplimiento</h2>
-                <p>Datos publicos. Uso responsable. Enfoque descriptivo y analitico.</p>
-                <p>CASTOR no perfila personas, no influye en usuarios y cumple la Ley 1581 de 2012.</p>
-                <p>Disenado para fortalecer la transparencia, no para manipular la opinion publica.</p>
+                <h2>Como funciona CASTOR</h2>
+                <p class="subtitle">De datos publicos a estrategia accionable en 4 pasos.</p>
+            </div>
+            <div class="how-steps">
+                <div class="how-step">
+                    <div class="how-step-number">1</div>
+                    <h3>Recolecta</h3>
+                    <p>Captura conversacion publica filtrada por ubicacion, tema y actores politicos.</p>
+                </div>
+                <div class="how-step">
+                    <div class="how-step-number">2</div>
+                    <h3>Analiza</h3>
+                    <p>Clasifica sentimiento, detecta temas dominantes y mide fuerza narrativa (ICCE).</p>
+                </div>
+                <div class="how-step">
+                    <div class="how-step-number">3</div>
+                    <h3>Compara</h3>
+                    <p>Posiciona tu campana vs rivales en radar de temas. Identifica brechas y ventajas.</p>
+                </div>
+                <div class="how-step">
+                    <div class="how-step-number">4</div>
+                    <h3>Recomienda</h3>
+                    <p>Genera jugada del dia con formato de ejecucion, payoff estimado y triggers de accion.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Outputs -->
+        <section id="outputs" class="outputs-section">
+            <div class="section-header">
+                <h2>Que entrega CASTOR</h2>
+                <p class="subtitle">Outputs claros, accionables y verificables para tu equipo de campana.</p>
+            </div>
+            <div class="outputs-grid">
+                <div class="output-card">
+                    <h3>Dashboard de estrategia</h3>
+                    <ul>
+                        <li>Radar vs rivales por tema</li>
+                        <li>Brechas y oportunidades</li>
+                        <li>Jugada principal del dia</li>
+                        <li>Alternativas tacticas</li>
+                    </ul>
+                </div>
+                <div class="output-card">
+                    <h3>Metricas clave</h3>
+                    <ul>
+                        <li>ICCE (Indice de Conversacion)</li>
+                        <li>Momentum narrativo</li>
+                        <li>Sentimiento neto</li>
+                        <li>Volumen por tema y ciudad</li>
+                    </ul>
+                </div>
+                <div class="output-card">
+                    <h3>Alertas y forecast</h3>
+                    <ul>
+                        <li>Proyeccion a 7-14 dias</li>
+                        <li>Triggers de accion definidos</li>
+                        <li>Alertas de riesgo narrativo</li>
+                        <li>Señales de rivales</li>
+                    </ul>
+                </div>
+                <div class="output-card">
+                    <h3>Analisis detallado</h3>
+                    <ul>
+                        <li>Informe ejecutivo</li>
+                        <li>Plan electoral por tema</li>
+                        <li>Discurso sugerido</li>
+                        <li>Mapa de popularidad geografica</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metodologia -->
+        <section id="metodologia" class="panel" style="padding: 5rem clamp(1.5rem, 4vw, 4rem);">
+            <div class="section-header">
+                <h2>Metodologia transparente</h2>
+                <p class="subtitle">Datos publicos, modelos auditables, uso etico.</p>
+            </div>
+            <div class="trust-grid" style="margin-top: 2rem;">
+                <div class="trust-item">
+                    <div class="trust-item-icon">1</div>
+                    <p><strong>Datos publicos</strong><br>Solo conversacion publica agregada</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-item-icon">2</div>
+                    <p><strong>Sin perfilamiento</strong><br>No identificamos individuos</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-item-icon">3</div>
+                    <p><strong>Modelo BETO</strong><br>Clasificacion de sentimiento auditable</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-item-icon">4</div>
+                    <p><strong>Ley 1581</strong><br>Cumplimiento de proteccion de datos</p>
+                </div>
             </div>
         </section>
 
         <!-- CTA Final -->
-        <section id="cta" class="cta">
-            <div class="cta-content">
-                <h2>La narrativa cambia todos los dias.</h2>
-                <p>Tu lectura no deberia llegar tarde.</p>
-                <div class="cta-buttons">
-                    <a href="/dashboard" class="primary-btn large" style="text-decoration: none; display: inline-block;">Ver ejemplo en vivo</a>
-                    <button class="ghost-btn" onclick="openDemoModal()" style="margin-left: 1rem;">Solicitar demo</button>
-                </div>
+        <section class="cta-electoral">
+            <h2>La narrativa cambia todos los dias.</h2>
+            <p>Tu estrategia no deberia llegar tarde. Prueba CASTOR ahora.</p>
+            <div class="cta-buttons">
+                <a href="/dashboard" class="primary-btn large" style="text-decoration: none; display: inline-block;">Ver dashboard en vivo</a>
+                <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo personalizada</button>
             </div>
         </section>
     </main>
@@ -437,35 +743,31 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-column">
-                <h3>Castor Elecciones</h3>
-                <p>Plataforma de análisis electoral basada en datos y modelos auditables.</p>
-                <p class="muted">© 2026 CASTOR Elecciones. Todos los derechos reservados.</p>
+                <h3>CASTOR IA Electoral</h3>
+                <p>Plataforma de estrategia electoral con inteligencia artificial.</p>
+                <p class="muted">2026 CASTOR Elecciones. Todos los derechos reservados.</p>
             </div>
             <div class="footer-column">
-                <h4>Productos</h4>
+                <h4>Plataforma</h4>
                 <ul>
-                    <li><a href="/media">CASTOR Medios</a></li>
-                    <li><a href="/campaign">CASTOR Campañas</a></li>
-                    <li><a href="/forecast">CASTOR Forecast</a></li>
-                    <li><a href="/dashboard">Analytics Dashboard</a></li>
+                    <li><a href="/dashboard">Dashboard Electoral</a></li>
                     <li><a href="#" onclick="openDemoModal()">Solicitar demo</a></li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Información</h4>
+                <h4>Informacion</h4>
                 <ul>
-                    <li><a href="#pipeline">Cómo funciona</a></li>
-                    <li><a href="#features">Características</a></li>
-                    <li><a href="/dashboard">Analytics</a></li>
-                    <li><a href="#origins">Orígenes de CASTOR</a></li>
+                    <li><a href="#como-funciona">Como funciona</a></li>
+                    <li><a href="#outputs">Que entrega</a></li>
+                    <li><a href="#metodologia">Metodologia</a></li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Legal / Políticas</h4>
+                <h4>Legal</h4>
                 <ul>
-                    <li><a href="#">Uso de datos públicos</a></li>
+                    <li><a href="#">Uso de datos publicos</a></li>
                     <li><a href="#">Privacidad</a></li>
-                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Terminos y condiciones</a></li>
                     <li><a href="/contact">Contacto</a></li>
                 </ul>
             </div>
@@ -487,29 +789,31 @@
                     </label>
                     <label>
                         Apellido *
-                        <input type="text" name="last_name" id="demo-last-name" required placeholder="Pérez">
+                        <input type="text" name="last_name" id="demo-last-name" required placeholder="Perez">
                     </label>
                 </div>
                 <label>
-                    Correo electrónico *
-                    <input type="email" name="email" id="demo-email" required placeholder="juan.perez@example.com">
+                    Correo electronico *
+                    <input type="email" name="email" id="demo-email" required placeholder="juan.perez@campana.com">
                 </label>
                 <label>
-                    Teléfono *
+                    Telefono *
                     <input type="tel" name="phone" id="demo-phone" required placeholder="+57 300 123 4567">
                 </label>
                 <label>
-                    ¿Qué te interesa? *
+                    Rol en la campana *
                     <select name="interest" id="demo-interest" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="forecast">Forecast</option>
-                        <option value="campañas">Campañas</option>
-                        <option value="medios">Medios</option>
+                        <option value="">Selecciona una opcion</option>
+                        <option value="estratega">Estratega / Director de campana</option>
+                        <option value="comunicaciones">Comunicaciones</option>
+                        <option value="candidato">Candidato</option>
+                        <option value="analista">Analista politico</option>
+                        <option value="otro">Otro</option>
                     </select>
                 </label>
                 <label>
-                    Ubicación (Ciudad) *
-                    <input type="text" name="location" id="demo-location" required placeholder="Bogotá, Medellín, Cali...">
+                    Ubicacion (Ciudad) *
+                    <input type="text" name="location" id="demo-location" required placeholder="Bogota, Medellin, Cali...">
                 </label>
                 <div class="form-actions">
                     <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>
@@ -519,14 +823,9 @@
         </div>
     </div>
 
-    <!-- API Configuration: Set API_BASE_URL from environment variable -->
+    <!-- API Configuration -->
     <script>
-        // Set API base URL from environment variable or use ngrok URL
-        // For Vercel: Set NEXT_PUBLIC_API_BASE_URL in Vercel environment variables
-        // For ngrok: Use https://castorelecciones.ngrok.app
-        // For Flask local development: Uses url_for, falls back to ngrok
         window.API_BASE_URL = (function() {
-            // Check if Flask url_for is available (local development)
             {% if url_for %}
             try {
                 var flaskUrl = '{{ url_for("web.index", _external=True).rstrip("/") }}';
@@ -535,11 +834,9 @@
                 }
             } catch(e) {}
             {% endif %}
-            // Check for Vercel environment variable (injected at build time)
             if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
                 return process.env.NEXT_PUBLIC_API_BASE_URL;
             }
-            // Default: ngrok URL for production
             return 'https://castorelecciones.ngrok.app';
         })();
     </script>
@@ -547,14 +844,83 @@
     <script src="/static/js/main.js"></script>
     <script src="/static/js/performance.js" defer></script>
     <script src="/static/js/landing.js" defer></script>
-    
-    <!-- Web Analytics (Google Analytics - Replace with your ID) -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+
+    <!-- Hero Radar Chart -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
-    </script> -->
+        document.addEventListener('DOMContentLoaded', function() {
+            const radarCtx = document.getElementById('hero-radar-chart');
+            if (!radarCtx) return;
+
+            // Esperar a que Chart.js cargue
+            function initChart() {
+                if (typeof Chart === 'undefined') {
+                    setTimeout(initChart, 100);
+                    return;
+                }
+
+                new Chart(radarCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Seguridad', 'Economia', 'Salud', 'Paz', 'SOV', 'SNA'],
+                        datasets: [
+                            {
+                                label: 'Tu campana',
+                                data: [68, 52, 58, 55, 62, 58],
+                                backgroundColor: 'rgba(66, 214, 151, 0.2)',
+                                borderColor: '#42d697',
+                                borderWidth: 2,
+                                pointBackgroundColor: '#42d697',
+                                pointBorderColor: '#42d697',
+                                pointRadius: 4
+                            },
+                            {
+                                label: 'Vicky Davila',
+                                data: [76, 52, 38, 50, 70, 32],
+                                backgroundColor: 'rgba(255, 106, 61, 0.15)',
+                                borderColor: '#FF6A3D',
+                                borderWidth: 2,
+                                pointBackgroundColor: '#FF6A3D',
+                                pointBorderColor: '#FF6A3D',
+                                pointRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(255,255,255,0.08)' },
+                                grid: { color: 'rgba(255,255,255,0.08)' },
+                                pointLabels: {
+                                    color: '#F5F7FA',
+                                    font: { size: 11, weight: '500' }
+                                },
+                                ticks: {
+                                    color: '#8892B0',
+                                    backdropColor: 'transparent',
+                                    stepSize: 20
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#F5F7FA',
+                                    padding: 20,
+                                    font: { size: 12 }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            initChart();
+        });
+    </script>
 </body>
 </html>

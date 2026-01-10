@@ -115,10 +115,10 @@ def register():
         
     except Exception as e:
         logger.error(f"Error in register endpoint: {e}", exc_info=True)
+        # SECURITY: Don't expose internal error details to client
         return jsonify({
             'success': False,
-            'error': 'Internal server error',
-            'message': str(e)
+            'error': 'Internal server error'
         }), 500
 
 

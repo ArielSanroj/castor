@@ -92,3 +92,5 @@ El dashboard **carga correctamente** pero las APIs de Media y Forecast no funcio
 **Estado**: Página carga pero APIs principales no funcionan
 
 
+
+

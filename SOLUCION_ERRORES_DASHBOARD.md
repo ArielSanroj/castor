@@ -165,3 +165,5 @@ tail -f backend.log
 **Estado:** Endpoints mejorados para ser más resilientes
 
 
+
+

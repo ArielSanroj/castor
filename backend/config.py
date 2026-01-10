@@ -14,11 +14,14 @@ load_dotenv(dotenv_path=env_path)
 
 class Config:
     """Base configuration class."""
-    
-    # Flask
-    SECRET_KEY: str = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
+
+    # Flask - SECURITY: SECRET_KEY must be set in production
+    SECRET_KEY: str = os.getenv('SECRET_KEY', '')
     DEBUG: bool = os.getenv('DEBUG', 'False').lower() == 'true'
     TESTING: bool = False
+
+    # Security validation
+    _SECRET_KEY_MIN_LENGTH: int = 32
     
     # Server
     HOST: str = os.getenv('HOST', '0.0.0.0')
@@ -38,17 +41,28 @@ class Config:
     TWITTER_ACCESS_TOKEN: Optional[str] = os.getenv('TWITTER_ACCESS_TOKEN')
     TWITTER_ACCESS_TOKEN_SECRET: Optional[str] = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
     TWITTER_TIMEOUT_SECONDS: int = int(os.getenv('TWITTER_TIMEOUT_SECONDS', '15'))
+
+    # Twitter Free Tier Limits (100 posts/month)
+    TWITTER_MIN_RESULTS: int = int(os.getenv('TWITTER_MIN_RESULTS', '10'))
+    TWITTER_MAX_RESULTS_PER_REQUEST: int = int(os.getenv('TWITTER_MAX_RESULTS_PER_REQUEST', '15'))
+    TWITTER_MONTHLY_LIMIT: int = int(os.getenv('TWITTER_MONTHLY_LIMIT', '100'))
+    TWITTER_DAILY_REQUEST_LIMIT: int = int(os.getenv('TWITTER_DAILY_REQUEST_LIMIT', '3'))
     
     # OpenAI
     OPENAI_API_KEY: Optional[str] = os.getenv('OPENAI_API_KEY')
     OPENAI_MODEL: str = os.getenv('OPENAI_MODEL', 'gpt-4o')
-    OPENAI_TIMEOUT_SECONDS: int = int(os.getenv('OPENAI_TIMEOUT_SECONDS', '15'))
+    OPENAI_TIMEOUT_SECONDS: int = int(os.getenv('OPENAI_TIMEOUT_SECONDS', '60'))  # Increased for long content generation
     
     # Database (PostgreSQL)
     DATABASE_URL: Optional[str] = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost:5432/castor_elecciones')
     SQLALCHEMY_DATABASE_URI: Optional[str] = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
     SQLALCHEMY_ECHO: bool = DEBUG
+
+    # Database Pool Configuration
+    DB_POOL_SIZE: int = int(os.getenv('DB_POOL_SIZE', '10'))
+    DB_MAX_OVERFLOW: int = int(os.getenv('DB_MAX_OVERFLOW', '20'))
+    DB_POOL_TIMEOUT: int = int(os.getenv('DB_POOL_TIMEOUT', '30'))
     
     # Twilio WhatsApp
     TWILIO_ACCOUNT_SID: Optional[str] = os.getenv('TWILIO_ACCOUNT_SID')
@@ -104,33 +118,41 @@ class Config:
     def validate(cls) -> bool:
         """
         Validate that all required configuration is present.
-        
+
         Returns:
             True if validation passes
-            
+
         Raises:
             ValueError: If required configuration is missing
         """
+        # SECURITY: Validate SECRET_KEY
+        if not cls.SECRET_KEY:
+            # Generate a temporary key for development only
+            import secrets
+            cls.SECRET_KEY = secrets.token_hex(32)
+            import logging
+            logging.warning("SECRET_KEY not set - generated temporary key. Set SECRET_KEY in production!")
+
         # Core required variables
         required_vars = [
             'DATABASE_URL',
         ]
-        
+
         # External API keys (may be optional in dev, but recommended)
         api_keys = [
             'TWITTER_BEARER_TOKEN',
             'OPENAI_API_KEY',
         ]
-        
+
         missing_required = [var for var in required_vars if not getattr(cls, var, None)]
         missing_api_keys = [var for var in api_keys if not getattr(cls, var, None)]
-        
+
         if missing_required:
             raise ValueError(f"Missing required environment variables: {', '.join(missing_required)}")
-        
+
         if missing_api_keys:
             raise ValueError(f"Missing API keys (may cause service failures): {', '.join(missing_api_keys)}")
-        
+
         return True
 
 
@@ -144,32 +166,34 @@ class ProductionConfig(Config):
     """Production configuration."""
     DEBUG = False
     TESTING = False
-    
+
     @classmethod
     def validate(cls) -> bool:
         """
         Stricter validation for production environment.
         Fails hard if any secrets are missing.
         """
-        # Validate SECRET_KEY
-        if not cls.SECRET_KEY or cls.SECRET_KEY == 'dev-secret-key-change-in-production':
-            raise ValueError("SECRET_KEY must be set to a secure value in production")
-        
+        # SECURITY: Validate SECRET_KEY length and presence
+        if not cls.SECRET_KEY or len(cls.SECRET_KEY) < cls._SECRET_KEY_MIN_LENGTH:
+            raise ValueError(
+                f"SECRET_KEY must be set to a secure value (min {cls._SECRET_KEY_MIN_LENGTH} chars) in production"
+            )
+
         # Validate JWT_SECRET_KEY
-        if not cls.JWT_SECRET_KEY or cls.JWT_SECRET_KEY == cls.SECRET_KEY == 'dev-secret-key-change-in-production':
-            raise ValueError("JWT_SECRET_KEY must be set in production")
-        
+        if not cls.JWT_SECRET_KEY or len(cls.JWT_SECRET_KEY) < cls._SECRET_KEY_MIN_LENGTH:
+            raise ValueError("JWT_SECRET_KEY must be set in production (min 32 chars)")
+
         # Validate all required secrets
         required_secrets = [
             'TWITTER_BEARER_TOKEN',
             'OPENAI_API_KEY',
             'DATABASE_URL',
         ]
-        
+
         missing_secrets = [var for var in required_secrets if not getattr(cls, var, None)]
         if missing_secrets:
             raise ValueError(f"Missing required secrets in production: {', '.join(missing_secrets)}")
-        
+
         return True
 
 

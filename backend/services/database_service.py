@@ -3,14 +3,15 @@ Database service using SQLAlchemy.
 Replaces Supabase service.
 """
 import logging
-from typing import Optional, Dict, Any, List
+from contextlib import contextmanager
+from typing import Optional, Dict, Any, List, Generator
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import Config
 from models.database import (
-    Base, User, Analysis, TrendingTopic, Speech, Signature, 
+    Base, User, Analysis, TrendingTopic, Speech, Signature,
     CampaignAction, VoteStrategy, Lead
 )
 
@@ -24,15 +25,16 @@ class DatabaseService:
         """Initialize database connection."""
         if not Config.DATABASE_URL:
             raise ValueError("DATABASE_URL not configured")
-        
+
         self.engine = create_engine(
             Config.DATABASE_URL,
             pool_pre_ping=True,
-            pool_size=10,
-            max_overflow=20
+            pool_size=Config.DB_POOL_SIZE,
+            max_overflow=Config.DB_MAX_OVERFLOW,
+            pool_timeout=Config.DB_POOL_TIMEOUT
         )
         self.SessionLocal = sessionmaker(bind=self.engine, autocommit=False, autoflush=False)
-        logger.info("DatabaseService initialized")
+        logger.info(f"DatabaseService initialized (pool_size={Config.DB_POOL_SIZE})")
     
     def init_db(self):
         """Initialize database tables."""
@@ -44,8 +46,27 @@ class DatabaseService:
             raise
     
     def get_session(self) -> Session:
-        """Get database session."""
+        """Get database session (legacy - prefer session_scope for new code)."""
         return self.SessionLocal()
+
+    @contextmanager
+    def session_scope(self) -> Generator[Session, None, None]:
+        """
+        Provide a transactional scope around a series of operations.
+        Usage:
+            with db_service.session_scope() as session:
+                session.add(obj)
+                # auto-commits on success, auto-rollbacks on exception
+        """
+        session = self.SessionLocal()
+        try:
+            yield session
+            session.commit()
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
     
     # User operations
     def create_user(

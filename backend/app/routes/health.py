@@ -140,3 +140,63 @@ def twitter_usage():
             'error': str(e)
         }), 500
 
+
+@health_bp.route('/health/deep', methods=['GET'])
+def deep_health():
+    """
+    Deep health check that tests external service connectivity.
+    WARNING: This endpoint makes actual API calls - use sparingly.
+    """
+    from config import Config
+
+    results = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "checks": {}
+    }
+
+    # Check OpenAI API key presence
+    results["checks"]["openai"] = {
+        "configured": bool(Config.OPENAI_API_KEY),
+        "model": Config.OPENAI_MODEL,
+        "circuit_breaker": get_openai_circuit_breaker().get_state()
+    }
+
+    # Check Twitter API key presence
+    results["checks"]["twitter"] = {
+        "configured": bool(Config.TWITTER_BEARER_TOKEN),
+        "circuit_breaker": get_twitter_circuit_breaker().get_state(),
+        "usage": get_twitter_usage_stats()
+    }
+
+    # Check Database
+    results["checks"]["database"] = _check_database()
+
+    # Check Redis
+    results["checks"]["redis"] = _check_redis()
+
+    # Overall status
+    all_ok = (
+        results["checks"]["database"].get("status") == "ok" and
+        results["checks"]["openai"]["configured"] and
+        results["checks"]["twitter"]["configured"]
+    )
+
+    results["status"] = "ok" if all_ok else "degraded"
+
+    return jsonify(results), 200 if all_ok else 503
+
+
+@health_bp.route('/health/ready', methods=['GET'])
+def readiness():
+    """Kubernetes-style readiness probe."""
+    db_check = _check_database()
+    if db_check.get("status") != "ok":
+        return jsonify({"ready": False, "reason": "database unavailable"}), 503
+    return jsonify({"ready": True}), 200
+
+
+@health_bp.route('/health/live', methods=['GET'])
+def liveness():
+    """Kubernetes-style liveness probe."""
+    return jsonify({"alive": True, "timestamp": datetime.utcnow().isoformat()}), 200
+

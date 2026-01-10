@@ -23,10 +23,17 @@ venv/
 env/
 ENV/
 
-# Environment variables
+# Environment variables - SECURITY CRITICAL
 .env
+.env.*
+!.env.example
 .env.local
 .env.*.local
+*.env
+secrets/
+credentials/
+*.pem
+*.key
 
 # IDE
 .vscode/
@@ -70,7 +77,11 @@ dist/
 tmp/
 temp/
 *.tmp
-.env.bak
-.env
+*.bak
+*.deprecated.bak
 test_openai_key.py
 verify_services.py
+
+# Backup files
+*.backup
+*.old

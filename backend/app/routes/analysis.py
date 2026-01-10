@@ -23,36 +23,23 @@ logger = logging.getLogger(__name__)
 
 analysis_bp = Blueprint('analysis', __name__)
 
-# Initialize services (singleton pattern)
-twitter_service = None
-sentiment_service = None
-openai_service = None
-twilio_service = None
-db_service = None
-trending_service = None
+# Thread-safe service initialization using factory pattern
+from utils.response_helpers import service_factory
 
 
 def get_services():
-    """Lazy initialization of services."""
-    global twitter_service, sentiment_service, openai_service, twilio_service, db_service, trending_service
-    
-    if twitter_service is None:
-        twitter_service = TwitterService()
-    if sentiment_service is None:
-        sentiment_service = SentimentService()
-    if openai_service is None:
-        openai_service = OpenAIService()
-    if twilio_service is None:
-        twilio_service = TwilioService()
-    if db_service is None:
-        db_service = DatabaseService()
-    if trending_service is None:
-        trending_service = TrendingService()
-    
-    return twitter_service, sentiment_service, openai_service, twilio_service, db_service, trending_service
+    """Thread-safe lazy initialization of services using factory pattern."""
+    twitter_svc = service_factory.get_or_create('twitter', TwitterService)
+    sentiment_svc = service_factory.get_or_create('sentiment', SentimentService)
+    openai_svc = service_factory.get_or_create('openai', OpenAIService)
+    twilio_svc = service_factory.get_or_create('twilio', TwilioService)
+    db_svc = service_factory.get_or_create('database', DatabaseService)
+    trending_svc = service_factory.get_or_create('trending', TrendingService)
+
+    return twitter_svc, sentiment_svc, openai_svc, twilio_svc, db_svc, trending_svc
 
 
-def _parse_analysis_request(req_data):
+def _parse_analysis_request(req_data: dict) -> tuple:
     """Validate and normalize incoming analysis request."""
     try:
         analysis_req = AnalysisRequest(**req_data)
@@ -208,18 +195,38 @@ def analyze():
         )
         
         # Step 7: Save to database (if user authenticated)
+        analysis_id = None
         try:
             user_id = get_jwt_identity()
             if user_id and db_svc:
-                db_svc.save_analysis(
+                saved = db_svc.save_analysis(
                     user_id=str(user_id),
                     location=analysis_req.location,
                     theme=analysis_req.theme,
                     candidate_name=analysis_req.candidate_name,
                     analysis_data=response.dict()
                 )
+                if saved:
+                    analysis_id = saved.get('id') if isinstance(saved, dict) else getattr(saved, 'id', None)
         except Exception as e:
             logger.warning(f"Could not save analysis to database: {e}")
+
+        # Step 7b: Index to RAG for AI assistant (async, non-blocking)
+        try:
+            from services.rag_service import get_rag_service
+            rag = get_rag_service()
+            rag.index_analysis(
+                analysis_id=analysis_id or f"analysis_{analysis_req.location}_{analysis_req.theme}",
+                analysis_data=response.dict(),
+                metadata={
+                    "location": analysis_req.location,
+                    "theme": analysis_req.theme,
+                    "candidate": analysis_req.candidate_name
+                }
+            )
+            logger.info(f"Indexed analysis to RAG for {analysis_req.location}")
+        except Exception as e:
+            logger.warning(f"Could not index to RAG (non-critical): {e}")
         
         # Step 8: Send WhatsApp if requested and user opted in
         try:

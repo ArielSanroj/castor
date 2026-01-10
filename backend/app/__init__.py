@@ -5,6 +5,16 @@ from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 import logging
+import sys
+
+try:
+    from flask_compress import Compress
+    compress = Compress()
+    COMPRESS_AVAILABLE = True
+except ImportError:
+    compress = None
+    COMPRESS_AVAILABLE = False
+
 from config import Config, config as config_map
 from utils.rate_limiter import init_rate_limiter
 from utils.cache import init_cache
@@ -79,20 +89,33 @@ def create_app(config_name: str = 'default') -> Flask:
     
     # Initialize rate limiting
     init_rate_limiter(app)
-    
+
     # Initialize caching
     init_cache()
-    
+
+    # Initialize response compression (if available)
+    if COMPRESS_AVAILABLE and compress:
+        app.config['COMPRESS_ALGORITHM'] = 'gzip'
+        app.config['COMPRESS_LEVEL'] = 6
+        app.config['COMPRESS_MIN_SIZE'] = 500
+        compress.init_app(app)
+
     # Initialize background jobs
     init_background_jobs()
-    
-    # Configure logging
+
+    # Configure logging with multiple handlers
+    log_level = getattr(logging, Config.LOG_LEVEL, logging.INFO)
+    log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+    # Create handlers list
+    handlers = [logging.StreamHandler(sys.stdout)]
+    if Config.LOG_FILE:
+        handlers.append(logging.FileHandler(Config.LOG_FILE))
+
     logging.basicConfig(
-        level=getattr(logging, Config.LOG_LEVEL),
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(Config.LOG_FILE) if Config.LOG_FILE else logging.StreamHandler()
-        ]
+        level=log_level,
+        format=log_format,
+        handlers=handlers
     )
     
     # Initialize shared pipeline (best-effort, non-fatal)
