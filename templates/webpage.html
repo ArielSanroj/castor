@@ -42,11 +42,11 @@
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <!-- Preload critical assets -->
-    <link rel="preload" href="/static/css/styles.css?v=20260110" as="style">
+    <link rel="preload" href="/static/css/styles.css?v=20260110c" as="style">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/static/css/styles.css?v=20260110">
+    <link rel="stylesheet" href="/static/css/styles.css?v=20260110c">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Structured Data / JSON-LD - Schema completo -->
@@ -86,7 +86,8 @@
                     "Jugada diaria recomendada",
                     "Analisis de sentimiento",
                     "Forecast narrativo",
-                    "Alertas y triggers de accion"
+                    "Alertas y triggers de accion",
+                    "Asistente IA conversacional 24/7 - Preguntale a CASTOR"
                 ],
                 "screenshot": "https://castor-elecciones.com/static/images/og-image.jpg"
             },
@@ -784,6 +785,11 @@
                     <h3>Recomienda</h3>
                     <p>Genera jugada del dia con formato de ejecucion, payoff estimado y triggers de accion.</p>
                 </div>
+                <div class="how-step" style="background: linear-gradient(135deg, rgba(255, 106, 61, 0.12), rgba(66, 214, 151, 0.08)); border: 1px solid rgba(255, 106, 61, 0.25);">
+                    <div class="how-step-number" style="background: linear-gradient(135deg, #FF6A3D, #ff8c5a);">5</div>
+                    <h3>Preguntale a CASTOR</h3>
+                    <p>Tu estratega IA 24/7. Consulta datos, pide analisis, genera contenido. Todo en lenguaje natural.</p>
+                </div>
             </div>
         </section>
 
@@ -828,6 +834,20 @@
                         <li>Plan electoral por tema</li>
                         <li>Discurso sugerido</li>
                         <li>Mapa de popularidad geografica</li>
+                    </ul>
+                </div>
+                <div class="output-card" style="background: linear-gradient(135deg, rgba(255, 106, 61, 0.15), rgba(66, 214, 151, 0.1)); border: 1px solid rgba(255, 106, 61, 0.3);">
+                    <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#FF6A3D"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/><circle cx="8" cy="10" r="1.5"/><circle cx="12" cy="10" r="1.5"/><circle cx="16" cy="10" r="1.5"/></svg>
+                        Preguntale a CASTOR
+                    </h3>
+                    <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 0.75rem;">Tu estratega electoral con IA, disponible 24/7</p>
+                    <ul>
+                        <li>Consulta tus datos en lenguaje natural</li>
+                        <li>Pide analisis comparativos vs rivales</li>
+                        <li>Genera ideas para contenido</li>
+                        <li>Recibe recomendaciones personalizadas</li>
+                        <li>Memoria de tus analisis anteriores</li>
                     </ul>
                 </div>
             </div>
@@ -971,10 +991,10 @@
             return 'https://castorelecciones.ngrok.app';
         })();
     </script>
-    <script src="/static/js/config.js?v=20260110"></script>
-    <script src="/static/js/main.js?v=20260110"></script>
-    <script src="/static/js/performance.js?v=20260110" defer></script>
-    <script src="/static/js/landing.js?v=20260110" defer></script>
+    <script src="/static/js/config.js?v=20260110c"></script>
+    <script src="/static/js/main.js?v=20260110c"></script>
+    <script src="/static/js/performance.js?v=20260110c" defer></script>
+    <script src="/static/js/landing.js?v=20260110c" defer></script>
 
     <!-- Hero Radar Chart -->
     <script>
@@ -1071,6 +1091,314 @@
                     ctaFloating.classList.remove('visible');
                 }
                 lastScrollY = scrollY;
+            });
+        })();
+    </script>
+
+    <!-- RAG Chat Widget - Preguntale a CASTOR -->
+    <style>
+        .rag-chat-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: auto;
+            min-width: 60px;
+            height: 50px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #FF6A3D 0%, #FF8C5A 100%);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 106, 61, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 16px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .rag-chat-fab:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(255, 106, 61, 0.6);
+        }
+        .rag-chat-fab svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+            flex-shrink: 0;
+        }
+        .rag-chat-fab-text {
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .rag-chat-panel {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 400px;
+            max-width: calc(100vw - 48px);
+            height: 500px;
+            max-height: calc(100vh - 140px);
+            background: var(--panel, #141824);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+            overflow: hidden;
+        }
+        .rag-chat-panel.open { display: flex; }
+        .rag-chat-header {
+            background: linear-gradient(135deg, #FF6A3D 0%, #FF8C5A 100%);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .rag-chat-header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .rag-chat-header-brand img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+        }
+        .rag-chat-header h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .rag-chat-header button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .rag-chat-header button:hover { background: rgba(255,255,255,0.3); }
+        .rag-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: var(--panel-alt, #1A1F2E);
+        }
+        .rag-message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .rag-message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #FF6A3D 0%, #FF8C5A 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .rag-message.assistant {
+            align-self: flex-start;
+            background: var(--panel, #141824);
+            color: var(--text, #F5F7FA);
+            border: 1px solid var(--border, #1E2433);
+            border-bottom-left-radius: 4px;
+        }
+        .rag-message.system {
+            align-self: center;
+            background: rgba(255, 106, 61, 0.15);
+            color: #FF8C5A;
+            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        .rag-chat-input-area {
+            padding: 12px 16px;
+            background: var(--panel, #141824);
+            border-top: 1px solid var(--border, #1E2433);
+            display: flex;
+            gap: 8px;
+        }
+        .rag-chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 24px;
+            font-size: 0.9rem;
+            outline: none;
+            background: var(--panel-alt, #1A1F2E);
+            color: var(--text, #F5F7FA);
+            transition: border-color 0.2s;
+        }
+        .rag-chat-input-area input::placeholder { color: var(--muted, #8892B0); }
+        .rag-chat-input-area input:focus { border-color: #FF6A3D; }
+        .rag-chat-input-area button {
+            background: linear-gradient(135deg, #FF6A3D 0%, #FF8C5A 100%);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .rag-chat-input-area button:hover { transform: scale(1.05); }
+        .rag-chat-input-area button:disabled { opacity: 0.6; cursor: not-allowed; }
+        .rag-typing {
+            display: flex;
+            gap: 4px;
+            padding: 8px 12px;
+        }
+        .rag-typing span {
+            width: 8px;
+            height: 8px;
+            background: #FF6A3D;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        .rag-typing span:nth-child(1) { animation-delay: -0.32s; }
+        .rag-typing span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        @media (max-width: 480px) {
+            .rag-chat-panel {
+                width: calc(100vw - 24px);
+                right: 12px;
+                bottom: 80px;
+                height: calc(100vh - 100px);
+            }
+            .rag-chat-fab {
+                right: 12px;
+                bottom: 12px;
+                padding: 0 12px;
+            }
+            .rag-chat-fab-text { font-size: 0.8rem; }
+        }
+    </style>
+
+    <!-- Floating Chat Button -->
+    <button class="rag-chat-fab" id="rag-chat-toggle" aria-label="Preguntale a CASTOR">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            <circle cx="8" cy="10" r="1.5"/>
+            <circle cx="12" cy="10" r="1.5"/>
+            <circle cx="16" cy="10" r="1.5"/>
+        </svg>
+        <span class="rag-chat-fab-text">Preguntale a CASTOR</span>
+    </button>
+
+    <!-- Chat Panel -->
+    <div class="rag-chat-panel" id="rag-chat-panel">
+        <div class="rag-chat-header">
+            <div class="rag-chat-header-brand">
+                <img src="/static/images/castorlogo.png" alt="CASTOR">
+                <h3>CASTOR</h3>
+            </div>
+            <button id="rag-close-btn" title="Cerrar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="rag-chat-messages" id="rag-chat-messages">
+            <div class="rag-message assistant">
+                Hola! Soy CASTOR, tu estratega electoral con IA. Puedo ayudarte a entender como funciona nuestra plataforma, responder preguntas sobre estrategia electoral, o mostrarte ejemplos de analisis. Que te gustaria saber?
+            </div>
+        </div>
+        <div class="rag-chat-input-area">
+            <input type="text" id="rag-chat-input" placeholder="Escribe tu pregunta..." autocomplete="off">
+            <button id="rag-send-btn" title="Enviar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // RAG Chat - Landing Page Version
+        (function() {
+            const toggle = document.getElementById('rag-chat-toggle');
+            const panel = document.getElementById('rag-chat-panel');
+            const closeBtn = document.getElementById('rag-close-btn');
+            const input = document.getElementById('rag-chat-input');
+            const sendBtn = document.getElementById('rag-send-btn');
+            const messages = document.getElementById('rag-chat-messages');
+
+            toggle.addEventListener('click', () => {
+                panel.classList.toggle('open');
+                if (panel.classList.contains('open')) input.focus();
+            });
+
+            closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+            async function sendMessage() {
+                const query = input.value.trim();
+                if (!query) return;
+
+                addMessage(query, 'user');
+                input.value = '';
+                sendBtn.disabled = true;
+
+                const typingEl = document.createElement('div');
+                typingEl.className = 'rag-message assistant';
+                typingEl.innerHTML = '<div class="rag-typing"><span></span><span></span><span></span></div>';
+                messages.appendChild(typingEl);
+                messages.scrollTop = messages.scrollHeight;
+
+                try {
+                    const response = await fetch(`${window.API_BASE_URL}/api/chat/rag`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: query, top_k: 5 })
+                    });
+
+                    typingEl.remove();
+
+                    if (!response.ok) throw new Error('Error en la respuesta');
+
+                    const data = await response.json();
+                    let messageContent = data.answer || data.response || 'No pude procesar tu pregunta. Intenta de nuevo.';
+                    addMessage(messageContent, 'assistant', true);
+                } catch (error) {
+                    typingEl.remove();
+                    addMessage('Lo siento, hubo un error. Intenta de nuevo o solicita una demo para hablar con nuestro equipo.', 'system');
+                    console.error('RAG Chat error:', error);
+                }
+
+                sendBtn.disabled = false;
+            }
+
+            function addMessage(content, type, isHtml = false) {
+                const msgEl = document.createElement('div');
+                msgEl.className = `rag-message ${type}`;
+                if (isHtml) msgEl.innerHTML = content;
+                else msgEl.textContent = content;
+                messages.appendChild(msgEl);
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
             });
         })();
     </script>
