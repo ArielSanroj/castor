@@ -28,10 +28,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-    <link rel="preload" href="/static/css/styles.css?v=20260110" as="style">
+    <link rel="preload" href="/static/css/styles.css?v=20260110b" as="style">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
 
-    <link rel="stylesheet" href="/static/css/styles.css?v=20260110">
+    <link rel="stylesheet" href="/static/css/styles.css?v=20260110b">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
@@ -306,13 +306,24 @@
                     </div>
                     <div class="card dashboard-card">
                         <p class="summary-title">Brechas clave</p>
+                        <div class="gap-legend" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                            <span style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #FF6A3D;">
+                                <span style="width: 12px; height: 12px; background: rgba(255, 106, 61, 0.75); border-radius: 2px;"></span>
+                                Rival tiene ventaja
+                            </span>
+                            <span style="font-size: 0.75rem; color: #8892B0;">0</span>
+                            <span style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #42d697;">
+                                Tu campana tiene ventaja
+                                <span style="width: 12px; height: 12px; background: rgba(66, 214, 151, 0.75); border-radius: 2px;"></span>
+                            </span>
+                        </div>
                         <canvas id="game-gap-chart" height="180"></canvas>
                         <p class="dashboard-subtitle" id="game-gap-context" style="margin-top: 0.75rem;"></p>
-                        <div class="dashboard-subtitle" style="margin-top: 0.75rem;">
-                            <strong>SOV:</strong> Share of Voice, porcentaje de conversación que domina la campaña.<br>
-                            <strong>SNA:</strong> Sentimiento Neto, balance entre positivo y negativo.<br>
-                            <strong>ICCE:</strong> Índice de Conversación Electoral (0-100).<br>
-                            <strong>Momentum:</strong> velocidad de cambio de la narrativa.
+                        <div class="dashboard-subtitle" style="margin-top: 0.75rem; font-size: 0.8rem; line-height: 1.6;">
+                            <strong>SOV:</strong> Share of Voice - % de conversacion que domina cada campana.<br>
+                            <strong>SNA:</strong> Sentimiento Neto Acumulado - balance positivo vs negativo.<br>
+                            <strong>ICCE:</strong> Indice de Conversacion Ciudadana Electoral (0-100).<br>
+                            <strong>Momentum:</strong> Velocidad y direccion del cambio narrativo.
                         </div>
                     </div>
                 </div>
@@ -496,12 +507,12 @@
             return 'https://castorelecciones.ngrok.app';
         })();
     </script>
-    <script src="/static/js/config.js?v=20260110"></script>
-    <script src="/static/js/main.js?v=20260110"></script>
-    <script src="/static/js/performance.js?v=20260110" defer></script>
-    <script src="/static/js/landing.js?v=20260110" defer></script>
-    <script src="/static/js/unified_dashboard.js?v=20260110"></script>
-    <script src="/static/js/rag_chat.js?v=20260110" defer></script>
+    <script src="/static/js/config.js?v=20260110b"></script>
+    <script src="/static/js/main.js?v=20260110b"></script>
+    <script src="/static/js/performance.js?v=20260110b" defer></script>
+    <script src="/static/js/landing.js?v=20260110b" defer></script>
+    <script src="/static/js/unified_dashboard.js?v=20260110b"></script>
+    <script src="/static/js/rag_chat.js?v=20260110b" defer></script>
 
     <!-- RAG Chat Button and Container - CASTOR Brand Colors -->
     <style>
