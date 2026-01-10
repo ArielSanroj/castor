@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <!-- SEO Meta Tags -->
-    <title>CASTOR | IA Electoral - Estrategia politica en tiempo real</title>
-    <meta name="description" content="IA Electoral que analiza la conversacion publica, compara tu posicion vs rivales y recomienda jugadas diarias. Gana la narrativa antes que los demas.">
-    <meta name="keywords" content="IA electoral, estrategia politica, inteligencia electoral, campañas, analisis de rivales, narrativa politica">
-    <meta name="author" content="Castor Elecciones">
+    <!-- SEO Meta Tags - Optimizado Colombia 2026 -->
+    <title>CASTOR IA Electoral | Software de Estrategia para Campanas Colombia 2026</title>
+    <meta name="description" content="Software electoral inteligente para alcaldias, gobernaciones, Congreso y presidencia. Analiza conversacion publica, compara vs rivales reales y recibe la jugada diaria. Prueba gratis.">
+    <meta name="keywords" content="software electoral Colombia, estrategia campana politica, IA electoral 2026, dashboard campana, analisis narrativo electoral, alcaldia, gobernacion, Congreso, Bogota, Medellin, Cali">
+    <meta name="author" content="CASTOR Elecciones">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="https://castor-elecciones.com/">
+    <meta name="geo.region" content="CO">
+    <meta name="geo.placename" content="Colombia">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://castor-elecciones.com/">
-    <meta property="og:title" content="CASTOR | IA Electoral - Gana la narrativa politica">
-    <meta property="og:description" content="IA que compara tu campana vs rivales y recomienda jugadas diarias. Estrategia electoral en tiempo real.">
+    <meta property="og:title" content="CASTOR | Software Electoral Inteligente para Colombia 2026">
+    <meta property="og:description" content="Tu copiloto electoral con IA. Funciona para alcaldias, gobernaciones, Congreso o presidencia. Compara vs rivales y recibe jugadas diarias.">
     <meta property="og:image" content="https://castorelecciones.com/static/images/og-image.jpg">
-    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale" content="es_CO">
+    <meta property="og:site_name" content="CASTOR IA Electoral">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://castor-elecciones.com/">
-    <meta name="twitter:title" content="CASTOR | IA Electoral">
-    <meta name="twitter:description" content="Estrategia electoral con IA. Compara vs rivales, recibe jugadas diarias.">
+    <meta name="twitter:title" content="CASTOR | Software Electoral IA Colombia 2026">
+    <meta name="twitter:description" content="Estrategia electoral con IA para cualquier campana. Alcaldias, gobernaciones, Congreso, presidencia. Jugada diaria + comparacion vs rivales.">
     <meta name="twitter:image" content="https://castorelecciones.com/static/images/og-image.jpg">
 
     <!-- Favicons -->
@@ -46,20 +49,58 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Structured Data / JSON-LD -->
+    <!-- Structured Data / JSON-LD - Schema completo -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "CASTOR IA Electoral",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "description": "Plataforma de inteligencia electoral con IA que analiza narrativa politica, compara posicion vs rivales y recomienda estrategias diarias."
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://castor-elecciones.com/#organization",
+                "name": "CASTOR Elecciones",
+                "url": "https://castor-elecciones.com",
+                "logo": "https://castor-elecciones.com/static/images/castorlogo.png",
+                "description": "Software electoral inteligente con IA para campanas politicas en Colombia",
+                "areaServed": {
+                    "@type": "Country",
+                    "name": "Colombia"
+                }
+            },
+            {
+                "@type": "SoftwareApplication",
+                "@id": "https://castor-elecciones.com/#software",
+                "name": "CASTOR IA Electoral",
+                "applicationCategory": "BusinessApplication",
+                "operatingSystem": "Web",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "Consultar",
+                    "priceCurrency": "COP",
+                    "availability": "https://schema.org/InStock"
+                },
+                "description": "Dashboard de estrategia electoral con IA para campanas en Colombia 2026. Analiza conversacion publica, compara vs rivales y genera jugadas diarias.",
+                "url": "https://castor-elecciones.com",
+                "author": {"@id": "https://castor-elecciones.com/#organization"},
+                "featureList": [
+                    "Comparacion vs rivales en tiempo real",
+                    "Jugada diaria recomendada",
+                    "Analisis de sentimiento",
+                    "Forecast narrativo",
+                    "Alertas y triggers de accion"
+                ],
+                "screenshot": "https://castor-elecciones.com/static/images/og-image.jpg"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://castor-elecciones.com/#webpage",
+                "url": "https://castor-elecciones.com",
+                "name": "CASTOR IA Electoral - Software de Estrategia para Campanas Colombia 2026",
+                "description": "Software electoral inteligente para alcaldias, gobernaciones, Congreso y presidencia.",
+                "isPartOf": {"@id": "https://castor-elecciones.com/#organization"},
+                "about": {"@id": "https://castor-elecciones.com/#software"},
+                "inLanguage": "es-CO"
+            }
+        ]
     }
     </script>
 
@@ -452,6 +493,85 @@
                 display: none;
             }
         }
+        /* CTA Flotante */
+        .cta-floating {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #FF6A3D 0%, #FF8C5A 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(255, 106, 61, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .cta-floating.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .cta-floating:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 6px 30px rgba(255, 106, 61, 0.6);
+        }
+        @media (max-width: 600px) {
+            .cta-floating {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                bottom: 16px;
+            }
+        }
+        /* Tipos de campana */
+        .campaign-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        .campaign-type-chip {
+            background: rgba(255, 106, 61, 0.1);
+            border: 1px solid rgba(255, 106, 61, 0.3);
+            color: #FF8C5A;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        /* Mobile UX mejorado */
+        @media (max-width: 480px) {
+            .hero-electoral h1 {
+                font-size: 1.75rem;
+            }
+            .hero-electoral .lead {
+                font-size: 1rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            .cta-buttons .primary-btn,
+            .cta-buttons .ghost-btn {
+                width: 100%;
+                padding: 1rem !important;
+                font-size: 1rem !important;
+            }
+            .hero-info-card {
+                padding: 1.25rem;
+            }
+            .value-card {
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body class="landing" itemscope itemtype="https://schema.org/WebPage">
@@ -498,51 +618,60 @@
         <!-- Hero Section -->
         <section class="hero-electoral" aria-labelledby="hero-title">
             <div class="hero__content">
-                <img src="/static/images/castorlogo.png" alt="CASTOR Logo" class="hero-logo">
-                <div class="hero-badge">IA Electoral</div>
-                <h1 id="hero-title">Tu estratega electoral con inteligencia artificial</h1>
+                <img src="/static/images/castorlogo.png" alt="CASTOR Logo" class="hero-logo" loading="eager">
+                <div class="hero-badge">Software Electoral Inteligente</div>
+                <h1 id="hero-title">Tu copiloto en cualquier contienda electoral</h1>
                 <p class="lead">
-                    CASTOR analiza la conversacion publica, compara tu posicion vs rivales reales, y te recomienda la jugada del dia. Estrategia electoral en tiempo real.
+                    CASTOR analiza la conversacion publica de tu territorio, compara tu narrativa vs rivales reales y te entrega la jugada ganadora del dia. Funciona para alcaldias, gobernaciones, Congreso o presidencia.
                 </p>
-                <div class="cta-buttons">
-                    <a href="/dashboard" class="primary-btn large" style="text-decoration: none; display: inline-block;">Ver dashboard en vivo</a>
-                    <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo personalizada</button>
+                <!-- Tipos de campana soportadas -->
+                <div class="campaign-types">
+                    <span class="campaign-type-chip">Alcaldias</span>
+                    <span class="campaign-type-chip">Gobernaciones</span>
+                    <span class="campaign-type-chip">Concejos</span>
+                    <span class="campaign-type-chip">Asambleas</span>
+                    <span class="campaign-type-chip">Congreso</span>
+                    <span class="campaign-type-chip">Presidencia</span>
+                </div>
+                <div class="cta-buttons" style="margin-top: 2rem;">
+                    <a href="/dashboard" class="primary-btn large" style="text-decoration: none; display: inline-block;">Probar con datos de ejemplo</a>
+                    <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo para mi campana</button>
                 </div>
 
                 <!-- Demo visual con grafica -->
                 <div class="hero-split">
                     <div class="hero-chart-container">
-                        <span class="hero-chart-label">Tu campana vs Rival</span>
-                        <span class="hero-chart-badge">En vivo</span>
+                        <span class="hero-chart-label">Tu campana vs Rival seleccionado</span>
+                        <span class="hero-chart-badge">Ejemplo en vivo</span>
                         <canvas id="hero-radar-chart" height="280"></canvas>
                     </div>
                     <div class="hero-info-card">
                         <h3>Jugada recomendada del dia</h3>
                         <div style="background: rgba(66, 214, 151, 0.1); border: 1px solid rgba(66, 214, 151, 0.3); border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
                             <div style="font-size: 0.75rem; color: var(--success); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem;">Jugada principal</div>
-                            <div style="font-weight: 600; color: var(--text);">Contrastar en Seguridad: comunicado + video corto + 3 posts</div>
+                            <div style="font-weight: 600; color: var(--text);">Contrastar en [Tema caliente]: comunicado + video corto + 3 posts</div>
                         </div>
                         <div class="hero-info-item">
-                            <span class="hero-info-label">ICCE actual</span>
+                            <span class="hero-info-label">ICCE (Indice Conversacion)</span>
                             <span class="hero-info-value">62.4</span>
                         </div>
                         <div class="hero-info-item">
-                            <span class="hero-info-label">Momentum</span>
+                            <span class="hero-info-label">Momentum narrativo</span>
                             <span class="hero-info-value positive">+0.012</span>
                         </div>
                         <div class="hero-info-item">
-                            <span class="hero-info-label">Ventaja en Seguridad</span>
+                            <span class="hero-info-label">Ventaja en tema clave</span>
                             <span class="hero-info-value positive">+8 pts</span>
                         </div>
                         <div class="hero-info-item">
-                            <span class="hero-info-label">Brecha en Economia</span>
+                            <span class="hero-info-label">Brecha a cerrar</span>
                             <span class="hero-info-value negative">-12 pts</span>
                         </div>
                         <div class="hero-info-item">
-                            <span class="hero-info-label">Confianza</span>
+                            <span class="hero-info-label">Nivel de confianza</span>
                             <span class="hero-info-value">Alta</span>
                         </div>
-                        <a href="/dashboard" class="primary-btn" style="display: block; text-align: center; margin-top: 1rem; text-decoration: none;">Ver analisis completo</a>
+                        <a href="/dashboard" class="primary-btn" style="display: block; text-align: center; margin-top: 1rem; text-decoration: none;">Probar ahora gratis</a>
                     </div>
                 </div>
             </div>
@@ -581,8 +710,8 @@
         <!-- Rivales Reales -->
         <section class="rivals-section">
             <div class="section-header">
-                <h2>Compite contra rivales reales</h2>
-                <p class="subtitle">CASTOR tiene perfiles de candidatos activos en Colombia. Compara tu narrativa en tiempo real.</p>
+                <h2>Compara contra cualquier rival</h2>
+                <p class="subtitle">CASTOR tiene perfiles de figuras politicas activas en Colombia. Tambien puedes agregar rivales locales de tu territorio.</p>
             </div>
             <div class="rivals-grid">
                 <span class="rival-chip">Vicky Davila</span>
@@ -591,20 +720,21 @@
                 <span class="rival-chip">Juan Manuel Galan</span>
                 <span class="rival-chip">Anibal Gaviria</span>
                 <span class="rival-chip">Juan Daniel Oviedo</span>
-                <span class="rival-chip">Juan Carlos Pinzon</span>
-                <span class="rival-chip">Daniel Palacios</span>
-                <span class="rival-chip">Abelardo de la Espriella</span>
+                <span class="rival-chip">+ Tu rival local</span>
             </div>
+            <p style="text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 1rem;">
+                Funciona igual para: alcaldias de Bogota, Medellin, Cali o municipios pequenos &bull; listas al Congreso &bull; gobernaciones &bull; revocatorias
+            </p>
 
             <!-- Demo Preview -->
             <div class="demo-preview">
                 <div class="demo-preview-header">
-                    <h4>Ejemplo: Tu campana vs Vicky Davila</h4>
-                    <span class="demo-preview-badge">En vivo</span>
+                    <h4>Ejemplo: Tu campana vs Rival seleccionado</h4>
+                    <span class="demo-preview-badge">Datos de ejemplo</span>
                 </div>
                 <div class="demo-move">
                     <div class="demo-move-label">Jugada principal recomendada</div>
-                    <div class="demo-move-text">Contrastar en Seguridad: comunicado + video corto + 3 posts con hashtags</div>
+                    <div class="demo-move-text">Contrastar en [Tema dominante]: comunicado + video corto + 3 posts con hashtags locales</div>
                 </div>
                 <div class="demo-metrics">
                     <div class="demo-metric">
@@ -623,7 +753,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 2rem;">
-                <a href="/dashboard" class="primary-btn" style="text-decoration: none;">Ver comparacion completa</a>
+                <a href="/dashboard" class="primary-btn" style="text-decoration: none;">Probar con mi territorio</a>
             </div>
         </section>
 
@@ -826,16 +956,17 @@
     <!-- API Configuration -->
     <script>
         window.API_BASE_URL = (function() {
-            {% if url_for %}
-            try {
-                var flaskUrl = '{{ url_for("web.index", _external=True).rstrip("/") }}';
-                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '') {
-                    return flaskUrl;
-                }
-            } catch(e) {}
-            {% endif %}
             if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
                 return process.env.NEXT_PUBLIC_API_BASE_URL;
+            }
+            // Detectar origen automaticamente
+            if (typeof window !== 'undefined' && window.location) {
+                var origin = window.location.origin;
+                // Si es Vercel, usar el backend en ngrok o Railway
+                if (origin.includes('vercel.app')) {
+                    return 'https://castorelecciones.ngrok.app';
+                }
+                return origin;
             }
             return 'https://castorelecciones.ngrok.app';
         })();
@@ -874,7 +1005,7 @@
                                 pointRadius: 4
                             },
                             {
-                                label: 'Vicky Davila',
+                                label: 'Rival seleccionado',
                                 data: [76, 52, 38, 50, 70, 32],
                                 backgroundColor: 'rgba(255, 106, 61, 0.15)',
                                 borderColor: '#FF6A3D',
@@ -921,6 +1052,27 @@
 
             initChart();
         });
+
+        // CTA Flotante - aparece despues de scroll
+        (function() {
+            const ctaFloating = document.createElement('a');
+            ctaFloating.className = 'cta-floating';
+            ctaFloating.href = '#';
+            ctaFloating.onclick = function(e) { e.preventDefault(); openDemoModal(); };
+            ctaFloating.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg> Solicitar Demo Gratis';
+            document.body.appendChild(ctaFloating);
+
+            let lastScrollY = 0;
+            window.addEventListener('scroll', function() {
+                const scrollY = window.scrollY;
+                if (scrollY > 600) {
+                    ctaFloating.classList.add('visible');
+                } else {
+                    ctaFloating.classList.remove('visible');
+                }
+                lastScrollY = scrollY;
+            });
+        })();
     </script>
 </body>
 </html>
