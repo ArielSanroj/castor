@@ -454,3 +454,109 @@ def campaign_analyze_product():
         logger.warning(f"RAG indexing skipped (campaign): {e}")
 
     return jsonify(response_model.model_dump()), 200
+
+
+@campaign_bp.route('/campaign/rivals/compare', methods=['POST'])
+@limiter.limit("2 per minute")
+@jwt_required(optional=True)
+def compare_rivals():
+    """
+    Compare rival candidates using the same Twitter-backed analysis pipeline.
+
+    Request body:
+    {
+        "location": "Colombia",
+        "topic": "Seguridad",
+        "candidate_names": ["Paloma Valencia", "Vicky Dávila", ...],
+        "days_back": 30,
+        "max_tweets": 30
+    }
+    """
+    try:
+        payload = request.get_json() or {}
+        location = (payload.get("location") or "").strip()
+        if not location:
+            return jsonify({"success": False, "error": "location is required"}), 400
+
+        candidate_names = payload.get("candidate_names") or []
+        if not candidate_names:
+            return jsonify({"success": False, "error": "candidate_names is required"}), 400
+
+        topic = payload.get("topic")
+        days_back = int(payload.get("days_back") or 30)
+        max_tweets = int(payload.get("max_tweets") or 30)
+
+        pipeline = _get_pipeline()
+        if not pipeline:
+            return jsonify({
+                "success": False,
+                "error": "Servicios de análisis no disponibles",
+            }), 503
+
+        results = []
+        for name in candidate_names:
+            if not name:
+                continue
+            try:
+                core_result = pipeline.run_core_pipeline(
+                    location=location,
+                    topic=topic,
+                    candidate_name=name,
+                    politician=None,
+                    max_tweets=max_tweets,
+                    time_window_days=days_back,
+                    language="es",
+                )
+                results.append({
+                    "candidate_name": name,
+                    "tweets_analyzed": core_result.tweets_analyzed,
+                    "sentiment_overview": core_result.sentiment_overview.model_dump() if hasattr(core_result.sentiment_overview, "model_dump") else core_result.sentiment_overview,
+                    "topics": [t.model_dump() if hasattr(t, "model_dump") else t for t in core_result.topics],
+                    "time_window_from": core_result.time_window_from.isoformat() if core_result.time_window_from else None,
+                    "time_window_to": core_result.time_window_to.isoformat() if core_result.time_window_to else None,
+                })
+
+                # Index into RAG (best-effort)
+                try:
+                    rag = get_rag_service()
+                    rag.index_analysis(
+                        analysis_id=f"rival_{uuid.uuid4().hex}",
+                        analysis_data={
+                            "executive_summary": {
+                                "overview": f"Comparación de rival {name} en {location}.",
+                                "key_findings": [
+                                    f"Tweets analizados: {core_result.tweets_analyzed}",
+                                ],
+                                "recommendations": []
+                            },
+                            "topics": [t.model_dump() if hasattr(t, "model_dump") else t for t in core_result.topics],
+                            "sentiment_overview": core_result.sentiment_overview.model_dump() if hasattr(core_result.sentiment_overview, "model_dump") else core_result.sentiment_overview,
+                            "metadata": {
+                                "location": location,
+                                "theme": topic,
+                                "candidate_name": name,
+                                "time_window_from": core_result.time_window_from.isoformat() if core_result.time_window_from else None,
+                                "time_window_to": core_result.time_window_to.isoformat() if core_result.time_window_to else None,
+                            }
+                        },
+                        metadata={
+                            "location": location,
+                            "candidate": name,
+                            "topic_name": topic,
+                            "created_at": core_result.time_window_to.isoformat() if core_result.time_window_to else None,
+                        },
+                    )
+                except Exception as e:
+                    logger.warning(f"RAG indexing skipped (rival compare): {e}")
+            except Exception as e:
+                logger.warning(f"Rival compare failed for {name}: {e}")
+
+        return jsonify({
+            "success": True,
+            "location": location,
+            "topic": topic,
+            "candidates": results
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in rival compare: {e}", exc_info=True)
+        return jsonify({"success": False, "error": "Error processing rivals"}), 500

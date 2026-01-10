@@ -13,6 +13,14 @@
       "destination": "/templates/webpage.html"
     },
     {
+      "source": "/dashboard",
+      "destination": "/templates/unified_dashboard.html"
+    },
+    {
+      "source": "/unified_dashboard",
+      "destination": "/templates/unified_dashboard.html"
+    },
+    {
       "source": "/media",
       "destination": "/templates/media.html"
     },

@@ -516,29 +516,17 @@
 
     <!-- API Configuration: Set API_BASE_URL from environment variable -->
     <script>
-        // Set API base URL from environment variable or use ngrok URL
-        // For Vercel: Set NEXT_PUBLIC_API_BASE_URL in Vercel environment variables
-        // For ngrok: Use https://castorelecciones.ngrok.app
-        // For Flask local development: Uses url_for, falls back to ngrok
+        // Set API base URL
         window.API_BASE_URL = (function() {
-            // Check for Vercel environment variable (injected at build time)
             if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
                 return process.env.NEXT_PUBLIC_API_BASE_URL;
             }
-            // Try to use Flask url_for if available (local development)
-            {% if url_for %}
-            try {
-                var flaskUrl = '{{ url_for("web.index", _external=True).rstrip("/") }}';
-                if (flaskUrl && flaskUrl !== 'None' && flaskUrl !== '' && !flaskUrl.includes('error') && !flaskUrl.includes('Could not build')) {
-                    return flaskUrl;
-                }
-            } catch(e) {
-                // Fall through to default
-            }
-            {% endif %}
-            // Default: ngrok URL for production or use current origin
             if (typeof window !== 'undefined' && window.location) {
-                return window.location.origin;
+                var origin = window.location.origin;
+                if (origin.includes('vercel.app')) {
+                    return 'https://castorelecciones.ngrok.app';
+                }
+                return origin;
             }
             return 'https://castorelecciones.ngrok.app';
         })();

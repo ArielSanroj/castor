@@ -29,6 +29,21 @@ const COLOMBIA_POINTS = [
   { name: "Villavicencio", lat: 4.142, lon: -73.627 }
 ];
 
+const RIVAL_CANDIDATES = [
+  "Vicky Dávila",
+  "Mauricio Cárdenas",
+  "David Luna",
+  "Juan Manuel Galán",
+  "Aníbal Gaviria",
+  "Juan Daniel Oviedo",
+  "Juan Carlos Pinzón",
+  "Daniel Palacios",
+  "Abelardo de la Espriella"
+];
+
+let rivalProfilesLive = {};
+let rivalProfilesContextKey = null;
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("unified-form");
   const submitBtn = document.getElementById("unified-submit-btn");
@@ -1137,6 +1152,9 @@ function renderGameTheoryBlock(mediaData, forecastData, trendingData, campaignDa
   const selectedRival = getSelectedRivalName();
   if (rivalNameEl) rivalNameEl.textContent = selectedRival;
   if (candidateNameEl) candidateNameEl.textContent = input?.candidateName || "Paloma Valencia";
+  if (lastGameContext) {
+    loadRivalProfilesFromApi(lastGameContext);
+  }
 
   const gameData = buildGameTheoryFromSelection(
     mediaData,
@@ -1175,7 +1193,7 @@ function buildGameTheoryFromSelection(mediaData, forecastData, trendingData, cam
   const sentiment = extractSentiment(mediaData);
   const topTopic = mediaData?.topics?.[0]?.topic || input?.topic || "Seguridad";
   const secondTopic = mediaData?.topics?.[1]?.topic || "Economia";
-  const rivalProfile = RIVAL_PROFILES[selectedRival] || { seguridad: 58, economia: 58, salud: 58, paz: 58, sov: 58, sna: 40, momentum: 0.003 };
+  const rivalProfile = rivalProfilesLive[selectedRival] || RIVAL_PROFILES[selectedRival] || { seguridad: 58, economia: 58, salud: 58, paz: 58, sov: 58, sna: 40, momentum: 0.003 };
 
   const campaignScore = buildCampaignScores(signals, sentiment);
   const rivalScore = {
@@ -1726,6 +1744,12 @@ function setupUnifiedTabs() {
         c.classList.toggle("active", isActive);
       });
 
+      if (target === "game") {
+        if (lastGameContext) {
+          loadRivalProfilesFromApi(lastGameContext);
+        }
+      }
+
       setTimeout(() => {
         if (target === "game") {
           if (gameRadarChart) gameRadarChart.resize();
@@ -1745,6 +1769,7 @@ function setupGameRivalSelector() {
   if (!select) return;
   select.addEventListener("change", () => {
     if (!lastGameContext) return;
+    loadRivalProfilesFromApi(lastGameContext);
     renderGameTheoryBlock(
       lastGameContext.mediaData,
       lastGameContext.forecastData,
@@ -1758,6 +1783,128 @@ function setupGameRivalSelector() {
 function getSelectedRivalName() {
   const select = document.getElementById("game-rival-select");
   return select?.value || "Vicky Dávila";
+}
+
+async function loadRivalProfilesFromApi(context) {
+  if (!context) return;
+  const candidateName = context.input?.candidateName || "Paloma Valencia";
+  const location = context.input?.location || "Colombia";
+  const topic = context.input?.topic || null;
+  const daysBack = Number(document.getElementById("unified-days-back")?.value || 30);
+  const contextKey = `${candidateName}|${location}|${topic || "all"}|${daysBack}`;
+
+  if (rivalProfilesContextKey === contextKey) {
+    return;
+  }
+  rivalProfilesContextKey = contextKey;
+
+  try {
+    const response = await fetch("/api/campaign/rivals/compare", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        location,
+        topic,
+        candidate_names: [candidateName, ...RIVAL_CANDIDATES],
+        days_back: daysBack,
+        max_tweets: 30
+      })
+    });
+
+    if (!response.ok) {
+      rivalProfilesContextKey = null;
+      return;
+    }
+
+    const data = await response.json();
+    if (!data.success || !data.candidates?.length) {
+      rivalProfilesContextKey = null;
+      return;
+    }
+
+    rivalProfilesLive = buildRivalProfilesFromApi(data.candidates, candidateName);
+    if (lastGameContext) {
+      renderGameTheoryBlock(
+        lastGameContext.mediaData,
+        lastGameContext.forecastData,
+        lastGameContext.trendingData,
+        lastGameContext.campaignData,
+        lastGameContext.input
+      );
+    }
+  } catch (e) {
+    rivalProfilesContextKey = null;
+  }
+}
+
+function buildRivalProfilesFromApi(candidates, mainCandidate) {
+  const totalTweets = candidates.reduce((sum, c) => sum + (c.tweets_analyzed || 0), 0) || 1;
+  const profiles = {};
+
+  candidates.forEach((candidate) => {
+    const name = candidate.candidate_name || "Desconocido";
+    if (name === mainCandidate) return;
+    const sentiment = candidate.sentiment_overview || { positive: 0.34, neutral: 0.33, negative: 0.33 };
+    const topics = candidate.topics || [];
+    const tweets = candidate.tweets_analyzed || 0;
+
+    const sna = 50 + (sentiment.positive - sentiment.negative) * 50;
+    const sov = Math.min(80, Math.max(20, (tweets / totalTweets) * 100));
+
+    const scores = deriveTopicScores(topics);
+
+    profiles[name] = {
+      seguridad: scores.seguridad,
+      economia: scores.economia,
+      salud: scores.salud,
+      paz: scores.paz,
+      sov,
+      sna,
+      momentum: 0.003
+    };
+  });
+
+  return profiles;
+}
+
+function deriveTopicScores(topics) {
+  const fallback = { seguridad: 55, economia: 55, salud: 55, paz: 55 };
+  if (!topics.length) return fallback;
+
+  const buckets = {
+    seguridad: [],
+    economia: [],
+    salud: [],
+    paz: []
+  };
+
+  topics.forEach((topic) => {
+    const name = (topic.topic || "").toLowerCase();
+    const sentiment = topic.sentiment || {};
+    const score = 50 + ((sentiment.positive || 0) - (sentiment.negative || 0)) * 50;
+    if (name.includes("seguridad") || name.includes("crimen") || name.includes("orden") || name.includes("justicia")) {
+      buckets.seguridad.push(score);
+    } else if (name.includes("econom") || name.includes("empleo") || name.includes("costo")) {
+      buckets.economia.push(score);
+    } else if (name.includes("salud")) {
+      buckets.salud.push(score);
+    } else if (name.includes("paz") || name.includes("reins")) {
+      buckets.paz.push(score);
+    }
+  });
+
+  return {
+    seguridad: averageOrFallback(buckets.seguridad, fallback.seguridad),
+    economia: averageOrFallback(buckets.economia, fallback.economia),
+    salud: averageOrFallback(buckets.salud, fallback.salud),
+    paz: averageOrFallback(buckets.paz, fallback.paz)
+  };
+}
+
+function averageOrFallback(values, fallback) {
+  if (!values.length) return fallback;
+  const sum = values.reduce((acc, v) => acc + v, 0);
+  return Math.max(20, Math.min(80, sum / values.length));
 }
 
 function setupAccordion() {
