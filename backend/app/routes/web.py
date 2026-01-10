@@ -2,7 +2,7 @@
 Web routes for serving HTML pages.
 Handles landing page and other web interfaces.
 """
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 import os
 
 web_bp = Blueprint('web', __name__)
@@ -12,7 +12,7 @@ web_bp = Blueprint('web', __name__)
 def index():
     """Serve index page."""
     try:
-        return render_template('index.html')
+        return render_template('unified_dashboard.html')
     except Exception:
         # Fallback if template not found
         return {'message': 'Welcome to CASTOR ELECCIONES API', 'docs': '/api/health'}, 200
@@ -73,15 +73,14 @@ def forecast():
 
 @web_bp.route('/dashboard')
 def unified_dashboard():
-    """Serve unified analytics dashboard."""
-    try:
-        return render_template('unified_dashboard.html')
-    except Exception as e:
-        return {
-            'error': 'Template not found',
-            'message': 'Unified dashboard template not available',
-            'details': str(e)
-        }, 404
+    """Redirect legacy dashboard route to root."""
+    return redirect(url_for('web.index'))
+
+
+@web_bp.route('/unified_dashboard')
+def unified_dashboard_alias():
+    """Redirect unified dashboard alias to root."""
+    return redirect(url_for('web.index'))
 
 
 @web_bp.route('/analytics')
@@ -100,11 +99,4 @@ def analytics_dashboard():
 @web_bp.route('/dashboard-old')
 def old_dashboard():
     """Serve old unified dashboard (legacy)."""
-    try:
-        return render_template('unified_dashboard.html')
-    except Exception as e:
-        return {
-            'error': 'Template not found',
-            'message': 'Old dashboard template not available',
-            'details': str(e)
-        }, 404
+    return redirect(url_for('web.index'))

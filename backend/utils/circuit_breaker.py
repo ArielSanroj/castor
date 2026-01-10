@@ -131,6 +131,22 @@ class CircuitBreaker:
         self.last_failure_time = None
         logger.info("Circuit breaker manually reset")
 
+    def get_state(self) -> dict:
+        """Get current circuit breaker state for monitoring."""
+        return {
+            "state": self.state.value,
+            "failure_count": self.failure_count,
+            "success_count": self.success_count,
+            "failure_threshold": self.failure_threshold,
+            "recovery_timeout": self.recovery_timeout,
+            "last_failure_time": self.last_failure_time.isoformat() if self.last_failure_time else None,
+            "is_allowing_requests": self.state != CircuitState.OPEN or self._should_attempt_reset()
+        }
+
+    def is_open(self) -> bool:
+        """Check if circuit breaker is open."""
+        return self.state == CircuitState.OPEN and not self._should_attempt_reset()
+
 
 class CircuitBreakerOpenError(Exception):
     """Raised when circuit breaker is open."""
@@ -209,6 +225,8 @@ def get_openai_circuit_breaker() -> CircuitBreaker:
 def get_twitter_circuit_breaker() -> CircuitBreaker:
     """Get Twitter circuit breaker instance."""
     return _twitter_circuit_breaker
+
+
 
 
 

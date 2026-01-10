@@ -575,8 +575,9 @@ def get_dashboard():
         if not icce_values:
             return jsonify({
                 "success": False,
-                "error": "No data available"
-            }), 404
+                "error": "No se encontraron datos de Twitter para los parámetros proporcionados. Verifica que la ubicación, candidato o tema sean correctos.",
+                "message": "No hay suficientes tweets para calcular ICCE. Intenta con una ubicación diferente o un rango de fechas más amplio."
+            }), 200
         
         # Calculate momentum and smoothed values
         momentum_values = forecast_service.calculate_momentum(icce_values) if len(icce_values) >= 2 else []

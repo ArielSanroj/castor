@@ -18,7 +18,8 @@ from models.schemas import (
     ExecutiveSummary,
     StrategicPlan,
     Speech,
-    PNDTopicAnalysis
+    PNDTopicAnalysis,
+    SentimentData
 )
 from app.schemas.core import CoreAnalysisResult
 from app.schemas.media import MediaAnalysisSummary
@@ -416,28 +417,104 @@ Formato JSON:
             )
             return fallback.dict()
 
-    # The following adapters are placeholders to align with new schemas.
-    # They intentionally raise until you supply prompts/logic.
+    # New schema adapters - delegate to existing methods with schema conversion
     def generate_executive_summary_new(
         self,
         core_result: CoreAnalysisResult,
         request: NewCampaignRequest,
     ) -> NewExecutiveSummary:
-        raise NotImplementedError("Implementa generate_executive_summary_new según tu lógica")
+        """Generate executive summary using new schema format."""
+        # Convert core_result topics to PNDTopicAnalysis format
+        topic_analyses = [
+            PNDTopicAnalysis(
+                topic=t.topic,
+                sentiment=SentimentData(
+                    positive=t.sentiment.positive if hasattr(t, 'sentiment') else 0.33,
+                    negative=t.sentiment.negative if hasattr(t, 'sentiment') else 0.33,
+                    neutral=t.sentiment.neutral if hasattr(t, 'sentiment') else 0.34
+                ),
+                tweet_count=t.tweet_count if hasattr(t, 'tweet_count') else 0,
+                key_insights=t.key_insights if hasattr(t, 'key_insights') else [],
+                sample_tweets=t.sample_tweets if hasattr(t, 'sample_tweets') else []
+            )
+            for t in core_result.topics
+        ]
+        # Use existing method
+        result = self.generate_executive_summary(
+            location=request.location,
+            topic_analyses=topic_analyses,
+            candidate_name=request.candidate_name
+        )
+        return NewExecutiveSummary(
+            overview=result.overview,
+            key_findings=result.key_findings,
+            recommendations=result.recommendations
+        )
 
     def generate_strategic_plan_new(
         self,
         core_result: CoreAnalysisResult,
         request: NewCampaignRequest,
     ) -> NewStrategicPlan:
-        raise NotImplementedError("Implementa generate_strategic_plan_new según tu lógica")
+        """Generate strategic plan using new schema format."""
+        topic_analyses = [
+            PNDTopicAnalysis(
+                topic=t.topic,
+                sentiment=SentimentData(
+                    positive=t.sentiment.positive if hasattr(t, 'sentiment') else 0.33,
+                    negative=t.sentiment.negative if hasattr(t, 'sentiment') else 0.33,
+                    neutral=t.sentiment.neutral if hasattr(t, 'sentiment') else 0.34
+                ),
+                tweet_count=t.tweet_count if hasattr(t, 'tweet_count') else 0,
+                key_insights=[],
+                sample_tweets=[]
+            )
+            for t in core_result.topics
+        ]
+        result = self.generate_strategic_plan(
+            location=request.location,
+            topic_analyses=topic_analyses,
+            candidate_name=request.candidate_name
+        )
+        return NewStrategicPlan(
+            objectives=result.objectives,
+            actions=result.actions,
+            timeline=result.timeline,
+            expected_impact=result.expected_impact
+        )
 
     def generate_speech_new(
         self,
         core_result: CoreAnalysisResult,
         request: NewCampaignRequest,
     ) -> NewSpeech:
-        raise NotImplementedError("Implementa generate_speech_new según tu lógica")
+        """Generate speech using new schema format."""
+        topic_analyses = [
+            PNDTopicAnalysis(
+                topic=t.topic,
+                sentiment=SentimentData(
+                    positive=t.sentiment.positive if hasattr(t, 'sentiment') else 0.33,
+                    negative=t.sentiment.negative if hasattr(t, 'sentiment') else 0.33,
+                    neutral=t.sentiment.neutral if hasattr(t, 'sentiment') else 0.34
+                ),
+                tweet_count=t.tweet_count if hasattr(t, 'tweet_count') else 0,
+                key_insights=[],
+                sample_tweets=[]
+            )
+            for t in core_result.topics
+        ]
+        result = self.generate_speech(
+            location=request.location,
+            topic_analyses=topic_analyses,
+            candidate_name=request.candidate_name or "el candidato",
+            trending_topic={"topic": core_result.trending_topic} if core_result.trending_topic else None
+        )
+        return NewSpeech(
+            title=result.title,
+            content=result.content,
+            key_points=result.key_points,
+            duration_minutes=result.duration_minutes
+        )
     
     def chat(
         self,

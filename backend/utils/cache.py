@@ -189,3 +189,40 @@ def cached(prefix: str, ttl: int = 60) -> Callable:
         return wrapper
 
     return decorator
+
+
+def invalidate(key_pattern: str) -> int:
+    """
+    Invalidate cache entries matching pattern.
+
+    Args:
+        key_pattern: Pattern to match (e.g., 'castor:twitter:*')
+
+    Returns:
+        Number of keys deleted
+    """
+    if redis_client and hasattr(redis_client, "keys"):
+        try:
+            keys = redis_client.keys(key_pattern)
+            if keys:
+                return redis_client.delete(*keys)
+        except Exception as exc:
+            logger.warning(f"Error invalidating cache pattern {key_pattern}: {exc}")
+    return 0
+
+
+def invalidate_prefix(prefix: str) -> int:
+    """Invalidate all cache entries with given prefix."""
+    return invalidate(f"castor:{prefix}:*")
+
+
+def clear_all() -> None:
+    """Clear all cache entries."""
+    if redis_client and hasattr(redis_client, "flushdb"):
+        try:
+            redis_client.flushdb()
+            logger.info("Redis cache cleared")
+        except Exception as exc:
+            logger.warning(f"Error clearing Redis cache: {exc}")
+    _local_cache.clear()
+    logger.info("Local cache cleared")

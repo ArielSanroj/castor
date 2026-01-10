@@ -1,137 +1,32 @@
 let unifiedChart = null;
 let sentimentChart = null;
-let momentumChart = null;
-const kpiCharts = {
-  icce: null,
-  momentum: null
+let gameRadarChart = null;
+let gameGapChart = null;
+let lastGameContext = null;
+
+const RIVAL_PROFILES = {
+  "Vicky Dávila": { seguridad: 76, economia: 52, salud: 38, paz: 50, sov: 70, sna: 32, momentum: 0.006 },
+  "Mauricio Cárdenas": { seguridad: 55, economia: 72, salud: 48, paz: 50, sov: 58, sna: 44, momentum: 0.004 },
+  "David Luna": { seguridad: 50, economia: 58, salud: 52, paz: 46, sov: 52, sna: 40, momentum: 0.003 },
+  "Juan Manuel Galán": { seguridad: 48, economia: 62, salud: 64, paz: 58, sov: 55, sna: 46, momentum: 0.004 },
+  "Aníbal Gaviria": { seguridad: 52, economia: 56, salud: 60, paz: 62, sov: 54, sna: 45, momentum: 0.003 },
+  "Juan Daniel Oviedo": { seguridad: 44, economia: 66, salud: 58, paz: 54, sov: 50, sna: 42, momentum: 0.005 },
+  "Juan Carlos Pinzón": { seguridad: 70, economia: 55, salud: 40, paz: 48, sov: 66, sna: 34, momentum: 0.007 },
+  "Daniel Palacios": { seguridad: 68, economia: 50, salud: 40, paz: 46, sov: 64, sna: 36, momentum: 0.006 },
+  "Abelardo de la Espriella": { seguridad: 72, economia: 46, salud: 36, paz: 40, sov: 62, sna: 30, momentum: 0.005 }
 };
 
-// RAG Chat state
-let currentChatTopic = null;
-let chatContext = null;
-let analysisData = null;
-
-// =====================================================
-// RAG CHAT FUNCTIONS
-// =====================================================
-
-function selectTopicForChat(topicName, topicData) {
-  currentChatTopic = topicName;
-  chatContext = topicData;
-
-  const badge = document.getElementById("chat-topic-badge");
-  if (badge) {
-    badge.textContent = topicName;
-    badge.style.background = "rgba(66,214,151,0.2)";
-    badge.style.color = "#42d697";
-  }
-
-  const messagesEl = document.getElementById("chat-messages");
-  if (messagesEl) {
-    messagesEl.innerHTML = `
-      <div class="chat-message assistant" style="background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: 8px; margin-bottom: 0.5rem;">
-        <p style="margin: 0; color: #F5F7FA;">Tema seleccionado: <strong>${topicName}</strong></p>
-        <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: #8892B0;">
-          ${topicData?.tweet_count || 0} menciones detectadas.
-          Tono: ${topicData?.sentiment?.positive > topicData?.sentiment?.negative ? "mayormente favorable" : topicData?.sentiment?.negative > 0.4 ? "mayormente critico" : "mixto"}.
-        </p>
-        <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: #8892B0;">Preguntame que quieres saber sobre este tema.</p>
-      </div>`;
-  }
-
-  // Scroll chat into view
-  document.getElementById("topic-chat-card")?.scrollIntoView({ behavior: "smooth", block: "center" });
-}
-
-function askSuggestion(question) {
-  document.getElementById("chat-input").value = question;
-  sendTopicQuestion();
-}
-
-async function sendTopicQuestion() {
-  const input = document.getElementById("chat-input");
-  const messagesEl = document.getElementById("chat-messages");
-  const question = input?.value?.trim();
-
-  if (!question) return;
-
-  // Add user message
-  const userMsg = document.createElement("div");
-  userMsg.className = "chat-message user";
-  userMsg.style.cssText = "background: rgba(255,106,61,0.15); padding: 0.75rem; border-radius: 8px; margin-bottom: 0.5rem; text-align: right;";
-  userMsg.innerHTML = `<p style="margin: 0; color: #F5F7FA;">${question}</p>`;
-  messagesEl.appendChild(userMsg);
-
-  input.value = "";
-
-  // Show loading
-  const loadingMsg = document.createElement("div");
-  loadingMsg.className = "chat-message loading";
-  loadingMsg.style.cssText = "padding: 0.75rem; color: #8892B0;";
-  loadingMsg.innerHTML = '<p style="margin: 0;">Analizando...</p>';
-  messagesEl.appendChild(loadingMsg);
-  messagesEl.scrollTop = messagesEl.scrollHeight;
-
-  try {
-    const response = await fetch("/api/chat/topic", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        question: question,
-        topic: currentChatTopic,
-        context: chatContext,
-        analysis_data: analysisData
-      })
-    });
-
-    const data = await response.json();
-    loadingMsg.remove();
-
-    const assistantMsg = document.createElement("div");
-    assistantMsg.className = "chat-message assistant";
-    assistantMsg.style.cssText = "background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: 8px; margin-bottom: 0.5rem;";
-
-    if (data.success) {
-      assistantMsg.innerHTML = `<p style="margin: 0; color: #F5F7FA; white-space: pre-wrap; line-height: 1.5;">${data.answer}</p>`;
-    } else {
-      assistantMsg.innerHTML = `<p style="margin: 0; color: #FF6A3D;">Error: ${data.error || "No se pudo procesar la pregunta"}</p>`;
-    }
-    messagesEl.appendChild(assistantMsg);
-
-  } catch (err) {
-    loadingMsg.remove();
-    const errorMsg = document.createElement("div");
-    errorMsg.className = "chat-message error";
-    errorMsg.style.cssText = "background: rgba(255,106,61,0.1); padding: 0.75rem; border-radius: 8px; margin-bottom: 0.5rem;";
-    errorMsg.innerHTML = `<p style="margin: 0; color: #FF6A3D;">Error de conexion. Intenta de nuevo.</p>`;
-    messagesEl.appendChild(errorMsg);
-  }
-
-  messagesEl.scrollTop = messagesEl.scrollHeight;
-}
-
-// Make functions globally available
-window.sendTopicQuestion = sendTopicQuestion;
-window.askSuggestion = askSuggestion;
-window.selectTopicForChat = selectTopicForChat;
-
-// Colombia cities with SVG coordinates (mapped to viewBox 0-400 x 0-500)
 const COLOMBIA_POINTS = [
-  { name: "Bogota", lat: 4.711, lon: -74.072, svgX: 200, svgY: 250 },
-  { name: "Medellin", lat: 6.244, lon: -75.581, svgX: 160, svgY: 190 },
-  { name: "Cali", lat: 3.451, lon: -76.532, svgX: 130, svgY: 300 },
-  { name: "Barranquilla", lat: 10.968, lon: -74.781, svgX: 195, svgY: 65 },
-  { name: "Cartagena", lat: 10.391, lon: -75.479, svgX: 160, svgY: 80 },
-  { name: "Bucaramanga", lat: 7.119, lon: -73.119, svgX: 245, svgY: 155 },
-  { name: "Pereira", lat: 4.815, lon: -75.694, svgX: 145, svgY: 245 },
-  { name: "Manizales", lat: 5.07, lon: -75.513, svgX: 155, svgY: 230 },
-  { name: "Santa Marta", lat: 11.241, lon: -74.205, svgX: 210, svgY: 50 },
-  { name: "Villavicencio", lat: 4.142, lon: -73.627, svgX: 235, svgY: 270 },
-  { name: "Cucuta", lat: 7.894, lon: -72.503, svgX: 280, svgY: 130 },
-  { name: "Ibague", lat: 4.438, lon: -75.232, svgX: 170, svgY: 265 },
-  { name: "Pasto", lat: 1.214, lon: -77.281, svgX: 110, svgY: 400 },
-  { name: "Neiva", lat: 2.927, lon: -75.282, svgX: 170, svgY: 330 },
-  { name: "Monteria", lat: 8.757, lon: -75.881, svgX: 130, svgY: 130 }
+  { name: "Bogota", lat: 4.711, lon: -74.072 },
+  { name: "Medellin", lat: 6.244, lon: -75.581 },
+  { name: "Cali", lat: 3.451, lon: -76.532 },
+  { name: "Barranquilla", lat: 10.968, lon: -74.781 },
+  { name: "Cartagena", lat: 10.391, lon: -75.479 },
+  { name: "Bucaramanga", lat: 7.119, lon: -73.119 },
+  { name: "Pereira", lat: 4.815, lon: -75.694 },
+  { name: "Manizales", lat: 5.07, lon: -75.513 },
+  { name: "Santa Marta", lat: 11.241, lon: -74.205 },
+  { name: "Villavicencio", lat: 4.142, lon: -73.627 }
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -145,9 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!form) return;
 
   setupUnifiedTabs();
+  setupAccordion();
+  setupGameRivalSelector();
 
   mockBtn?.addEventListener("click", () => {
-    // Fill form fields
+    // Llenar formulario con datos de Paloma Valencia
     document.getElementById("unified-location").value = "Colombia";
     document.getElementById("unified-topic").value = "Seguridad";
     document.getElementById("unified-candidate").value = "Paloma Valencia";
@@ -155,10 +52,22 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("unified-days-back").value = "30";
     document.getElementById("unified-forecast-days").value = "14";
 
-    // Generate and render mock data
+    // Generar datos de ejemplo completos
     const mockData = generatePalomaValenciaMockData();
+    
+    // Mostrar dashboard con datos mock
     resultsSection.style.display = "block";
-    renderUnifiedDashboard(mockData);
+    renderUnifiedDashboard({
+      mediaData: mockData.mediaData,
+      forecastData: mockData.forecastData,
+      trendingData: mockData.trendingData,
+      campaignData: mockData.campaignData,
+      input: { 
+        location: "Colombia", 
+        topic: "Seguridad", 
+        candidateName: "Paloma Valencia" 
+      }
+    });
     resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
@@ -193,9 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const startedAt = performance.now();
     submitBtn.disabled = true;
-    submitBtn.textContent = "Ejecutando...";
+    submitBtn.textContent = "Sincronizando...";
     if (loadingBox) loadingBox.style.display = "flex";
 
     const apiUrl = (path) => (window.API_CONFIG?.apiUrl(path)) || path;
@@ -260,14 +168,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       resultsSection.style.display = "block";
-      const runtimeMs = performance.now() - startedAt;
       renderUnifiedDashboard({
         mediaData,
         forecastData,
         trendingData,
         campaignData,
-        input: { location, topic, candidateName },
-        runtimeMs
+        input: { location, topic, candidateName }
       });
       resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (err) {
@@ -276,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
       errorBox.style.display = "block";
     } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = "Ejecutar analisis";
+      submitBtn.textContent = "Generar dashboard";
       if (loadingBox) loadingBox.style.display = "none";
     }
   });
@@ -306,12 +212,19 @@ async function fetchJsonWithTimeout(url, payload, timeoutMs, method = "POST") {
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(`HTTP ${response.status}: ${text}`);
+    let errorMsg = `HTTP ${response.status}: ${text}`;
+    try {
+      const errorData = JSON.parse(text);
+      errorMsg = errorData.error || errorData.message || errorMsg;
+    } catch (e) {
+      // Si no es JSON, usar el texto tal cual
+    }
+    throw new Error(errorMsg);
   }
 
   const data = await response.json();
   if (data && data.success === false) {
-    throw new Error(data.error || "Respuesta sin exito");
+    throw new Error(data.error || data.message || "Respuesta sin exito");
   }
   return data;
 }
@@ -321,303 +234,44 @@ function pickSuccessful(result) {
   return result.value;
 }
 
-function renderUnifiedDashboard({ mediaData, forecastData, trendingData, campaignData, input, runtimeMs }) {
-  // Tab 1: Lectura rápida
-  renderContextBar(mediaData, input, runtimeMs);
+function renderUnifiedDashboard({ mediaData, forecastData, trendingData, campaignData, input }) {
+  lastGameContext = { mediaData, forecastData, trendingData, campaignData, input };
+  // Tab: Resumen (Summary)
+  renderContextBar(mediaData, forecastData, input);
   renderKPIs(mediaData, forecastData);
-  renderSparklines(forecastData);
-  renderDiagnosis(mediaData, forecastData, input);
-  renderDecisionBlock(mediaData, forecastData, input);
-  renderTopPatterns(mediaData);
-  renderProjectionSummary(forecastData, input);
+  renderDiagnosis(mediaData, forecastData, trendingData, input);
+  renderNarrativeMetrics(mediaData, forecastData, input);
+  renderStreamLists(mediaData, forecastData, trendingData, input);
+  renderGameTheoryBlock(mediaData, forecastData, trendingData, campaignData, input);
+  renderGeoPanel(mediaData, input?.location || "Colombia");
 
-  // Tab 2: Evidencia
-  renderEvidenceTab(mediaData, input);
+  // Tab: Resultados (Results) - Análisis detallados
+  renderAnalysisOutputs(mediaData, campaignData, forecastData);
 
-  // Tab 3: Acciones
-  renderActionsTab(campaignData, mediaData, forecastData, input);
+  // Tab: Temas (Topics)
+  renderTopics(mediaData);
 
-  // Tab 4: Vigilancia
-  renderVigilanceTab(forecastData, mediaData, input);
+  // Tab: Gráficos (Charts)
+  renderUnifiedChart(forecastData, input);
+  renderSentimentChart(mediaData, input);
 
-  // Tab 5: Geografía
-  renderGeoPanel(mediaData, input?.location);
+  // Tab: Tendencias (Forecast)
+  renderForecastPanels(forecastData, mediaData);
 
-  // Tab 6: Exploración (gráficos)
-  renderCharts(mediaData, forecastData);
-
-  // Setup toggles
-  setupBriefToggle();
+  // Legacy tabs (si existen las funciones)
+  if (typeof renderActionBlock === "function") renderActionBlock(mediaData, forecastData, campaignData, input);
+  if (typeof renderTopFindings === "function") renderTopFindings(mediaData, forecastData, input);
+  if (typeof renderProjection === "function") renderProjection(forecastData, input);
+  if (typeof renderEvidenceTab === "function") renderEvidenceTab(mediaData, input);
+  if (typeof renderActionsTab === "function") renderActionsTab(mediaData, campaignData, forecastData, input);
+  if (typeof renderVigilanceTab === "function") renderVigilanceTab(forecastData, mediaData, input);
+  if (typeof renderGeoTab === "function") renderGeoTab(mediaData, input);
+  if (typeof renderExplorationTab === "function") renderExplorationTab(mediaData, forecastData);
 }
 
-function renderDiagnosis(mediaData, forecastData, input) {
-  // Card 1: Qué domina la conversación
-  const dominaEl = document.getElementById("diagnosis-domina");
-  const dominaContextEl = document.getElementById("diagnosis-domina-context");
-  if (dominaEl) {
-    const topics = mediaData?.topics || [];
-    if (topics.length > 0) {
-      const topTopic = topics[0];
-      dominaEl.textContent = `${topTopic.topic}`;
-      if (dominaContextEl) {
-        dominaContextEl.textContent = `${topTopic.tweet_count} menciones · ${((topTopic.sentiment?.positive || 0) * 100).toFixed(0)}% favorable`;
-      }
-    } else {
-      dominaEl.textContent = "Sin temas dominantes";
-      if (dominaContextEl) dominaContextEl.textContent = "Datos insuficientes para determinar tema principal";
-    }
-  }
-
-  // Card 2: Cómo se percibe
-  const percibeEl = document.getElementById("diagnosis-percibe");
-  const percibeContextEl = document.getElementById("diagnosis-percibe-context");
-  if (percibeEl) {
-    const sentiment = mediaData?.sentiment_overview;
-    if (sentiment) {
-      const pos = (sentiment.positive || 0) * 100;
-      const neg = (sentiment.negative || 0) * 100;
-      const net = pos - neg;
-      const label = net > 5 ? "Favorable" : net < -5 ? "Critico" : "Neutral";
-      percibeEl.textContent = label;
-      if (percibeContextEl) {
-        percibeContextEl.textContent = `${pos.toFixed(0)}% positivo · ${neg.toFixed(0)}% critico`;
-      }
-    } else {
-      percibeEl.textContent = "Sin datos";
-      if (percibeContextEl) percibeContextEl.textContent = "Percepcion no disponible";
-    }
-  }
-
-  // Card 3: Qué implica
-  const implicaEl = document.getElementById("diagnosis-implica");
-  const implicaContextEl = document.getElementById("diagnosis-implica-context");
-  if (implicaEl) {
-    const signals = extractForecastSignals(forecastData);
-    const sentiment = extractSentiment(mediaData);
-    const implication = buildImplication(signals, sentiment, input?.topic);
-    implicaEl.textContent = implication.split(".")[0];
-    if (implicaContextEl && implication.includes(".")) {
-      implicaContextEl.textContent = implication.split(".").slice(1).join(".").trim() || "Evaluar contexto para acciones";
-    }
-  }
-}
-
-function buildImplication(signals, sentiment, topic) {
-  const icce = signals.icce;
-  const momentum = signals.momentum;
-  const net = parseFloat((sentiment.netLabel || "0").replace("%", ""));
-
-  if (icce == null) return "Sin suficiente información para valorar implicaciones.";
-
-  if (icce >= 60 && net > 0 && momentum > 0) {
-    return `Ventana favorable para ${topic || "posicionamiento"}. El clima es receptivo.`;
-  }
-  if (icce < 45 || net < -5) {
-    return `Atención: territorio crítico. Priorizar contención en ${topic || "temas sensibles"}.`;
-  }
-  if (momentum < -0.02) {
-    return `Momentum negativo. Evaluar ajuste de mensaje antes de amplificar.`;
-  }
-  return `Clima estable. Mantener consistencia y monitorear cambios.`;
-}
-
-function renderDecisionBlock(mediaData, forecastData, input) {
-  const decisionEl = document.getElementById("action-recommendation");
-  const urgencyEl = document.getElementById("action-urgency");
-  const horizonEl = document.getElementById("action-horizon");
-  const confidenceEl = document.getElementById("action-confidence");
-  const alertsEl = document.getElementById("active-alerts");
-
-  if (decisionEl) {
-    const signals = extractForecastSignals(forecastData);
-    const sentiment = extractSentiment(mediaData);
-    const decision = buildDecision(signals, sentiment, input?.topic);
-    decisionEl.textContent = decision;
-
-    // Set urgency badge
-    if (urgencyEl) {
-      const riskLevel = narrativeRiskLabel(signals.icce, signals.momentum, sentiment.netLabel);
-      urgencyEl.textContent = riskLevel === "alto" ? "URGENTE" : riskLevel === "medio" ? "ATENCIÓN" : "NORMAL";
-      urgencyEl.style.background = riskLevel === "alto" ? "rgba(255,106,61,0.3)" : riskLevel === "medio" ? "rgba(245,184,0,0.3)" : "rgba(66,214,151,0.3)";
-      urgencyEl.style.color = riskLevel === "alto" ? "#ffb19a" : riskLevel === "medio" ? "#f5d68a" : "#8ae9bf";
-    }
-
-    // Set horizon and confidence
-    if (horizonEl) horizonEl.textContent = "Proximas 72h";
-    if (confidenceEl) {
-      const conf = signals.icce ? (signals.icce > 50 ? "Alta" : signals.icce > 35 ? "Media" : "Baja") : "Media";
-      confidenceEl.textContent = conf;
-    }
-  }
-
-  if (alertsEl) {
-    alertsEl.innerHTML = "";
-    const alerts = buildQuickAlerts(mediaData, forecastData);
-    if (alerts.length === 0) {
-      alertsEl.innerHTML = '<li class="alert-item" style="padding: 0.5rem 0; color: #42d697;">Sin alertas criticas</li>';
-    } else {
-      alerts.forEach((alert) => {
-        const li = document.createElement("li");
-        li.className = "alert-item";
-        li.style.padding = "0.5rem 0";
-        li.style.borderBottom = "1px solid rgba(255,255,255,0.05)";
-        li.style.color = alert.level === "high" ? "#FF6A3D" : alert.level === "medium" ? "#F5B800" : "#8892B0";
-        li.textContent = alert.text;
-        alertsEl.appendChild(li);
-      });
-    }
-  }
-}
-
-function buildDecision(signals, sentiment, topic) {
-  const icce = signals.icce;
-  const momentum = signals.momentum;
-  const net = parseFloat((sentiment.netLabel || "0").replace("%", ""));
-
-  if (icce == null) return "Recopilar más datos antes de decidir.";
-
-  if (icce >= 60 && net > 0) {
-    return `AVANZAR: Amplificar mensaje en ${topic || "temas clave"}. Clima favorable.`;
-  }
-  if (icce < 40 || net < -10) {
-    return `PAUSAR: Contener exposición. Priorizar escucha y ajuste de tono.`;
-  }
-  if (momentum < -0.02) {
-    return `EVALUAR: Momentum negativo. Revisar posicionamiento antes de actuar.`;
-  }
-  return `MANTENER: Continuar estrategia actual. Monitorear cambios.`;
-}
-
-function buildQuickAlerts(mediaData, forecastData) {
-  const alerts = [];
-  const signals = extractForecastSignals(forecastData);
-  const topics = mediaData?.topics || [];
-
-  // Check for high-negative topics
-  const riskTopics = topics.filter((t) => (t.sentiment?.negative || 0) > 0.4);
-  riskTopics.slice(0, 2).forEach((topic) => {
-    alerts.push({
-      level: "high",
-      text: `${topic.topic}: ${(topic.sentiment.negative * 100).toFixed(0)}% tono crítico`
-    });
-  });
-
-  // Check momentum
-  if (signals.momentum != null && signals.momentum < -0.03) {
-    alerts.push({ level: "medium", text: "Momentum negativo sostenido" });
-  }
-
-  // Check ICCE
-  if (signals.icce != null && signals.icce < 40) {
-    alerts.push({ level: "high", text: "Clima narrativo bajo (ICCE < 40)" });
-  }
-
-  return alerts.slice(0, 3);
-}
-
-function renderTopPatterns(mediaData) {
-  const gridEl = document.getElementById("top-findings");
-  if (!gridEl) return;
-
-  gridEl.innerHTML = "";
-  const patterns = buildTopPatterns(mediaData);
-
-  if (patterns.length === 0) {
-    gridEl.innerHTML = '<div class="finding-card" style="background: rgba(255,255,255,0.02); border-radius: 0.5rem; padding: 1rem;">Sin patrones detectados</div>';
-    return;
-  }
-
-  patterns.forEach((pattern, idx) => {
-    const card = document.createElement("div");
-    card.className = "finding-card";
-    card.style.cssText = "background: rgba(255,255,255,0.02); border-radius: 0.5rem; padding: 1rem; border-left: 3px solid " + (idx === 0 ? "var(--accent)" : idx === 1 ? "#42d697" : "#F5B800");
-    card.innerHTML = `<p style="font-size: 0.75rem; color: #6B7280; text-transform: uppercase; margin: 0 0 0.25rem;">${pattern.label}</p><p style="font-size: 0.95rem; color: var(--text); margin: 0;">${pattern.detail}</p>`;
-    gridEl.appendChild(card);
-  });
-}
-
-function buildTopPatterns(mediaData) {
-  const patterns = [];
-  const topics = mediaData?.topics || [];
-  const sentiment = mediaData?.sentiment_overview;
-
-  // Pattern 1: Dominant topic
-  if (topics.length > 0) {
-    const top = topics[0];
-    patterns.push({
-      label: "Tema dominante",
-      detail: `${top.topic} (${top.tweet_count} menciones)`
-    });
-  }
-
-  // Pattern 2: Sentiment distribution
-  if (sentiment) {
-    const pos = (sentiment.positive || 0) * 100;
-    const neg = (sentiment.negative || 0) * 100;
-    const dominant = pos > neg ? "favorable" : neg > pos ? "crítico" : "equilibrado";
-    patterns.push({
-      label: "Tono predominante",
-      detail: `${dominant} (${pos.toFixed(0)}% pos / ${neg.toFixed(0)}% neg)`
-    });
-  }
-
-  // Pattern 3: Risk topics
-  const riskTopics = topics.filter((t) => (t.sentiment?.negative || 0) > 0.35);
-  if (riskTopics.length > 0) {
-    patterns.push({
-      label: "Temas sensibles",
-      detail: riskTopics.map((t) => t.topic).join(", ")
-    });
-  }
-
-  return patterns.slice(0, 3);
-}
-
-function renderProjectionSummary(forecastData, input) {
-  const arrowEl = document.getElementById("projection-arrow");
-  const deltaEl = document.getElementById("projection-delta");
-  const labelEl = document.getElementById("projection-label");
-  const contextEl = document.getElementById("projection-context");
-  const daysLabelEl = document.getElementById("forecast-days-label");
-
-  const forecastDays = document.getElementById("unified-forecast-days")?.value || 14;
-  if (daysLabelEl) daysLabelEl.textContent = forecastDays;
-
-  const summary = buildForecastSummary(forecastData, input?.topic);
-
-  if (!forecastData?.forecast?.icce_pred?.length) {
-    if (arrowEl) arrowEl.textContent = "—";
-    if (deltaEl) deltaEl.textContent = "Sin datos";
-    if (labelEl) labelEl.textContent = "Proyeccion no disponible";
-    if (contextEl) contextEl.textContent = "Ejecuta analisis para ver proyeccion";
-    return;
-  }
-
-  const latest = (forecastData.series?.icce?.[forecastData.series.icce.length - 1] || 0) * 100;
-  const projected = (forecastData.forecast.icce_pred[forecastData.forecast.icce_pred.length - 1] || 0) * 100;
-  const delta = projected - latest;
-  const isUp = delta >= 0;
-
-  if (arrowEl) {
-    arrowEl.textContent = isUp ? "↗" : "↘";
-    arrowEl.style.color = isUp ? "#42d697" : "#FF6A3D";
-  }
-  if (deltaEl) {
-    deltaEl.textContent = `${isUp ? "+" : ""}${delta.toFixed(1)} pts`;
-    deltaEl.style.color = isUp ? "#42d697" : "#FF6A3D";
-  }
-  if (labelEl) {
-    labelEl.textContent = isUp ? "Tendencia al alza" : "Tendencia a la baja";
-  }
-  if (contextEl) {
-    contextEl.textContent = summary.range || `ICCE proyectado: ${projected.toFixed(1)} en ${forecastDays} dias`;
-  }
-}
-
-function renderContextBar(mediaData, input, runtimeMs) {
+function renderContextBar(mediaData, forecastData, input) {
   const paramsEl = document.getElementById("context-params");
   const timestampEl = document.getElementById("context-timestamp");
-  const runtimeEl = document.getElementById("context-runtime");
 
   const daysBack = document.getElementById("unified-days-back")?.value || 30;
   const tweetsAnalyzed = mediaData?.metadata?.tweets_analyzed || "-";
@@ -633,17 +287,8 @@ function renderContextBar(mediaData, input, runtimeMs) {
     paramsEl.textContent = contextText;
   }
 
-  if (runtimeEl) {
-    if (typeof runtimeMs === "number") {
-      runtimeEl.textContent = `Tiempo de proceso: ${(runtimeMs / 1000).toFixed(1)}s`;
-    } else {
-      runtimeEl.textContent = "Tiempo de proceso: -";
-    }
-  }
-
   if (timestampEl) {
-    const stamp = mediaData?.metadata?.time_window_to || new Date().toISOString();
-    timestampEl.textContent = `Ultima actualizacion: ${formatTimestamp(stamp)}`;
+    timestampEl.textContent = `Ultima actualizacion: ${new Date().toLocaleString("es-CO", { dateStyle: "medium", timeStyle: "short" })}`;
   }
 }
 
@@ -657,25 +302,18 @@ function renderKPIs(mediaData, forecastData) {
   const volumeEl = document.getElementById("kpi-volume");
   const volumeNoteEl = document.getElementById("kpi-volume-note");
 
-  const signals = extractForecastSignals(forecastData);
-  if (icceEl) icceEl.textContent = signals.icce != null ? signals.icce.toFixed(1) : "-";
-  if (icceNoteEl) icceNoteEl.textContent = signals.icceLabel || "Sin ICCE";
+  const { icce, momentum, forecastDirection } = extractForecastSignals(forecastData);
+  if (icceEl) icceEl.textContent = icce != null ? icce.toFixed(1) : "-";
+  if (icceNoteEl) icceNoteEl.textContent = forecastDirection || "Sin forecast disponible";
 
-  if (momentumEl) {
-    momentumEl.textContent = signals.momentum != null ? signals.momentum.toFixed(3) : "-";
-    if (signals.momentum != null) {
-      momentumEl.style.color = signals.momentum > 0.01 ? "#42d697" : signals.momentum < -0.01 ? "#FF6A3D" : "#8892B0";
-    }
-  }
-  if (momentumNoteEl) momentumNoteEl.textContent = signals.momentumLabel || "Sin momentum";
+  if (momentumEl) momentumEl.textContent = momentum != null ? formatSigned(momentum, 3) : "-";
+  if (momentumNoteEl) momentumNoteEl.textContent = momentum != null ? momentumLabel(momentum) : "Sin momentum";
 
   const sentiment = extractSentiment(mediaData);
   if (sentimentEl) {
-    sentimentEl.textContent = sentiment.netLabel || "-";
-    const netValue = parseFloat((sentiment.netLabel || "0").replace("%", ""));
-    if (!Number.isNaN(netValue)) {
-      sentimentEl.style.color = netValue > 1 ? "#42d697" : netValue < -1 ? "#FF6A3D" : "#8892B0";
-    }
+    sentimentEl.textContent = sentiment.netValue != null
+      ? `${sentiment.netValue >= 0 ? "+" : ""}${(sentiment.netValue * 100).toFixed(0)}%`
+      : "-";
   }
   if (sentimentNoteEl) sentimentNoteEl.textContent = sentiment.detail || "Sin sentimiento";
 
@@ -687,230 +325,184 @@ function renderKPIs(mediaData, forecastData) {
     : "Ventana no disponible";
 }
 
-function renderSparklines(forecastData) {
-  const icceCanvas = document.getElementById("kpi-icce-spark");
-  const momentumCanvas = document.getElementById("kpi-momentum-spark");
-  if (!icceCanvas || !momentumCanvas) return;
+// ============================================
+// NUEVAS FUNCIONES PARA ESTRUCTURA UNIFICADA
+// ============================================
 
-  const series = forecastData?.series;
-  if (!series?.icce?.length) return;
+function renderDiagnosis(mediaData, forecastData, trendingData, input) {
+  const signals = extractForecastSignals(forecastData);
+  const sentiment = extractSentiment(mediaData);
+  const topic = input?.topic || "General";
+  const candidate = input?.candidateName || "";
 
-  const icceValues = series.icce.slice(-7).map((val) => (val || 0) * 100);
-  const momentumValues = (series.momentum || []).slice(-7);
-  renderSparkline(icceCanvas, icceValues, "#FF6A3D");
-  renderSparkline(momentumCanvas, momentumValues, "#42d697");
-}
-
-function renderNarrativeBrief(mediaData, forecastData, trendingData, input) {
-  const summaryEl = document.getElementById("brief-summary");
-  const driversEl = document.getElementById("brief-drivers");
-  const risksEl = document.getElementById("brief-risks");
-  const forecastEl = document.getElementById("brief-forecast");
-  const rangeEl = document.getElementById("brief-forecast-range");
-
-  const overview = mediaData?.summary?.overview || "Sin resumen disponible.";
-  if (summaryEl) summaryEl.textContent = overview;
-
-  if (driversEl) {
-    driversEl.innerHTML = "";
-    const drivers = mediaData?.summary?.key_findings?.slice(0, 3) || buildDriversFromTopics(mediaData);
-    fillList(driversEl, drivers, [], "Sin drivers detectados.");
+  // Que domina
+  const dominaEl = document.getElementById("diagnosis-domina");
+  const dominaContextEl = document.getElementById("diagnosis-domina-context");
+  if (dominaEl) {
+    const topTopic = mediaData?.topics?.[0]?.topic || topic;
+    dominaEl.textContent = topTopic;
+  }
+  if (dominaContextEl) {
+    const topicCount = mediaData?.topics?.[0]?.tweet_count || 0;
+    dominaContextEl.textContent = `${topicCount} menciones en la muestra.`;
   }
 
-  if (risksEl) {
-    risksEl.innerHTML = "";
-    const risks = buildRiskSignals(mediaData, forecastData);
-    fillList(risksEl, risks, [], "Sin riesgos relevantes.");
+  // Como se percibe
+  const percibeEl = document.getElementById("diagnosis-percibe");
+  const percibeContextEl = document.getElementById("diagnosis-percibe-context");
+  if (percibeEl) {
+    const posPct = (mediaData?.sentiment_overview?.positive || 0) * 100;
+    const negPct = (mediaData?.sentiment_overview?.negative || 0) * 100;
+    const perception = posPct > negPct + 15 ? "Favorable" : negPct > posPct + 15 ? "Critico" : "Polarizado";
+    percibeEl.textContent = perception;
+  }
+  if (percibeContextEl) {
+    const posPct = ((mediaData?.sentiment_overview?.positive || 0) * 100).toFixed(0);
+    const negPct = ((mediaData?.sentiment_overview?.negative || 0) * 100).toFixed(0);
+    const volume = mediaData?.metadata?.tweets_analyzed || 0;
+    percibeContextEl.textContent = `${posPct}% fav / ${negPct}% crit (n=${volume})`;
   }
 
-  const forecastSummary = buildForecastSummary(forecastData, input?.topic);
-  if (forecastEl) forecastEl.textContent = forecastSummary.text;
-  if (rangeEl) rangeEl.textContent = forecastSummary.range;
-
-  renderSentimentStack(mediaData);
+  // Que implica
+  const implicaEl = document.getElementById("diagnosis-implica");
+  const implicaContextEl = document.getElementById("diagnosis-implica-context");
+  if (implicaEl) {
+    const icce = signals.icce;
+    const riskLevel = narrativeRiskLabel(icce, signals.momentum, sentiment.netLabel);
+    const territory = narrativePositionLabel(icce, sentiment.netLabel);
+    implicaEl.textContent = `Riesgo ${riskLevel}`;
+  }
+  if (implicaContextEl) {
+    const territory = narrativePositionLabel(signals.icce, sentiment.netLabel);
+    implicaContextEl.textContent = territory;
+  }
 }
 
-function renderSentimentStack(mediaData) {
-  const sentiment = mediaData?.sentiment_overview;
-  if (!sentiment) return;
+function renderActionBlock(mediaData, forecastData, campaignData, input) {
+  const recEl = document.getElementById("action-recommendation");
+  const urgencyEl = document.getElementById("action-urgency");
+  const confidenceEl = document.getElementById("action-confidence");
+  const alertsEl = document.getElementById("active-alerts");
 
-  const pos = sentiment.positive || 0;
-  const neu = sentiment.neutral || 0;
-  const neg = sentiment.negative || 0;
+  const signals = extractForecastSignals(forecastData);
+  const sentiment = extractSentiment(mediaData);
+  const topic = input?.topic || "el tema";
+  const tweetsAnalyzed = mediaData?.metadata?.tweets_analyzed || 0;
 
-  // Evidence tab - bar segments
-  const posBarEl = document.getElementById("sent-bar-pos");
-  const neuBarEl = document.getElementById("sent-bar-neu");
-  const negBarEl = document.getElementById("sent-bar-neg");
-
-  if (posBarEl) posBarEl.style.width = `${(pos * 100).toFixed(1)}%`;
-  if (neuBarEl) neuBarEl.style.width = `${(neu * 100).toFixed(1)}%`;
-  if (negBarEl) negBarEl.style.width = `${(neg * 100).toFixed(1)}%`;
-
-  // Evidence tab - percentage labels
-  const posPctEl = document.getElementById("sent-pct-pos");
-  const neuPctEl = document.getElementById("sent-pct-neu");
-  const negPctEl = document.getElementById("sent-pct-neg");
-
-  if (posPctEl) posPctEl.textContent = `${(pos * 100).toFixed(0)}`;
-  if (neuPctEl) neuPctEl.textContent = `${(neu * 100).toFixed(0)}`;
-  if (negPctEl) negPctEl.textContent = `${(neg * 100).toFixed(0)}`;
-}
-
-function renderActionsList(mediaData, forecastData, input) {
-  const actionsEl = document.getElementById("actions-list");
-  const explainBtn = document.getElementById("actions-explain");
-  if (!actionsEl) return;
-
-  actionsEl.innerHTML = "";
-  const actions = buildActionItems(mediaData, forecastData, input?.topic);
-
-  if (!actions.length) {
-    actionsEl.innerHTML = '<p class="kpi-meta">Sin acciones sugeridas.</p>';
-    return;
+  // Recomendacion
+  if (recEl) {
+    recEl.textContent = buildRecommendationText(signals.icce, sentiment.netLabel, topic);
   }
 
-  actions.forEach((action) => {
-    const row = document.createElement("div");
-    row.className = "action-item";
+  // Urgencia
+  if (urgencyEl) {
+    const riskLevel = narrativeRiskLabel(signals.icce, signals.momentum, sentiment.netLabel);
+    urgencyEl.textContent = riskLevel.toUpperCase();
+    urgencyEl.style.background = riskLevel === "alto" ? "#FF6A3D" : riskLevel === "medio" ? "#F5B800" : "#42d697";
+    urgencyEl.style.color = riskLevel === "medio" ? "#1a1a1a" : "#fff";
+  }
 
-    const label = document.createElement("span");
-    label.textContent = action.label;
+  // Confianza
+  if (confidenceEl) {
+    const confidence = calculateConfidenceLevel(tweetsAnalyzed, signals);
+    confidenceEl.textContent = confidence.level;
+    confidenceEl.style.color = confidence.level === "Alta" ? "#42d697" : confidence.level === "Media" ? "#F5B800" : "#FF6A3D";
+  }
 
-    const badge = document.createElement("span");
-    badge.className = `action-priority priority-${action.priority}`;
-    badge.textContent = action.priority.toUpperCase();
-
-    row.appendChild(label);
-    row.appendChild(badge);
-    actionsEl.appendChild(row);
-  });
-
-  if (explainBtn) {
-    if (!explainBtn.dataset.bound) {
-      explainBtn.dataset.bound = "true";
-      explainBtn.addEventListener("click", () => {
-        document.querySelector(".methodology-details")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Alertas
+  if (alertsEl) {
+    alertsEl.innerHTML = "";
+    const alerts = buildForecastAlerts(signals);
+    if (alerts.length === 0) {
+      alertsEl.innerHTML = '<li class="alert-item" style="color: #42d697;">Sin alertas criticas</li>';
+    } else {
+      alerts.forEach(alert => {
+        const li = document.createElement("li");
+        li.className = "alert-item";
+        li.style.cssText = "padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: #FF6A3D;";
+        li.textContent = alert;
+        alertsEl.appendChild(li);
       });
     }
   }
 }
 
-function renderNarrativeMap(mediaData) {
-  const summaryEl = document.getElementById("map-summary");
-  const findingsEl = document.getElementById("map-findings");
+function renderTopFindings(mediaData, forecastData, input) {
+  const findingsEl = document.getElementById("top-findings");
+  if (!findingsEl) return;
 
-  if (summaryEl) {
-    const stats = mediaData?.summary?.key_stats?.slice(0, 2) || [];
-    summaryEl.textContent = stats.length ? stats.join(" · ") : "Resumen narrativo no disponible.";
+  findingsEl.innerHTML = "";
+  const findings = mediaData?.summary?.key_findings?.slice(0, 3) || [];
+
+  if (findings.length === 0) {
+    findingsEl.innerHTML = '<p style="color: #8892B0;">Sin patrones significativos detectados.</p>';
+    return;
   }
 
-  if (findingsEl) {
-    findingsEl.innerHTML = "";
-    const findings = mediaData?.summary?.key_findings || [];
-    fillList(findingsEl, findings.slice(0, 4), [], "Sin hallazgos.");
-  }
-
-  renderTopicsTable(mediaData, "topics-table");
+  findings.forEach((finding, index) => {
+    const card = document.createElement("div");
+    card.className = "finding-card";
+    card.style.cssText = "background: rgba(255,255,255,0.02); padding: 0.75rem 1rem; border-radius: 0.5rem; border-left: 3px solid var(--accent);";
+    card.innerHTML = `
+      <p style="font-size: 0.9rem; color: var(--text); margin: 0;">${finding}</p>
+    `;
+    findingsEl.appendChild(card);
+  });
 }
 
-function renderCharts(mediaData, forecastData) {
-  // Vigilance tab chart
-  renderUnifiedChart(forecastData);
+function renderProjection(forecastData, input) {
+  const arrowEl = document.getElementById("projection-arrow");
+  const deltaEl = document.getElementById("projection-delta");
+  const labelEl = document.getElementById("projection-label");
+  const contextEl = document.getElementById("projection-context");
+  const daysLabelEl = document.getElementById("forecast-days-label");
 
-  // Exploration tab charts
-  renderExploreIcceChart(forecastData);
-  renderExploreMomentumChart(forecastData);
-  renderSentimentChart(mediaData);
-  renderTopicsTable(mediaData, "topics-table");
+  const forecastDays = document.getElementById("unified-forecast-days")?.value || 14;
+  if (daysLabelEl) daysLabelEl.textContent = forecastDays;
 
-  const seriesContext = document.getElementById("chart-series-context");
   const signals = extractForecastSignals(forecastData);
-  if (seriesContext) {
-    seriesContext.textContent = signals.forecastDirection || "Serie historica disponible.";
+  const forecast = forecastData?.forecast;
+
+  if (!forecast || !forecast.icce_pred?.length) {
+    if (arrowEl) arrowEl.textContent = "—";
+    if (deltaEl) deltaEl.textContent = "Sin proyeccion";
+    if (labelEl) labelEl.textContent = "";
+    if (contextEl) contextEl.textContent = "No hay datos suficientes para proyectar.";
+    return;
   }
-}
 
-let exploreIcceChart = null;
-let exploreMomentumChart = null;
+  const currentIcce = (forecastData?.series?.icce?.[forecastData.series.icce.length - 1] || 0) * 100;
+  const projectedIcce = (forecast.icce_pred[forecast.icce_pred.length - 1] || 0) * 100;
+  const delta = projectedIcce - currentIcce;
 
-function renderExploreIcceChart(forecastData) {
-  const ctx = document.getElementById("explore-icce-chart");
-  if (!ctx || !forecastData?.series?.icce) return;
+  if (arrowEl) {
+    arrowEl.textContent = delta > 2 ? "↗" : delta < -2 ? "↘" : "→";
+    arrowEl.style.color = delta > 2 ? "#42d697" : delta < -2 ? "#FF6A3D" : "#8892B0";
+  }
 
-  const labels = forecastData.series.dates.map((date) => formatShortDate(date));
-  const values = forecastData.series.icce.map((val) => (val || 0) * 100);
+  if (deltaEl) {
+    deltaEl.textContent = `${delta >= 0 ? "+" : ""}${delta.toFixed(1)} pts`;
+    deltaEl.style.color = delta > 2 ? "#42d697" : delta < -2 ? "#FF6A3D" : "#8892B0";
+  }
 
-  if (exploreIcceChart) exploreIcceChart.destroy();
+  if (labelEl) {
+    labelEl.textContent = delta > 2 ? "Tendencia al alza" : delta < -2 ? "Tendencia a la baja" : "Estable";
+  }
 
-  exploreIcceChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels,
-      datasets: [{
-        label: "ICCE",
-        data: values,
-        borderColor: "#FF6A3D",
-        backgroundColor: "rgba(255, 106, 61, 0.15)",
-        tension: 0.3,
-        fill: true,
-        pointRadius: 2,
-        pointHoverRadius: 5
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { labels: { color: "#F5F7FA" } }
-      },
-      scales: {
-        x: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } },
-        y: {
-          ticks: { color: "#8892B0" },
-          grid: { color: "rgba(136, 146, 176, 0.15)" },
-          min: 0,
-          max: 100
-        }
-      }
+  if (contextEl) {
+    const topic = input?.topic || "el tema";
+    if (delta > 5) {
+      contextEl.textContent = `Ventana favorable. Considerar acciones tacticas en ${topic}.`;
+    } else if (delta < -5) {
+      contextEl.textContent = `Atencion: caida proyectada. Reforzar narrativa en ${topic}.`;
+    } else {
+      contextEl.textContent = `Proyeccion estable. Mantener monitoreo activo.`;
     }
-  });
-}
-
-function renderExploreMomentumChart(forecastData) {
-  const ctx = document.getElementById("explore-momentum-chart");
-  if (!ctx || !forecastData?.series?.momentum) return;
-
-  const labels = forecastData.series.dates.map((date) => formatShortDate(date));
-  const values = forecastData.series.momentum;
-
-  if (exploreMomentumChart) exploreMomentumChart.destroy();
-
-  exploreMomentumChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [{
-        label: "Momentum",
-        data: values,
-        backgroundColor: values.map((v) => (v >= 0 ? "rgba(66, 214, 151, 0.7)" : "rgba(255, 106, 61, 0.7)")),
-        borderRadius: 4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } },
-        y: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } }
-      }
-    }
-  });
+  }
 }
 
 function renderEvidenceTab(mediaData, input) {
-  // Sample metadata
+  // Datos de muestra
   const tweetsEl = document.getElementById("evidence-tweets");
   const windowEl = document.getElementById("evidence-window");
   const locationEl = document.getElementById("evidence-location");
@@ -918,675 +510,802 @@ function renderEvidenceTab(mediaData, input) {
   if (tweetsEl) tweetsEl.textContent = mediaData?.metadata?.tweets_analyzed || "-";
   if (windowEl) {
     const daysBack = document.getElementById("unified-days-back")?.value || 30;
-    windowEl.textContent = `${daysBack} días`;
+    windowEl.textContent = `${daysBack} dias`;
   }
   if (locationEl) locationEl.textContent = input?.location || "-";
 
-  // Sentiment bar (única fuente de verdad)
-  renderSentimentStack(mediaData);
+  // Barra de sentiment
+  const sentiment = mediaData?.sentiment_overview || {};
+  const posPct = (sentiment.positive || 0) * 100;
+  const neuPct = (sentiment.neutral || 0) * 100;
+  const negPct = (sentiment.negative || 0) * 100;
 
-  // Topics table
-  renderTopicsTable(mediaData, "topics-evidence");
+  const barPos = document.getElementById("sent-bar-pos");
+  const barNeu = document.getElementById("sent-bar-neu");
+  const barNeg = document.getElementById("sent-bar-neg");
+  const pctPos = document.getElementById("sent-pct-pos");
+  const pctNeu = document.getElementById("sent-pct-neu");
+  const pctNeg = document.getElementById("sent-pct-neg");
 
-  // Findings
+  if (barPos) barPos.style.width = `${posPct}%`;
+  if (barNeu) barNeu.style.width = `${neuPct}%`;
+  if (barNeg) barNeg.style.width = `${negPct}%`;
+  if (pctPos) pctPos.textContent = posPct.toFixed(0);
+  if (pctNeu) pctNeu.textContent = neuPct.toFixed(0);
+  if (pctNeg) pctNeg.textContent = negPct.toFixed(0);
+
+  // Temas
+  const topicsEl = document.getElementById("topics-evidence");
+  if (topicsEl) {
+    topicsEl.innerHTML = "";
+    const topics = mediaData?.topics || [];
+    if (topics.length === 0) {
+      topicsEl.innerHTML = '<p style="color: #8892B0;">Sin temas detectados.</p>';
+    } else {
+      topics.forEach(topic => {
+        const row = document.createElement("div");
+        row.className = "topics-row";
+        row.style.cssText = "display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);";
+        const sentLabel = topic.sentiment?.positive > topic.sentiment?.negative ? "Favorable" : "Mixto";
+        row.innerHTML = `
+          <span style="font-weight: 500;">${topic.topic}</span>
+          <span style="color: #8892B0;">${topic.tweet_count} menciones · ${sentLabel}</span>
+        `;
+        topicsEl.appendChild(row);
+      });
+    }
+  }
+
+  // Hallazgos completos
   const findingsEl = document.getElementById("evidence-findings");
   if (findingsEl) {
     findingsEl.innerHTML = "";
     const findings = mediaData?.summary?.key_findings || [];
-    fillList(findingsEl, findings.slice(0, 5), [], "Sin hallazgos detectados.");
+    if (findings.length === 0) {
+      findingsEl.innerHTML = '<li style="color: #8892B0;">Sin hallazgos.</li>';
+    } else {
+      findings.forEach(finding => {
+        const li = document.createElement("li");
+        li.textContent = finding;
+        findingsEl.appendChild(li);
+      });
+    }
   }
 }
 
-function renderActionsTab(campaignData, mediaData, forecastData, input) {
-  // Brief ejecutivo
+function renderActionsTab(mediaData, campaignData, forecastData, input) {
   const briefEl = document.getElementById("action-brief");
+  const oppsEl = document.getElementById("action-opportunities");
+  const frictionsEl = document.getElementById("action-frictions");
+  const itemsEl = document.getElementById("action-items");
+  const planEl = document.getElementById("action-plan-by-topic");
+  const speechEl = document.getElementById("action-speech");
+
+  const signals = extractForecastSignals(forecastData);
+  const sentiment = extractSentiment(mediaData);
+  const topic = input?.topic || "General";
+  const candidate = input?.candidateName || "el candidato";
+
+  // Brief ejecutivo
   if (briefEl) {
-    const brief = buildExecutiveBrief(campaignData, mediaData, input);
-    briefEl.textContent = brief;
+    const icceLabel = signals.icce ? `ICCE en ${signals.icce.toFixed(0)}` : "sin datos suficientes";
+    const sentLabel = sentiment.netLabel ? `balance de tono ${sentiment.netLabel}` : "tono mixto";
+    briefEl.textContent = `Conversacion en ${topic} con ${icceLabel} y ${sentLabel}. ${buildRecommendationText(signals.icce, sentiment.netLabel, topic)}`;
   }
 
   // Oportunidades
-  const oppsEl = document.getElementById("action-opportunities");
   if (oppsEl) {
     oppsEl.innerHTML = "";
-    const opportunities = buildOpportunities(mediaData, forecastData, input);
-    opportunities.forEach((opp) => {
+    const drivers = buildDrivers(mediaData, forecastData, null, input);
+    drivers.forEach(d => {
       const li = document.createElement("li");
-      li.textContent = opp;
+      li.textContent = d;
       oppsEl.appendChild(li);
     });
   }
 
   // Fricciones
-  const frictionsEl = document.getElementById("action-frictions");
   if (frictionsEl) {
     frictionsEl.innerHTML = "";
-    const frictions = buildFrictions(mediaData);
-    frictions.forEach((friction) => {
+    const risks = buildRisks(mediaData, forecastData, input);
+    risks.forEach(r => {
       const li = document.createElement("li");
-      li.textContent = friction;
+      li.textContent = r;
       frictionsEl.appendChild(li);
     });
   }
 
   // Acciones internas
-  const actionsEl = document.getElementById("action-items");
-  if (actionsEl) {
-    actionsEl.innerHTML = "";
-    const actions = buildInternalActions(campaignData, mediaData, input);
-    actions.forEach((action) => {
-      const div = document.createElement("div");
-      div.className = "action-item";
-      div.style.cssText = "display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem 1rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 0.5rem;";
-      const priorityColor = action.priority === "URGENTE" ? "#ffb19a" : action.priority === "ESTRATÉGICO" ? "#f5d68a" : "#8ae9bf";
-      const priorityBg = action.priority === "URGENTE" ? "rgba(255,106,61,0.2)" : action.priority === "ESTRATÉGICO" ? "rgba(245,184,0,0.2)" : "rgba(66,214,151,0.2)";
-      div.innerHTML = `<span style="color: var(--text); font-weight: 500;">${action.text}</span><span style="font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 999px; text-transform: uppercase; background: ${priorityBg}; color: ${priorityColor};">${action.priority}</span>`;
-      actionsEl.appendChild(div);
+  if (itemsEl) {
+    itemsEl.innerHTML = "";
+    const actions = [
+      { label: "Monitorear", text: `Vigilar picos en ${topic}. Alertas si volumen sube 50%.` },
+      { label: "Validar", text: "Verificar claims en data antes de amplificar." },
+      { label: "Preparar", text: "Contingencias listas si riesgo sube a alto." }
+    ];
+    actions.forEach(action => {
+      const item = document.createElement("div");
+      item.style.cssText = "background: rgba(255,255,255,0.02); padding: 0.75rem 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem;";
+      item.innerHTML = `<strong style="color: var(--accent);">${action.label}:</strong> <span style="color: #8892B0;">${action.text}</span>`;
+      itemsEl.appendChild(item);
     });
   }
 
   // Plan por tema
-  const planEl = document.getElementById("action-plan-by-topic");
   if (planEl) {
     planEl.innerHTML = "";
-    const plan = buildTopicPlan(campaignData, mediaData);
-    plan.forEach((item) => {
-      const div = document.createElement("div");
-      div.className = "plan-item";
-      div.style.cssText = "padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem; border-left: 3px solid var(--accent); margin-bottom: 0.75rem;";
-      div.innerHTML = `<p style="font-weight: 600; margin: 0 0 0.25rem; color: var(--text);">${item.topic}</p><p style="font-size: 0.9rem; color: #8892B0; margin: 0;">${item.action}</p>`;
-      planEl.appendChild(div);
+    const plan = campaignData?.strategic_plan || {};
+    const objectives = plan.objectives || [`Mejorar percepcion en ${topic}`];
+    objectives.slice(0, 2).forEach(obj => {
+      const item = document.createElement("div");
+      item.style.cssText = "background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.75rem;";
+      item.innerHTML = `
+        <p style="font-weight: 500; margin-bottom: 0.5rem;">${obj}</p>
+        <p style="font-size: 0.85rem; color: #8892B0;">Senal esperada: Mejora del balance de tono en ${topic}.</p>
+      `;
+      planEl.appendChild(item);
     });
   }
 
-  // Discurso IA
-  const speechEl = document.getElementById("action-speech");
-  const speechFullEl = document.getElementById("action-speech-full");
+  // Discurso
   if (speechEl) {
-    const speechText = campaignData?.speech?.content || "Discurso no disponible. Requiere análisis con tema específico.";
-    const preview = speechText.split(". ").slice(0, 2).join(". ");
-    speechEl.textContent = preview ? `${preview}.` : speechText;
-    if (speechFullEl) {
-      speechFullEl.textContent = speechText;
-      speechFullEl.style.display = "none";
-    }
+    speechEl.textContent = campaignData?.speech?.content || "Discurso no disponible.";
   }
-}
-
-function buildExecutiveBrief(campaignData, mediaData, input) {
-  if (campaignData?.executive_summary?.overview) {
-    return campaignData.executive_summary.overview;
-  }
-  const sentiment = mediaData?.sentiment_overview;
-  if (!sentiment) return "Brief no disponible. Ejecutar análisis con tema específico.";
-
-  const pos = (sentiment.positive || 0) * 100;
-  const neg = (sentiment.negative || 0) * 100;
-  const topic = input?.topic || "la conversación";
-  const candidate = input?.candidateName || "el candidato";
-
-  if (pos > neg + 10) {
-    return `${candidate} tiene ventana favorable en ${topic}. El tono general es positivo (${pos.toFixed(0)}%). Oportunidad para amplificar mensaje.`;
-  }
-  if (neg > pos + 10) {
-    return `${candidate} enfrenta territorio crítico en ${topic}. Tono negativo (${neg.toFixed(0)}%). Priorizar contención y ajuste de narrativa.`;
-  }
-  return `${candidate} en territorio neutral en ${topic}. Equilibrio entre tonos positivo y negativo. Mantener consistencia.`;
-}
-
-function buildOpportunities(mediaData, forecastData, input) {
-  const opportunities = [];
-  const signals = extractForecastSignals(forecastData);
-  const topics = mediaData?.topics || [];
-
-  // Positive topics
-  const posTopics = topics.filter((t) => (t.sentiment?.positive || 0) > 0.5);
-  posTopics.slice(0, 2).forEach((topic) => {
-    opportunities.push(`${topic.topic}: tono favorable (${((topic.sentiment.positive) * 100).toFixed(0)}%). Amplificar.`);
-  });
-
-  // Momentum positive
-  if (signals.momentum > 0.01) {
-    opportunities.push("Momentum positivo: clima receptivo para nuevos mensajes.");
-  }
-
-  // High ICCE
-  if (signals.icce > 55) {
-    opportunities.push("Clima narrativo favorable para posicionamiento.");
-  }
-
-  return opportunities.length ? opportunities : ["Analizar más datos para identificar oportunidades."];
-}
-
-function buildFrictions(mediaData) {
-  const frictions = [];
-  const topics = mediaData?.topics || [];
-
-  // Negative topics
-  const negTopics = topics.filter((t) => (t.sentiment?.negative || 0) > 0.35);
-  negTopics.slice(0, 3).forEach((topic) => {
-    frictions.push(`${topic.topic}: ${((topic.sentiment.negative) * 100).toFixed(0)}% tono crítico. Monitorear.`);
-  });
-
-  return frictions.length ? frictions : ["Sin fricciones significativas detectadas."];
-}
-
-function buildInternalActions(campaignData, mediaData, input) {
-  const actions = [];
-  const topics = mediaData?.topics || [];
-
-  // From campaign data
-  if (campaignData?.strategic_plan?.actions?.length) {
-    campaignData.strategic_plan.actions.slice(0, 2).forEach((action) => {
-      actions.push({ priority: "ESTRATÉGICO", text: action.action || action });
-    });
-  }
-
-  // Risk topics
-  const riskTopic = topics.find((t) => (t.sentiment?.negative || 0) > 0.4);
-  if (riskTopic) {
-    actions.push({ priority: "URGENTE", text: `Preparar Q&A defensivo para ${riskTopic.topic}` });
-  }
-
-  // Default actions
-  if (actions.length === 0) {
-    actions.push({ priority: "RUTINA", text: "Mantener monitoreo de conversación" });
-    actions.push({ priority: "RUTINA", text: "Actualizar contenido según hallazgos" });
-  }
-
-  return actions.slice(0, 4);
-}
-
-function buildTopicPlan(campaignData, mediaData) {
-  const plan = [];
-  const topics = mediaData?.topics || [];
-
-  topics.slice(0, 3).forEach((topic) => {
-    const sentiment = topic.sentiment || {};
-    const pos = (sentiment.positive || 0) * 100;
-    const neg = (sentiment.negative || 0) * 100;
-
-    let action;
-    if (pos > neg + 15) {
-      action = "Amplificar mensaje positivo";
-    } else if (neg > pos + 15) {
-      action = "Contener y preparar respuesta";
-    } else {
-      action = "Monitorear evolución";
-    }
-
-    plan.push({ topic: topic.topic, action });
-  });
-
-  return plan.length ? plan : [{ topic: "General", action: "Ejecutar análisis con tema específico" }];
 }
 
 function renderVigilanceTab(forecastData, mediaData, input) {
-  // Update forecast days label
-  const forecastDaysLabel = document.getElementById("vigilance-forecast-days");
-  if (forecastDaysLabel) {
-    forecastDaysLabel.textContent = document.getElementById("unified-forecast-days")?.value || 14;
-  }
-
-  // Scenario: Si sube
+  const daysEl = document.getElementById("vigilance-forecast-days");
   const scenarioUpEl = document.getElementById("scenario-up");
-  if (scenarioUpEl) {
-    scenarioUpEl.textContent = buildScenarioUp(forecastData, input);
-  }
-
-  // Scenario: Si baja
   const scenarioDownEl = document.getElementById("scenario-down");
+  const momentumEl = document.getElementById("risk-momentum");
+  const volatilityEl = document.getElementById("risk-volatility");
+  const criticsEl = document.getElementById("risk-critics");
+  const confEl = document.getElementById("risk-confidence");
+
+  const forecastDays = document.getElementById("unified-forecast-days")?.value || 14;
+  if (daysEl) daysEl.textContent = forecastDays;
+
+  const signals = extractForecastSignals(forecastData);
+  const topic = input?.topic || "el tema";
+
+  // Escenarios
+  if (scenarioUpEl) {
+    scenarioUpEl.textContent = `Ventana para acciones tacticas en ${topic}. Aprovechar momentum favorable.`;
+  }
   if (scenarioDownEl) {
-    scenarioDownEl.textContent = buildScenarioDown(forecastData, input);
+    scenarioDownEl.textContent = `Reforzar narrativa en ${topic}. Activar plan de contencion.`;
   }
 
-  // Alertas narrativas
-  const alertsEl = document.getElementById("forecast-alerts-list");
-  if (alertsEl) {
-    alertsEl.innerHTML = "";
-    const alerts = buildVigilanceAlerts(forecastData, mediaData);
-    alerts.forEach((alert) => {
+  // Senales de riesgo
+  if (momentumEl) {
+    const mom = signals.momentum;
+    const label = mom == null ? "-" : mom > 0.02 ? "Positivo" : mom < -0.02 ? "Negativo" : "Estable";
+    const color = mom == null ? "#8892B0" : mom > 0.02 ? "#42d697" : mom < -0.02 ? "#FF6A3D" : "#8892B0";
+    momentumEl.textContent = label;
+    momentumEl.style.color = color;
+  }
+
+  if (volatilityEl) {
+    volatilityEl.textContent = "Baja";
+    volatilityEl.style.color = "#42d697";
+  }
+
+  if (criticsEl) {
+    const negPct = ((mediaData?.sentiment_overview?.negative || 0) * 100).toFixed(0);
+    criticsEl.textContent = `${negPct}%`;
+    criticsEl.style.color = negPct > 30 ? "#FF6A3D" : negPct > 20 ? "#F5B800" : "#42d697";
+  }
+
+  if (confEl) {
+    const tweetsAnalyzed = mediaData?.metadata?.tweets_analyzed || 0;
+    const confidence = calculateConfidenceLevel(tweetsAnalyzed, signals);
+    confEl.textContent = confidence.level;
+    confEl.style.color = confidence.level === "Alta" ? "#42d697" : confidence.level === "Media" ? "#F5B800" : "#FF6A3D";
+  }
+
+  // Render chart and alerts
+  renderUnifiedChart(forecastData, input);
+  renderForecastPanels(forecastData);
+}
+
+function renderGeoTab(mediaData, input) {
+  renderGeoPanel(mediaData, input?.location);
+
+  // Contexto geografico adicional
+  const concEl = document.getElementById("geo-concentration");
+  const domEl = document.getElementById("geo-dominant");
+  const oppEl = document.getElementById("geo-opportunity");
+  const sentGridEl = document.getElementById("geo-sentiment-grid");
+
+  const distribution = buildGeoDistribution(mediaData, input?.location);
+
+  if (distribution.length >= 2) {
+    const top = distribution[0];
+    const second = distribution[1];
+    const concentration = (top.weight * 100).toFixed(0);
+
+    if (concEl) {
+      concEl.textContent = concentration > 40 ? `Alta (${concentration}% en ${top.name})` : `Distribuida`;
+    }
+    if (domEl) {
+      domEl.textContent = top.name;
+    }
+    if (oppEl) {
+      oppEl.textContent = concentration > 40 ? `Expandir hacia ${second.name}` : `Balance adecuado entre regiones`;
+    }
+  }
+
+  // Grid de sentiment por region
+  if (sentGridEl) {
+    sentGridEl.innerHTML = "";
+    distribution.slice(0, 4).forEach(point => {
+      const item = document.createElement("div");
+      item.style.cssText = "background: rgba(255,255,255,0.02); padding: 0.75rem; border-radius: 0.5rem; text-align: center;";
+      item.innerHTML = `
+        <p style="font-weight: 500; margin-bottom: 0.25rem;">${point.name}</p>
+        <p style="font-size: 0.85rem; color: #8892B0;">${(point.weight * 100).toFixed(1)}%</p>
+      `;
+      sentGridEl.appendChild(item);
+    });
+  }
+}
+
+function renderExplorationTab(mediaData, forecastData) {
+  renderSentimentChart(mediaData, {});
+  renderTopics(mediaData);
+}
+
+function renderNarrativeSummary(mediaData, forecastData, trendingData, input) {
+  const summaryEl = document.getElementById("narrative-summary");
+  const tagsEl = document.getElementById("summary-tags");
+  const titleEl = document.getElementById("narrative-title");
+  const driversEl = document.getElementById("narrative-drivers");
+  const risksEl = document.getElementById("narrative-risks");
+  const watchEl = document.getElementById("narrative-watch");
+
+  const location = input?.location || "la region";
+  const candidate = input?.candidateName || "";
+  const topic = input?.topic || "General";
+  const signals = extractForecastSignals(forecastData);
+  const sentiment = extractSentiment(mediaData);
+
+  // Dynamic title
+  if (titleEl) {
+    let title = "Estado de la Narrativa";
+    if (candidate) title += ` para ${candidate}`;
+    if (topic && topic !== "General") title += ` en ${topic}`;
+    titleEl.textContent = title;
+  }
+
+  // Summary text
+  const overview = mediaData?.summary?.overview;
+  const daysBack = document.getElementById("unified-days-back")?.value || 30;
+  const fallback = `La conversacion en ${location}${candidate ? ` para ${candidate}` : ""} muestra una dinamica ${signals.icce > 55 ? "favorable" : signals.icce < 45 ? "critica" : "mixta"}. ${signals.forecastDirection || ""}`.trim();
+  if (summaryEl) summaryEl.textContent = overview || fallback;
+
+  // Generate drivers based on data
+  const drivers = buildDrivers(mediaData, forecastData, trendingData, input);
+  if (driversEl) {
+    driversEl.innerHTML = "";
+    drivers.forEach(driver => {
       const li = document.createElement("li");
-      li.style.cssText = "padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);";
-      li.style.color = alert.level === "high" ? "#FF6A3D" : alert.level === "medium" ? "#F5B800" : "#8892B0";
-      li.textContent = alert.text;
-      alertsEl.appendChild(li);
+      li.textContent = driver;
+      driversEl.appendChild(li);
     });
   }
 
-  // Señales de riesgo
+  // Generate risks based on data
+  const risks = buildRisks(mediaData, forecastData, input);
+  if (risksEl) {
+    risksEl.innerHTML = "";
+    risks.forEach(risk => {
+      const li = document.createElement("li");
+      li.textContent = risk;
+      risksEl.appendChild(li);
+    });
+  }
+
+  // Generate watch items
+  const watchItems = buildWatchItems(mediaData, forecastData, input);
+  if (watchEl) {
+    watchEl.innerHTML = "";
+    watchItems.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      watchEl.appendChild(li);
+    });
+  }
+
+  // Tags
+  if (tagsEl) {
+    tagsEl.innerHTML = "";
+    const tags = [];
+    if (mediaData?.summary?.key_stats) tags.push(...mediaData.summary.key_stats.slice(0, 3));
+    if (trendingData?.trending_topics) {
+      tags.push(...trendingData.trending_topics.slice(0, 3).map((t) => `#${t}`));
+    }
+    if (tags.length === 0) {
+      tags.push("Sin tags destacados");
+    }
+    tags.forEach((tag) => {
+      const chip = document.createElement("span");
+      chip.className = "summary-tag";
+      chip.textContent = tag;
+      tagsEl.appendChild(chip);
+    });
+  }
+}
+
+function buildDrivers(mediaData, forecastData, trendingData, input) {
+  const drivers = [];
   const signals = extractForecastSignals(forecastData);
-  const riskMomentumEl = document.getElementById("risk-momentum");
-  const riskVolatilityEl = document.getElementById("risk-volatility");
-  const riskCriticsEl = document.getElementById("risk-critics");
-  const riskConfidenceEl = document.getElementById("risk-confidence");
+  const sentiment = extractSentiment(mediaData);
+  const topic = input?.topic || "el tema";
 
-  if (riskMomentumEl) {
-    const momLabel = signals.momentum != null
-      ? (signals.momentum > 0.01 ? "Positivo" : signals.momentum < -0.01 ? "Negativo" : "Estable")
-      : "Sin datos";
-    riskMomentumEl.textContent = momLabel;
-    riskMomentumEl.style.color = signals.momentum > 0.01 ? "#42d697" : signals.momentum < -0.01 ? "#FF6A3D" : "#8892B0";
+  if (signals.icce && signals.icce > 55) {
+    drivers.push(`Alta traccion en ${topic} (ICCE ${signals.icce.toFixed(1)})`);
+  }
+  if (signals.momentum && signals.momentum > 0.01) {
+    drivers.push(`Momentum positivo sostenido`);
+  }
+  if (sentiment.netLabel && parseFloat(sentiment.netLabel) > 10) {
+    drivers.push(`Sentiment favorable en la muestra`);
+  }
+  if (trendingData?.trending_topics?.length > 0) {
+    drivers.push(`Temas trending alineados: ${trendingData.trending_topics.slice(0, 2).join(", ")}`);
+  }
+  if (mediaData?.topics?.length > 0) {
+    const topTopic = mediaData.topics[0];
+    if (topTopic.sentiment?.positive > 0.4) {
+      drivers.push(`Engagement alto en ${topTopic.topic}`);
+    }
   }
 
-  if (riskVolatilityEl) {
-    const volatility = forecastData?.series?.icce
-      ? calculateVolatility(forecastData.series.icce)
-      : null;
-    riskVolatilityEl.textContent = volatility != null
-      ? (volatility > 0.05 ? "Alta" : volatility > 0.02 ? "Media" : "Baja")
-      : "Sin datos";
-  }
-
-  if (riskCriticsEl) {
-    const negPercent = (mediaData?.sentiment_overview?.negative || 0) * 100;
-    riskCriticsEl.textContent = `${negPercent.toFixed(0)}%`;
-    riskCriticsEl.style.color = negPercent > 35 ? "#FF6A3D" : negPercent > 20 ? "#F5B800" : "#42d697";
-  }
-
-  if (riskConfidenceEl) {
-    const conf = signals.icce
-      ? (signals.icce > 50 ? "Alta" : signals.icce > 35 ? "Media" : "Baja")
-      : "Media";
-    riskConfidenceEl.textContent = conf;
-  }
-
-  // Render forecast chart in vigilance tab
-  renderVigilanceChart(forecastData);
+  return drivers.length > 0 ? drivers.slice(0, 3) : ["Sin drivers significativos detectados"];
 }
 
-function calculateVolatility(values) {
-  if (!values || values.length < 2) return null;
-  const mean = values.reduce((a, b) => a + b, 0) / values.length;
-  const variance = values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / values.length;
-  return Math.sqrt(variance);
-}
-
-function buildScenarioUp(forecastData, input) {
+function buildRisks(mediaData, forecastData, input) {
+  const risks = [];
   const signals = extractForecastSignals(forecastData);
-  const topic = input?.topic || "la conversación";
+  const sentiment = extractSentiment(mediaData);
+  const topic = input?.topic || "el tema";
 
-  if (!signals.icce) {
-    return "Si mejora el clima: oportunidad para posicionamiento proactivo.";
+  if (signals.icce && signals.icce < 45) {
+    risks.push(`ICCE bajo (${signals.icce.toFixed(1)}) - riesgo de desgaste`);
+  }
+  if (signals.momentum && signals.momentum < -0.01) {
+    risks.push(`Momentum negativo - tendencia a la baja`);
+  }
+  if (sentiment.netLabel && parseFloat(sentiment.netLabel) < -5) {
+    risks.push(`Predominio de criticas en la conversacion`);
+  }
+  if (mediaData?.sentiment_overview?.negative > 0.3) {
+    risks.push(`Mas de 30% de menciones negativas`);
+  }
+  if (mediaData?.metadata?.tweets_analyzed < 50) {
+    risks.push(`Bajo volumen de datos - confianza reducida`);
   }
 
-  const projected = forecastData?.forecast?.icce_pred?.slice(-1)[0];
-  if (projected && projected > (signals.icce / 100)) {
-    return `Si ICCE sube a ${(projected * 100).toFixed(0)}: ventana para amplificar mensaje en ${topic}. Preparar contenido ofensivo.`;
-  }
-
-  return `Si mejora el tono en ${topic}: aprovechar para lanzar iniciativas. Clima receptivo.`;
+  return risks.length > 0 ? risks.slice(0, 3) : ["Sin riesgos criticos detectados"];
 }
 
-function buildScenarioDown(forecastData, input) {
+function buildWatchItems(mediaData, forecastData, input) {
+  const watchItems = [];
   const signals = extractForecastSignals(forecastData);
-  const topic = input?.topic || "la conversación";
+  const topic = input?.topic || "el tema";
+  const location = input?.location || "la region";
 
-  if (!signals.icce) {
-    return "Si empeora el clima: activar protocolo de contención.";
+  if (signals.forecastDirection) {
+    watchItems.push(`Proyeccion: ${signals.forecastDirection} - actuar si cambia direccion`);
+  }
+  if (signals.momentum) {
+    if (Math.abs(signals.momentum) < 0.01) {
+      watchItems.push(`Momentum estable - vigilar cambios subitos`);
+    }
+  }
+  watchItems.push(`Picos en ${topic} en ${location} - activar alertas si volumen sube 50%+`);
+
+  if (mediaData?.topics?.length > 1) {
+    const secondTopic = mediaData.topics[1];
+    if (secondTopic) {
+      watchItems.push(`Tema secundario "${secondTopic.topic}" puede ganar relevancia`);
+    }
   }
 
-  return `Si ICCE baja de 40: pausar exposición en ${topic}. Priorizar escucha y ajuste de narrativa.`;
+  return watchItems.slice(0, 3);
 }
 
-function buildVigilanceAlerts(forecastData, mediaData) {
-  const alerts = [];
+function renderNarrativeMetrics(mediaData, forecastData, input) {
+  // Elementos del resumen narrativo
+  const summaryEl = document.getElementById("narrative-summary");
+  const tagsEl = document.getElementById("summary-tags");
+  
+  // Elementos de fuerza narrativa
+  const strengthEl = document.getElementById("narrative-strength");
+  const trendEl = document.getElementById("narrative-trend");
+  const projectionEl = document.getElementById("narrative-projection");
+  const positionEl = document.getElementById("narrative-position");
+  const riskEl = document.getElementById("narrative-risk");
+  const recommendationEl = document.getElementById("narrative-recommendation");
+  const dominanceEl = document.getElementById("narrative-dominance");
+  const toneEl = document.getElementById("narrative-tone");
+
   const signals = extractForecastSignals(forecastData);
+  const sentiment = extractSentiment(mediaData);
+  const icceValue = signals.icce ?? null;
+  const topic = input?.topic || "General";
+  const candidate = input?.candidateName || "el candidato";
+  const location = input?.location || "la región";
+  const tweetsAnalyzed = mediaData?.metadata?.tweets_analyzed || 0;
 
-  // ICCE threshold
-  alerts.push({
-    level: signals.icce && signals.icce < 45 ? "high" : "low",
-    text: `ICCE < 45: ${signals.icce ? "ACTIVA" : "Configurada"}`
-  });
-
-  // Momentum threshold
-  alerts.push({
-    level: signals.momentum && signals.momentum < -0.02 ? "medium" : "low",
-    text: `Momentum negativo: ${signals.momentum && signals.momentum < -0.02 ? "ACTIVA" : "Configurada"}`
-  });
-
-  // Topic risk
-  const topics = mediaData?.topics || [];
-  const riskTopic = topics.find((t) => (t.sentiment?.negative || 0) > 0.4);
-  alerts.push({
-    level: riskTopic ? "high" : "low",
-    text: `Tema crítico (>40% neg): ${riskTopic ? "ACTIVA - " + riskTopic.topic : "Configurada"}`
-  });
-
-  return alerts;
-}
-
-function renderVigilanceChart(forecastData) {
-  const ctx = document.getElementById("vigilance-chart");
-  if (!ctx || !forecastData) return;
-
-  // Reuse the unified chart logic
-  renderUnifiedChart(forecastData);
-}
-
-function renderBriefsTab(campaignData) {
-  const planEl = document.getElementById("brief-plan");
-  const speechEl = document.getElementById("brief-speech");
-  const speechFullEl = document.getElementById("brief-speech-full");
-
-  if (planEl) {
-    if (campaignData?.strategic_plan?.objectives?.length) {
-      const objectives = campaignData.strategic_plan.objectives.slice(0, 2).join(" · ");
-      const impact = campaignData.strategic_plan.expected_impact || "Impacto no especificado.";
-      const actions = (campaignData.strategic_plan.actions || [])
-        .slice(0, 2)
-        .map((item) => item.action)
-        .filter(Boolean)
-        .join(" · ");
-      planEl.textContent = `Necesidad: ${objectives}. Propuesta: ${actions || "Acciones priorizadas"}. Impacto: ${impact}.`;
+  // Resumen narrativo - texto principal
+  if (summaryEl) {
+    const execSummary = mediaData?.summary?.executive_summary;
+    if (execSummary) {
+      summaryEl.textContent = execSummary;
     } else {
-      planEl.textContent = "Plan estrategico no disponible (tema requerido).";
+      const posPct = ((mediaData?.sentiment_overview?.positive || 0) * 100).toFixed(0);
+      const negPct = ((mediaData?.sentiment_overview?.negative || 0) * 100).toFixed(0);
+      const icceText = icceValue ? `con un ICCE de ${icceValue.toFixed(1)}` : "";
+      const sentimentText = posPct > negPct ? "predominantemente favorable" : posPct < negPct ? "con tono crítico" : "con tono mixto";
+      summaryEl.textContent = `La conversación sobre ${topic} en ${location} ${icceText} muestra un clima ${sentimentText}. ${posPct}% de las menciones son positivas frente a ${negPct}% negativas. ${buildRecommendationText(icceValue, sentiment.netLabel, topic)}`;
     }
   }
 
-  if (speechEl) {
-    const speechText = campaignData?.speech?.content || "Discurso no disponible.";
-    const preview = speechText.split(". ").slice(0, 2).join(". ");
-    speechEl.textContent = preview ? `${preview}.` : speechText;
-    if (speechFullEl) {
-      speechFullEl.textContent = speechText;
-      speechFullEl.style.display = "none";
-    }
-  }
-}
-
-function setupBriefToggle() {
-  const toggle = document.getElementById("brief-speech-toggle");
-  const fullEl = document.getElementById("brief-speech-full");
-  if (!toggle || !fullEl) return;
-
-  if (toggle.dataset.bound === "true") return;
-  toggle.dataset.bound = "true";
-  toggle.addEventListener("click", () => {
-    const isHidden = fullEl.style.display === "none" || !fullEl.style.display;
-    fullEl.style.display = isHidden ? "block" : "none";
-    toggle.textContent = isHidden ? "Ocultar" : "Ver completo";
-  });
-}
-function renderGeoPanel(mediaData, location) {
-  const geoListEl = document.getElementById("geo-list");
-  const geoConcentrationEl = document.getElementById("geo-concentration");
-  const geoDominantEl = document.getElementById("geo-dominant");
-  const geoOpportunityEl = document.getElementById("geo-opportunity");
-  const geoSentimentGridEl = document.getElementById("geo-sentiment-grid");
-  const cityMarkersEl = document.getElementById("city-markers");
-  const cityLabelsEl = document.getElementById("city-labels");
-
-  const distribution = buildGeoDistribution(mediaData, location);
-
-  // Render SVG city markers on Colombia map
-  if (cityMarkersEl && cityLabelsEl) {
-    cityMarkersEl.innerHTML = "";
-    cityLabelsEl.innerHTML = "";
-
-    distribution.forEach((point, idx) => {
-      // Find SVG coordinates from COLOMBIA_POINTS
-      const cityData = COLOMBIA_POINTS.find(c => c.name === point.name);
-      if (!cityData) return;
-
-      const size = 6 + point.weight * 25;
-      const opacity = 0.5 + point.weight * 0.5;
-
-      // Create circle marker
-      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute("cx", cityData.svgX);
-      circle.setAttribute("cy", cityData.svgY);
-      circle.setAttribute("r", size);
-      circle.setAttribute("fill", `rgba(255, 106, 61, ${opacity})`);
-      circle.setAttribute("stroke", "rgba(255, 255, 255, 0.3)");
-      circle.setAttribute("stroke-width", "1");
-      circle.setAttribute("filter", "url(#glow)");
-      circle.style.cursor = "pointer";
-      circle.setAttribute("data-city", point.name);
-      circle.setAttribute("data-weight", (point.weight * 100).toFixed(1));
-
-      // Add hover tooltip
-      const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
-      title.textContent = `${point.name}: ${(point.weight * 100).toFixed(1)}% de la conversacion`;
-      circle.appendChild(title);
-
-      cityMarkersEl.appendChild(circle);
-
-      // Add label for top 5 cities
-      if (idx < 5) {
-        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute("x", cityData.svgX + size + 4);
-        text.setAttribute("y", cityData.svgY + 3);
-        text.setAttribute("fill", "#F5F7FA");
-        text.setAttribute("font-size", "9");
-        text.setAttribute("font-weight", "500");
-        text.textContent = point.name;
-        cityLabelsEl.appendChild(text);
-      }
+  // Tags del resumen
+  if (tagsEl) {
+    tagsEl.innerHTML = "";
+    const tags = [];
+    if (icceValue) tags.push(`ICCE ${icceValue.toFixed(1)}`);
+    if (signals.momentum != null) tags.push(`Momentum ${formatSigned(signals.momentum, 3)}`);
+    if (sentiment.netValue != null) tags.push(`Sentimiento ${sentiment.netValue >= 0 ? "+" : ""}${(sentiment.netValue * 100).toFixed(0)}%`);
+    if (tweetsAnalyzed) tags.push(`${tweetsAnalyzed} tweets`);
+    
+    tags.forEach(tag => {
+      const span = document.createElement("span");
+      span.className = "summary-tag";
+      span.textContent = tag;
+      tagsEl.appendChild(span);
     });
   }
 
-  // Render city list
-  if (geoListEl) {
-    geoListEl.innerHTML = "";
-    distribution.slice(0, 6).forEach((point, index) => {
+  // Fuerza narrativa
+  const strengthLabel = icceValue == null ? "Sin datos" : narrativeStrengthLabel(icceValue);
+  if (strengthEl) {
+    if (icceValue != null) {
+      const comparison = icceValue > 60 ? "por encima del promedio" : icceValue < 40 ? "por debajo" : "en rango neutral";
+      strengthEl.textContent = `${icceValue.toFixed(1)} · ${strengthLabel.charAt(0).toUpperCase() + strengthLabel.slice(1)} (${comparison})`;
+    } else {
+      strengthEl.textContent = "-";
+    }
+  }
+
+  // Tendencia semanal
+  if (trendEl) {
+    const momentumText = signals.momentumLabel || "Sin tendencia";
+    const arrow = signals.momentum > 0.01 ? "↑" : signals.momentum < -0.01 ? "↓" : "→";
+    trendEl.textContent = `${arrow} ${momentumText}`;
+  }
+
+  // Proyección
+  if (projectionEl) projectionEl.textContent = signals.forecastDirection || "Sin proyección disponible";
+
+  // Posición narrativa
+  if (positionEl) positionEl.textContent = narrativePositionLabel(icceValue, sentiment.netLabel);
+
+  // Riesgo
+  if (riskEl) {
+    const riskLevel = narrativeRiskLabel(icceValue, signals.momentum, sentiment.netLabel);
+    const riskColor = riskLevel === "alto" ? "#FF6A3D" : riskLevel === "medio" ? "#F5B800" : "#42d697";
+    const riskIcon = riskLevel === "alto" ? "⚠️" : riskLevel === "medio" ? "⚡" : "✓";
+    const riskHint = riskLevel === "alto" ? "alerta" : riskLevel === "medio" ? "vigilancia" : "estable";
+    riskEl.innerHTML = `<span style="color: ${riskColor}; font-weight: 600;">${riskIcon} ${riskLevel.toUpperCase()} · ${riskHint}</span>`;
+  }
+
+  // Recomendación
+  if (recommendationEl) {
+    recommendationEl.textContent = buildRecommendationText(icceValue, sentiment.netLabel, topic);
+  }
+
+  // Dominio narrativo
+  if (dominanceEl) {
+    const topTopic = mediaData?.topics?.[0];
+    if (topTopic) {
+      const topSentiment = topTopic.sentiment?.positive > topTopic.sentiment?.negative ? "favorable" : "mixto";
+      dominanceEl.textContent = `${topTopic.topic} (${topTopic.tweet_count} menciones, tono ${topSentiment})`;
+    } else {
+      dominanceEl.textContent = topic || "Sin datos de temas";
+    }
+  }
+
+  // Tono de conversación
+  if (toneEl) {
+    const posPct = ((mediaData?.sentiment_overview?.positive || 0) * 100).toFixed(0);
+    const negPct = ((mediaData?.sentiment_overview?.negative || 0) * 100).toFixed(0);
+    const neuPct = ((mediaData?.sentiment_overview?.neutral || 0) * 100).toFixed(0);
+    toneEl.textContent = `${posPct}% positivo · ${neuPct}% neutral · ${negPct}% crítico`;
+  }
+}
+
+function calculateConfidenceLevel(tweetsAnalyzed, signals) {
+  let score = 0;
+  let reasons = [];
+
+  if (tweetsAnalyzed >= 100) {
+    score += 2;
+    reasons.push("volumen alto");
+  } else if (tweetsAnalyzed >= 50) {
+    score += 1;
+    reasons.push("volumen medio");
+  } else {
+    reasons.push("volumen bajo");
+  }
+
+  if (signals.icce != null) {
+    score += 1;
+  }
+  if (signals.momentum != null) {
+    score += 1;
+  }
+
+  if (score >= 3) {
+    return { level: "Alta", reason: reasons[0] || "datos consistentes" };
+  } else if (score >= 2) {
+    return { level: "Media", reason: reasons[0] || "datos parciales" };
+  } else {
+    return { level: "Baja", reason: "datos insuficientes" };
+  }
+}
+
+function renderStreamLists(mediaData, forecastData, trendingData, input) {
+  const mediaList = document.getElementById("media-stream-list");
+  const campaignList = document.getElementById("campaign-stream-list");
+  const forecastList = document.getElementById("forecast-stream-list");
+  const mediaContext = document.getElementById("media-stream-context");
+  const campaignContext = document.getElementById("campaign-stream-context");
+  const forecastContext = document.getElementById("forecast-stream-context");
+
+  const topic = input?.topic || "el tema";
+  const location = input?.location || "la region";
+
+  // Media stream with importance context
+  const mediaFindings = mediaData?.summary?.key_findings?.map((finding, i) => {
+    if (i === 0) return `${finding} – Indica tono ciudadano predominante`;
+    return finding;
+  }) || [];
+  const topicMentions = mediaData?.topics?.map((t) => {
+    const sentLabel = t.sentiment?.positive > t.sentiment?.negative ? "favorable" : "mixto";
+    return `${t.topic}: ${t.tweet_count} menciones (tono ${sentLabel})`;
+  }) || [];
+
+  fillList(mediaList, mediaFindings, topicMentions, "Sin hallazgos de medios.");
+  if (mediaContext) {
+    const negPct = mediaData?.sentiment_overview?.negative ? (mediaData.sentiment_overview.negative * 100).toFixed(0) : 0;
+    mediaContext.textContent = negPct > 25
+      ? `Alerta: ${negPct}% de menciones negativas detectadas.`
+      : `Tono general controlado (${negPct}% negativos).`;
+  }
+
+  // Campaign stream with importance context
+  const trendingItems = trendingData?.trending_topics?.map((topic, i) => {
+    return `Tema caliente: ${topic}${i === 0 ? " – Mayor traccion actual" : ""}`;
+  }) || [];
+
+  fillList(campaignList, trendingItems, [], "Sin tendencias disponibles.");
+  if (campaignContext) {
+    campaignContext.textContent = trendingData?.trending_topics?.length > 0
+      ? `${trendingData.trending_topics.length} temas activos en ${location}. Vigilar picos subitos.`
+      : "Sin temas trending detectados en esta ventana.";
+  }
+
+  // Forecast stream with importance context
+  const forecastSignals = extractForecastSignals(forecastData);
+  const forecastItems = [
+    forecastSignals.forecastDirection ? `${forecastSignals.forecastDirection} – Proyeccion principal` : null,
+    forecastSignals.momentumLabel ? `${forecastSignals.momentumLabel} – Velocidad de cambio` : null,
+    forecastSignals.icceLabel ? `${forecastSignals.icceLabel} – Indice actual` : null
+  ].filter(Boolean);
+
+  fillList(forecastList, forecastItems, [], "Sin forecast disponible.");
+  if (forecastContext) {
+    if (forecastSignals.momentum && forecastSignals.momentum < -0.02) {
+      forecastContext.textContent = "Atencion: Momentum negativo. Considerar accion preventiva.";
+    } else if (forecastSignals.momentum && forecastSignals.momentum > 0.02) {
+      forecastContext.textContent = "Momentum positivo. Ventana favorable para acciones tacticas.";
+    } else {
+      forecastContext.textContent = "Tendencia estable. Mantener monitoreo activo.";
+    }
+  }
+}
+
+function renderGameTheoryBlock(mediaData, forecastData, trendingData, campaignData, input) {
+  const mainEl = document.getElementById("game-main");
+  const altEl = document.getElementById("game-alternatives");
+  const signalEl = document.getElementById("game-rival-signal");
+  const triggerEl = document.getElementById("game-trigger");
+  const payoffEl = document.getElementById("game-payoff");
+  const confidenceEl = document.getElementById("game-confidence");
+  const radarCtx = document.getElementById("game-radar-chart");
+  const gapCtx = document.getElementById("game-gap-chart");
+  const radarContextEl = document.getElementById("game-radar-context");
+  const gapContextEl = document.getElementById("game-gap-context");
+  const rivalNameEl = document.getElementById("game-rival-name");
+  const candidateNameEl = document.getElementById("game-candidate-name");
+
+  if (!mainEl && !altEl && !signalEl && !triggerEl) return;
+
+  const selectedRival = getSelectedRivalName();
+  if (rivalNameEl) rivalNameEl.textContent = selectedRival;
+  if (candidateNameEl) candidateNameEl.textContent = input?.candidateName || "Paloma Valencia";
+
+  const gameData = buildGameTheoryFromSelection(
+    mediaData,
+    forecastData,
+    trendingData,
+    campaignData,
+    input,
+    selectedRival
+  );
+
+  if (mainEl) mainEl.textContent = gameData.main_move || "-";
+  if (altEl) {
+    altEl.innerHTML = "";
+    (gameData.alternatives || []).forEach((alt) => {
       const li = document.createElement("li");
-      const barWidth = Math.max(10, point.weight * 100);
-      li.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-          <span style="font-weight: 500;">${index + 1}. ${point.name}</span>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 60px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
-              <div style="width: ${barWidth}%; height: 100%; background: linear-gradient(90deg, #FF6A3D, #FF8C5A); border-radius: 3px;"></div>
-            </div>
-            <strong style="min-width: 40px; text-align: right;">${(point.weight * 100).toFixed(1)}%</strong>
-          </div>
-        </div>`;
-      geoListEl.appendChild(li);
+      li.textContent = alt;
+      altEl.appendChild(li);
     });
   }
+  if (signalEl) signalEl.textContent = gameData.rival_signal || "";
+  if (triggerEl) triggerEl.textContent = gameData.trigger || "";
+  if (payoffEl) payoffEl.textContent = gameData.payoff || "Payoff estimado";
+  if (confidenceEl) confidenceEl.textContent = gameData.confidence ? `Confianza ${gameData.confidence}` : "Confianza media";
 
-  // Geographic context
-  const topCity = distribution[0]?.name || location || "Colombia";
-  const topPercent = distribution[0] ? (distribution[0].weight * 100).toFixed(0) : "-";
-  const secondCity = distribution[1]?.name || "";
-  const top3Percent = distribution.slice(0, 3).reduce((sum, p) => sum + p.weight, 0) * 100;
-
-  if (geoConcentrationEl) {
-    geoConcentrationEl.textContent = `Top 3 ciudades concentran ${top3Percent.toFixed(0)}% de menciones`;
-  }
-
-  if (geoDominantEl) {
-    geoDominantEl.textContent = `${topCity} (${topPercent}%)${secondCity ? `, ${secondCity}` : ""}`;
-  }
-
-  if (geoOpportunityEl) {
-    const lowCities = distribution.slice(4).map(p => p.name).slice(0, 2).join(", ");
-    geoOpportunityEl.textContent = lowCities
-      ? `Menor presencia en: ${lowCities}`
-      : "Cobertura distribuida uniformemente";
-  }
-
-  // Sentiment by region
-  if (geoSentimentGridEl) {
-    geoSentimentGridEl.innerHTML = "";
-    const sentiment = mediaData?.sentiment_overview || { positive: 0.33, neutral: 0.34, negative: 0.33 };
-
-    distribution.slice(0, 4).forEach((point) => {
-      const variation = (hashString(point.name) % 20 - 10) / 100;
-      const regionalPos = Math.max(0, Math.min(1, (sentiment.positive || 0) + variation));
-      const regionalNeg = Math.max(0, Math.min(1, (sentiment.negative || 0) - variation));
-
-      const div = document.createElement("div");
-      div.className = "geo-sentiment-row";
-      div.style.cssText = "display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255,255,255,0.02); border-radius: 6px;";
-      const label = regionalPos > regionalNeg + 0.1 ? "favorable" : regionalNeg > regionalPos + 0.1 ? "critico" : "neutral";
-      const color = label === "favorable" ? "#42d697" : label === "critico" ? "#FF6A3D" : "#8892B0";
-      const bgColor = label === "favorable" ? "rgba(66,214,151,0.15)" : label === "critico" ? "rgba(255,106,61,0.15)" : "rgba(255,255,255,0.1)";
-      div.innerHTML = `<span style="color: var(--text); font-weight: 500;">${point.name}</span><span style="padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; background: ${bgColor}; color: ${color}; text-transform: capitalize;">${label}</span>`;
-      geoSentimentGridEl.appendChild(div);
-    });
-  }
+  renderGameTheoryCharts(gameData, radarCtx, gapCtx, radarContextEl, gapContextEl);
 }
 
-function setupUnifiedTabs() {
-  const tabs = document.querySelectorAll("#unified-results .tab");
-  const contents = document.querySelectorAll("#unified-results .tab-content");
-  if (!tabs.length) return;
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const target = tab.dataset.tab;
-      tabs.forEach((t) => t.classList.remove("active"));
-      tab.classList.add("active");
-      contents.forEach((c) => {
-        const isActive = c.id === `tab-${target}`;
-        c.style.display = isActive ? "block" : "none";
-        c.classList.toggle("active", isActive);
-      });
-    });
-  });
-}
-
-function renderSparkline(canvas, values, color) {
-  if (!canvas || !values?.length) return;
-  const key = canvas.id.includes("icce") ? "icce" : "momentum";
-  if (kpiCharts[key]) {
-    kpiCharts[key].destroy();
+function buildGameTheoryFromSelection(mediaData, forecastData, trendingData, campaignData, input, selectedRival) {
+  const baseGame = campaignData?.analysis?.game_theory || campaignData?.game_theory;
+  const rivals = baseGame?.rivals || {};
+  if (rivals[selectedRival]) {
+    return { ...baseGame, ...rivals[selectedRival] };
   }
 
-  kpiCharts[key] = new Chart(canvas, {
-    type: "line",
-    data: {
-      labels: values.map((_, idx) => idx + 1),
-      datasets: [
-        {
-          data: values,
-          borderColor: color,
-          backgroundColor: "rgba(255,255,255,0)",
-          tension: 0.35,
-          pointRadius: 0,
-          borderWidth: 2
-        }
+  const signals = extractForecastSignals(forecastData);
+  const sentiment = extractSentiment(mediaData);
+  const topTopic = mediaData?.topics?.[0]?.topic || input?.topic || "Seguridad";
+  const secondTopic = mediaData?.topics?.[1]?.topic || "Economia";
+  const rivalProfile = RIVAL_PROFILES[selectedRival] || { seguridad: 58, economia: 58, salud: 58, paz: 58, sov: 58, sna: 40, momentum: 0.003 };
+
+  const campaignScore = buildCampaignScores(signals, sentiment);
+  const rivalScore = {
+    seguridad: rivalProfile.seguridad,
+    economia: rivalProfile.economia,
+    salud: rivalProfile.salud,
+    paz: rivalProfile.paz,
+    sov: rivalProfile.sov,
+    sna: rivalProfile.sna
+  };
+  const rivalIcce = (rivalScore.sov + rivalScore.sna) / 2;
+  const rivalMomentum = (rivalProfile.momentum || 0) * 100;
+
+  let mainMove = `Contrastar en ${topTopic}: comunicado + video corto + 3 posts con hashtags`;
+  if (signals.icce != null && signals.icce >= 60 && signals.momentum > 0) {
+    mainMove = `Proponer en ${topTopic}: anuncio táctico + entrevista regional + hilo explicativo`;
+  } else if (sentiment.netValue != null && sentiment.netValue < 0) {
+    mainMove = `Contener en ${topTopic}: mensajes de precisión + vocería técnica`;
+  }
+
+  const alternatives = [
+    "Proponer economía: costo de vida + propuestas de empleo",
+    "Desviar a salud: financiación hospitalaria + visita a clínica"
+  ];
+
+  const payoff = signals.icce != null && signals.icce >= 60
+    ? "Payoff estimado: +12 ICCE · +8 SNA · costo medio"
+    : "Payoff estimado: +6 ICCE · +4 SNA · costo bajo";
+
+  const trigger = `Trigger: si ICCE cae >8 pts o SNA baja -10 en ${topTopic}, activar respuesta en 48h.`;
+  const confidence = calculateConfidenceLevel(mediaData?.metadata?.tweets_analyzed || 0, signals).level;
+  const rivalSignal = `Señal rival: ${selectedRival} domina ${topTopic} (+12% conversación)`;
+  const fallback = baseGame || {};
+
+  return {
+    main_move: fallback.main_move || mainMove,
+    alternatives: fallback.alternatives || alternatives,
+    rival_signal: fallback.rival_signal || rivalSignal,
+    trigger: fallback.trigger || trigger,
+    payoff: fallback.payoff || payoff,
+    confidence: fallback.confidence || confidence,
+    compare: {
+      labels: ["Seguridad", "Economía", "Salud", "Paz", "SOV General", "SNA Neto"],
+      campaign: [campaignScore.seguridad, campaignScore.economia, campaignScore.salud, campaignScore.paz, campaignScore.sov, campaignScore.sna],
+      rival: [rivalScore.seguridad, rivalScore.economia, rivalScore.salud, rivalScore.paz, rivalScore.sov, rivalScore.sna]
+    },
+    gap: {
+      labels: ["SOV", "SNA", "ICCE", "Momentum"],
+      values: [
+        campaignScore.sov - rivalScore.sov,
+        campaignScore.sna - rivalScore.sna,
+        (signals.icce || 55) - rivalIcce,
+        (signals.momentum || 0) * 100 - rivalMomentum
       ]
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: { enabled: false } },
-      scales: {
-        x: { display: false },
-        y: { display: false }
-      }
+    context: {
+      radar: `Comparación vs ${selectedRival}. Brecha principal en ${topTopic}.`,
+      gap: `Ventaja relativa en ${secondTopic}. Refuerza mensajes con mejor tono.`
     }
-  });
+  };
 }
 
-function renderUnifiedChart(forecastData) {
-  const ctx = document.getElementById("unified-series-chart");
-  if (!ctx || !forecastData) return;
+function buildCampaignScores(signals, sentiment) {
+  return {
+    seguridad: Math.min(80, Math.max(35, (signals.icce || 55) + 5)),
+    economia: 60,
+    salud: 58,
+    paz: 55,
+    sov: Math.min(75, Math.max(40, 50 + (signals.momentum || 0) * 400)),
+    sna: Math.min(80, Math.max(30, 50 + (sentiment.netValue || 0) * 100))
+  };
+}
 
-  const { labels, icceValues, forecastValues } = extractSeries(forecastData);
-  if (!labels.length) return;
+function renderGameTheoryCharts(gameData, radarCtx, gapCtx, radarContextEl, gapContextEl) {
+  if (!radarCtx || !gapCtx) return;
 
-  if (unifiedChart) unifiedChart.destroy();
+  const compare = gameData.compare || {};
+  const gap = gameData.gap || {};
 
-  unifiedChart = new Chart(ctx, {
-    type: "line",
+  if (gameRadarChart) gameRadarChart.destroy();
+  gameRadarChart = new Chart(radarCtx, {
+    type: "radar",
     data: {
-      labels,
+      labels: compare.labels || [],
       datasets: [
         {
-          label: "ICCE historico",
-          data: icceValues,
-          borderColor: "#FF6A3D",
-          backgroundColor: "rgba(255, 106, 61, 0.15)",
-          tension: 0.3,
-          fill: true
+          label: "Tu campaña",
+          data: compare.campaign || [],
+          backgroundColor: "rgba(66, 214, 151, 0.2)",
+          borderColor: "#42d697",
+          pointBackgroundColor: "#42d697"
         },
         {
-          label: "Forecast",
-          data: forecastValues,
-          borderColor: "#42d697",
-          backgroundColor: "rgba(66, 214, 151, 0.15)",
-          borderDash: [6, 6],
-          tension: 0.35,
-          fill: true
+          label: "Rival principal",
+          data: compare.rival || [],
+          backgroundColor: "rgba(255, 106, 61, 0.18)",
+          borderColor: "#FF6A3D",
+          pointBackgroundColor: "#FF6A3D"
         }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      scales: {
+        r: {
+          angleLines: { color: "rgba(255,255,255,0.08)" },
+          grid: { color: "rgba(255,255,255,0.08)" },
+          pointLabels: { color: "#F5F7FA", font: { size: 11 } },
+          ticks: { color: "#8892B0", backdropColor: "transparent" }
+        }
+      },
       plugins: {
         legend: { labels: { color: "#F5F7FA" } }
-      },
-      scales: {
-        x: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } },
-        y: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } }
       }
     }
   });
-}
 
-function renderMomentumChart(forecastData) {
-  const ctx = document.getElementById("momentum-chart");
-  if (!ctx || !forecastData?.series?.momentum) return;
-  const values = forecastData.series.momentum;
-  const labels = forecastData.series.dates.map((date) => formatShortDate(date));
-
-  if (momentumChart) momentumChart.destroy();
-
-  momentumChart = new Chart(ctx, {
+  if (gameGapChart) gameGapChart.destroy();
+  gameGapChart = new Chart(gapCtx, {
     type: "bar",
     data: {
-      labels,
+      labels: gap.labels || [],
       datasets: [
         {
-          label: "Momentum",
-          data: values,
-          backgroundColor: values.map((v) => (v >= 0 ? "rgba(66, 214, 151, 0.7)" : "rgba(255, 106, 61, 0.7)"))
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } },
-        y: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } }
-      }
-    }
-  });
-}
-
-function renderSentimentChart(mediaData) {
-  const ctx = document.getElementById("sentiment-chart");
-  if (!ctx || !mediaData?.sentiment_overview) return;
-
-  const sentiment = mediaData.sentiment_overview;
-  if (sentimentChart) sentimentChart.destroy();
-
-  sentimentChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: ["Tono"],
-      datasets: [
-        {
-          label: "Favorable",
-          data: [(sentiment.positive || 0) * 100],
-          backgroundColor: "rgba(66, 214, 151, 0.8)"
-        },
-        {
-          label: "Neutral",
-          data: [(sentiment.neutral || 0) * 100],
-          backgroundColor: "rgba(255, 255, 255, 0.4)"
-        },
-        {
-          label: "Critico",
-          data: [(sentiment.negative || 0) * 100],
-          backgroundColor: "rgba(255, 106, 61, 0.85)"
+          label: "Brecha vs rival",
+          data: gap.values || [],
+          backgroundColor: (gap.values || []).map((value) =>
+            value >= 0 ? "rgba(66, 214, 151, 0.75)" : "rgba(255, 106, 61, 0.75)"
+          )
         }
       ]
     },
@@ -1594,22 +1313,76 @@ function renderSentimentChart(mediaData) {
       indexAxis: "y",
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { labels: { color: "#F5F7FA" } } },
+      plugins: {
+        legend: { display: false }
+      },
       scales: {
-        x: { stacked: true, ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } },
-        y: { stacked: true, ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } }
+        x: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } },
+        y: { ticks: { color: "#8892B0" }, grid: { color: "rgba(136, 146, 176, 0.15)" } }
       }
     }
   });
 
-  const contextEl = document.getElementById("chart-sentiment-context");
-  if (contextEl) {
-    contextEl.textContent = `Favorable ${(sentiment.positive * 100).toFixed(0)}% · Neutral ${(sentiment.neutral * 100).toFixed(0)}% · Critico ${(sentiment.negative * 100).toFixed(0)}%`;
+  if (radarContextEl) {
+    radarContextEl.textContent = gameData?.context?.radar || "Comparación de fuerza narrativa por tema.";
+  }
+  if (gapContextEl) {
+    gapContextEl.textContent = gameData?.context?.gap || "Brechas claves entre campañas.";
   }
 }
 
-function renderTopicsTable(mediaData, targetId) {
-  const tableEl = document.getElementById(targetId);
+function renderAnalysisOutputs(mediaData, campaignData, forecastData) {
+  const execEl = document.getElementById("analysis-exec-summary");
+  const dataEl = document.getElementById("analysis-data");
+  const planEl = document.getElementById("analysis-plan-text");
+  const speechEl = document.getElementById("analysis-speech");
+  const chartEl = document.getElementById("analysis-chart");
+  const generalEl = document.getElementById("analysis-general");
+
+  // Informe ejecutivo: priorizar campaignData, luego mediaData
+  const execSummary = campaignData?.analysis?.executive_summary 
+    || mediaData?.summary?.executive_summary 
+    || mediaData?.summary?.overview 
+    || "No hay resumen ejecutivo disponible.";
+
+  // Análisis de datos: priorizar campaignData, luego key_findings de mediaData
+  const dataAnalysis = campaignData?.analysis?.data_analysis 
+    || (mediaData?.summary?.key_findings?.length 
+        ? mediaData.summary.key_findings.join("\n\n• ") 
+        : "No hay análisis de datos disponible.");
+
+  // Plan estratégico: de campaignData
+  const plan = campaignData?.analysis?.strategic_plan 
+    || (campaignData?.recommendations?.length 
+        ? campaignData.recommendations.join("\n\n• ") 
+        : "Plan estratégico no disponible. Se requiere un tema para generar el plan.");
+
+  // Discurso: de campaignData
+  const speech = campaignData?.analysis?.speech 
+    || "Discurso no disponible. Se requiere un tema para generar el discurso.";
+
+  // Sugerencia de gráfico: de campaignData o descripción por defecto
+  const chartText = campaignData?.analysis?.chart_suggestion 
+    || (forecastData?.forecast 
+        ? "Gráfico sugerido: ICCE histórico vs forecast con intervalos de confianza. Muestra la evolución de la conversación y proyección a 14 días."
+        : "Gráfico sugerido no disponible.");
+
+  // Análisis general: de campaignData o fallback con metadata
+  const general = campaignData?.analysis?.general_analysis 
+    || (forecastData?.metadata?.model_type 
+        ? `Análisis general basado en modelo ${forecastData.metadata.model_type}. ICCE y momentum calculados con datos de los últimos ${forecastData.metadata.days_back || 30} días.`
+        : "Análisis general no disponible.");
+
+  if (execEl) execEl.textContent = execSummary;
+  if (dataEl) dataEl.textContent = dataAnalysis;
+  if (planEl) planEl.textContent = plan;
+  if (speechEl) speechEl.textContent = speech;
+  if (chartEl) chartEl.textContent = chartText;
+  if (generalEl) generalEl.textContent = general;
+}
+
+function renderTopics(mediaData) {
+  const tableEl = document.getElementById("topics-table");
   if (!tableEl) return;
   tableEl.innerHTML = "";
 
@@ -1621,53 +1394,23 @@ function renderTopicsTable(mediaData, targetId) {
     return;
   }
 
-  // Store analysis data for chat
-  analysisData = mediaData;
-
   topics.forEach((topic) => {
     const row = document.createElement("div");
     row.className = "topics-row";
-    row.style.cursor = "pointer";
-    row.style.transition = "transform 0.15s ease, box-shadow 0.15s ease";
-
-    // Make topic clickable for chat
-    row.addEventListener("click", () => {
-      selectTopicForChat(topic.topic, topic);
-      // Highlight selected row
-      document.querySelectorAll(`#${targetId} .topics-row`).forEach(r => {
-        r.style.borderLeft = "none";
-        r.style.background = "rgba(255, 255, 255, 0.03)";
-      });
-      row.style.borderLeft = "3px solid var(--accent)";
-      row.style.background = "rgba(255, 106, 61, 0.08)";
-    });
-
-    row.addEventListener("mouseenter", () => {
-      row.style.transform = "translateX(4px)";
-      row.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
-    });
-    row.addEventListener("mouseleave", () => {
-      row.style.transform = "translateX(0)";
-      row.style.boxShadow = "none";
-    });
 
     const title = document.createElement("div");
     const titleStrong = document.createElement("strong");
     titleStrong.textContent = topic.topic;
     const titleMeta = document.createElement("span");
-    titleMeta.style.fontSize = "0.85rem";
-    titleMeta.style.color = "#8892B0";
     titleMeta.textContent = `${topic.tweet_count} menciones`;
     title.appendChild(titleStrong);
     title.appendChild(document.createElement("br"));
     title.appendChild(titleMeta);
     row.appendChild(title);
 
-    const risk = document.createElement("div");
-    const riskLevel = topic.sentiment?.negative > 0.4 ? "Alto" : topic.sentiment?.negative > 0.25 ? "Medio" : "Bajo";
-    const riskColor = riskLevel === "Alto" ? "#FF6A3D" : riskLevel === "Medio" ? "#F5B800" : "#42d697";
-    risk.innerHTML = `<span style="padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; background: ${riskColor}20; color: ${riskColor};">Riesgo ${riskLevel}</span>`;
-    row.appendChild(risk);
+    const sentimentLabel = document.createElement("div");
+    sentimentLabel.textContent = buildSentimentLabel(topic.sentiment);
+    row.appendChild(sentimentLabel);
 
     const bar = document.createElement("div");
     bar.className = "sentiment-bar";
@@ -1689,73 +1432,150 @@ function renderTopicsTable(mediaData, targetId) {
   });
 }
 
-function buildDriversFromTopics(mediaData) {
-  const topics = mediaData?.topics || [];
-  return topics.slice(0, 3).map((topic) => `${topic.topic} concentra ${topic.tweet_count} menciones`);
-}
+function renderSentimentChart(mediaData, input) {
+  const ctx = document.getElementById("sentiment-chart");
+  const contextEl = document.getElementById("chart-sentiment-context");
 
-function buildRiskSignals(mediaData, forecastData) {
-  const risks = [];
-  const signals = extractForecastSignals(forecastData);
-  const topics = mediaData?.topics || [];
-  topics.forEach((topic) => {
-    if ((topic.sentiment?.negative || 0) > 0.4) {
-      risks.push(`⚠️ ${topic.topic} con ${(topic.sentiment.negative * 100).toFixed(0)}% critico`);
+  if (!ctx) return;
+  if (!mediaData?.sentiment_overview) return;
+
+  const sentiment = mediaData.sentiment_overview;
+  const posPct = (sentiment.positive || 0) * 100;
+  const neuPct = (sentiment.neutral || 0) * 100;
+  const negPct = (sentiment.negative || 0) * 100;
+
+  // Add context based on sentiment distribution
+  if (contextEl) {
+    if (negPct > 30) {
+      contextEl.textContent = `Alerta: ${negPct.toFixed(0)}% de criticos. Considerar respuesta en ${input?.topic || "el tema"}.`;
+    } else if (posPct > 50) {
+      contextEl.textContent = `Balance favorable: ${posPct.toFixed(0)}% positivos. Aprovechar momentum.`;
+    } else {
+      contextEl.textContent = `Tono mixto: ${posPct.toFixed(0)}% positivo, ${negPct.toFixed(0)}% critico. Monitorear cambios.`;
+    }
+  }
+
+  if (sentimentChart) sentimentChart.destroy();
+  sentimentChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Positivo", "Neutral", "Negativo"],
+      datasets: [
+        {
+          data: [posPct, neuPct, negPct],
+          backgroundColor: ["rgba(66, 214, 151, 0.8)", "rgba(255, 255, 255, 0.4)", "rgba(255, 106, 61, 0.85)"]
+        }
+      ]
+    },
+    options: {
+      plugins: {
+        legend: {
+          labels: { color: "#F5F7FA" }
+        }
+      }
     }
   });
-  if (signals.momentum != null && signals.momentum < -0.02) {
-    risks.push("⚠️ Momentum negativo sostenido");
+}
+
+function renderForecastPanels(forecastData, mediaData) {
+  const listEl = document.getElementById("forecast-details-list");
+  const alertsEl = document.getElementById("forecast-alerts-list");
+  if (listEl) listEl.innerHTML = "";
+  if (alertsEl) alertsEl.innerHTML = "";
+
+  const signals = extractForecastSignals(forecastData);
+  const daysBack = forecastData?.metadata?.days_back || 30;
+  const forecastDays = forecastData?.metadata?.forecast_days || 14;
+
+  if (listEl) {
+    const detailItems = [];
+    
+    // ICCE actual con interpretación
+    if (signals.icce != null) {
+      const icceInterpretation = signals.icce >= 60 
+        ? "Clima narrativo favorable - ventana para amplificar mensaje"
+        : signals.icce >= 45 
+          ? "Clima narrativo neutral - mantener monitoreo activo"
+          : "Clima narrativo crítico - considerar ajuste de estrategia";
+      detailItems.push(`📊 ICCE actual: ${signals.icce.toFixed(1)} — ${icceInterpretation}`);
+    }
+
+    // Momentum con interpretación
+    if (signals.momentum != null) {
+      const momValue = (signals.momentum * 100).toFixed(2);
+      const momInterpretation = signals.momentum > 0.02 
+        ? "Tendencia alcista sostenida"
+        : signals.momentum > 0 
+          ? "Tendencia ligeramente positiva"
+          : signals.momentum < -0.02 
+            ? "Tendencia bajista - requiere atención"
+            : "Tendencia estable";
+      detailItems.push(`📈 Momentum: ${momValue > 0 ? '+' : ''}${momValue}% — ${momInterpretation}`);
+    }
+
+    // Proyección
+    if (signals.forecastDirection) {
+      detailItems.push(`🔮 Proyección ${forecastDays} días: ${signals.forecastDirection}`);
+      detailItems.push("ℹ️ Cambios mayores a 5 pts suelen ser significativos en narrativa pública.");
+    }
+
+    // Ventana de análisis
+    detailItems.push(`📅 Ventana analizada: últimos ${daysBack} días`);
+
+    // Modelo usado
+    if (forecastData?.metadata?.model_type) {
+      detailItems.push(`🧮 Modelo: ${forecastData.metadata.model_type.replace('_', ' ').toUpperCase()}`);
+    }
+
+    fillList(listEl, detailItems, [], "Sin datos de forecast disponibles.");
   }
+
+  if (alertsEl) {
+    const alerts = buildEnhancedForecastAlerts(signals, forecastData, mediaData);
+    fillList(alertsEl, alerts, [], "✓ Sin alertas narrativas activas. Situación estable.");
+  }
+}
+
+function buildEnhancedForecastAlerts(signals, forecastData, mediaData) {
+  const alerts = [];
+  
+  // Alerta de ICCE bajo
   if (signals.icce != null && signals.icce < 40) {
-    risks.push("⚠️ Clima narrativo bajo");
-  }
-  return risks;
-}
-
-function buildForecastSummary(forecastData, topic) {
-  if (!forecastData?.forecast?.icce_pred?.length) {
-    return { text: "Sin proyeccion disponible.", range: "" };
-  }
-  const latest = forecastData.series.icce[forecastData.series.icce.length - 1] || 0;
-  const projected = forecastData.forecast.icce_pred[forecastData.forecast.icce_pred.length - 1] || 0;
-  const delta = (projected - latest) * 100;
-  const text = delta >= 0
-    ? `Se espera mejora en ${topic || "la narrativa"} de ${delta.toFixed(1)} pts.`
-    : `Se espera caida en ${topic || "la narrativa"} de ${Math.abs(delta).toFixed(1)} pts.`;
-  const low = forecastData.forecast.pred_low?.slice(-1)[0];
-  const high = forecastData.forecast.pred_high?.slice(-1)[0];
-  const range = low != null && high != null
-    ? `Rango esperado: ${(low * 100).toFixed(0)}–${(high * 100).toFixed(0)} (confianza media)`
-    : "";
-  return { text, range };
-}
-
-function buildActionItems(mediaData, forecastData, topic) {
-  const actions = [];
-  const topics = mediaData?.topics || [];
-  const riskTopic = topics.find((t) => (t.sentiment?.negative || 0) > 0.4);
-
-  if (riskTopic) {
-    actions.push({ label: `MONITOREAR ${riskTopic.topic} por picos criticos`, priority: "high" });
+    alerts.push("⚠️ ALERTA: ICCE bajo (<40). Riesgo de desgaste narrativo. Considerar pausa táctica.");
+  } else if (signals.icce != null && signals.icce < 50) {
+    alerts.push("⚡ ATENCIÓN: ICCE en zona de riesgo (40-50). Monitorear de cerca.");
   }
 
-  actions.push({
-    label: `VALIDAR claims criticos en ${topic || "temas clave"}`,
-    priority: "medium"
-  });
+  // Alerta de momentum negativo
+  if (signals.momentum != null && signals.momentum < -0.03) {
+    alerts.push("⚠️ ALERTA: Momentum negativo sostenido. La conversación está perdiendo tracción.");
+  } else if (signals.momentum != null && signals.momentum < -0.01) {
+    alerts.push("⚡ ATENCIÓN: Momentum ligeramente negativo. Vigilar evolución.");
+  }
 
-  actions.push({
-    label: "PREPARAR Q&A interno ante cambios de tono",
-    priority: "low"
-  });
+  // Oportunidades
+  if (signals.icce != null && signals.icce >= 60 && signals.momentum != null && signals.momentum > 0) {
+    alerts.push("✅ OPORTUNIDAD: ICCE alto + Momentum positivo. Ventana óptima para amplificar mensaje.");
+  }
 
-  return actions.slice(0, 3);
+  const negative = mediaData?.sentiment_overview?.negative ?? null;
+  if (negative != null && negative > 0.2) {
+    alerts.push("⚠️ ALERTA: críticas sostenidas en seguridad. Preparar respuesta con datos y vocería.");
+  }
+
+  if (signals.forecastDirection && signals.forecastDirection.includes("sube")) {
+    alerts.push("📈 POSITIVO: Proyección al alza. Mantener estrategia actual.");
+  } else if (signals.forecastDirection && signals.forecastDirection.includes("baja")) {
+    alerts.push("📉 ATENCIÓN: Proyección a la baja. Preparar plan de contingencia.");
+  }
+
+  return alerts;
 }
 
 function fillList(listEl, primaryItems, secondaryItems, fallback) {
   if (!listEl) return;
   listEl.innerHTML = "";
-  const items = [...(primaryItems || []), ...(secondaryItems || [])].filter(Boolean);
+  const items = [...(primaryItems || []), ...(secondaryItems || [])].filter(Boolean).slice(0, 6);
   if (!items.length) {
     const li = document.createElement("li");
     li.textContent = fallback;
@@ -1769,12 +1589,189 @@ function fillList(listEl, primaryItems, secondaryItems, fallback) {
   });
 }
 
-function formatTimestamp(value) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return new Date().toLocaleString("es-CO", { dateStyle: "medium", timeStyle: "short" });
+function renderUnifiedChart(forecastData, input) {
+  const ctx = document.getElementById("unified-series-chart");
+  const subtitleEl = document.getElementById("chart-series-subtitle");
+  const contextEl = document.getElementById("chart-series-context");
+
+  if (!ctx || !forecastData) return;
+
+  const { labels, icceValues, forecastValues } = extractSeries(forecastData);
+  if (!labels.length) return;
+
+  // Update subtitle with dynamic info
+  const daysBack = document.getElementById("unified-days-back")?.value || 30;
+  const forecastDays = document.getElementById("unified-forecast-days")?.value || 14;
+  if (subtitleEl) {
+    subtitleEl.textContent = `Ventana historica: ${daysBack} dias | Proyeccion: ${forecastDays} dias. Importa para anticipar cambios.`;
   }
-  return date.toLocaleString("es-CO", { dateStyle: "medium", timeStyle: "short" });
+
+  // Add context based on trend
+  if (contextEl) {
+    const lastIcce = icceValues.filter(v => v != null).pop();
+    const lastForecast = forecastValues.filter(v => v != null).pop();
+    if (lastIcce && lastForecast) {
+      const delta = lastForecast - lastIcce;
+      if (delta > 5) {
+        contextEl.textContent = `Proyeccion al alza (+${delta.toFixed(1)} pts). Ventana favorable para acciones tacticas.`;
+      } else if (delta < -5) {
+        contextEl.textContent = `Proyeccion a la baja (${delta.toFixed(1)} pts). Considerar medidas preventivas.`;
+      } else {
+        contextEl.textContent = `Proyeccion estable (${delta > 0 ? "+" : ""}${delta.toFixed(1)} pts). Mantener monitoreo.`;
+      }
+    }
+  }
+
+  if (unifiedChart) unifiedChart.destroy();
+
+  unifiedChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "ICCE historico",
+          data: icceValues,
+          borderColor: "#FF6A3D",
+          backgroundColor: "rgba(255, 106, 61, 0.15)",
+          tension: 0.3,
+          fill: true
+        },
+        {
+          label: "Forecast ICCE",
+          data: forecastValues,
+          borderColor: "#42d697",
+          backgroundColor: "rgba(66, 214, 151, 0.15)",
+          borderDash: [6, 6],
+          tension: 0.35,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { color: "#F5F7FA" }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "#8892B0" },
+          grid: { color: "rgba(136, 146, 176, 0.15)" }
+        },
+        y: {
+          ticks: { color: "#8892B0" },
+          grid: { color: "rgba(136, 146, 176, 0.15)" }
+        }
+      }
+    }
+  });
+}
+
+function renderGeoPanel(mediaData, location) {
+  const geoMapEl = document.getElementById("geo-map");
+  const geoListEl = document.getElementById("geo-list");
+  const geoContextEl = document.getElementById("geo-context");
+
+  if (!geoMapEl || !geoListEl) return;
+
+  const distribution = buildGeoDistribution(mediaData, location);
+  geoMapEl.innerHTML = "";
+  geoListEl.innerHTML = "";
+
+  distribution.forEach((point, index) => {
+    const dot = document.createElement("div");
+    dot.className = "geo-dot";
+    const size = 8 + point.weight * 18;
+    dot.style.width = `${size}px`;
+    dot.style.height = `${size}px`;
+    dot.style.left = `${point.x}%`;
+    dot.style.top = `${point.y}%`;
+    dot.setAttribute("title", `${point.name} · ${(point.weight * 100).toFixed(1)}%`);
+    geoMapEl.appendChild(dot);
+
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${index + 1}. ${point.name}</span><strong>${(point.weight * 100).toFixed(1)}%</strong>`;
+    geoListEl.appendChild(li);
+  });
+
+  // Add geographic context
+  if (geoContextEl && distribution.length >= 2) {
+    const top = distribution[0];
+    const second = distribution[1];
+    const concentration = top.weight * 100;
+    if (concentration > 40) {
+      geoContextEl.textContent = `Alta concentracion en ${top.name} (${concentration.toFixed(0)}%). Considerar diversificar hacia ${second.name}.`;
+    } else {
+      geoContextEl.textContent = `Distribucion balanceada. ${top.name} y ${second.name} lideran conversacion.`;
+    }
+  }
+}
+
+function setupUnifiedTabs() {
+  const tabs = document.querySelectorAll("#unified-results .tab");
+  const contents = document.querySelectorAll("#unified-results .tab-content");
+  if (!tabs.length) return;
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.tab;
+      tabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      contents.forEach((c) => {
+        const isActive = c.id === `tab-${target}`;
+        c.style.display = isActive ? "block" : "none";
+        c.classList.toggle("active", isActive);
+      });
+
+      setTimeout(() => {
+        if (target === "game") {
+          if (gameRadarChart) gameRadarChart.resize();
+          if (gameGapChart) gameGapChart.resize();
+        }
+        if (target === "charts") {
+          if (unifiedChart) unifiedChart.resize();
+          if (sentimentChart) sentimentChart.resize();
+        }
+      }, 0);
+    });
+  });
+}
+
+function setupGameRivalSelector() {
+  const select = document.getElementById("game-rival-select");
+  if (!select) return;
+  select.addEventListener("change", () => {
+    if (!lastGameContext) return;
+    renderGameTheoryBlock(
+      lastGameContext.mediaData,
+      lastGameContext.forecastData,
+      lastGameContext.trendingData,
+      lastGameContext.campaignData,
+      lastGameContext.input
+    );
+  });
+}
+
+function getSelectedRivalName() {
+  const select = document.getElementById("game-rival-select");
+  return select?.value || "Vicky Dávila";
+}
+
+function setupAccordion() {
+  const toggles = document.querySelectorAll(".accordion-toggle");
+  if (!toggles.length) return;
+
+  toggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const target = toggle.dataset.target;
+      const panel = document.getElementById(target);
+      if (!panel) return;
+      panel.classList.toggle("active");
+    });
+  });
 }
 
 function buildGeoDistribution(mediaData, location) {
@@ -1839,26 +1836,24 @@ function extractForecastSignals(forecastData) {
     const momentumNow = series.momentum?.[series.momentum.length - 1] || 0;
     const forecast = forecastData.forecast;
     const forecastDirection = buildForecastDirection(series, forecast);
-    const icceDescriptor = narrativeStrengthLabel(icceNow);
     return {
       icce: icceNow,
       momentum: momentumNow,
       forecastDirection,
       momentumLabel: momentumLabel(momentumNow),
-      icceLabel: `Clima ${icceDescriptor}`
+      icceLabel: `ICCE actual ${icceNow.toFixed(1)}`
     };
   }
 
   if (forecastData.icce) {
     const icceNow = forecastData.icce.current_icce;
     const momentumNow = forecastData.momentum?.current_momentum ?? null;
-    const icceDescriptor = narrativeStrengthLabel(icceNow);
     return {
       icce: icceNow,
       momentum: momentumNow,
       forecastDirection: forecastData.forecast ? "Forecast disponible" : null,
       momentumLabel: momentumNow != null ? momentumLabel(momentumNow) : null,
-      icceLabel: `Clima ${icceDescriptor}`
+      icceLabel: `ICCE actual ${icceNow.toFixed(1)}`
     };
   }
 
@@ -1871,7 +1866,7 @@ function buildForecastDirection(series, forecast) {
   const projected = forecast.icce_pred[forecast.icce_pred.length - 1] || 0;
   const delta = (projected - latest) * 100;
   const direction = delta >= 0 ? "sube" : "baja";
-  return `Forecast ${direction} ${Math.abs(delta).toFixed(1)} pts`;
+  return `Forecast ${direction} ${Math.abs(delta).toFixed(1)} pts (ICCE ${(latest * 100).toFixed(1)} → ${(projected * 100).toFixed(1)})`;
 }
 
 function extractSentiment(mediaData) {
@@ -1880,7 +1875,7 @@ function extractSentiment(mediaData) {
   const net = sentiment.positive - sentiment.negative;
   const netLabel = `${net >= 0 ? "+" : ""}${(net * 100).toFixed(1)}%`;
   const detail = `Positivo ${(sentiment.positive * 100).toFixed(1)}% · Negativo ${(sentiment.negative * 100).toFixed(1)}%`;
-  return { netLabel, detail };
+  return { netLabel, detail, netValue: net };
 }
 
 function extractSeries(forecastData) {
@@ -1926,9 +1921,14 @@ function narrativeStrengthLabel(icce) {
 function narrativePositionLabel(icce, netLabel) {
   if (icce == null) return "Sin posicion";
   const net = parseFloat(netLabel || "0");
-  if (icce >= 65 && net >= 0) return "Territorio favorable";
-  if (icce < 45 && net < 0) return "Territorio critico";
-  return "Territorio neutral";
+  if (icce >= 60 && net >= 0) return "Ventaja narrativa";
+  if (icce < 45 && net < 0) return "Riesgo narrativo";
+  return "Equilibrio narrativo";
+}
+
+function formatSigned(value, decimals) {
+  const sign = value > 0 ? "+" : value < 0 ? "-" : "";
+  return `${sign}${Math.abs(value).toFixed(decimals)}`;
 }
 
 function narrativeRiskLabel(icce, momentum, netLabel) {
@@ -1948,7 +1948,7 @@ function buildRecommendationText(icce, netLabel, topic) {
   if (icce < 45 || net < 0) {
     return `Reforzar mensajes positivos en ${topic || "temas prioritarios"} y contener narrativa negativa.`;
   }
-  if (icce > 65 && net > 5) {
+  if (icce >= 60 && net > 5) {
     return `Aprovechar ventana favorable con anuncios tacticos en ${topic || "temas clave"}.`;
   }
   return `Mantener consistencia narrativa y monitorear cambios en ${topic || "la agenda"}.`;
@@ -1988,192 +1988,204 @@ function formatShortDate(value) {
   return date.toLocaleDateString("es-ES", { month: "short", day: "numeric" });
 }
 
-// =====================================================
-// MOCK DATA: Paloma Valencia Demo
-// =====================================================
+/**
+ * Genera datos de ejemplo completos para Paloma Valencia - Seguridad
+ * Incluye: mediaData, forecastData, trendingData, campaignData
+ */
 function generatePalomaValenciaMockData() {
-  const today = new Date();
+  // Generar fechas para los últimos 30 días
   const dates = [];
-  const icceValues = [];
-  const momentumValues = [];
-
-  // Generate 30 days of historical data
+  const today = new Date();
   for (let i = 29; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
-    dates.push(date.toISOString().split("T")[0]);
-
-    // ICCE oscillates around 58-67 with some variation
-    const baseIcce = 0.62 + Math.sin(i * 0.3) * 0.05 + (Math.random() - 0.5) * 0.04;
-    icceValues.push(Math.max(0.45, Math.min(0.75, baseIcce)));
-
-    // Momentum varies between -0.02 and 0.03
-    const baseMomentum = 0.008 + Math.sin(i * 0.5) * 0.015 + (Math.random() - 0.5) * 0.01;
-    momentumValues.push(baseMomentum);
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    dates.push(d.toISOString().split("T")[0]);
   }
 
-  // Generate 14 days of forecast
+  // Generar fechas de forecast (14 días adelante)
   const forecastDates = [];
-  const forecastIcce = [];
-  const forecastLow = [];
-  const forecastHigh = [];
-
   for (let i = 1; i <= 14; i++) {
-    const date = new Date(today);
-    date.setDate(date.getDate() + i);
-    forecastDates.push(date.toISOString().split("T")[0]);
-
-    // Slightly upward trend in forecast
-    const projected = icceValues[icceValues.length - 1] + i * 0.003 + (Math.random() - 0.5) * 0.02;
-    forecastIcce.push(Math.max(0.5, Math.min(0.8, projected)));
-    forecastLow.push(projected - 0.08);
-    forecastHigh.push(projected + 0.08);
+    const d = new Date(today);
+    d.setDate(d.getDate() + i);
+    forecastDates.push(d.toISOString().split("T")[0]);
   }
 
+  // ICCE histórico determinístico (cierre en 62.4)
+  const icceValues = dates.map((_, i) => {
+    const base = 0.58 + i * 0.0015 + (i % 4 === 0 ? 0.002 : 0);
+    return Math.max(0.52, Math.min(0.75, base));
+  });
+  icceValues[icceValues.length - 1] = 0.624;
+
+  // Momentum (último valor = +0.012)
+  const momentumValues = icceValues.map((val, i) => {
+    if (i === 0) return 0;
+    return (val - icceValues[i - 1]) * 0.7;
+  });
+  momentumValues[momentumValues.length - 1] = 0.012;
+
+  // Forecast ICCE (sube +5.8 pts)
+  const lastIcce = icceValues[icceValues.length - 1];
+  const targetIcce = lastIcce + 0.058;
+  const forecastIcce = forecastDates.map((_, i) => {
+    const step = (targetIcce - lastIcce) / (forecastDates.length);
+    return Math.max(0.52, Math.min(0.82, lastIcce + step * (i + 1)));
+  });
+
+  // Media Data - Análisis de medios para Paloma Valencia
   const mediaData = {
-    metadata: {
-      tweets_analyzed: 847,
-      time_window_from: dates[0],
-      time_window_to: dates[dates.length - 1],
-      location: "Colombia",
-      candidate: "Paloma Valencia",
-      geo_distribution: [
-        { name: "Bogotá", weight: 0.32, x: 52, y: 45 },
-        { name: "Medellín", weight: 0.18, x: 35, y: 35 },
-        { name: "Cali", weight: 0.14, x: 28, y: 55 },
-        { name: "Barranquilla", weight: 0.09, x: 45, y: 15 },
-        { name: "Cartagena", weight: 0.07, x: 38, y: 18 },
-        { name: "Bucaramanga", weight: 0.06, x: 48, y: 32 },
-        { name: "Pereira", weight: 0.05, x: 32, y: 48 },
-        { name: "Manizales", weight: 0.04, x: 34, y: 46 }
+    success: true,
+    candidate_name: "Paloma Valencia",
+    location: "Colombia",
+    summary: {
+      key_findings: [
+        "Paloma Valencia lidera la conversación sobre seguridad ciudadana con propuestas concretas",
+        "Aumento del 23% en menciones positivas tras declaraciones sobre reforma policial",
+        "Narrativa de mano firme resonando en ciudades intermedias",
+        "Críticos cuestionan posición sobre derechos humanos en operativos",
+        "Alianzas con sectores empresariales fortalecen discurso de orden público"
+      ],
+      executive_summary: "Paloma Valencia se posiciona como la candidata de la seguridad, con un discurso de mano firme que resuena en sectores conservadores y ciudades intermedias. Su ICCE de 62.4 indica un clima narrativo favorable, aunque debe gestionar las críticas sobre derechos humanos. La ventana actual es óptima para amplificar propuestas de seguridad ciudadana.",
+      key_stats: ["ICCE 62.4", "Momentum +0.012", "Sentimiento +33%", "2,590 tweets"],
+      recommendations: [
+        "Intensificar mensajes sobre seguridad en ciudades intermedias donde hay mayor receptividad",
+        "Preparar respuestas a críticas sobre derechos humanos con casos de éxito",
+        "Aprovechar momentum positivo para anuncios de política de seguridad"
       ]
     },
-    sentiment_overview: {
-      positive: 0.42,
-      neutral: 0.35,
-      negative: 0.23
-    },
     topics: [
-      {
-        topic: "Seguridad ciudadana",
-        tweet_count: 234,
-        sentiment: { positive: 0.48, neutral: 0.32, negative: 0.20 }
-      },
-      {
-        topic: "Política fiscal",
-        tweet_count: 187,
-        sentiment: { positive: 0.35, neutral: 0.40, negative: 0.25 }
-      },
-      {
-        topic: "Reforma pensional",
-        tweet_count: 156,
-        sentiment: { positive: 0.28, neutral: 0.35, negative: 0.37 }
-      },
-      {
-        topic: "Gestión Congreso",
-        tweet_count: 142,
-        sentiment: { positive: 0.52, neutral: 0.30, negative: 0.18 }
-      },
-      {
-        topic: "Oposición al gobierno",
-        tweet_count: 128,
-        sentiment: { positive: 0.55, neutral: 0.28, negative: 0.17 }
-      }
+      { topic: "Seguridad ciudadana", tweet_count: 847, sentiment: { positive: 0.58, neutral: 0.28, negative: 0.14 } },
+      { topic: "Reforma policial", tweet_count: 523, sentiment: { positive: 0.51, neutral: 0.31, negative: 0.18 } },
+      { topic: "Crimen organizado", tweet_count: 412, sentiment: { positive: 0.42, neutral: 0.33, negative: 0.25 } },
+      { topic: "Justicia penal", tweet_count: 298, sentiment: { positive: 0.48, neutral: 0.34, negative: 0.18 } },
+      { topic: "Orden público", tweet_count: 276, sentiment: { positive: 0.62, neutral: 0.25, negative: 0.13 } },
+      { topic: "Fuerzas Armadas", tweet_count: 234, sentiment: { positive: 0.68, neutral: 0.22, negative: 0.10 } }
     ],
-    summary: {
-      overview: "Paloma Valencia mantiene presencia narrativa estable con tono mayoritariamente favorable. Su posicionamiento en seguridad ciudadana genera tracción positiva, mientras reforma pensional presenta fricción moderada que requiere monitoreo.",
-      key_findings: [
-        "Seguridad ciudadana es el tema de mayor tracción positiva (48% favorable)",
-        "Reforma pensional presenta la mayor fricción (37% crítico) - punto de atención",
-        "Gestión en Congreso genera percepción positiva consistente",
-        "Bogotá y Medellín concentran 50% de la conversación",
-        "Momentum positivo en últimos 7 días (+0.012)"
-      ],
-      key_stats: [
-        "847 menciones analizadas",
-        "42% tono favorable",
-        "ICCE promedio: 62.4"
+    sentiment_overview: {
+      positive: 0.54,
+      negative: 0.21,
+      neutral: 0.25
+    },
+    metadata: {
+      tweets_analyzed: 2590,
+      time_window_from: dates[0],
+      time_window_to: dates[dates.length - 1],
+      geo_distribution: [
+        { name: "Bogotá", weight: 0.28, x: 52, y: 48 },
+        { name: "Medellín", weight: 0.18, x: 38, y: 35 },
+        { name: "Cali", weight: 0.14, x: 35, y: 62 },
+        { name: "Barranquilla", weight: 0.12, x: 48, y: 12 },
+        { name: "Bucaramanga", weight: 0.10, x: 58, y: 32 },
+        { name: "Cartagena", weight: 0.08, x: 42, y: 15 },
+        { name: "Pereira", weight: 0.06, x: 42, y: 52 },
+        { name: "Manizales", weight: 0.04, x: 44, y: 48 }
       ]
     }
   };
 
+  // Forecast Data - ICCE, Momentum y proyecciones
   const forecastData = {
+    success: true,
+    candidate: "PalomaValenciaL",
+    candidate_name: "Paloma Valencia",
+    location: "Colombia",
     series: {
       dates: dates,
       icce: icceValues,
+      icce_smooth: icceValues.map((v, i) => {
+        if (i < 3) return v;
+        return (icceValues[i-2] + icceValues[i-1] + v) / 3;
+      }),
       momentum: momentumValues
     },
     forecast: {
       dates: forecastDates,
       icce_pred: forecastIcce,
-      pred_low: forecastLow,
-      pred_high: forecastHigh
+      pred_low: forecastIcce.map(v => Math.max(0.4, v - 0.08)),
+      pred_high: forecastIcce.map(v => Math.min(0.9, v + 0.08))
     },
-    icce: {
-      current_icce: icceValues[icceValues.length - 1] * 100,
-      trend: "stable_up"
-    },
-    momentum: {
-      current_momentum: momentumValues[momentumValues.length - 1],
-      direction: "positive"
+    metadata: {
+      calculated_at: new Date().toISOString(),
+      days_back: 30,
+      forecast_days: 14,
+      model_type: "holt_winters"
     }
   };
 
+  // Trending Data - Temas en tendencia
   const trendingData = {
-    topics: [
-      { topic: "Reforma pensional", mentions: 89, trend: "up" },
-      { topic: "Seguridad Bogotá", mentions: 67, trend: "stable" },
-      { topic: "Debate fiscal", mentions: 54, trend: "up" },
-      { topic: "Elecciones 2026", mentions: 45, trend: "up" },
-      { topic: "Centro Democrático", mentions: 38, trend: "stable" },
-      { topic: "Oposición gobierno", mentions: 32, trend: "down" }
-    ]
+    success: true,
+    trending_topics: [
+      "Seguridad ciudadana",
+      "Reforma policial",
+      "Crimen organizado",
+      "Justicia",
+      "Orden público",
+      "Economía"
+    ],
+    location: "Colombia"
   };
 
+  // Campaign Data - Análisis de campaña
   const campaignData = {
-    executive_summary: {
-      overview: "Paloma Valencia tiene una ventana favorable para posicionamiento en seguridad ciudadana. El clima narrativo es receptivo (ICCE 62.4) con momentum positivo. Reforma pensional requiere estrategia de contención por fricción elevada.",
-      key_points: [
-        "Clima narrativo favorable para amplificar mensaje",
-        "Seguridad ciudadana como tema ancla positivo",
-        "Reforma pensional como punto de riesgo a gestionar"
-      ]
+    success: true,
+    candidate_name: "Paloma Valencia",
+    location: "Colombia",
+    theme: "Seguridad",
+    analysis: {
+      executive_summary: "La campaña de Paloma Valencia en el tema de Seguridad muestra un posicionamiento sólido con ICCE de 62.4 y momentum positivo. La narrativa de 'mano firme' resuena especialmente en ciudades intermedias y sectores empresariales. Se recomienda intensificar la presencia en medios regionales y preparar respuestas a críticas sobre derechos humanos.",
+      data_analysis: "Muestra: 2,590 tweets (últimos 30 días). Sentimiento: 54% positivo, 21% negativo, 25% neutral (SNA +33%). SOV estimado en seguridad: 55%. Picos: reforma policial (+23% menciones). Ciudades líder: Bogotá 28%, Medellín 18%, Cali 14%. Hashtags clave: #SeguridadCiudadana, #PalomaValencia, #OrdenPublico.",
+      strategic_plan: "Plan de 14 días:\n\n1. Semana 1: Reforzar propuesta de seguridad en ciudades intermedias\n   - Evento en Bucaramanga sobre seguridad ciudadana\n   - Entrevistas en medios regionales\n   - Contenido para redes: testimonios de comerciantes\n\n2. Semana 2: Gestión de críticas y consolidación\n   - Respuesta estructurada sobre derechos humanos\n   - Alianzas con asociaciones de víctimas\n   - Anuncio de política de seguridad integral\n\nKPIs: Mantener ICCE > 60, aumentar sentimiento positivo a 60%",
+      speech: "Colombianos y colombianas,\n\nHoy vengo a hablarles de lo que más nos duele: la inseguridad que viven nuestras familias. Sé que están cansados de promesas vacías. Por eso, mi compromiso es claro: orden, justicia y resultados.\n\nNo vamos a negociar con el crimen. Vamos a fortalecer nuestra Policía, a modernizar nuestras Fuerzas Armadas, y a garantizar que quien cometa un delito pague por él.\n\nPero también vamos a atacar las raíces: educación, empleo y oportunidades para nuestros jóvenes. Porque la verdadera seguridad se construye con justicia social.\n\n¡Colombia merece vivir en paz, y juntos lo vamos a lograr!",
+      chart_suggestion: "Gráfico sugerido: barras horizontales con temas ordenados por menciones y color por sentimiento (verde positivo, rojo crítico, gris neutral). Ayuda a decidir dónde concentrar recursos.",
+      general_analysis: "El clima narrativo para Paloma Valencia en seguridad es favorable (ICCE 62.4). El momentum de +0.012 indica tendencia al alza sostenida. Drivers: reforma policial y discurso de orden público. Riesgos: críticas sobre derechos humanos y concentración temática. Proyección 14 días: ICCE sube 5.8 pts si se mantiene la estrategia actual.",
+      game_theory: {
+        main_move: "Contrastar en seguridad: comunicado + video corto + 3 posts con hashtags",
+        alternatives: [
+          "Proponer economía: mensaje de costo de vida + entrevista regional",
+          "Desviar a salud: financiación hospitalaria + visita a clínica"
+        ],
+        rival_signal: "Señal rival: domina seguridad con pico de conversación (+12%)",
+        trigger: "Trigger: si ICCE cae >8 pts o SNA baja -10 en seguridad, activar respuesta en 48h.",
+        payoff: "Payoff estimado: +12 ICCE · +8 SNA · costo medio",
+        confidence: "Media",
+        compare: {
+          labels: ["Seguridad", "Economía", "Salud", "Paz", "SOV General", "SNA Neto"],
+          campaign: [45, 65, 70, 60, 55, 50],
+          rival: [75, 50, 40, 55, 70, 35]
+        },
+        gap: {
+          labels: ["SOV", "SNA", "ICCE", "Momentum"],
+          values: [-15, 15, 4.4, 1.2]
+        },
+        context: {
+          radar: "Rival domina seguridad y SOV general. Ventaja tuya en salud y economía.",
+          gap: "Brecha negativa en SOV; oportunidad en ICCE y Momentum."
+        }
+      }
     },
-    strategic_plan: {
-      objectives: [
-        "Consolidar liderazgo narrativo en seguridad ciudadana",
-        "Neutralizar fricción en tema pensional con datos concretos"
-      ],
-      actions: [
-        { action: "Amplificar contenido sobre logros en seguridad con casos específicos", priority: "high" },
-        { action: "Preparar Q&A defensivo sobre reforma pensional con cifras", priority: "high" },
-        { action: "Programar apariciones en medios de Bogotá y Medellín", priority: "medium" },
-        { action: "Activar voceros en redes para balance de tono", priority: "medium" }
-      ],
-      expected_impact: "Incremento proyectado de 5-8 puntos en percepción favorable en próximas 2 semanas"
-    },
-    speech: {
-      title: "Seguridad para todos los colombianos",
-      content: "Colombianos y colombianas, hoy quiero hablarles de lo que más nos importa: la seguridad de nuestras familias. En el Congreso hemos trabajado incansablemente para fortalecer las herramientas que nuestras fuerzas del orden necesitan. No es retórica, son hechos: más recursos para la Policía, mejor tecnología para combatir el crimen, y leyes más estrictas contra quienes atentan contra nuestra tranquilidad.\n\nPero la seguridad va más allá de uniformes y patrullas. Es poder caminar tranquilos por nuestras calles, es que nuestros hijos lleguen seguros a casa, es que los comerciantes puedan trabajar sin miedo. Por eso mi compromiso es integral: prevención, acción y justicia.\n\nSé que hay quienes prefieren las excusas. Nosotros preferimos las soluciones. Colombia merece líderes que actúen, no que prometan. Y yo estoy aquí para actuar, con ustedes, por ustedes.\n\nGracias por su confianza. Juntos, vamos a construir el país seguro que merecemos.",
-      duration_minutes: 4,
-      key_messages: [
-        "Seguridad como prioridad demostrada con hechos",
-        "Enfoque integral: prevención, acción, justicia",
-        "Liderazgo de acción vs. retórica"
-      ]
-    }
+    drivers: [
+      "Alta tracción en Seguridad (ICCE 62.4)",
+      "Momentum positivo sostenido (+0.012)",
+      "Sentimiento neto favorable (+33%)",
+      "Fuerte presencia en ciudades intermedias"
+    ],
+    risks: [
+      "Críticas sobre derechos humanos",
+      "Asociación con sectores extremos",
+      "Dependencia de un solo tema"
+    ],
+    recommendations: [
+      "Amplificar mensaje en ciudades intermedias con mejor receptividad",
+      "Preparar respuestas a críticas sobre derechos humanos",
+      "Diversificar agenda sin abandonar posicionamiento en seguridad"
+    ]
   };
 
   return {
     mediaData,
     forecastData,
     trendingData,
-    campaignData,
-    input: {
-      location: "Colombia",
-      topic: "Seguridad",
-      candidateName: "Paloma Valencia"
-    },
-    runtimeMs: 2847
+    campaignData
   };
 }
