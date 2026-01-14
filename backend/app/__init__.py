@@ -86,6 +86,31 @@ def create_app(config_name: str = 'default') -> Flask:
         }
     })
     jwt.init_app(app)
+
+    # HTTPS enforcement in production
+    if not app.debug and os.environ.get('FORCE_HTTPS', 'true').lower() == 'true':
+        from flask import request, redirect
+
+        @app.before_request
+        def enforce_https():
+            """Redirect HTTP to HTTPS in production."""
+            # Check X-Forwarded-Proto header (set by reverse proxy/load balancer)
+            if request.headers.get('X-Forwarded-Proto', 'http') != 'https':
+                if request.url.startswith('http://'):
+                    url = request.url.replace('http://', 'https://', 1)
+                    return redirect(url, code=301)
+
+        @app.after_request
+        def add_security_headers(response):
+            """Add security headers to all responses."""
+            response.headers['X-Content-Type-Options'] = 'nosniff'
+            response.headers['X-Frame-Options'] = 'DENY'
+            response.headers['X-XSS-Protection'] = '1; mode=block'
+            response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+            # HSTS - only enable in production with valid SSL
+            if os.environ.get('ENABLE_HSTS', 'false').lower() == 'true':
+                response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+            return response
     
     # Initialize rate limiting
     init_rate_limiter(app)

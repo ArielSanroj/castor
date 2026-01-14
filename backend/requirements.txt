@@ -57,3 +57,9 @@ bandit==1.7.5
 # Pre-commit hooks
 pre-commit==3.6.0
 
+
+# Production Server
+gunicorn==21.2.0
+
+# System Monitoring
+psutil==5.9.7
