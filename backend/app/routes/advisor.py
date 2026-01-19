@@ -6,7 +6,7 @@ import logging
 from flask import Blueprint, request, jsonify, current_app
 from pydantic import ValidationError
 
-from app.schemas.advisor import AdvisorRequest, AdvisorResponse, AdvisorDraft
+from app.schemas.advisor import AdvisorRequest
 from services.openai_service import OpenAIService
 from utils.rate_limiter import limiter
 

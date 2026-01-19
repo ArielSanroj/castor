@@ -65,12 +65,6 @@ class Config:
     DB_MAX_OVERFLOW: int = int(os.getenv('DB_MAX_OVERFLOW', '20'))
     DB_POOL_TIMEOUT: int = int(os.getenv('DB_POOL_TIMEOUT', '30'))
     
-    # Twilio WhatsApp
-    TWILIO_ACCOUNT_SID: Optional[str] = os.getenv('TWILIO_ACCOUNT_SID')
-    TWILIO_AUTH_TOKEN: Optional[str] = os.getenv('TWILIO_AUTH_TOKEN')
-    TWILIO_WHATSAPP_FROM: Optional[str] = os.getenv('TWILIO_WHATSAPP_FROM')
-    TWILIO_CONTENT_SID: Optional[str] = os.getenv('TWILIO_CONTENT_SID')
-    
     # BETO Model
     BETO_MODEL_PATH: str = os.getenv('BETO_MODEL_PATH', 'dccuchile/bert-base-spanish-wwm-uncased')
     

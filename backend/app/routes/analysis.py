@@ -10,7 +10,7 @@ import tweepy
 from sqlalchemy.exc import SQLAlchemyError
 
 from models.schemas import AnalysisRequest, AnalysisResponse
-from services import TwitterService, SentimentService, OpenAIService, TwilioService
+from services import TwitterService, SentimentService, OpenAIService
 from services.database_service import DatabaseService
 from services.trending_service import TrendingService
 from services.background_jobs import enqueue_analysis_task, get_job_status
@@ -32,11 +32,10 @@ def get_services():
     twitter_svc = service_factory.get_or_create('twitter', TwitterService)
     sentiment_svc = service_factory.get_or_create('sentiment', SentimentService)
     openai_svc = service_factory.get_or_create('openai', OpenAIService)
-    twilio_svc = service_factory.get_or_create('twilio', TwilioService)
     db_svc = service_factory.get_or_create('database', DatabaseService)
     trending_svc = service_factory.get_or_create('trending', TrendingService)
 
-    return twitter_svc, sentiment_svc, openai_svc, twilio_svc, db_svc, trending_svc
+    return twitter_svc, sentiment_svc, openai_svc, db_svc, trending_svc
 
 
 def _parse_analysis_request(req_data: dict) -> tuple:
@@ -107,7 +106,7 @@ def analyze():
         services, error_response = _get_initialized_services()
         if error_response:
             return error_response
-        twitter_svc, sentiment_svc, openai_svc, twilio_svc, db_svc, trending_svc = services
+        twitter_svc, sentiment_svc, openai_svc, db_svc, trending_svc = services
         
         logger.info(f"Starting analysis for {analysis_req.location}, theme: {analysis_req.theme}")
         
@@ -227,24 +226,6 @@ def analyze():
             logger.info(f"Indexed analysis to RAG for {analysis_req.location}")
         except Exception as e:
             logger.warning(f"Could not index to RAG (non-critical): {e}")
-        
-        # Step 8: Send WhatsApp if requested and user opted in
-        try:
-            user_id = get_jwt_identity()
-            if user_id and db_svc:
-                user = db_svc.get_user(str(user_id))
-                if user and user.whatsapp_opt_in and user.whatsapp_number:
-                    whatsapp_result = twilio_svc.send_whatsapp_report(
-                        phone_number=user.whatsapp_number,
-                        recipient_name=f"{user.first_name or ''} {user.last_name or ''}".strip(),
-                        candidate_name=analysis_req.candidate_name or "el candidato",
-                        speech=speech,
-                        strategic_plan=strategic_plan,
-                        location=analysis_req.location
-                    )
-                    response.metadata['whatsapp_sent'] = whatsapp_result.get('success', False)
-        except Exception as e:
-            logger.warning(f"Could not send WhatsApp: {e}")
         
         # Add trending topic info to response
         if trending_topic and isinstance(trending_topic, dict):
