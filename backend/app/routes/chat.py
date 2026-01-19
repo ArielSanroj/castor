@@ -5,16 +5,12 @@ AI assistant for campaign advice with RAG support.
 import logging
 import uuid
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required
 from pydantic import ValidationError
-
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../'))
 
 from models.schemas import ChatRequest, ChatResponse
 from services import OpenAIService
-from services.rag_service import get_rag_service, RAGService
+from services.rag_service import get_rag_service
 from app.schemas.rag import (
     RAGChatRequest,
     RAGChatResponse,

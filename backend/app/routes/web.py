@@ -3,7 +3,6 @@ Web routes for serving HTML pages.
 Handles landing page and other web interfaces.
 """
 from flask import Blueprint, render_template, redirect, url_for
-import os
 
 web_bp = Blueprint('web', __name__)
 

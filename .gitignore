@@ -79,8 +79,6 @@ temp/
 *.tmp
 *.bak
 *.deprecated.bak
-test_openai_key.py
-verify_services.py
 
 # Backup files
 *.backup

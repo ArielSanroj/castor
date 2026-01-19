@@ -6,7 +6,7 @@ import logging
 import threading
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from typing import Tuple, Optional
+from typing import Tuple
 from config import Config
 
 logger = logging.getLogger(__name__)
@@ -19,13 +19,13 @@ _model_lock = threading.Lock()
 def get_beto_model() -> Tuple[AutoModelForSequenceClassification, AutoTokenizer, torch.device]:
     """
     Get or create BETO model singleton.
-    
+
     Returns:
         Tuple of (model, tokenizer, device)
     """
     global _model_cache
     model_key = Config.BETO_MODEL_PATH
-    
+
     if model_key not in _model_cache:
         with _model_lock:
             # Double-check pattern
@@ -45,25 +45,5 @@ def get_beto_model() -> Tuple[AutoModelForSequenceClassification, AutoTokenizer,
                 except Exception as e:
                     logger.error(f"Error loading BETO model: {e}", exc_info=True)
                     raise
-    
+
     return _model_cache[model_key]
-
-
-def clear_model_cache():
-    """Clear model cache (useful for testing)."""
-    global _model_cache
-    with _model_lock:
-        _model_cache.clear()
-        logger.info("BETO model cache cleared")
-
-
-
-
-
-
-
-
-
-
-
-

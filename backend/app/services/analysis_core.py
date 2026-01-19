@@ -160,13 +160,6 @@ class AnalysisCorePipeline:
         if narrative_metrics_result:
             core_result.narrative_metrics = narrative_metrics_result  # type: ignore
 
-        if self.db_service is not None:
-            try:
-                # Persist in a minimal, non-breaking way
-                self.db_service.save_analysis_core(core_result)  # type: ignore[attr-defined]
-            except Exception as exc:
-                logger.debug(f"Skipping DB persistence for core analysis: {exc}")
-
         return core_result
 
     def _build_query(

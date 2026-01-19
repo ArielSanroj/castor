@@ -5,23 +5,16 @@ import logging
 import uuid
 from datetime import datetime
 from flask import Blueprint, request, jsonify, current_app
-from pydantic import ValidationError
 
 from app.schemas.forecast import (
-    ForecastRequest,
     ICCEResponse,
     MomentumResponse,
     ForecastResponse,
-    ScenarioRequest,
     ScenarioResponse,
-    ForecastDashboardResponse,
 )
 from app.schemas.narrative import NarrativeMetricsResponse, NarrativeIndices, IVNResult
 from app.services.forecast_service import ForecastService
 from services.rag_service import get_rag_service
-from services.twitter_service import TwitterService
-from services.sentiment_service import SentimentService
-from services.database_service import DatabaseService
 from utils.rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
@@ -579,7 +572,7 @@ def get_dashboard():
                 "success": False,
                 "error": "No se encontraron datos de Twitter para los parámetros proporcionados. Verifica que la ubicación, candidato o tema sean correctos.",
                 "message": "No hay suficientes tweets para calcular ICCE. Intenta con una ubicación diferente o un rango de fechas más amplio."
-            }), 200
+            }), 404
         
         # Calculate momentum and smoothed values
         momentum_values = forecast_service.calculate_momentum(icce_values) if len(icce_values) >= 2 else []

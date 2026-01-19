@@ -123,7 +123,7 @@ def media_analyze():
             analysis_data=analysis_payload,
             metadata={
                 "location": metadata.location,
-                "candidate": metadata.candidate_name,
+                "candidate": req.candidate_name,
                 "created_at": metadata.time_window_to,
                 "topic_name": metadata.topic,
             },

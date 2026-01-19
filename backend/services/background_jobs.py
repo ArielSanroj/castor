@@ -110,32 +110,4 @@ def get_job_status(job_id: str) -> Optional[Dict[str, Any]]:
         return None
 
 
-def enqueue_trending_detection(location: str) -> Optional[str]:
-    """
-    Enqueue trending topic detection task.
-    
-    Args:
-        location: Location to analyze
-        
-    Returns:
-        Job ID or None
-    """
-    if not task_queue:
-        return None
-    
-    try:
-        from tasks.trending_tasks import detect_trending_topics_task
-        
-        job = task_queue.enqueue(
-            detect_trending_topics_task,
-            location,
-            job_timeout='5m',
-            result_ttl=1800  # 30 minutes
-        )
-        
-        logger.info(f"Trending detection task enqueued: {job.id}")
-        return job.id
-    except Exception as e:
-        logger.error(f"Error enqueueing trending task: {e}", exc_info=True)
-        return None
 
