@@ -48,11 +48,22 @@ class Config:
     TWITTER_MONTHLY_LIMIT: int = int(os.getenv('TWITTER_MONTHLY_LIMIT', '100'))
     TWITTER_DAILY_REQUEST_LIMIT: int = int(os.getenv('TWITTER_DAILY_REQUEST_LIMIT', '3'))
     
+    # LLM Provider Selection (openai, claude, local)
+    LLM_PROVIDER: str = os.getenv('LLM_PROVIDER', 'openai')
+
     # OpenAI
     OPENAI_API_KEY: Optional[str] = os.getenv('OPENAI_API_KEY')
     OPENAI_MODEL: str = os.getenv('OPENAI_MODEL', 'gpt-4o')
     OPENAI_EMBEDDING_MODEL: str = os.getenv('OPENAI_EMBEDDING_MODEL', 'text-embedding-3-small')
     OPENAI_TIMEOUT_SECONDS: int = int(os.getenv('OPENAI_TIMEOUT_SECONDS', '60'))  # Increased for long content generation
+
+    # Anthropic Claude
+    ANTHROPIC_API_KEY: Optional[str] = os.getenv('ANTHROPIC_API_KEY')
+    CLAUDE_MODEL: str = os.getenv('CLAUDE_MODEL', 'claude-3-5-sonnet-20241022')
+
+    # Local LLM (Ollama)
+    LOCAL_LLM_URL: str = os.getenv('LOCAL_LLM_URL', 'http://localhost:11434')
+    LOCAL_LLM_MODEL: str = os.getenv('LOCAL_LLM_MODEL', 'llama3.2')
     
     # Database (PostgreSQL)
     DATABASE_URL: Optional[str] = os.getenv('DATABASE_URL', 'postgresql://user:password@localhost:5432/castor_elecciones')
