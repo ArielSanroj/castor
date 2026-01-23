@@ -331,21 +331,21 @@ def get_analysis_by_id(api_call_id: str):
         # Sort topics by tweet_count descending
         topics.sort(key=lambda x: x['tweet_count'], reverse=True)
 
-        # Build response
+        # Build response (api_call is a dict from get_api_call_with_data)
         response = {
             "success": True,
             "api_call_id": api_call_id,
-            "candidate_name": api_call.candidate_name or '',
-            "location": api_call.location or '',
-            "politician": api_call.politician or '',
-            "fetched_at": api_call.fetched_at.isoformat() if api_call.fetched_at else None,
+            "candidate_name": api_call.get('candidate_name') or '',
+            "location": api_call.get('location') or '',
+            "politician": api_call.get('politician') or '',
+            "fetched_at": api_call.get('fetched_at'),
 
             # Media data
             "mediaData": {
                 "success": True,
-                "candidate_name": api_call.candidate_name or '',
-                "location": api_call.location or '',
-                "fetched_at": api_call.fetched_at.isoformat() if api_call.fetched_at else None,
+                "candidate_name": api_call.get('candidate_name') or '',
+                "location": api_call.get('location') or '',
+                "fetched_at": api_call.get('fetched_at'),
                 "summary": {
                     "key_findings": analysis.key_findings if analysis else [],
                     "executive_summary": analysis.executive_summary if analysis else "",
@@ -360,8 +360,8 @@ def get_analysis_by_id(api_call_id: str):
                 },
                 "metadata": {
                     "tweets_analyzed": full_data.get('tweets_count', 0),
-                    "time_window_from": api_call.fetched_at.isoformat() if api_call.fetched_at else None,
-                    "time_window_to": api_call.fetched_at.isoformat() if api_call.fetched_at else None,
+                    "time_window_from": api_call.get('fetched_at'),
+                    "time_window_to": api_call.get('fetched_at'),
                     "geo_distribution": analysis.geo_distribution if analysis else []
                 }
             },
@@ -408,24 +408,42 @@ def get_analysis_by_id(api_call_id: str):
 
 @media_bp.route("/history", methods=["GET"])
 def get_analysis_history():
-    """Get list of all stored analyses."""
+    """Get list of all stored analyses with complete data (tweets + PND metrics)."""
     try:
         db_service = _get_db_service()
 
         candidate = request.args.get('candidate')
         location = request.args.get('location')
-        limit = int(request.args.get('limit', 20))
+        requested_limit = int(request.args.get('limit', 20))
 
+        # Buscar más registros para asegurar que encontramos los completos
+        # ya que muchos pueden estar en estado "processing"
         api_calls = db_service.get_api_calls(
             candidate_name=candidate,
             location=location,
-            limit=limit
+            limit=200  # Buscar suficientes para filtrar
         )
+
+        # Filtrar solo análisis completos: completados + tweets + métricas PND
+        complete_analyses = []
+        for call in api_calls:
+            if call.get('status') != 'completed' or call.get('tweets_retrieved', 0) == 0:
+                continue
+
+            # Verificar si tiene métricas PND
+            full_data = db_service.get_api_call_with_data(call['id'])
+            if full_data and len(full_data.get('pnd_metrics', [])) > 0:
+                call['pnd_metrics_count'] = len(full_data.get('pnd_metrics', []))
+                complete_analyses.append(call)
+
+                # Aplicar el límite solicitado después de filtrar
+                if len(complete_analyses) >= requested_limit:
+                    break
 
         return jsonify({
             "success": True,
-            "count": len(api_calls),
-            "api_calls": api_calls
+            "count": len(complete_analyses),
+            "api_calls": complete_analyses
         }), 200
 
     except Exception as e:

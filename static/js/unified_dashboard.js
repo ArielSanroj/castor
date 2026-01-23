@@ -109,6 +109,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAccordion();
   setupGameRivalSelector();
 
+  // Cargar uso de Twitter API al iniciar
+  fetchTwitterUsage();
+
   // Botón "Muéstrame un ejemplo" - Carga el último análisis guardado en la BD
   mockBtn?.addEventListener("click", async () => {
     loadingBox.style.display = "block";
@@ -426,12 +429,13 @@ function renderContextBar(mediaData, forecastData, input) {
   }
 
   if (metaSourcesEl) {
-    // Contar fuentes: tweets + forecast points + trending items
-    let sourcesCount = 0;
-    if (mediaData?.tweets?.length) sourcesCount += mediaData.tweets.length;
-    if (forecastData?.historical?.length) sourcesCount += forecastData.historical.length;
-    if (forecastData?.forecast?.length) sourcesCount += forecastData.forecast.length;
-    metaSourcesEl.textContent = sourcesCount || tweetsAnalyzed || "0";
+    // Contar autores únicos de los tweets
+    let uniqueAuthors = 0;
+    if (mediaData?.tweets?.length) {
+      const authors = new Set(mediaData.tweets.map(t => t.author_username).filter(Boolean));
+      uniqueAuthors = authors.size;
+    }
+    metaSourcesEl.textContent = uniqueAuthors || "--";
   }
 
   if (metaDaysEl) {
@@ -446,6 +450,114 @@ function renderContextBar(mediaData, forecastData, input) {
                      (forecastData?.metadata?.cached_at);
     metaCacheEl.style.display = isCached ? "flex" : "none";
   }
+
+  // Cargar uso de Twitter API
+  fetchTwitterUsage();
+}
+
+async function fetchTwitterUsage() {
+  const twitterUsageEl = document.getElementById("meta-twitter-usage");
+  if (!twitterUsageEl) return;
+
+  try {
+    const response = await fetch(`${window.API_BASE_URL}/api/twitter-usage`);
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success && data.stats) {
+        const used = data.stats.today?.used || 0;
+        const limit = 500; // Daily limit
+        const remaining = data.stats.today?.remaining || (limit - used);
+
+        // Color based on remaining
+        let color = "#4A7C59"; // Green - healthy
+        if (remaining < 100) color = "#C9A227"; // Yellow - warning
+        if (remaining < 20) color = "#8B3A3A"; // Red - critical
+
+        twitterUsageEl.textContent = `${used}/${limit}`;
+        twitterUsageEl.style.color = color;
+
+        // Add tooltip with more details
+        const twitterStatEl = document.getElementById("twitter-api-usage");
+        if (twitterStatEl) {
+          twitterStatEl.title = `Tweets hoy: ${used}\nRestantes: ${remaining}\nMes: ${data.stats.month?.used || 0}/15000`;
+        }
+
+        // Show/update reset timer
+        updateResetTimer(remaining, limit);
+      }
+    }
+  } catch (error) {
+    console.warn("Could not fetch Twitter usage:", error);
+    twitterUsageEl.textContent = "--/500";
+  }
+}
+
+// Timer para mostrar cuándo se resetea el límite
+let resetTimerInterval = null;
+
+function updateResetTimer(remaining, limit) {
+  const timerEl = document.getElementById("api-reset-timer");
+  if (!timerEl) return;
+
+  // Mostrar timer si queda menos del 30% o si está agotado
+  const percentage = (remaining / limit) * 100;
+
+  if (percentage <= 30) {
+    timerEl.style.display = "flex";
+    startResetCountdown();
+  } else {
+    timerEl.style.display = "none";
+    if (resetTimerInterval) {
+      clearInterval(resetTimerInterval);
+      resetTimerInterval = null;
+    }
+  }
+}
+
+function startResetCountdown() {
+  if (resetTimerInterval) return; // Ya está corriendo
+
+  const timerValueEl = document.getElementById("reset-timer-value");
+  if (!timerValueEl) return;
+
+  function updateCountdown() {
+    // Calcular tiempo hasta medianoche UTC (7PM Colombia)
+    const now = new Date();
+    const utcMidnight = new Date(Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate() + 1, // Mañana
+      0, 0, 0, 0 // Medianoche UTC
+    ));
+
+    const diff = utcMidnight - now;
+
+    if (diff <= 0) {
+      timerValueEl.textContent = "¡Disponible ahora!";
+      timerValueEl.style.color = "#4A7C59";
+      // Recargar uso
+      setTimeout(() => fetchTwitterUsage(), 2000);
+      return;
+    }
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    timerValueEl.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+    // Color según urgencia
+    if (hours < 1) {
+      timerValueEl.style.color = "#4A7C59"; // Verde - pronto
+    } else if (hours < 6) {
+      timerValueEl.style.color = "#C9A227"; // Amarillo
+    } else {
+      timerValueEl.style.color = "#e0e0e0"; // Normal
+    }
+  }
+
+  updateCountdown();
+  resetTimerInterval = setInterval(updateCountdown, 1000);
 }
 
 function renderKPIs(mediaData, forecastData) {

@@ -224,15 +224,62 @@ def health():
 
 @health_bp.route('/twitter-usage', methods=['GET'])
 def twitter_usage():
-    """Get Twitter API usage statistics (Free tier monitoring)."""
+    """Get Twitter API usage statistics from database (real usage)."""
     try:
-        stats = get_twitter_usage_stats()
+        from services.database_service import DatabaseService
+        from models.database import ApiCall, Tweet
+        from sqlalchemy import func
+        from datetime import datetime, timedelta
+
+        db_service = DatabaseService()
+
+        # Calcular uso real desde la base de datos
+        today_start = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+
+        with db_service.session_scope() as session:
+            # Tweets traídos hoy (basado en fetched_at de ApiCall)
+            today_tweets = session.query(func.sum(ApiCall.tweets_retrieved)).filter(
+                ApiCall.fetched_at >= today_start,
+                ApiCall.status == 'completed'
+            ).scalar() or 0
+
+            # Total tweets en BD
+            total_tweets = session.query(func.count(Tweet.id)).scalar() or 0
+
+            # API calls completadas hoy
+            today_calls = session.query(func.count(ApiCall.id)).filter(
+                ApiCall.fetched_at >= today_start,
+                ApiCall.status == 'completed'
+            ).scalar() or 0
+
+        daily_limit = 500  # Twitter Basic tier
+        monthly_limit = 15000
+
+        stats = {
+            "today": {
+                "used": int(today_tweets),
+                "limit": daily_limit,
+                "remaining": max(0, daily_limit - int(today_tweets)),
+                "percentage": round((today_tweets / daily_limit * 100), 1) if daily_limit > 0 else 0,
+                "api_calls": int(today_calls)
+            },
+            "month": {
+                "used": int(total_tweets),
+                "limit": monthly_limit,
+                "remaining": max(0, monthly_limit - int(total_tweets)),
+                "percentage": round((total_tweets / monthly_limit * 100), 1) if monthly_limit > 0 else 0
+            },
+            "month_start": today_start.replace(day=1).isoformat()
+        }
+
         return jsonify({
             'success': True,
-            'plan': 'Free Tier (100 posts/month)',
-            'stats': stats
+            'plan': 'Basic Tier (500/day, 15K/month)',
+            'stats': stats,
+            'total_tweets_in_db': int(total_tweets)
         }), 200
     except Exception as e:
+        logger.error(f"Error getting twitter usage: {e}", exc_info=True)
         return jsonify({
             'success': False,
             'error': str(e)

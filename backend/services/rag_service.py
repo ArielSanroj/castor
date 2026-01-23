@@ -257,9 +257,10 @@ Reglas:
     def sync_from_database(self, limit: int = 100) -> int:
         """
         Sync historical analyses from database to vector store.
+        Uses the new ApiCall model with tweets and PND metrics.
 
         Args:
-            limit: Maximum number of analyses to sync
+            limit: Maximum number of API calls to sync
 
         Returns:
             Number of documents indexed
@@ -269,37 +270,108 @@ Reglas:
             return 0
 
         try:
-            # Get all historical analyses
-            analyses = self.db_service.get_all_analyses(limit=limit)
-
             indexed_count = 0
-            for analysis in analyses:
-                try:
-                    analysis_id = analysis.get('id') or str(analysis.get('created_at', ''))
-                    analysis_data = analysis.get('analysis_data', {})
 
-                    if analysis_data:
-                        doc_ids = self.index_analysis(
-                            analysis_id=analysis_id,
-                            analysis_data=analysis_data,
-                            metadata={
-                                "location": analysis.get('location'),
-                                "theme": analysis.get('theme'),
-                                "candidate": analysis.get('candidate_name'),
-                                "created_at": str(analysis.get('created_at', '')),
-                                "user_id": analysis.get('user_id')
-                            }
-                        )
-                        indexed_count += len(doc_ids)
+            # Get API calls from new model
+            api_calls = self.db_service.get_api_calls(limit=limit)
+
+            for api_call in api_calls:
+                try:
+                    api_call_id = api_call.get('id')
+                    if not api_call_id:
+                        continue
+
+                    # Get full data for this API call
+                    full_data = self.db_service.get_api_call_with_data(api_call_id)
+                    if not full_data:
+                        continue
+
+                    metadata = {
+                        "location": api_call.get('location', 'Colombia'),
+                        "candidate_name": api_call.get('candidate_name', ''),
+                        "politician": api_call.get('politician', ''),
+                        "topic": api_call.get('topic', ''),
+                        "created_at": api_call.get('fetched_at', '')
+                    }
+
+                    # 1. Index analysis snapshot
+                    snapshot = full_data.get('analysis_snapshot')
+                    if snapshot:
+                        snapshot_data = {
+                            'icce': getattr(snapshot, 'icce', 50),
+                            'sov': getattr(snapshot, 'sov', 0),
+                            'sna': getattr(snapshot, 'sna', 0),
+                            'momentum': getattr(snapshot, 'momentum', 0),
+                            'sentiment_positive': getattr(snapshot, 'sentiment_positive', 0.33),
+                            'sentiment_negative': getattr(snapshot, 'sentiment_negative', 0.33),
+                            'sentiment_neutral': getattr(snapshot, 'sentiment_neutral', 0.34),
+                            'executive_summary': getattr(snapshot, 'executive_summary', ''),
+                            'key_findings': getattr(snapshot, 'key_findings', []),
+                            'trending_topics': getattr(snapshot, 'trending_topics', [])
+                        }
+                        self.index_analysis_snapshot(api_call_id, snapshot_data, metadata)
+                        indexed_count += 1
+
+                    # 2. Index tweets
+                    tweets = self.db_service.get_tweets_by_api_call(api_call_id, limit=200)
+                    if tweets:
+                        docs_created = self.index_tweets(api_call_id, tweets, metadata)
+                        indexed_count += docs_created
+
+                    # 3. Index PND metrics
+                    pnd_metrics = full_data.get('pnd_metrics', [])
+                    if pnd_metrics:
+                        pnd_data = []
+                        for m in pnd_metrics:
+                            pnd_data.append({
+                                'pnd_axis': getattr(m, 'pnd_axis', ''),
+                                'pnd_axis_display': getattr(m, 'pnd_axis_display', ''),
+                                'icce': getattr(m, 'icce', 0),
+                                'sov': getattr(m, 'sov', 0),
+                                'sna': getattr(m, 'sna', 0),
+                                'tweet_count': getattr(m, 'tweet_count', 0),
+                                'trend': getattr(m, 'trend', 'stable'),
+                                'sample_tweets': getattr(m, 'sample_tweets', [])
+                            })
+                        docs_created = self.index_pnd_metrics(api_call_id, pnd_data, metadata)
+                        indexed_count += docs_created
+
+                    logger.info(f"Synced API call {api_call_id}")
 
                 except Exception as e:
-                    logger.warning(f"Error syncing analysis {analysis.get('id')}: {e}")
+                    logger.warning(f"Error syncing API call {api_call.get('id')}: {e}")
+
+            # Also sync legacy analyses if they exist
+            try:
+                analyses = self.db_service.get_all_analyses(limit=limit)
+                for analysis in analyses:
+                    try:
+                        analysis_id = analysis.get('id') or str(analysis.get('created_at', ''))
+                        analysis_data = analysis.get('analysis_data', {})
+
+                        if analysis_data:
+                            doc_ids = self.index_analysis(
+                                analysis_id=analysis_id,
+                                analysis_data=analysis_data,
+                                metadata={
+                                    "location": analysis.get('location'),
+                                    "theme": analysis.get('theme'),
+                                    "candidate": analysis.get('candidate_name'),
+                                    "created_at": str(analysis.get('created_at', '')),
+                                    "user_id": analysis.get('user_id')
+                                }
+                            )
+                            indexed_count += len(doc_ids)
+                    except Exception as e:
+                        logger.warning(f"Error syncing legacy analysis: {e}")
+            except Exception as e:
+                logger.debug(f"No legacy analyses to sync: {e}")
 
             logger.info(f"Synced {indexed_count} documents from database")
             return indexed_count
 
         except Exception as e:
-            logger.error(f"Error syncing from database: {e}")
+            logger.error(f"Error syncing from database: {e}", exc_info=True)
             return 0
 
     def index_analysis(

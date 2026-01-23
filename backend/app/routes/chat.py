@@ -1,6 +1,7 @@
 """
 Chat endpoint routes.
 AI assistant for campaign advice with RAG support.
+Implements fallback chain: RAG -> OpenAI -> Llama (local)
 """
 import logging
 import uuid
@@ -11,6 +12,8 @@ from pydantic import ValidationError
 from models.schemas import ChatRequest, ChatResponse
 from services import OpenAIService
 from services.rag_service import get_rag_service
+from services.llm.local_provider import LocalLLMProvider
+from services.llm.base import LLMMessage
 from app.schemas.rag import (
     RAGChatRequest,
     RAGChatResponse,
@@ -39,6 +42,24 @@ def get_rag():
     except Exception as e:
         logger.warning(f"RAG service unavailable: {e}")
         return None
+
+
+def get_local_llm():
+    """Get Local LLM (Llama) service instance."""
+    try:
+        provider = LocalLLMProvider()
+        if provider._available:
+            return provider
+        return None
+    except Exception as e:
+        logger.warning(f"Local LLM unavailable: {e}")
+        return None
+
+
+# Minimum documents required for RAG to be considered sufficient
+MIN_RAG_DOCUMENTS = 2
+# Minimum score threshold for relevant documents
+MIN_RELEVANCE_SCORE = 0.4
 
 
 @chat_bp.route('/chat', methods=['POST'])
@@ -307,18 +328,61 @@ def rag_chat():
             topic_filter=req.filter_topic
         )
 
-        # If no documents retrieved, fallback to direct chat (OpenAI) with notice
-        if result.get("documents_retrieved", 0) == 0:
-            fallback_response, status = _fallback_to_regular_chat(req.message)
+        docs_retrieved = result.get("documents_retrieved", 0)
+        sources_data = result.get("sources", [])
+
+        # Check if RAG has sufficient information
+        # Criteria: at least MIN_RAG_DOCUMENTS with good relevance scores
+        has_sufficient_info = docs_retrieved >= MIN_RAG_DOCUMENTS
+
+        # Also check if the answer indicates lack of information
+        answer_text = result.get("answer", "").lower()
+        lacks_info_phrases = [
+            "no tengo información",
+            "no hay datos",
+            "no se encontr",
+            "no puedo proporcionar",
+            "no dispongo",
+            "no cuento con",
+            "contexto proporcionado no",
+            "no ofrece suficiente",
+            "no contienen",
+            "no contiene",
+            "insuficiente",
+            "no se han analizado",
+            "tweets analizados: 0",
+            "sin información",
+            "falta de datos",
+            "sugiero realizar",
+            "sería necesario realizar",
+            "para obtener un análisis más completo",
+            "limita la capacidad"
+        ]
+        answer_lacks_info = any(phrase in answer_text for phrase in lacks_info_phrases)
+
+        # If insufficient RAG info, use fallback chain (OpenAI -> Llama)
+        # Use fallback if: no docs, OR answer indicates lack of info
+        if docs_retrieved == 0 or answer_lacks_info:
+            logger.info(f"RAG insufficient (docs={docs_retrieved}, lacks_info={answer_lacks_info}), using fallback")
+
+            # Build context from whatever RAG found (if any)
+            rag_context = ""
+            if sources_data:
+                rag_context = "Información parcial encontrada:\n"
+                for s in sources_data[:3]:
+                    rag_context += f"- {s.get('title', 'Análisis')}: {s.get('content', '')[:200]}...\n"
+
+            fallback_response, status = _fallback_to_regular_chat(req.message, context=rag_context)
             if status == 200:
-                payload = fallback_response.get_json()
-                payload["message"] = "No historical context, using direct chat"
-                return jsonify(payload), 200
+                resp_payload = fallback_response.get_json()
+                resp_payload["rag_documents_found"] = docs_retrieved
+                resp_payload["message"] = "Información insuficiente en RAG, respuesta generada con IA"
+                return jsonify(resp_payload), 200
             return fallback_response, status
 
-        # Build response
+        # Build response with RAG data
         sources = [
-            RAGSource(**s) for s in result.get("sources", [])
+            RAGSource(**s) for s in sources_data
         ]
 
         response = RAGChatResponse(
@@ -500,24 +564,61 @@ def rag_search():
         }), 500
 
 
-def _fallback_to_regular_chat(message: str) -> tuple:
-    """Fallback to regular OpenAI chat when RAG is unavailable."""
+def _fallback_to_regular_chat(message: str, context: str = "") -> tuple:
+    """
+    Fallback chain: OpenAI -> Llama (local)
+    Used when RAG doesn't have sufficient information.
+    """
+    # Build the prompt with context if available
+    system_prompt = """Eres CASTOR, un asistente experto en estrategia electoral y análisis político en Colombia.
+Responde de manera clara, estructurada y útil. Usa formato con negritas (**texto**) para resaltar puntos importantes.
+Si no tienes información específica sobre un candidato, proporciona recomendaciones generales basadas en buenas prácticas de estrategia electoral."""
+
+    full_message = message
+    if context:
+        full_message = f"Contexto disponible:\n{context}\n\nPregunta: {message}"
+
+    # Try OpenAI first
     try:
+        logger.info("Attempting OpenAI fallback...")
         openai_svc = get_openai_service()
-        response_text = openai_svc.chat(message=message)
+        response_text = openai_svc.chat(message=full_message, context={"system_prompt": system_prompt})
         return jsonify({
             "success": True,
             "answer": response_text,
             "sources": [],
-            "fallback": True,
-            "message": "RAG unavailable, using direct chat"
+            "fallback": "openai",
+            "message": "Respuesta generada con OpenAI"
         }), 200
     except Exception as e:
-        logger.error(f"Fallback chat error: {e}")
-        return jsonify({
-            "success": False,
-            "error": "Chat service unavailable"
-        }), 503
+        logger.warning(f"OpenAI fallback failed: {e}")
+
+    # Try Llama (local) as last resort
+    try:
+        logger.info("Attempting Llama (local) fallback...")
+        local_llm = get_local_llm()
+        if local_llm:
+            messages = [
+                LLMMessage(role="system", content=system_prompt),
+                LLMMessage(role="user", content=full_message)
+            ]
+            response = local_llm.complete(messages)
+            return jsonify({
+                "success": True,
+                "answer": response.content,
+                "sources": [],
+                "fallback": "llama",
+                "message": "Respuesta generada con Llama (local)"
+            }), 200
+    except Exception as e:
+        logger.warning(f"Llama fallback failed: {e}")
+
+    # All fallbacks failed
+    logger.error("All chat fallbacks failed")
+    return jsonify({
+        "success": False,
+        "error": "No hay servicios de chat disponibles. Verifica la conexión."
+    }), 503
 
 
 @chat_bp.route('/chat/rag/sync', methods=['POST'])
@@ -536,6 +637,7 @@ def rag_sync():
     try:
         from flask import current_app
         from services.rag_service import get_rag_service
+        from services.database_service import DatabaseService
 
         payload = request.get_json() or {}
         limit = payload.get("limit", 100)
@@ -547,28 +649,147 @@ def rag_sync():
                 "error": "RAG service unavailable"
             }), 503
 
-        # Get database service from app extensions
+        # Get database service from app extensions or create new one
         db_service = current_app.extensions.get("database_service")
-        if db_service:
-            rag.set_db_service(db_service)
-            count = rag.sync_from_database(limit=limit)
+        if not db_service:
+            try:
+                db_service = DatabaseService()
+            except Exception as db_exc:
+                logger.error(f"Could not create database service: {db_exc}")
+                return jsonify({
+                    "success": False,
+                    "error": f"Database service not available: {str(db_exc)}"
+                }), 503
 
-            return jsonify({
-                "success": True,
-                "documents_synced": count,
-                "total_indexed": rag.vector_store.count()
-            }), 200
-        else:
-            return jsonify({
-                "success": False,
-                "error": "Database service not available"
-            }), 503
+        rag.set_db_service(db_service)
+        count = rag.sync_from_database(limit=limit)
+
+        return jsonify({
+            "success": True,
+            "documents_synced": count,
+            "total_indexed": rag.vector_store.count()
+        }), 200
 
     except Exception as e:
         logger.error(f"Error syncing RAG: {e}", exc_info=True)
         return jsonify({
             "success": False,
-            "error": "Error syncing with database"
+            "error": f"Error syncing with database: {str(e)}"
+        }), 500
+
+
+@chat_bp.route('/chat/rag/sync-latest', methods=['POST'])
+@limiter.limit("10 per minute")
+@jwt_required(optional=True)
+def rag_sync_latest():
+    """
+    Sync RAG with the latest API call only.
+    Quick sync for chat initialization.
+    """
+    try:
+        from flask import current_app
+        from services.rag_service import get_rag_service
+        from services.database_service import DatabaseService
+
+        rag = get_rag_service()
+        if rag is None:
+            return jsonify({
+                "success": False,
+                "error": "RAG service unavailable"
+            }), 503
+
+        # Get database service
+        db_service = current_app.extensions.get("database_service")
+        if not db_service:
+            try:
+                db_service = DatabaseService()
+            except Exception as db_exc:
+                return jsonify({
+                    "success": False,
+                    "error": f"Database not available: {str(db_exc)}"
+                }), 503
+
+        # Get latest API call
+        api_calls = db_service.get_api_calls(limit=1)
+        if not api_calls:
+            return jsonify({
+                "success": True,
+                "message": "No hay análisis en la base de datos",
+                "documents_synced": 0,
+                "total_indexed": rag.vector_store.count()
+            }), 200
+
+        api_call = api_calls[0]
+        api_call_id = api_call.get('id')
+        indexed_count = 0
+
+        # Get full data
+        full_data = db_service.get_api_call_with_data(api_call_id)
+        if full_data:
+            metadata = {
+                "location": api_call.get('location', 'Colombia'),
+                "candidate_name": api_call.get('candidate_name', ''),
+                "politician": api_call.get('politician', ''),
+                "topic": api_call.get('topic', ''),
+                "created_at": api_call.get('fetched_at', '')
+            }
+
+            # Index snapshot
+            snapshot = full_data.get('analysis_snapshot')
+            if snapshot:
+                snapshot_data = {
+                    'icce': getattr(snapshot, 'icce', 50),
+                    'sov': getattr(snapshot, 'sov', 0),
+                    'sna': getattr(snapshot, 'sna', 0),
+                    'momentum': getattr(snapshot, 'momentum', 0),
+                    'sentiment_positive': getattr(snapshot, 'sentiment_positive', 0.33),
+                    'sentiment_negative': getattr(snapshot, 'sentiment_negative', 0.33),
+                    'sentiment_neutral': getattr(snapshot, 'sentiment_neutral', 0.34),
+                    'executive_summary': getattr(snapshot, 'executive_summary', ''),
+                    'key_findings': getattr(snapshot, 'key_findings', []),
+                    'trending_topics': getattr(snapshot, 'trending_topics', [])
+                }
+                rag.index_analysis_snapshot(api_call_id, snapshot_data, metadata)
+                indexed_count += 1
+
+            # Index tweets
+            tweets = db_service.get_tweets_by_api_call(api_call_id, limit=200)
+            if tweets:
+                docs = rag.index_tweets(api_call_id, tweets, metadata)
+                indexed_count += docs
+
+            # Index PND metrics
+            pnd_metrics = full_data.get('pnd_metrics', [])
+            if pnd_metrics:
+                pnd_data = []
+                for m in pnd_metrics:
+                    pnd_data.append({
+                        'pnd_axis': getattr(m, 'pnd_axis', ''),
+                        'pnd_axis_display': getattr(m, 'pnd_axis_display', ''),
+                        'icce': getattr(m, 'icce', 0),
+                        'sov': getattr(m, 'sov', 0),
+                        'sna': getattr(m, 'sna', 0),
+                        'tweet_count': getattr(m, 'tweet_count', 0),
+                        'trend': getattr(m, 'trend', 'stable'),
+                        'sample_tweets': getattr(m, 'sample_tweets', [])
+                    })
+                docs = rag.index_pnd_metrics(api_call_id, pnd_data, metadata)
+                indexed_count += docs
+
+        return jsonify({
+            "success": True,
+            "message": f"Sincronizado con análisis de {api_call.get('candidate_name', 'N/A')} en {api_call.get('location', 'N/A')}",
+            "api_call_id": api_call_id,
+            "documents_synced": indexed_count,
+            "total_indexed": rag.vector_store.count(),
+            "tweets_count": api_call.get('tweets_retrieved', 0)
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Error syncing latest: {e}", exc_info=True)
+        return jsonify({
+            "success": False,
+            "error": f"Error: {str(e)}"
         }), 500
 
 
