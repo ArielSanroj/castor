@@ -372,13 +372,7 @@ def rag_chat():
                 for s in sources_data[:3]:
                     rag_context += f"- {s.get('title', 'Análisis')}: {s.get('content', '')[:200]}...\n"
 
-            fallback_response, status = _fallback_to_regular_chat(req.message, context=rag_context)
-            if status == 200:
-                resp_payload = fallback_response.get_json()
-                resp_payload["rag_documents_found"] = docs_retrieved
-                resp_payload["message"] = "Información insuficiente en RAG, respuesta generada con IA"
-                return jsonify(resp_payload), 200
-            return fallback_response, status
+            return _fallback_to_regular_chat(req.message, context=rag_context)
 
         # Build response with RAG data
         sources = [
@@ -586,9 +580,7 @@ Si no tienes información específica sobre un candidato, proporciona recomendac
         return jsonify({
             "success": True,
             "answer": response_text,
-            "sources": [],
-            "fallback": "openai",
-            "message": "Respuesta generada con OpenAI"
+            "sources": []
         }), 200
     except Exception as e:
         logger.warning(f"OpenAI fallback failed: {e}")
@@ -606,9 +598,7 @@ Si no tienes información específica sobre un candidato, proporciona recomendac
             return jsonify({
                 "success": True,
                 "answer": response.content,
-                "sources": [],
-                "fallback": "llama",
-                "message": "Respuesta generada con Llama (local)"
+                "sources": []
             }), 200
     except Exception as e:
         logger.warning(f"Llama fallback failed: {e}")
