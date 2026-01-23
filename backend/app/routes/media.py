@@ -4,6 +4,7 @@ Provides neutral analysis for press dashboards.
 """
 import logging
 import uuid
+from datetime import datetime, timezone
 from flask import Blueprint, request, jsonify, current_app
 from pydantic import ValidationError
 
@@ -12,15 +13,24 @@ from app.schemas.media import (
     MediaAnalysisResponse,
     MediaAnalysisSummary,
     MediaAnalysisMetadata,
+    TweetSummary,
 )
 from app.services.analysis_core import AnalysisCorePipeline
 from services.openai_service import OpenAIService
+from services.database_service import DatabaseService
 from services.rag_service import get_rag_service
 from utils.rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
 
 media_bp = Blueprint("media_product", __name__)
+
+
+def _get_db_service() -> DatabaseService:
+    """Get or create database service."""
+    if not hasattr(current_app, '_db_service'):
+        current_app._db_service = DatabaseService()
+    return current_app._db_service
 
 
 def _get_pipeline() -> AnalysisCorePipeline:
@@ -93,7 +103,25 @@ def media_analyze():
         time_window_to=core_result.time_window_to,
         trending_topic=core_result.trending_topic,
         raw_query=core_result.raw_query,
+        from_cache=core_result.from_cache,
+        cached_at=core_result.cached_at,
     )
+
+    # Convert tweets_data to TweetSummary for the response
+    tweets = [
+        TweetSummary(
+            tweet_id=t.tweet_id,
+            author_username=t.author_username,
+            author_name=t.author_name,
+            content=t.content,
+            sentiment_label=t.sentiment_label,
+            pnd_topic=t.pnd_topic,
+            retweet_count=t.retweet_count,
+            like_count=t.like_count,
+            reply_count=t.reply_count,
+        )
+        for t in core_result.tweets_data
+    ]
 
     response_model = MediaAnalysisResponse(
         success=True,
@@ -103,6 +131,7 @@ def media_analyze():
         peaks=core_result.peaks,
         chart_data=core_result.chart_data,
         metadata=metadata,
+        tweets=tweets,
     )
 
     # Index into RAG (best-effort)
@@ -132,3 +161,296 @@ def media_analyze():
         logger.warning(f"RAG indexing skipped (media): {e}")
 
     return jsonify(response_model.model_dump()), 200
+
+
+@media_bp.route("/latest", methods=["GET"])
+def get_latest_analysis():
+    """
+    Get the latest analysis data from database.
+    Returns real data from stored tweets and analysis.
+    """
+    try:
+        db_service = _get_db_service()
+
+        # Get latest successful API call
+        api_calls = db_service.get_api_calls(limit=1)
+        if not api_calls:
+            return jsonify({"success": False, "error": "No hay análisis guardados"}), 404
+
+        api_call = api_calls[0]
+        api_call_id = api_call['id']
+
+        # Get full data
+        full_data = db_service.get_api_call_with_data(api_call_id)
+        if not full_data:
+            return jsonify({"success": False, "error": "Error obteniendo datos"}), 500
+
+        # Get tweets sample
+        tweets = db_service.get_tweets_by_api_call(api_call_id, limit=50)
+
+        # Build response with all dashboard data
+        analysis = full_data.get('analysis_snapshot')
+        pnd_metrics = full_data.get('pnd_metrics', [])
+
+        # Build topics array from PND metrics
+        topics = []
+        for metric in pnd_metrics:
+            topics.append({
+                "topic": metric.pnd_axis_display,
+                "tweet_count": metric.tweet_count,
+                "sentiment": {
+                    "positive": metric.sentiment_positive,
+                    "neutral": 1 - metric.sentiment_positive - metric.sentiment_negative,
+                    "negative": metric.sentiment_negative
+                },
+                "icce": metric.icce,
+                "sov": metric.sov,
+                "sna": metric.sna,
+                "trend": metric.trend
+            })
+
+        # Sort topics by tweet_count descending
+        topics.sort(key=lambda x: x['tweet_count'], reverse=True)
+
+        # Build response
+        response = {
+            "success": True,
+            "api_call_id": api_call_id,
+            "candidate_name": api_call.get('candidate_name', ''),
+            "location": api_call.get('location', ''),
+            "politician": api_call.get('politician', ''),
+            "fetched_at": api_call.get('fetched_at'),
+
+            # Media data
+            "mediaData": {
+                "success": True,
+                "candidate_name": api_call.get('candidate_name', ''),
+                "location": api_call.get('location', ''),
+                "summary": {
+                    "key_findings": analysis.key_findings if analysis else [],
+                    "executive_summary": analysis.executive_summary if analysis else "",
+                    "key_stats": analysis.key_stats if analysis else [],
+                    "recommendations": analysis.recommendations if analysis else []
+                },
+                "topics": topics,
+                "sentiment_overview": {
+                    "positive": analysis.sentiment_positive if analysis else 0.33,
+                    "negative": analysis.sentiment_negative if analysis else 0.33,
+                    "neutral": analysis.sentiment_neutral if analysis else 0.34
+                },
+                "metadata": {
+                    "tweets_analyzed": full_data.get('tweets_count', 0),
+                    "time_window_from": api_call.get('fetched_at'),
+                    "time_window_to": api_call.get('fetched_at'),
+                    "geo_distribution": analysis.geo_distribution if analysis else []
+                }
+            },
+
+            # Analysis metrics
+            "analysisSnapshot": {
+                "icce": analysis.icce if analysis else 50,
+                "sov": analysis.sov if analysis else 0,
+                "sna": analysis.sna if analysis else 0,
+                "momentum": analysis.momentum if analysis else 0,
+                "sentiment_positive": analysis.sentiment_positive if analysis else 0.33,
+                "sentiment_negative": analysis.sentiment_negative if analysis else 0.33,
+                "sentiment_neutral": analysis.sentiment_neutral if analysis else 0.34,
+                "trending_topics": analysis.trending_topics if analysis else []
+            },
+
+            # PND metrics for table
+            "pndMetrics": [
+                {
+                    "pnd_axis": m.pnd_axis,
+                    "pnd_axis_display": m.pnd_axis_display,
+                    "icce": m.icce,
+                    "sov": m.sov,
+                    "sna": m.sna,
+                    "tweet_count": m.tweet_count,
+                    "trend": m.trend
+                }
+                for m in pnd_metrics
+            ],
+
+            # Sample tweets
+            "tweets": tweets,
+
+            # Tweets count
+            "tweetsCount": full_data.get('tweets_count', 0)
+        }
+
+        return jsonify(response), 200
+
+    except Exception as e:
+        logger.error(f"Error getting latest analysis: {e}", exc_info=True)
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+@media_bp.route("/analysis/<api_call_id>", methods=["GET"])
+def get_analysis_by_id(api_call_id: str):
+    """
+    Get a specific analysis by API call ID.
+    Returns full data for rendering dashboard.
+    """
+    try:
+        db_service = _get_db_service()
+
+        # Get full data for this specific API call
+        full_data = db_service.get_api_call_with_data(api_call_id)
+        if not full_data:
+            return jsonify({"success": False, "error": "Análisis no encontrado"}), 404
+
+        api_call = full_data.get('api_call')
+        if not api_call:
+            return jsonify({"success": False, "error": "Datos de llamada no encontrados"}), 404
+
+        # Get tweets sample
+        tweets = db_service.get_tweets_by_api_call(api_call_id, limit=50)
+
+        # Build response with all dashboard data
+        analysis = full_data.get('analysis_snapshot')
+        pnd_metrics = full_data.get('pnd_metrics', [])
+
+        # Build topics array from PND metrics
+        topics = []
+        for metric in pnd_metrics:
+            topics.append({
+                "topic": metric.pnd_axis_display,
+                "tweet_count": metric.tweet_count,
+                "sentiment": {
+                    "positive": metric.sentiment_positive,
+                    "neutral": 1 - metric.sentiment_positive - metric.sentiment_negative,
+                    "negative": metric.sentiment_negative
+                },
+                "icce": metric.icce,
+                "sov": metric.sov,
+                "sna": metric.sna,
+                "trend": metric.trend
+            })
+
+        # Sort topics by tweet_count descending
+        topics.sort(key=lambda x: x['tweet_count'], reverse=True)
+
+        # Build response
+        response = {
+            "success": True,
+            "api_call_id": api_call_id,
+            "candidate_name": api_call.candidate_name or '',
+            "location": api_call.location or '',
+            "politician": api_call.politician or '',
+            "fetched_at": api_call.fetched_at.isoformat() if api_call.fetched_at else None,
+
+            # Media data
+            "mediaData": {
+                "success": True,
+                "candidate_name": api_call.candidate_name or '',
+                "location": api_call.location or '',
+                "fetched_at": api_call.fetched_at.isoformat() if api_call.fetched_at else None,
+                "summary": {
+                    "key_findings": analysis.key_findings if analysis else [],
+                    "executive_summary": analysis.executive_summary if analysis else "",
+                    "key_stats": analysis.key_stats if analysis else [],
+                    "recommendations": analysis.recommendations if analysis else []
+                },
+                "topics": topics,
+                "sentiment_overview": {
+                    "positive": analysis.sentiment_positive if analysis else 0.33,
+                    "negative": analysis.sentiment_negative if analysis else 0.33,
+                    "neutral": analysis.sentiment_neutral if analysis else 0.34
+                },
+                "metadata": {
+                    "tweets_analyzed": full_data.get('tweets_count', 0),
+                    "time_window_from": api_call.fetched_at.isoformat() if api_call.fetched_at else None,
+                    "time_window_to": api_call.fetched_at.isoformat() if api_call.fetched_at else None,
+                    "geo_distribution": analysis.geo_distribution if analysis else []
+                }
+            },
+
+            # Analysis metrics
+            "analysisSnapshot": {
+                "icce": analysis.icce if analysis else 50,
+                "sov": analysis.sov if analysis else 0,
+                "sna": analysis.sna if analysis else 0,
+                "momentum": analysis.momentum if analysis else 0,
+                "sentiment_positive": analysis.sentiment_positive if analysis else 0.33,
+                "sentiment_negative": analysis.sentiment_negative if analysis else 0.33,
+                "sentiment_neutral": analysis.sentiment_neutral if analysis else 0.34,
+                "trending_topics": analysis.trending_topics if analysis else []
+            },
+
+            # PND metrics for table
+            "pndMetrics": [
+                {
+                    "pnd_axis": m.pnd_axis,
+                    "pnd_axis_display": m.pnd_axis_display,
+                    "icce": m.icce,
+                    "sov": m.sov,
+                    "sna": m.sna,
+                    "tweet_count": m.tweet_count,
+                    "trend": m.trend
+                }
+                for m in pnd_metrics
+            ],
+
+            # Sample tweets
+            "tweets": tweets,
+
+            # Tweets count
+            "tweetsCount": full_data.get('tweets_count', 0)
+        }
+
+        return jsonify(response), 200
+
+    except Exception as e:
+        logger.error(f"Error getting analysis {api_call_id}: {e}", exc_info=True)
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+@media_bp.route("/history", methods=["GET"])
+def get_analysis_history():
+    """Get list of all stored analyses."""
+    try:
+        db_service = _get_db_service()
+
+        candidate = request.args.get('candidate')
+        location = request.args.get('location')
+        limit = int(request.args.get('limit', 20))
+
+        api_calls = db_service.get_api_calls(
+            candidate_name=candidate,
+            location=location,
+            limit=limit
+        )
+
+        return jsonify({
+            "success": True,
+            "count": len(api_calls),
+            "api_calls": api_calls
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Error getting history: {e}", exc_info=True)
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+@media_bp.route("/tweets/<api_call_id>", methods=["GET"])
+def get_tweets_for_analysis(api_call_id: str):
+    """Get all tweets for a specific API call."""
+    try:
+        db_service = _get_db_service()
+
+        limit = int(request.args.get('limit', 500))
+        offset = int(request.args.get('offset', 0))
+
+        tweets = db_service.get_tweets_by_api_call(api_call_id, limit=limit, offset=offset)
+
+        return jsonify({
+            "success": True,
+            "api_call_id": api_call_id,
+            "count": len(tweets),
+            "tweets": tweets
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Error getting tweets: {e}", exc_info=True)
+        return jsonify({"success": False, "error": str(e)}), 500

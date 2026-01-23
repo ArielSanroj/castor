@@ -97,10 +97,10 @@ class Config:
     CACHE_TTL_OPENAI: int = int(os.getenv('CACHE_TTL_OPENAI', '43200'))  # 12 hours
     CACHE_TTL_TRENDING: int = int(os.getenv('CACHE_TTL_TRENDING', '21600'))  # 6 hours
     
-    # Twitter Free Tier Limits (100 posts per month)
-    TWITTER_MAX_TWEETS_PER_REQUEST: int = int(os.getenv('TWITTER_MAX_TWEETS_PER_REQUEST', '15'))  # Máximo por análisis
-    TWITTER_DAILY_TWEET_LIMIT: int = int(os.getenv('TWITTER_DAILY_TWEET_LIMIT', '3'))  # ~100/30 días = 3 por día
-    TWITTER_MONTHLY_LIMIT: int = 100  # Free tier limit
+    # Twitter Basic Plan Limits ($200/month - 15,000 posts/month)
+    TWITTER_MAX_TWEETS_PER_REQUEST: int = int(os.getenv('TWITTER_MAX_TWEETS_PER_REQUEST', '500'))  # Máximo por request (límite diario)
+    TWITTER_DAILY_TWEET_LIMIT: int = int(os.getenv('TWITTER_DAILY_TWEET_LIMIT', '500'))  # ~15000/30 días = 500 por día
+    TWITTER_MONTHLY_LIMIT: int = int(os.getenv('TWITTER_MONTHLY_LIMIT', '15000'))  # Basic plan limit
     
     # Logging
     LOG_LEVEL: str = os.getenv('LOG_LEVEL', 'INFO')

@@ -5,45 +5,1626 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <title>CASTOR | IA Electoral - Dashboard de Estrategia</title>
-    <meta name="description" content="Dashboard de estrategia electoral con IA. Compara tu posicion vs rivales, recibe jugadas diarias, alertas y forecast narrativo en tiempo real.">
-    <meta name="keywords" content="IA electoral, estrategia politica, dashboard electoral, comparacion rivales, jugadas tacticas, forecast narrativo, ICCE, momentum">
+    <meta name="description" content="Dashboard de estrategia electoral con IA. Conoce tu ventaja electoral y comparala con tus rivales. Estrategias y planes de accion diarios.">
+    <meta name="keywords" content="IA electoral, estrategia politica, dashboard electoral, comparacion rivales, estrategias electorales, forecast narrativo, ICCE, momentum">
     <meta name="author" content="Castor Elecciones">
     <meta name="robots" content="index, follow">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://castor-elecciones.com/dashboard">
     <meta property="og:title" content="CASTOR | IA Electoral - Dashboard de Estrategia">
-    <meta property="og:description" content="Dashboard de estrategia electoral con IA. Compara tu posicion vs rivales, recibe jugadas diarias y forecast narrativo.">
+    <meta property="og:description" content="Dashboard de estrategia electoral con IA. Conoce tu ventaja electoral y comparala con tus rivales. Estrategias diarias.">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="CASTOR | IA Electoral">
-    <meta name="twitter:description" content="Estrategia electoral con IA. Compara vs rivales, jugadas diarias, alertas en tiempo real.">
+    <meta name="twitter:description" content="Estrategia electoral con IA. Conoce tu ventaja electoral, estrategias diarias y planes de accion.">
 
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/castorlogo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/castorlogo.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/castorlogo.png">
-    <link rel="shortcut icon" href="/static/images/castorlogo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/logo.png">
+    <link rel="shortcut icon" href="/static/images/logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-    <link rel="preload" href="/static/css/styles.css?v=20260110b" as="style">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="/static/css/styles.css?v=20260122b" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" as="style">
 
-    <link rel="stylesheet" href="/static/css/styles.css?v=20260110b">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css?v=20260122b">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 
     <meta name="theme-color" content="#0A0E1A">
+
+    <style>
+        /* ========== BARRA DE METADATA / ULTIMA ACTUALIZACION ========== */
+        .data-metadata-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.08), rgba(201, 162, 39, 0.03));
+            border: 1px solid rgba(201, 162, 39, 0.25);
+            border-left: 4px solid #C9A227;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        .metadata-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .metadata-icon {
+            color: var(--accent, #C9A227);
+            display: flex;
+            align-items: center;
+        }
+        .metadata-timestamp {
+            font-size: 0.9rem;
+            color: var(--text, #F5F5F0);
+            font-weight: 600;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
+        }
+        .metadata-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .metadata-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .metadata-stat .stat-label {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .metadata-stat .stat-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--accent, #C9A227);
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .cache-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            background: rgba(139, 115, 85, 0.2);
+            color: #9A8F7C;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+        }
+        @media (max-width: 600px) {
+            .data-metadata-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .metadata-right {
+                gap: 1rem;
+            }
+        }
+
+        /* ========== BOTON VER HISTORICO ========== */
+        .history-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.75rem;
+            margin-left: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #C9A227;
+            background: rgba(201, 162, 39, 0.1);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+        .history-btn:hover {
+            background: rgba(201, 162, 39, 0.2);
+            border-color: rgba(201, 162, 39, 0.5);
+        }
+        .history-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ========== MODAL HISTORICO ========== */
+        .history-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .history-modal-overlay.active {
+            display: flex;
+        }
+        .history-modal {
+            background: var(--surface, #141824);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .history-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            background: rgba(201, 162, 39, 0.05);
+        }
+        .history-modal-title {
+            font-family: var(--font-display, 'Playfair Display', serif);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+        .history-modal-close {
+            background: none;
+            border: none;
+            color: var(--muted, #9A8F7C);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+        .history-modal-close:hover {
+            color: var(--text, #F5F5F0);
+        }
+        .history-modal-body {
+            padding: 1rem 1.5rem;
+            overflow-y: auto;
+            max-height: calc(80vh - 60px);
+        }
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(201, 162, 39, 0.05);
+            border: 1px solid rgba(201, 162, 39, 0.15);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .history-item:hover {
+            background: rgba(201, 162, 39, 0.1);
+            border-color: rgba(201, 162, 39, 0.3);
+        }
+        .history-item-main {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .history-item-date {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent, #C9A227);
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .history-item-meta {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .history-item-tweets {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+            background: rgba(201, 162, 39, 0.15);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+        .history-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .history-loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* ========== NIVEL 1: LA DECISION DE HOY ========== */
+        .decision-hero-section {
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.06), rgba(201, 162, 39, 0.02));
+            border: 1px solid rgba(201, 162, 39, 0.25);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .decision-hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #8B7355, #C9A227, #E8D48A, #C9A227, #8B7355);
+        }
+        .decision-hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .decision-hero-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .priority-indicator {
+            padding: 0.4rem 0.9rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
+        }
+        .priority-today {
+            background: linear-gradient(135deg, #C9A227, #D4AF37);
+            color: #0A0A0A;
+        }
+        .priority-48h {
+            background: rgba(201, 162, 39, 0.15);
+            color: #E8D48A;
+            border: 1px solid rgba(201, 162, 39, 0.3);
+        }
+        .priority-watch {
+            background: rgba(154, 143, 124, 0.15);
+            color: #9A8F7C;
+            border: 1px solid rgba(154, 143, 124, 0.3);
+        }
+        .decision-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text, #F5F5F0);
+            font-family: var(--font-display, 'Playfair Display', serif);
+            letter-spacing: 0.02em;
+        }
+        .decision-confidence {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(74, 124, 89, 0.15);
+            border: 1px solid rgba(74, 124, 89, 0.3);
+            border-radius: 6px;
+        }
+        .confidence-dot {
+            width: 8px;
+            height: 8px;
+            background: #4A7C59;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .decision-hero-main {
+            margin-bottom: 1.5rem;
+        }
+        .decision-main-text {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--text, #F5F5F0);
+            line-height: 1.5;
+            margin: 0;
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .decision-hero-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: rgba(201, 162, 39, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(201, 162, 39, 0.1);
+        }
+        .decision-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .meta-icon {
+            font-size: 1rem;
+            color: var(--accent, #C9A227);
+        }
+        .meta-label {
+            color: var(--muted, #9A8F7C);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .meta-value {
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+        .meta-value.positive {
+            color: #4A7C59;
+        }
+        .decision-hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
+        }
+        .action-btn.primary {
+            background: linear-gradient(135deg, #C9A227, #D4AF37);
+            color: #0A0A0A;
+        }
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(201, 162, 39, 0.35);
+            background: linear-gradient(135deg, #D4AF37, #E8D48A);
+        }
+        .action-btn.secondary {
+            background: rgba(74, 124, 89, 0.12);
+            border: 1px solid rgba(74, 124, 89, 0.3);
+            color: #5D9A6D;
+        }
+        .action-btn.secondary:hover {
+            background: rgba(74, 124, 89, 0.2);
+            border-color: rgba(74, 124, 89, 0.5);
+        }
+        .action-btn.ghost {
+            background: transparent;
+            border: 1px solid var(--border, #2A2A2A);
+            color: var(--muted, #9A8F7C);
+        }
+        .action-btn.ghost:hover {
+            border-color: var(--accent, #C9A227);
+            color: var(--accent, #C9A227);
+        }
+        .action-btn.small {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+        .decision-hero-warning {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(201, 162, 39, 0.06);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-left: 3px solid #C9A227;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+            color: #E8D48A;
+        }
+
+        /* Estrategia detallada */
+        .strategy-objective {
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: rgba(74, 124, 89, 0.08);
+            border-radius: 8px;
+            border-left: 3px solid #4A7C59;
+        }
+        .objective-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #5D9A6D;
+            margin: 0 0 0.5rem 0;
+        }
+        .objective-text {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text, #F5F5F0);
+            line-height: 1.5;
+        }
+        .strategy-actions-detail {
+            margin-bottom: 1.5rem;
+        }
+        .actions-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent, #C9A227);
+            margin: 0 0 1rem 0;
+        }
+        .actions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .action-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 8px;
+            transition: border-color 0.2s;
+        }
+        .action-item:hover {
+            border-color: rgba(201, 162, 39, 0.3);
+        }
+        .action-number {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            background: linear-gradient(135deg, #C9A227, #D4AF37);
+            color: #0A0A0A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .action-content strong {
+            display: block;
+            color: var(--text, #F5F5F0);
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+        .action-content p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--muted, #9A8F7C);
+            line-height: 1.4;
+        }
+        .impact-highlight {
+            background: rgba(74, 124, 89, 0.1);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            border: 1px solid rgba(74, 124, 89, 0.2);
+        }
+        .action-btn.success {
+            background: linear-gradient(135deg, #4A7C59, #5D9A6D);
+            color: #fff;
+        }
+        .action-btn.success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(74, 124, 89, 0.35);
+        }
+
+        /* Posts generados */
+        .generated-posts-area {
+            margin: 1.5rem 0;
+            padding: 1.25rem;
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 10px;
+        }
+        .posts-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent, #C9A227);
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .posts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .post-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .post-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted, #9A8F7C);
+        }
+        .post-time {
+            font-size: 0.7rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .post-text {
+            font-size: 0.9rem;
+            color: var(--text, #F5F5F0);
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+            white-space: pre-wrap;
+        }
+        .post-hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .hashtag {
+            font-size: 0.75rem;
+            color: #1DA1F2;
+            background: rgba(29, 161, 242, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        .post-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border, #2A2A2A);
+        }
+        .post-action-btn {
+            font-size: 0.7rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .post-action-btn.copy {
+            background: rgba(201, 162, 39, 0.15);
+            color: var(--accent, #C9A227);
+        }
+        .post-action-btn.copy:hover {
+            background: rgba(201, 162, 39, 0.25);
+        }
+        .post-action-btn.edit {
+            background: rgba(154, 143, 124, 0.15);
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* ========== NIVEL 2: CONTEXTO KPIs ========== */
+        .context-kpis-section {
+            margin-bottom: 2rem;
+        }
+        .context-kpis-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        @media (max-width: 900px) {
+            .context-kpis-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 500px) {
+            .context-kpis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .context-kpi-card {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all 0.25s ease;
+        }
+        .context-kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-color: rgba(201, 162, 39, 0.2);
+        }
+        .kpi-icon-wrapper {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .kpi-icon-wrapper.kpi-icce {
+            background: rgba(201, 162, 39, 0.12);
+            color: #C9A227;
+        }
+        .kpi-icon-wrapper.kpi-momentum {
+            background: rgba(74, 124, 89, 0.12);
+            color: #4A7C59;
+        }
+        .kpi-icon-wrapper.kpi-sentiment {
+            background: rgba(139, 115, 85, 0.15);
+            color: #8B7355;
+        }
+        .kpi-icon-wrapper.kpi-forecast {
+            background: rgba(201, 162, 39, 0.12);
+            color: #D4AF37;
+        }
+        .kpi-content {
+            flex: 1;
+        }
+        .kpi-label-new {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+            margin: 0 0 0.35rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .kpi-value-new {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+            margin: 0;
+            line-height: 1.2;
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .kpi-state {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin: 0.3rem 0 0 0;
+        }
+        .kpi-state.positive {
+            color: #5D9A6D;
+        }
+        .kpi-state.negative {
+            color: #A85454;
+        }
+        .kpi-state.neutral {
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* ========== NIVEL 3: COMPARACION RIVAL ========== */
+        .rival-comparison-section {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .rival-header {
+            margin-bottom: 1.5rem;
+        }
+        .rival-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+        .rival-title-row h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--text, #F5F5F0);
+            font-family: var(--font-display, 'Playfair Display', serif);
+            font-weight: 500;
+        }
+        .rival-select {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border, #2A2A2A);
+            background: var(--panel, #141414);
+            color: var(--text, #F5F5F0);
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
+        }
+        .rival-select:focus {
+            border-color: var(--accent, #C9A227);
+            outline: none;
+        }
+        .rival-insight {
+            color: var(--text-secondary, #E0DED8);
+            font-size: 0.9rem;
+            margin: 0;
+            padding: 0.75rem 1rem;
+            background: rgba(201, 162, 39, 0.05);
+            border-left: 3px solid #C9A227;
+            border-radius: 0 6px 6px 0;
+        }
+        .rival-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .rival-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .rival-radar-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        .rival-gaps-card {
+            padding: 1rem;
+        }
+        .gaps-title {
+            font-weight: 600;
+            color: var(--text, #F5F7FA);
+            margin: 0 0 1rem 0;
+            font-size: 0.95rem;
+        }
+        .gaps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .gap-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .gap-label {
+            width: 120px;
+            font-size: 0.85rem;
+            color: var(--text, #F5F7FA);
+        }
+        .gap-bar-container {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .gap-bar {
+            height: 100%;
+            border-radius: 4px;
+        }
+        .gap-bar.positive {
+            background: linear-gradient(90deg, #4A7C59, #5D9A6D);
+        }
+        .gap-bar.negative {
+            background: linear-gradient(90deg, #8B3A3A, #A85454);
+        }
+        .gap-value {
+            width: 60px;
+            text-align: right;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .gap-item.gap-positive .gap-value {
+            color: #5D9A6D;
+        }
+        .gap-item.gap-negative .gap-value {
+            color: #A85454;
+        }
+        .gaps-recommendation {
+            margin: 1rem 0 0 0;
+            padding: 0.75rem 1rem;
+            background: rgba(201, 162, 39, 0.06);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #E8D48A;
+            border: 1px solid rgba(201, 162, 39, 0.15);
+        }
+
+        /* ========== SECCION FORTALEZAS Y DEBILIDADES ========== */
+        .campaign-strength-section {
+            margin-bottom: 2rem;
+        }
+        .section-header-compact {
+            margin-bottom: 1.25rem;
+        }
+        .section-header-compact h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text, #F5F5F0);
+        }
+        .section-header-compact .subtitle {
+            font-size: 0.9rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .strength-weakness-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .strength-weakness-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .strength-card, .weakness-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .strength-card {
+            border-left: 4px solid var(--accent, #C9A227);
+        }
+        .weakness-card {
+            border-left: 4px solid var(--error, #8B3A3A);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-icon.positive {
+            background: rgba(201, 162, 39, 0.15);
+            color: var(--accent, #C9A227);
+        }
+        .card-icon.negative {
+            background: rgba(139, 58, 58, 0.15);
+            color: var(--error, #8B3A3A);
+        }
+        .strength-list, .weakness-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+        }
+        .strength-item, .weakness-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .strength-item:last-child, .weakness-item:last-child {
+            border-bottom: none;
+        }
+        .item-label {
+            font-weight: 500;
+            color: var(--text, #F5F5F0);
+        }
+        .item-value {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .item-value.positive {
+            color: var(--accent, #C9A227);
+        }
+        .item-value.negative {
+            color: var(--error, #8B3A3A);
+        }
+        .card-summary {
+            font-size: 0.85rem;
+            color: var(--muted, #9A8F7C);
+            margin: 0;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* ========== KPIS CAMPAÑA ========== */
+        .campaign-kpis-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .campaign-kpi {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border-gold, rgba(201,162,39,0.3));
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        .campaign-kpi .kpi-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent, #C9A227);
+            letter-spacing: 0.05em;
+        }
+        .campaign-kpi .kpi-number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text, #F5F5F0);
+            display: block;
+            margin: 0.25rem 0;
+        }
+        .campaign-kpi .kpi-desc {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .campaign-kpi .kpi-context {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+        .campaign-kpi .kpi-context.positive {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+        .campaign-kpi .kpi-context.moderate {
+            background: rgba(234, 179, 8, 0.15);
+            color: #eab308;
+        }
+        .campaign-kpi .kpi-context.negative {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        /* ========== PND ANALYSIS ========== */
+        .pnd-analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .pnd-analysis-grid { grid-template-columns: 1fr; }
+        }
+        .pnd-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .pnd-strengths { border-left: 4px solid var(--accent, #C9A227); }
+        .pnd-weaknesses { border-left: 4px solid var(--error, #8B3A3A); }
+        .pnd-card-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .pnd-icon { font-size: 1rem; }
+        .pnd-icon.positive { color: var(--accent, #C9A227); }
+        .pnd-icon.negative { color: var(--error, #8B3A3A); }
+        .pnd-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .pnd-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .pnd-eje { font-weight: 500; font-size: 0.9rem; }
+        .pnd-metrics { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .metric-pill {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .metric-pill.positive { background: rgba(201,162,39,0.15); color: var(--accent); }
+        .metric-pill.negative { background: rgba(139,58,58,0.15); color: var(--error); }
+        .metric-pill.neutral { background: rgba(154,143,124,0.15); color: var(--muted); }
+
+        /* ========== TABLA 10 EJES PND ========== */
+        .metrics-legend {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            background: rgba(201,162,39,0.05);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .legend-item strong {
+            color: var(--accent, #C9A227);
+        }
+        .pnd-full-table {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .pnd-table-header {
+            display: grid;
+            grid-template-columns: 40px 1.5fr 80px 80px 80px 100px 70px;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(201,162,39,0.1);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent, #C9A227);
+        }
+        @media (max-width: 768px) {
+            .pnd-table-header {
+                grid-template-columns: 30px 1fr 60px 60px 60px 70px 50px;
+                font-size: 0.65rem;
+                padding: 0.5rem;
+            }
+        }
+        .pnd-table-body {
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .pnd-row {
+            display: grid;
+            grid-template-columns: 40px 1.5fr 80px 80px 80px 100px 70px;
+            gap: 0.5rem;
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .pnd-row:hover {
+            background: rgba(201,162,39,0.05);
+        }
+        .pnd-ver-mas-btn {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #C9A227;
+            background: rgba(201, 162, 39, 0.1);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pnd-ver-mas-btn:hover {
+            background: rgba(201, 162, 39, 0.2);
+            border-color: #C9A227;
+        }
+
+        /* Modal de detalles del eje PND */
+        .pnd-detail-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .pnd-detail-modal-overlay.active {
+            display: flex;
+        }
+        .pnd-detail-modal {
+            background: var(--surface, #141824);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        .pnd-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            background: rgba(201, 162, 39, 0.08);
+        }
+        .pnd-detail-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #F5F5F0;
+        }
+        .pnd-detail-close {
+            background: none;
+            border: none;
+            color: #9A8F7C;
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+        }
+        .pnd-detail-close:hover {
+            color: #F5F5F0;
+        }
+        .pnd-detail-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: calc(85vh - 70px);
+        }
+        .pnd-detail-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .pnd-detail-metric {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(201, 162, 39, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(201, 162, 39, 0.15);
+        }
+        .pnd-detail-metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #C9A227;
+            font-family: 'Playfair Display', serif;
+        }
+        .pnd-detail-metric-label {
+            font-size: 0.75rem;
+            color: #9A8F7C;
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+        }
+        .pnd-detail-section {
+            margin-bottom: 1.5rem;
+        }
+        .pnd-detail-section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #C9A227;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .pnd-detail-explanation {
+            font-size: 0.95rem;
+            color: #F5F5F0;
+            line-height: 1.6;
+        }
+        .pnd-detail-tweets {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .pnd-detail-tweet {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid #C9A227;
+            font-size: 0.9rem;
+            color: #F5F5F0;
+            line-height: 1.5;
+        }
+        .pnd-detail-tweet-meta {
+            font-size: 0.75rem;
+            color: #9A8F7C;
+            margin-top: 0.5rem;
+        }
+        .pnd-detail-tweet-meta .sentiment-positivo,
+        .pnd-detail-tweet-meta .sentiment-positive {
+            color: #22c55e;
+            font-weight: 600;
+        }
+        .pnd-detail-tweet-meta .sentiment-negativo,
+        .pnd-detail-tweet-meta .sentiment-negative {
+            color: #ef4444;
+            font-weight: 600;
+        }
+        .pnd-detail-tweet-meta .sentiment-neutral {
+            color: #eab308;
+            font-weight: 600;
+        }
+        .pnd-row:last-child {
+            border-bottom: none;
+        }
+        .pnd-row.loading {
+            opacity: 0.5;
+        }
+        @media (max-width: 768px) {
+            .pnd-row {
+                grid-template-columns: 30px 1fr 60px 60px 60px 70px 50px;
+                font-size: 0.85rem;
+                padding: 0.5rem;
+            }
+        }
+        .col-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .status-indicator.strong { background: var(--accent, #C9A227); }
+        .status-indicator.moderate { background: var(--muted, #9A8F7C); }
+        .status-indicator.weak { background: var(--error, #8B3A3A); }
+        .col-eje-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text, #F5F5F0);
+        }
+        .col-metric {
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .col-metric.positive { color: var(--accent, #C9A227); }
+        .col-metric.negative { color: var(--error, #8B3A3A); }
+        .col-metric.neutral { color: var(--muted, #9A8F7C); }
+        .col-trend {
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        .trend-up { color: var(--accent, #C9A227); }
+        .trend-down { color: var(--error, #8B3A3A); }
+        .trend-stable { color: var(--muted, #9A8F7C); }
+
+        /* Resumen PND */
+        .pnd-summary-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .pnd-summary-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .pnd-summary-card.positive {
+            background: rgba(201,162,39,0.1);
+            border: 1px solid rgba(201,162,39,0.3);
+        }
+        .pnd-summary-card.negative {
+            background: rgba(139,58,58,0.1);
+            border: 1px solid rgba(139,58,58,0.3);
+        }
+        .summary-icon {
+            font-size: 1rem;
+        }
+        .pnd-summary-card.positive .summary-icon { color: var(--accent, #C9A227); }
+        .pnd-summary-card.negative .summary-icon { color: var(--error, #8B3A3A); }
+        .summary-label {
+            color: var(--muted, #9A8F7C);
+        }
+        .summary-value {
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+
+        /* ========== RIVAL COMPARISON TABLE ========== */
+        .rival-pnd-comparison {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        @media (max-width: 900px) {
+            .rival-pnd-comparison { grid-template-columns: 1fr; }
+        }
+        .rival-comparison-table {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .comparison-header-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 1.5fr 0.8fr;
+            background: rgba(201,162,39,0.08);
+            padding: 0.75rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+        }
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 1.5fr 0.8fr;
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+            font-size: 0.85rem;
+        }
+        .comparison-row:last-child { border-bottom: none; }
+        .col-eje { font-weight: 500; }
+        .col-tu, .col-rival { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+        .metric-mini {
+            font-size: 0.65rem;
+            padding: 0.15rem 0.35rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+        }
+        .col-diff { font-weight: 700; text-align: center; }
+        .col-diff.positive { color: var(--accent); }
+        .col-diff.negative { color: var(--error); }
+
+        /* ========== INSIGHTS MEJORADOS ========== */
+        .insights-improved {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .insight-item {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+        }
+        .insight-item.insight-key { border-left: 4px solid #3B82F6; }
+        .insight-item.insight-opportunity { border-left: 4px solid var(--accent, #C9A227); }
+        .insight-item.insight-risk { border-left: 4px solid var(--error, #8B3A3A); }
+        .insight-icon-wrap {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .insight-key .insight-icon-wrap { background: rgba(59,130,246,0.15); color: #3B82F6; }
+        .insight-opportunity .insight-icon-wrap { background: rgba(201,162,39,0.15); color: var(--accent); }
+        .insight-risk .insight-icon-wrap { background: rgba(139,58,58,0.15); color: var(--error); }
+        .insight-content { flex: 1; }
+        .insight-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; color: var(--muted); }
+        .insight-desc { font-size: 0.85rem; margin: 0.25rem 0 0; line-height: 1.4; }
+
+        /* ========== NARRATIVE SECTION ========== */
+        .narrative-section { margin-bottom: 1.5rem; }
+        .narrative-summary-box {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border-gold, rgba(201,162,39,0.2));
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .narrative-text { font-size: 0.9rem; line-height: 1.5; margin: 0; color: var(--text-secondary); }
+        .section-subtitle { font-size: 0.85rem; font-weight: 600; margin: 1rem 0 0.75rem; color: var(--text); }
+        .narrative-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.75rem;
+        }
+        @media (max-width: 900px) {
+            .narrative-metrics-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .narrative-metric {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .metric-name { font-size: 0.7rem; color: var(--muted); display: block; }
+        .metric-val { font-size: 1rem; font-weight: 600; color: var(--text); display: block; margin-top: 0.25rem; }
+
+        /* ========== ACTION CARDS ========== */
+        .action-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        @media (max-width: 900px) {
+            .action-cards-grid { grid-template-columns: 1fr; }
+        }
+        .action-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .action-card.action-priority { border-top: 3px solid var(--error, #8B3A3A); }
+        .action-card.action-media { border-top: 3px solid var(--accent, #C9A227); }
+        .action-card.action-digital { border-top: 3px solid #3B82F6; }
+        .action-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+        .action-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+        }
+        .action-badge.urgent { background: rgba(139,58,58,0.2); color: var(--error); }
+        .action-badge.media { background: rgba(201,162,39,0.2); color: var(--accent); }
+        .action-badge.digital { background: rgba(59,130,246,0.2); color: #3B82F6; }
+        .action-time { font-size: 0.75rem; color: var(--muted); }
+        .action-text { font-size: 0.85rem; margin: 0 0 0.75rem; line-height: 1.4; }
+        .action-owner { font-size: 0.75rem; color: var(--muted); }
+        .action-owner strong { color: var(--text); }
+
+        /* ========== MAPA COLOMBIA ========== */
+        .colombia-map { padding: 1rem; }
+        .colombia-svg { width: 100%; max-height: 280px; }
+        .region {
+            fill: rgba(201,162,39,0.2);
+            stroke: var(--border, #1E2433);
+            stroke-width: 1;
+            transition: fill 0.3s;
+        }
+        .region.highlight { fill: rgba(201,162,39,0.5); }
+        .region:hover { fill: rgba(201,162,39,0.4); cursor: pointer; }
+        .city-dot { fill: var(--accent, #C9A227); }
+        .city-dot.bogota { fill: var(--text, #F5F5F0); r: 8; }
+        .city-label { font-size: 10px; fill: var(--text-secondary); }
+
+        /* ========== NIVEL 5: PROFUNDIDAD ========== */
+        .depth-section {
+            margin-top: 2rem;
+        }
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 900px) {
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .insight-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .insight-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+        .insight-key .insight-badge {
+            background: rgba(201, 162, 39, 0.12);
+            color: #C9A227;
+        }
+        .insight-opportunity .insight-badge {
+            background: rgba(74, 124, 89, 0.12);
+            color: #5D9A6D;
+        }
+        .insight-risk .insight-badge {
+            background: rgba(139, 58, 58, 0.15);
+            color: #A85454;
+        }
+        .insight-text {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text, #F5F7FA);
+            line-height: 1.5;
+        }
+
+        /* ========== ALTERNATIVAS ========== */
+        .alternatives-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .alternatives-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .alternative-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .alternative-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .alternative-owner {
+            font-size: 0.8rem;
+            color: var(--muted, #8892B0);
+            padding: 0.25rem 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        .alternative-text {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text, #F5F7FA);
+        }
+        .alternative-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--muted, #8892B0);
+        }
+        .rival-signal-card, .trigger-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .signal-badge, .trigger-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .signal-badge {
+            background: rgba(139, 58, 58, 0.12);
+            color: #A85454;
+        }
+        .trigger-badge {
+            background: rgba(201, 162, 39, 0.12);
+            color: #D4AF37;
+        }
+        .signal-text, .trigger-text {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text, #F5F7FA);
+        }
+    </style>
 </head>
 <body class="landing" data-mode="unified" itemscope itemtype="https://schema.org/WebPage">
     <header class="main-header" role="banner">
         <nav class="main-nav" role="navigation" aria-label="Navegacion principal">
             <div class="nav-left">
                 <a class="brand" href="/" aria-label="Ir a inicio de Castor Elecciones">
-                    <img src="/static/images/castorlogo.png"
+                    <img src="/static/images/logo.png"
                          alt="Castor Elecciones - Logo"
                          width="54"
                          height="54"
@@ -65,59 +1646,127 @@
 
         <section class="panel dashboard-intro" aria-labelledby="hero-title">
             <div class="section-header">
-                <p class="eyebrow" role="doc-subtitle">IA ELECTORAL · ESTRATEGIA · RIVALES · JUGADAS</p>
+                <p class="eyebrow" role="doc-subtitle">IA ELECTORAL · ESTRATEGIA · RIVALES · PLANES DE ACCION</p>
                 <h1 id="hero-title">Dashboard de Estrategia Electoral</h1>
-                <p class="subtitle">Compara tu posicion vs rivales, recibe jugadas diarias, alertas y proyecciones narrativas.</p>
+                <p class="subtitle">Conoce tu ventaja electoral, y comparala con tus rivales. Recibe estrategias y planes de accion diarios para ganar la contienda electoral.</p>
             </div>
         </section>
 
         <section class="panel" aria-labelledby="dashboard-form-title">
-            <div class="section-header">
-                <h2 id="dashboard-form-title">Conoce el pulso electoral</h2>
-                <p class="subtitle">Define ciudad, temática en discusión y tendencia que quieres proyectar.</p>
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 id="dashboard-form-title">Conoce el pulso electoral</h2>
+                    <p class="subtitle">Define ciudad, temática en discusión y tendencia que quieres proyectar.</p>
+                </div>
+                <button type="button" id="view-history-btn-form" title="Ver historial de llamadas API"
+                    style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; margin-top: 0.5rem; font-size: 0.85rem; font-weight: 600; color: #C9A227; background: rgba(201, 162, 39, 0.15); border: 1px solid #C9A227; border-radius: 6px; cursor: pointer;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A227">
+                        <path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                    </svg>
+                    Ver histórico
+                </button>
             </div>
 
             <div class="card compact-card" style="max-width: 1200px; margin: 0 auto;">
                 <form id="unified-form">
                     <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
                         <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
-                            <label for="unified-location" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Ubicacion *</label>
-                            <input id="unified-location" name="location" type="text" placeholder="Colombia, Bogota..." required
-                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                            <label for="unified-location" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Ubicación *</label>
+                            <select id="unified-location" name="location" required
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem; background: white;">
+                                <option value="Colombia" selected>Colombia (Nacional)</option>
+                                <optgroup label="Principales ciudades">
+                                    <option value="Bogotá">Bogotá D.C.</option>
+                                    <option value="Medellín">Medellín</option>
+                                    <option value="Cali">Cali</option>
+                                    <option value="Barranquilla">Barranquilla</option>
+                                    <option value="Cartagena">Cartagena</option>
+                                    <option value="Bucaramanga">Bucaramanga</option>
+                                    <option value="Cúcuta">Cúcuta</option>
+                                    <option value="Pereira">Pereira</option>
+                                    <option value="Santa Marta">Santa Marta</option>
+                                    <option value="Ibagué">Ibagué</option>
+                                </optgroup>
+                                <optgroup label="Otras ciudades">
+                                    <option value="Manizales">Manizales</option>
+                                    <option value="Villavicencio">Villavicencio</option>
+                                    <option value="Pasto">Pasto</option>
+                                    <option value="Neiva">Neiva</option>
+                                    <option value="Armenia">Armenia</option>
+                                    <option value="Montería">Montería</option>
+                                    <option value="Valledupar">Valledupar</option>
+                                    <option value="Popayán">Popayán</option>
+                                    <option value="Sincelejo">Sincelejo</option>
+                                    <option value="Tunja">Tunja</option>
+                                </optgroup>
+                                <optgroup label="Regiones">
+                                    <option value="Costa Caribe">Costa Caribe</option>
+                                    <option value="Eje Cafetero">Eje Cafetero</option>
+                                    <option value="Antioquia">Antioquia</option>
+                                    <option value="Valle del Cauca">Valle del Cauca</option>
+                                    <option value="Santander">Santander</option>
+                                </optgroup>
+                            </select>
                         </div>
                         <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
                             <label for="unified-topic" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Temática</label>
-                            <input id="unified-topic" name="topic" type="text" placeholder="Seguridad, Paz, Alimentos..."
-                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                            <select id="unified-topic" name="topic"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem; background: white;">
+                                <option value="" selected>Todas las temáticas</option>
+                                <optgroup label="Ejes del Plan Nacional de Desarrollo">
+                                    <option value="Seguridad">Seguridad</option>
+                                    <option value="Economía y Empleo">Economía y Empleo</option>
+                                    <option value="Educación">Educación</option>
+                                    <option value="Salud">Salud</option>
+                                    <option value="Infraestructura">Infraestructura</option>
+                                    <option value="Gobernanza y Transparencia">Gobernanza y Transparencia</option>
+                                    <option value="Paz y Reinserción">Paz y Reinserción</option>
+                                    <option value="Igualdad y Equidad">Igualdad y Equidad</option>
+                                    <option value="Medio Ambiente">Medio Ambiente</option>
+                                    <option value="Alimentación">Alimentación</option>
+                                </optgroup>
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
                         <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
                             <label for="unified-candidate" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Candidato</label>
-                            <input id="unified-candidate" name="candidate_name" type="text" placeholder="Nombre propio"
+                            <input id="unified-candidate" name="candidate_name" type="text" placeholder="Nombre del candidato" value="Abelardo de la Espriella"
                                    style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
                         </div>
                         <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
-                            <label for="unified-politician" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Usuario X/Twitter (opcional)</label>
-                            <input id="unified-politician" name="politician" type="text" placeholder="@usuario"
+                            <label for="unified-politician" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Usuario X/Twitter</label>
+                            <input id="unified-politician" name="politician" type="text" placeholder="@usuario" value="@ABDELAESPRIELLA"
                                    style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
                         </div>
                     </div>
 
                     <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; align-items: flex-end;">
-                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
-                            <label for="unified-days-back" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días hacia atrás</label>
+                        <div class="form-field" style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-max-tweets" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Tweets a traer</label>
+                            <select id="unified-max-tweets" name="max_tweets"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem; background: white;">
+                                <option value="50">50 tweets</option>
+                                <option value="100" selected>100 tweets</option>
+                                <option value="250">250 tweets</option>
+                                <option value="300">300 tweets</option>
+                                <option value="400">400 tweets</option>
+                                <option value="500">500 tweets (máx. diario)</option>
+                            </select>
+                        </div>
+                        <div class="form-field" style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-days-back" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días atrás <span style="color: #9CA3AF; font-weight: 400;">(máx. 90)</span></label>
                             <input id="unified-days-back" name="days_back" type="number" min="7" max="90" value="30"
                                    style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
                         </div>
-                        <div class="form-field" style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 0.25rem;">
-                            <label for="unified-forecast-days" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días a proyectar</label>
+                        <div class="form-field" style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-forecast-days" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días a proyectar <span style="color: #9CA3AF; font-weight: 400;">(máx. 30)</span></label>
                             <input id="unified-forecast-days" name="forecast_days" type="number" min="7" max="30" value="14"
                                    style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
                         </div>
                         <div class="form-field" style="align-self: flex-end; display: flex; gap: 0.5rem;">
-                            <button type="button" class="ghost-btn" id="unified-mock-btn" style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: transparent; color: #374151;">Prueba con un ejemplo</button>
+                            <button type="button" class="ghost-btn" id="unified-mock-btn" style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.5rem 1rem; font-weight: 600; cursor: pointer; background: transparent; color: #374151;">Muéstrame un ejemplo</button>
                             <button type="submit" id="unified-submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Generar dashboard</button>
                         </div>
                     </div>
@@ -131,201 +1780,451 @@
         </section>
 
         <section id="unified-results" class="panel" style="display: none;">
-            <div class="section-header">
-                <h2>Pulso Electoral </h2>
-                <p class="subtitle">Resumen estrategico, pronóstico electoraly geografia de popularidad.</p>
+
+            <!-- ========== BARRA DE METADATA / ULTIMA ACTUALIZACION ========== -->
+            <div id="data-metadata-bar" class="data-metadata-bar">
+                <div class="metadata-left">
+                    <span class="metadata-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                    </span>
+                    <span id="context-timestamp" class="metadata-timestamp">Ultima actualizacion: --</span>
+                    <button type="button" id="view-history-btn" class="history-btn" title="Ver historial de llamadas API">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                        </svg>
+                        Ver histórico
+                    </button>
+                </div>
+                <div class="metadata-right">
+                    <div class="metadata-stat">
+                        <span class="stat-label">Tweets</span>
+                        <span id="meta-tweets-count" class="stat-value">--</span>
+                    </div>
+                    <div class="metadata-stat">
+                        <span class="stat-label">Fuentes</span>
+                        <span id="meta-sources-count" class="stat-value">--</span>
+                    </div>
+                    <div class="metadata-stat">
+                        <span class="stat-label">Ventana</span>
+                        <span id="meta-days-window" class="stat-value">--</span>
+                    </div>
+                    <div class="metadata-stat" id="meta-cache-indicator" style="display: none;">
+                        <span class="cache-badge">CACHE</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="tabs dashboard-tabs">
-                <button class="tab active" data-tab="game">Estrategia electoral</button>
-                <button class="tab" data-tab="summary">Resumen</button>
-                <button class="tab" data-tab="results">Resultados</button>
-                <button class="tab" data-tab="topics">Temas</button>
-                <button class="tab" data-tab="charts">Tendencias</button>
-                <button class="tab" data-tab="methodology">Metodologia</button>
-            </div>
+            <!-- ========== NIVEL 1: TU CAMPAÑA - 10 EJES PND ========== -->
+            <div class="campaign-strength-section" id="campaign-strength">
+                <div class="section-header-compact">
+                    <h2>Tu campaña</h2>
+                    <p class="subtitle">Análisis por los 10 ejes del Plan Nacional de Desarrollo</p>
+                </div>
 
-            <div id="tab-summary" class="tab-content" style="display: none;">
-                <div class="summary-section">
-                    <div class="kpi-grid">
-                        <div class="kpi-card">
-                            <p class="kpi-label">Índice de Conversación Electoral (ICCE)</p>
-                            <p id="kpi-icce" class="kpi-value">-</p>
-                            <p id="kpi-icce-note" class="kpi-meta">-</p>
-                        </div>
-                        <div class="kpi-card">
-                            <p class="kpi-label">Momentum Electoral</p>
-                            <p id="kpi-momentum" class="kpi-value">-</p>
-                            <p id="kpi-momentum-note" class="kpi-meta">-</p>
-                        </div>
-                        <div class="kpi-card">
-                            <p class="kpi-label">Sentimiento de la gente</p>
-                            <p id="kpi-sentiment" class="kpi-value">-</p>
-                            <p id="kpi-sentiment-note" class="kpi-meta">-</p>
-                        </div>
-                        <div class="kpi-card">
-                            <p class="kpi-label">Volumen de conversación</p>
-                            <p id="kpi-volume" class="kpi-value">-</p>
-                            <p id="kpi-volume-note" class="kpi-meta">-</p>
+                <!-- KPIs Globales -->
+                <div class="campaign-kpis-row">
+                    <div class="campaign-kpi">
+                        <span class="kpi-name">ICCE</span>
+                        <span id="campaign-icce" class="kpi-number">--</span>
+                        <span class="kpi-desc">Fuerza narrativa</span>
+                        <span id="campaign-icce-context" class="kpi-context">--</span>
+                    </div>
+                    <div class="campaign-kpi">
+                        <span class="kpi-name">SOV</span>
+                        <span id="campaign-sov" class="kpi-number">--</span>
+                        <span class="kpi-desc">Share of Voice</span>
+                        <span id="campaign-sov-context" class="kpi-context">--</span>
+                    </div>
+                    <div class="campaign-kpi">
+                        <span class="kpi-name">SNA</span>
+                        <span id="campaign-sna" class="kpi-number">--</span>
+                        <span class="kpi-desc">Sentimiento Neto Agregado</span>
+                        <span id="campaign-sna-context" class="kpi-context">--</span>
+                    </div>
+                </div>
+
+                <!-- Leyenda de métricas -->
+                <div class="metrics-legend">
+                    <span class="legend-item"><strong>ICCE:</strong> Índice Compuesto de Capacidad Electoral (0-100)</span>
+                    <span class="legend-item"><strong>SOV:</strong> Share of Voice - % de conversación</span>
+                    <span class="legend-item"><strong>SNA:</strong> Sentimiento Neto Agregado (-100 a +100)</span>
+                </div>
+
+                <!-- Tabla de 10 Ejes PND -->
+                <div class="pnd-full-table">
+                    <div class="pnd-table-header">
+                        <div class="col-status"></div>
+                        <div class="col-eje-name">Eje PND</div>
+                        <div class="col-metric">ICCE</div>
+                        <div class="col-metric">SOV</div>
+                        <div class="col-metric">SNA</div>
+                        <div class="col-trend">Tendencia</div>
+                        <div class="col-action"></div>
+                    </div>
+                    <div id="pnd-ejes-table" class="pnd-table-body">
+                        <!-- Renderizado dinámicamente por JS -->
+                        <div class="pnd-row loading">
+                            <div class="col-status"></div>
+                            <div class="col-eje-name">Cargando ejes PND...</div>
+                            <div class="col-metric">--</div>
+                            <div class="col-metric">--</div>
+                            <div class="col-metric">--</div>
+                            <div class="col-trend">--</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="summary-grid">
-                    <div class="card dashboard-card summary-card">
-                        <p class="summary-title">Resumen narrativo del momento</p>
-                        <p id="narrative-summary" class="dashboard-text">-</p>
+                <!-- Resumen rápido -->
+                <div class="pnd-summary-row">
+                    <div class="pnd-summary-card positive">
+                        <span class="summary-icon">▲</span>
+                        <span class="summary-label">Fortalezas:</span>
+                        <span id="pnd-top-strength" class="summary-value">--</span>
+                    </div>
+                    <div class="pnd-summary-card negative">
+                        <span class="summary-icon">▼</span>
+                        <span class="summary-label">Oportunidad:</span>
+                        <span id="pnd-top-weakness" class="summary-value">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== NIVEL 2: LA ESTRATEGIA DE HOY ========== -->
+            <div id="decision-hero" class="decision-hero-section">
+                <div class="decision-hero-header">
+                    <div class="decision-hero-badge">
+                        <span class="priority-indicator priority-today">HOY</span>
+                        <span class="decision-label">La estrategia de hoy</span>
+                    </div>
+                    <div class="decision-topic" id="decision-topic-badge">
+                        <span id="decision-topic-text">Tema: Seguridad ciudadana</span>
+                    </div>
+                </div>
+
+                <!-- Objetivo estratégico -->
+                <div class="strategy-objective">
+                    <h3 class="objective-title">Objetivo</h3>
+                    <p id="decision-objective" class="objective-text">Posicionar tu propuesta de seguridad ciudadana como la más sólida del debate, aprovechando el momentum actual y la conversación activa en redes sobre el tema.</p>
+                </div>
+
+                <!-- Acciones detalladas -->
+                <div class="strategy-actions-detail">
+                    <h3 class="actions-title">Plan de acción</h3>
+                    <div id="decision-actions-list" class="actions-list">
+                        <div class="action-item">
+                            <span class="action-number">1</span>
+                            <div class="action-content">
+                                <strong>Publicar video de propuesta</strong>
+                                <p>Video de 60 segundos explicando tu plan de aumento de pie de fuerza, con datos concretos y ejemplos de ciudades donde funcionó.</p>
+                            </div>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">2</span>
+                            <div class="action-content">
+                                <strong>Campaña en X (Twitter)</strong>
+                                <p>Publicar 3 posts con hashtags locales (#SeguridadCali, #ColombiaSinMiedo) espaciados cada 4 horas para maximizar alcance.</p>
+                            </div>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">3</span>
+                            <div class="action-content">
+                                <strong>Entrevista en medios regionales</strong>
+                                <p>Agendar entrevista en Blu Radio mañana 7am para amplificar el mensaje a audiencia del Valle del Cauca.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impacto esperado -->
+                <div class="decision-hero-meta">
+                    <div class="decision-meta-item impact-highlight">
+                        <span class="meta-icon">↑</span>
+                        <span class="meta-label">Impacto esperado</span>
+                        <span id="decision-impact" class="meta-value positive">+12 pts ICCE</span>
+                    </div>
+                </div>
+
+                <!-- Área de posts generados -->
+                <div id="generated-posts-area" class="generated-posts-area" style="display: none;">
+                    <h4 class="posts-title">Posts generados para X</h4>
+                    <div id="generated-posts-list" class="posts-list">
+                        <!-- Posts generados por JS -->
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="decision-hero-actions">
+                    <button class="action-btn primary" id="btn-generate-content" onclick="generateXPosts()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        Generar posts para X
+                    </button>
+                    <button class="action-btn success" id="btn-execute" onclick="executeStrategy()" style="display: none;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        Ejecutar estrategia
+                    </button>
+                    <button class="action-btn secondary" id="btn-send-email" onclick="sendByEmail()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        Enviar por correo
+                    </button>
+                    <button class="action-btn ghost" id="btn-see-alternatives" onclick="scrollToAlternatives()">
+                        Ver alternativas
+                    </button>
+                </div>
+
+                <div class="decision-hero-warning" id="decision-warning">
+                    <span class="warning-icon">⚠️</span>
+                    <span id="decision-warning-text">Ventana óptima: si no actúas, perderás momentum en 7-10 días.</span>
+                </div>
+            </div>
+
+
+            <!-- ========== NIVEL 4: RIVALES - COMPARACION ========== -->
+            <div class="rival-comparison-section" id="rival-section">
+                <div class="rival-header">
+                    <div class="rival-title-row">
+                        <h3><span id="game-candidate-name" style="color: var(--accent);">Abelardo de la Espriella</span> vs <span id="rival-name-display">Vicky Dávila</span></h3>
+                        <select id="game-rival-select" class="rival-select">
+                            <option value="Vicky Dávila" selected>Vicky Dávila (Movimiento Valientes)</option>
+                            <option value="Juan Carlos Pinzón">Juan Carlos Pinzón (Verde Oxígeno)</option>
+                            <option value="Daniel Palacios">Daniel Palacios (Rescatemos a Colombia)</option>
+                            <option value="Mauricio Cárdenas">Mauricio Cárdenas (Avanza Colombia)</option>
+                            <option value="David Luna">David Luna (Sí Hay Un Camino)</option>
+                            <option value="Juan Manuel Galán">Juan Manuel Galán (Nuevo Liberalismo)</option>
+                            <option value="Aníbal Gaviria">Aníbal Gaviria (Fuerza de las Regiones)</option>
+                            <option value="Juan Daniel Oviedo">Juan Daniel Oviedo (Con Toda por Colombia)</option>
+                            <option value="Sergio Fajardo">Sergio Fajardo (Independiente)</option>
+                            <option value="Gustavo Bolívar">Gustavo Bolívar (Pacto Histórico)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Comparación por Ejes PND -->
+                <div class="rival-pnd-comparison">
+                    <div class="rival-comparison-table">
+                        <div class="comparison-header-row">
+                            <div class="col-eje">Eje PND</div>
+                            <div class="col-tu">Tu campaña</div>
+                            <div class="col-rival">Rival</div>
+                            <div class="col-diff">Diferencia</div>
+                        </div>
+                        <div id="rival-pnd-rows" class="comparison-body">
+                            <!-- Los 10 ejes PND se cargan dinámicamente -->
+                        </div>
+                    </div>
+                    <div class="rival-radar-card">
+                        <canvas id="game-radar-chart" height="220"></canvas>
+                    </div>
+                </div>
+
+                <p class="gaps-recommendation" id="gaps-recommendation">Refuerza mensajes en Economía donde tienes ventaja. Prepara respuesta en Seguridad y Medio Ambiente.</p>
+            </div>
+
+            <!-- ========== NIVEL 5: PROFUNDIDAD (Tabs) ========== -->
+            <div class="depth-section">
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <h2>Analisis detallado</h2>
+                    <p class="subtitle">Explora los datos a fondo cuando lo necesites.</p>
+                </div>
+
+                <div class="tabs dashboard-tabs">
+                    <button class="tab active" data-tab="summary">Resumen</button>
+                    <button class="tab" data-tab="game">Alternativas</button>
+                    <button class="tab" data-tab="topics">Temas</button>
+                    <button class="tab" data-tab="charts">Tendencias</button>
+                    <button class="tab" data-tab="results">Análisis detallado</button>
+                    <button class="tab" data-tab="methodology">Metodologia</button>
+                </div>
+
+            <div id="tab-summary" class="tab-content active" style="display: block;">
+
+                <!-- Insights Mejorados -->
+                <div class="insights-improved">
+                    <div class="insight-item insight-key">
+                        <div class="insight-icon-wrap">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        </div>
+                        <div class="insight-content">
+                            <span class="insight-label">INSIGHT CLAVE</span>
+                            <p id="narrative-summary" class="insight-desc">La narrativa de seguridad está funcionando mejor en ciudades intermedias como Cali y Barranquilla.</p>
+                        </div>
+                    </div>
+                    <div class="insight-item insight-opportunity">
+                        <div class="insight-icon-wrap">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                        </div>
+                        <div class="insight-content">
+                            <span class="insight-label">OPORTUNIDAD</span>
+                            <p id="narrative-opportunity" class="insight-desc">Amplificar mensajes de economía en medios regionales del Valle del Cauca.</p>
+                        </div>
+                    </div>
+                    <div class="insight-item insight-risk">
+                        <div class="insight-icon-wrap">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                        </div>
+                        <div class="insight-content">
+                            <span class="insight-label">RIESGO</span>
+                            <p id="narrative-risk" class="insight-desc">Críticas sobre medio ambiente en redes requieren respuesta en las próximas 24h.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen + Métricas Narrativas -->
+                <div class="narrative-section">
+                    <div class="narrative-summary-box">
+                        <p id="narrative-summary-detail" class="narrative-text">Cargando análisis comparativo...</p>
                         <div class="summary-tags" id="summary-tags"></div>
                     </div>
-                    <div class="card dashboard-card">
-                        <p class="summary-title">Fuerza narrativa del momento</p>
-                        <div class="metric-stack">
-                            <div>
-                                <p class="metric-label">Fuerza narrativa</p>
-                                <p id="narrative-strength" class="metric-value">-</p>
-                            </div>
-                            <div>
-                                <p class="metric-label">Tendencia semanal</p>
-                                <p id="narrative-trend" class="metric-value">-</p>
-                            </div>
-                            <div>
-                                <p class="metric-label">Proyección <span class="tooltip-icon" title="Cambio esperado del ICCE en los próximos días. Se expresa en puntos (0-100) y muestra la dirección probable.">i</span></p>
-                                <p id="narrative-projection" class="metric-value">-</p>
-                            </div>
-                            <div>
-                                <p class="metric-label">Posición narrativa <span class="tooltip-icon" title="Ventaja narrativa vs rivales según ICCE y tono. Ventaja = conversación favorable, Equilibrio = sin ventaja clara, Riesgo = desgaste narrativo.">i</span></p>
-                                <p id="narrative-position" class="metric-value">-</p>
-                            </div>
-                            <div>
-                                <p class="metric-label">Riesgo <span class="tooltip-icon" title="Probabilidad de deterioro narrativo. Bajo = estabilidad, Medio = cambios latentes, Alto = caída probable sin acción.">i</span></p>
-                                <p id="narrative-risk" class="metric-value">-</p>
-                            </div>
-                            <div>
-                                <p class="metric-label">Recomendacion</p>
-                                <p id="narrative-recommendation" class="metric-value">-</p>
-                            </div>
-                            <div>
-                                <p class="metric-label">Dominio narrativo</p>
-                                <p id="narrative-dominance" class="metric-value">-</p>
-                            </div>
-                            <div>
-                                <p class="metric-label">Tono conversación <span class="tooltip-icon" title="Positivo: apoyo y aprobación. Neutral: informativo o mixto. Crítico: rechazo o preocupación.">i</span></p>
-                                <p id="narrative-tone" class="metric-value">-</p>
-                            </div>
+
+                    <h4 class="section-subtitle">Métricas narrativas</h4>
+                    <div class="narrative-metrics-grid">
+                        <div class="narrative-metric">
+                            <span class="metric-name">Fuerza narrativa</span>
+                            <span id="narrative-strength" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Tendencia semanal</span>
+                            <span id="narrative-trend" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Proyección</span>
+                            <span id="narrative-projection" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Posición narrativa</span>
+                            <span id="narrative-position" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Riesgo</span>
+                            <span id="narrative-risk-detail" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Tono</span>
+                            <span id="narrative-tone" class="metric-val">-</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="summary-streams">
+                <!-- Acciones Estratégicas del Día -->
+                <div class="strategy-actions-section">
                     <div class="summary-header">
-                        <h3>Streams en vivo</h3>
-                        <p class="dashboard-subtitle">Medios, campaña y tendencias con contexto operativo.</p>
+                        <h3>Plan de acción del día</h3>
+                        <p class="dashboard-subtitle">Tácticas priorizadas para ejecutar hoy.</p>
                     </div>
-                    <div class="summary-streams-grid">
-                    <div class="card dashboard-card stream-card stream-media">
-                        <h3>Medios</h3>
-                        <p class="dashboard-subtitle">Hallazgos y tono ciudadano.</p>
-                        <ul id="media-stream-list" class="dashboard-list"></ul>
-                        <p id="media-stream-context" class="dashboard-subtitle" style="margin-top: 0.75rem;"></p>
-                    </div>
-                    <div class="card dashboard-card stream-card stream-campaign">
-                        <h3> Campaña</h3>
-                        <p class="dashboard-subtitle">Temas de mayor popularidad, y oportunidades electorales.</p>
-                        <ul id="campaign-stream-list" class="dashboard-list"></ul>
-                        <p id="campaign-stream-context" class="dashboard-subtitle" style="margin-top: 0.75rem;"></p>
-                    </div>
-                    <div class="card dashboard-card stream-card stream-forecast">
-                        <h3>Tendencias electorales</h3>
-                        <p class="dashboard-subtitle">Tendencias del sentimiento de la gente y sus necesidades.</p>
-                        <ul id="forecast-stream-list" class="dashboard-list"></ul>
-                        <p id="forecast-stream-context" class="dashboard-subtitle" style="margin-top: 0.75rem;"></p>
-                    </div>
+                    <div class="action-cards-grid">
+                        <div class="action-card action-priority">
+                            <div class="action-header">
+                                <span class="action-badge urgent">PRIORITARIO</span>
+                                <span class="action-time">Hoy antes de 12pm</span>
+                            </div>
+                            <p id="action-priority-text" class="action-text">Publicar video sobre seguridad en redes sociales con hashtag #SeguridadParaTodos</p>
+                            <div class="action-owner">Responsable: <strong>Comunicaciones</strong></div>
+                        </div>
+                        <div class="action-card action-media">
+                            <div class="action-header">
+                                <span class="action-badge media">MEDIOS</span>
+                                <span class="action-time">Hoy 7pm</span>
+                            </div>
+                            <p id="action-media-text" class="action-text">Entrevista en Blu Radio sobre propuestas de economía y empleo</p>
+                            <div class="action-owner">Responsable: <strong>Prensa</strong></div>
+                        </div>
+                        <div class="action-card action-digital">
+                            <div class="action-header">
+                                <span class="action-badge digital">DIGITAL</span>
+                                <span class="action-time">Mañana</span>
+                            </div>
+                            <p id="action-digital-text" class="action-text">Campaña de Twitter con testimonios ciudadanos sobre seguridad en Cali</p>
+                            <div class="action-owner">Responsable: <strong>Redes</strong></div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Mapa de Colombia -->
                 <div class="geo-panel">
                     <div class="geo-map-card">
                         <div class="geo-map-header">
-                            <h3>Mapa de popularidad</h3>
-                            <span class="geo-badge">Distribucion</span>
+                            <h3>Mapa de Colombia - Popularidad por región</h3>
+                            <span class="geo-badge">Distribución geográfica</span>
                         </div>
-                        <div id="geo-map" class="geo-map" aria-label="Mapa de calor de conversacion"></div>
-                        <p class="geo-footnote">Basado en menciones geograficas y patrones de ubicacion.</p>
+                        <div id="geo-map" class="geo-map colombia-map" aria-label="Mapa de popularidad en Colombia">
+                            <!-- Mapa SVG de Colombia -->
+                            <svg viewBox="0 0 400 450" class="colombia-svg">
+                                <g id="colombia-regions">
+                                    <!-- Caribe -->
+                                    <path id="region-caribe" class="region" d="M120,50 L280,30 L300,80 L250,120 L150,110 L100,80 Z" data-region="Caribe" data-value="42"/>
+                                    <!-- Andina -->
+                                    <path id="region-andina" class="region highlight" d="M150,110 L250,120 L270,200 L250,280 L180,300 L130,250 L120,180 Z" data-region="Andina" data-value="68"/>
+                                    <!-- Pacifica -->
+                                    <path id="region-pacifica" class="region" d="M80,120 L130,130 L130,250 L100,300 L60,280 L50,200 Z" data-region="Pacífica" data-value="55"/>
+                                    <!-- Orinoquia -->
+                                    <path id="region-orinoquia" class="region" d="M270,120 L350,100 L380,180 L350,280 L270,250 L270,200 Z" data-region="Orinoquía" data-value="38"/>
+                                    <!-- Amazonia -->
+                                    <path id="region-amazonia" class="region" d="M180,300 L250,280 L350,280 L380,380 L280,420 L180,400 L130,350 Z" data-region="Amazonía" data-value="25"/>
+                                </g>
+                                <!-- Ciudades principales -->
+                                <circle cx="180" cy="170" r="8" class="city-dot bogota"/>
+                                <text x="195" y="175" class="city-label">Bogotá</text>
+                                <circle cx="130" cy="220" r="6" class="city-dot"/>
+                                <text x="90" y="225" class="city-label">Cali</text>
+                                <circle cx="200" cy="140" r="6" class="city-dot"/>
+                                <text x="210" y="145" class="city-label">Medellín</text>
+                                <circle cx="220" cy="70" r="5" class="city-dot"/>
+                                <text x="230" y="75" class="city-label">Barranquilla</text>
+                            </svg>
+                        </div>
+                        <p class="geo-footnote">Intensidad del color indica fuerza de conversación (ICCE).</p>
                     </div>
                     <div class="geo-list-card">
-                        <h3>Ciudades con más conversacion</h3>
+                        <h3>Ciudades con más conversación</h3>
                         <ol id="geo-list" class="geo-list"></ol>
                         <p id="geo-context" class="dashboard-subtitle" style="margin-top: 0.75rem;"></p>
                     </div>
                 </div>
             </div>
 
-            <div id="tab-game" class="tab-content active" style="display: block;">
+            <div id="tab-game" class="tab-content" style="display: none;">
                 <div class="summary-header">
-                    <h3>Estrategia electoral</h3>
-                    <p class="dashboard-subtitle">Comparación con rivales y jugada recomendada del día.</p>
-                </div>
-                <div class="game-controls">
-                    <label for="game-rival-select">Comparar contra</label>
-                    <select id="game-rival-select">
-                        <option value="Vicky Dávila">Vicky Dávila (Movimiento Valientes)</option>
-                        <option value="Mauricio Cárdenas">Mauricio Cárdenas (Avanza Colombia)</option>
-                        <option value="David Luna">David Luna (Movimiento Sí Hay Un Camino)</option>
-                        <option value="Juan Manuel Galán">Juan Manuel Galán (Nuevo Liberalismo)</option>
-                        <option value="Aníbal Gaviria">Aníbal Gaviria (Unidos: La Fuerza de las Regiones)</option>
-                        <option value="Juan Daniel Oviedo">Juan Daniel Oviedo (Con Toda por Colombia)</option>
-                        <option value="Juan Carlos Pinzón">Juan Carlos Pinzón (Partido Verde Oxígeno)</option>
-                        <option value="Daniel Palacios">Daniel Palacios (Rescatemos a Colombia)</option>
-                        <option value="Abelardo de la Espriella">Abelardo de la Espriella (Firme por Colombia)</option>
-                    </select>
-                    <span class="dashboard-subtitle">Tu campaña: <span id="game-candidate-name">Paloma Valencia</span></span>
+                    <h3>Alternativas tacticas</h3>
+                    <p class="dashboard-subtitle">Otras acciones que puedes tomar segun el contexto.</p>
                 </div>
 
-                <div class="game-grid">
-                    <div class="card dashboard-card game-primary">
-                        <p class="summary-title">Jugada principal</p>
-                        <p id="game-main" class="dashboard-text" style="font-size: 1.05rem; font-weight: 600;">-</p>
-                        <div class="summary-tags" id="game-tags" style="margin-top: 0.5rem;">
-                            <span id="game-payoff" class="summary-tag">-</span>
-                            <span id="game-confidence" class="summary-tag">-</span>
+                <div class="alternatives-grid" id="alternatives-section">
+                    <div class="alternative-card" data-priority="medium">
+                        <div class="alternative-header">
+                            <span class="priority-badge priority-48h">Proximas 48h</span>
+                            <span class="alternative-owner">Digital</span>
                         </div>
-                        <p id="game-trigger" class="dashboard-subtitle" style="margin-top: 0.75rem;"></p>
+                        <p id="alt-1-text" class="alternative-text">Proponer economia: mensaje de costo de vida + entrevista regional</p>
+                        <div class="alternative-meta">
+                            <span class="alt-impact">Impacto: +8 pts</span>
+                            <span class="alt-cost">Costo: Bajo</span>
+                        </div>
+                        <button class="action-btn small" onclick="selectAlternative(1)">Usar esta estrategia</button>
                     </div>
-                    <div class="card dashboard-card">
-                        <p class="summary-title">Alternativas tácticas</p>
-                        <ul id="game-alternatives" class="dashboard-list"></ul>
-                        <p id="game-rival-signal" class="dashboard-subtitle" style="margin-top: 0.75rem;"></p>
+
+                    <div class="alternative-card" data-priority="low">
+                        <div class="alternative-header">
+                            <span class="priority-badge priority-watch">En observacion</span>
+                            <span class="alternative-owner">Territorio</span>
+                        </div>
+                        <p id="alt-2-text" class="alternative-text">Desviar a salud: financiacion hospitalaria + visita a clinica</p>
+                        <div class="alternative-meta">
+                            <span class="alt-impact">Impacto: +5 pts</span>
+                            <span class="alt-cost">Costo: Alto</span>
+                        </div>
+                        <button class="action-btn small" onclick="selectAlternative(2)">Usar esta estrategia</button>
                     </div>
                 </div>
 
-                <div class="dashboard-grid">
-                    <div class="card dashboard-card">
-                        <p class="summary-title">Estado narrativo vs <span id="game-rival-name">rival</span></p>
-                        <canvas id="game-radar-chart" height="180"></canvas>
-                        <p class="dashboard-subtitle" id="game-radar-context" style="margin-top: 0.75rem;"></p>
-                    </div>
-                    <div class="card dashboard-card">
-                        <p class="summary-title">Brechas clave</p>
-                        <div class="gap-legend" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.03); border-radius: 6px;">
-                            <span style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #FF6A3D;">
-                                <span style="width: 12px; height: 12px; background: rgba(255, 106, 61, 0.75); border-radius: 2px;"></span>
-                                Rival tiene ventaja
-                            </span>
-                            <span style="font-size: 0.75rem; color: #8892B0;">0</span>
-                            <span style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #42d697;">
-                                Tu campana tiene ventaja
-                                <span style="width: 12px; height: 12px; background: rgba(66, 214, 151, 0.75); border-radius: 2px;"></span>
-                            </span>
-                        </div>
-                        <canvas id="game-gap-chart" height="180"></canvas>
-                        <p class="dashboard-subtitle" id="game-gap-context" style="margin-top: 0.75rem;"></p>
-                        <div class="dashboard-subtitle" style="margin-top: 0.75rem; font-size: 0.8rem; line-height: 1.6;">
-                            <strong>SOV:</strong> Share of Voice - % de conversacion que domina cada campana.<br>
-                            <strong>SNA:</strong> Sentimiento Neto Acumulado - balance positivo vs negativo.<br>
-                            <strong>ICCE:</strong> Indice de Conversacion Ciudadana Electoral (0-100).<br>
-                            <strong>Momentum:</strong> Velocidad y direccion del cambio narrativo.
-                        </div>
-                    </div>
+                <div class="rival-signal-card">
+                    <span class="signal-badge">SENAL DEL RIVAL</span>
+                    <p id="game-rival-signal" class="signal-text">El rival domina seguridad con pico de conversacion (+12%). Preparar respuesta.</p>
+                </div>
+
+                <div class="trigger-card">
+                    <span class="trigger-badge">TRIGGER DE ACCION</span>
+                    <p id="game-trigger" class="trigger-text">Si ICCE cae >8 pts o SNA baja -10 en seguridad, activar respuesta en 48h.</p>
                 </div>
             </div>
 
@@ -507,6 +2406,162 @@
             return 'https://castorelecciones.ngrok.app';
         })();
     </script>
+    <script>
+        // ========== FUNCIONES DE ACCION DEL DASHBOARD ==========
+        function generateContent() {
+            const panel = document.getElementById('rag-chat-panel');
+            const input = document.getElementById('rag-chat-input');
+            panel.classList.add('open');
+            input.value = 'Genera un comunicado de prensa para la estrategia del dia';
+            input.focus();
+        }
+
+        function sendToTeam() {
+            const decision = document.getElementById('decision-main-action').textContent;
+            const subject = encodeURIComponent('Estrategia del dia - CASTOR');
+            const body = encodeURIComponent(`Hola equipo,\n\nLa recomendacion de CASTOR para hoy es:\n\n${decision}\n\nSaludos`);
+            window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
+        }
+
+        function scrollToAlternatives() {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-tab="game"]').classList.add('active');
+
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.style.display = 'none';
+                c.classList.remove('active');
+            });
+            const altTab = document.getElementById('tab-game');
+            altTab.style.display = 'block';
+            altTab.classList.add('active');
+
+            document.getElementById('alternatives-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectAlternative(num) {
+            const altText = document.getElementById(`alt-${num}-text`).textContent;
+            document.getElementById('decision-main-action').textContent = altText;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Actualizar el rival seleccionado
+        document.addEventListener('DOMContentLoaded', function() {
+            const rivalSelect = document.getElementById('game-rival-select');
+            const rivalDisplay = document.getElementById('rival-name-display');
+
+            if (rivalSelect && rivalDisplay) {
+                rivalSelect.addEventListener('change', function() {
+                    rivalDisplay.textContent = this.value;
+                });
+            }
+        });
+
+        // Funcion para actualizar la seccion de decision con datos del API
+        function updateDecisionHero(data) {
+            if (!data) return;
+
+            // Decision principal
+            if (data.main_play) {
+                document.getElementById('decision-main-action').textContent = data.main_play;
+            }
+
+            // Confianza
+            if (data.confidence) {
+                document.getElementById('decision-confidence-text').textContent = `Confianza ${data.confidence}`;
+                const badge = document.getElementById('decision-confidence-badge');
+                if (data.confidence === 'Alta') {
+                    badge.style.background = 'rgba(74, 124, 89, 0.15)';
+                    badge.style.borderColor = 'rgba(74, 124, 89, 0.3)';
+                } else if (data.confidence === 'Media') {
+                    badge.style.background = 'rgba(201, 162, 39, 0.15)';
+                    badge.style.borderColor = 'rgba(201, 162, 39, 0.3)';
+                }
+            }
+
+            // Impacto
+            if (data.payoff) {
+                document.getElementById('decision-impact').textContent = data.payoff;
+            }
+
+            // Warning
+            if (data.trigger) {
+                document.getElementById('decision-warning-text').textContent = data.trigger;
+            }
+        }
+
+        // Funcion para actualizar KPIs
+        function updateContextKPIs(data) {
+            if (!data) return;
+
+            // ICCE
+            if (data.icce !== undefined) {
+                document.getElementById('kpi-icce').textContent = data.icce.toFixed(1);
+                const icceState = document.getElementById('kpi-icce-state');
+                if (data.icce >= 60) {
+                    icceState.textContent = 'Favorable';
+                    icceState.className = 'kpi-state positive';
+                } else if (data.icce >= 40) {
+                    icceState.textContent = 'Neutral';
+                    icceState.className = 'kpi-state neutral';
+                } else {
+                    icceState.textContent = 'Desfavorable';
+                    icceState.className = 'kpi-state negative';
+                }
+            }
+
+            // Momentum
+            if (data.momentum !== undefined) {
+                const mom = data.momentum;
+                const momEl = document.getElementById('kpi-momentum');
+                const momState = document.getElementById('kpi-momentum-state');
+                if (mom > 0) {
+                    momEl.textContent = '↑';
+                    momState.textContent = 'En subida';
+                    momState.className = 'kpi-state positive';
+                } else if (mom < 0) {
+                    momEl.textContent = '↓';
+                    momState.textContent = 'En bajada';
+                    momState.className = 'kpi-state negative';
+                } else {
+                    momEl.textContent = '→';
+                    momState.textContent = 'Estable';
+                    momState.className = 'kpi-state neutral';
+                }
+            }
+
+            // Sentimiento
+            if (data.sna !== undefined) {
+                const sna = data.sna;
+                document.getElementById('kpi-sentiment').textContent = (sna >= 0 ? '+' : '') + sna + '%';
+                const sentState = document.getElementById('kpi-sentiment-state');
+                if (sna > 10) {
+                    sentState.textContent = 'Positivo';
+                    sentState.className = 'kpi-state positive';
+                } else if (sna < -10) {
+                    sentState.textContent = 'Negativo';
+                    sentState.className = 'kpi-state negative';
+                } else {
+                    sentState.textContent = 'Mixto';
+                    sentState.className = 'kpi-state neutral';
+                }
+            }
+
+            // Forecast
+            if (data.forecast_change !== undefined) {
+                const fc = data.forecast_change;
+                document.getElementById('kpi-forecast').textContent = (fc >= 0 ? '↑ ' : '↓ ') + Math.abs(fc).toFixed(1);
+                const fcState = document.getElementById('kpi-forecast-state');
+                if (fc > 0) {
+                    fcState.textContent = 'Proyeccion al alza';
+                    fcState.className = 'kpi-state positive';
+                } else {
+                    fcState.textContent = 'Proyeccion a la baja';
+                    fcState.className = 'kpi-state negative';
+                }
+            }
+        }
+    </script>
     <script src="/static/js/config.js?v=20260110b"></script>
     <script src="/static/js/main.js?v=20260110b"></script>
     <script src="/static/js/performance.js?v=20260110b" defer></script>
@@ -522,12 +2577,12 @@
             right: 24px;
             width: auto;
             min-width: 60px;
-            height: 50px;
-            border-radius: 25px;
-            background: linear-gradient(135deg, #FF6A3D 0%, #FF8C5A 100%);
+            height: 48px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #C9A227 0%, #D4AF37 100%);
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(255, 106, 61, 0.4);
+            box-shadow: 0 4px 20px rgba(201, 162, 39, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -537,8 +2592,9 @@
             z-index: 1000;
         }
         .rag-chat-fab:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 30px rgba(255, 106, 61, 0.6);
+            transform: scale(1.03);
+            box-shadow: 0 6px 30px rgba(201, 162, 39, 0.5);
+            background: linear-gradient(135deg, #D4AF37 0%, #E8D48A 100%);
         }
         .rag-chat-fab svg {
             width: 24px;
@@ -556,12 +2612,12 @@
             position: absolute;
             top: -4px;
             right: -4px;
-            background: #42d697;
-            color: #0A0E1A;
+            background: #C9A227;
+            color: #0A0A0A;
             font-size: 11px;
             font-weight: 600;
             padding: 2px 6px;
-            border-radius: 10px;
+            border-radius: 6px;
             display: none;
         }
         .rag-chat-panel {
@@ -572,10 +2628,10 @@
             max-width: calc(100vw - 48px);
             height: 500px;
             max-height: calc(100vh - 140px);
-            background: var(--panel, #141824);
-            border: 1px solid var(--border, #1E2433);
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            background: var(--panel, #141414);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             display: none;
             flex-direction: column;
             z-index: 999;
@@ -585,8 +2641,8 @@
             display: flex;
         }
         .rag-chat-header {
-            background: linear-gradient(135deg, #FF6A3D 0%, #FF8C5A 100%);
-            color: white;
+            background: linear-gradient(135deg, #C9A227 0%, #D4AF37 100%);
+            color: #0A0A0A;
             padding: 16px 20px;
             display: flex;
             align-items: center;
@@ -612,12 +2668,12 @@
             gap: 8px;
         }
         .rag-chat-header button {
-            background: rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.15);
             border: none;
-            color: white;
+            color: #0A0A0A;
             width: 32px;
             height: 32px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -625,7 +2681,7 @@
             transition: background 0.2s;
         }
         .rag-chat-header button:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.25);
         }
         .rag-chat-messages {
             flex: 1;
@@ -634,74 +2690,75 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            background: var(--panel-alt, #1A1F2E);
+            background: var(--panel-alt, #1C1C1C);
         }
         .rag-message {
             max-width: 85%;
             padding: 12px 16px;
-            border-radius: 12px;
+            border-radius: 8px;
             font-size: 0.9rem;
             line-height: 1.5;
         }
         .rag-message.user {
             align-self: flex-end;
-            background: linear-gradient(135deg, #FF6A3D 0%, #FF8C5A 100%);
-            color: white;
+            background: linear-gradient(135deg, #C9A227 0%, #D4AF37 100%);
+            color: #0A0A0A;
             border-bottom-right-radius: 4px;
         }
         .rag-message.assistant {
             align-self: flex-start;
-            background: var(--panel, #141824);
-            color: var(--text, #F5F7FA);
-            border: 1px solid var(--border, #1E2433);
+            background: var(--panel, #141414);
+            color: var(--text, #F5F5F0);
+            border: 1px solid var(--border, #2A2A2A);
             border-bottom-left-radius: 4px;
         }
         .rag-message.system {
             align-self: center;
-            background: rgba(255, 106, 61, 0.15);
-            color: #FF8C5A;
+            background: rgba(201, 162, 39, 0.1);
+            color: #E8D48A;
             font-size: 0.8rem;
             padding: 8px 12px;
-            border-radius: 8px;
+            border-radius: 6px;
         }
         .rag-message-sources {
             margin-top: 8px;
             padding-top: 8px;
-            border-top: 1px solid var(--border, #1E2433);
+            border-top: 1px solid var(--border, #2A2A2A);
             font-size: 0.75rem;
-            color: var(--muted, #8892B0);
+            color: var(--muted, #9A8F7C);
         }
         .rag-chat-input-area {
             padding: 12px 16px;
-            background: var(--panel, #141824);
-            border-top: 1px solid var(--border, #1E2433);
+            background: var(--panel, #141414);
+            border-top: 1px solid var(--border, #2A2A2A);
             display: flex;
             gap: 8px;
         }
         .rag-chat-input-area input {
             flex: 1;
             padding: 10px 14px;
-            border: 1px solid var(--border, #1E2433);
-            border-radius: 24px;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 6px;
             font-size: 0.9rem;
             outline: none;
-            background: var(--panel-alt, #1A1F2E);
-            color: var(--text, #F5F7FA);
+            background: var(--panel-alt, #1C1C1C);
+            color: var(--text, #F5F5F0);
             transition: border-color 0.2s;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
         }
         .rag-chat-input-area input::placeholder {
-            color: var(--muted, #8892B0);
+            color: var(--muted, #9A8F7C);
         }
         .rag-chat-input-area input:focus {
-            border-color: #FF6A3D;
+            border-color: #C9A227;
         }
         .rag-chat-input-area button {
-            background: linear-gradient(135deg, #FF6A3D 0%, #FF8C5A 100%);
+            background: linear-gradient(135deg, #C9A227 0%, #D4AF37 100%);
             border: none;
-            color: white;
+            color: #0A0A0A;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 6px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -723,7 +2780,7 @@
         .rag-typing span {
             width: 8px;
             height: 8px;
-            background: #FF6A3D;
+            background: #C9A227;
             border-radius: 50%;
             animation: typing 1.4s infinite ease-in-out both;
         }
@@ -767,7 +2824,7 @@
     <div class="rag-chat-panel" id="rag-chat-panel">
         <div class="rag-chat-header">
             <div class="rag-chat-header-brand">
-                <img src="/static/images/castorlogo.png" alt="CASTOR">
+                <img src="/static/images/logo.png" alt="CASTOR">
                 <h3>CASTOR</h3>
             </div>
             <div class="rag-chat-header-actions">
@@ -928,6 +2985,217 @@
                     console.log('RAG stats check failed:', e);
                 }
             }, 2000);
+        })();
+    </script>
+
+    <!-- ========== MODAL DETALLES EJE PND ========== -->
+    <div id="pnd-detail-modal-overlay" class="pnd-detail-modal-overlay">
+        <div class="pnd-detail-modal">
+            <div class="pnd-detail-header">
+                <h3 id="pnd-detail-title" class="pnd-detail-title">Eje PND</h3>
+                <button type="button" class="pnd-detail-close" id="pnd-detail-close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="pnd-detail-body">
+                <div class="pnd-detail-metrics">
+                    <div class="pnd-detail-metric">
+                        <div id="pnd-detail-icce" class="pnd-detail-metric-value">--</div>
+                        <div class="pnd-detail-metric-label">ICCE</div>
+                    </div>
+                    <div class="pnd-detail-metric">
+                        <div id="pnd-detail-sov" class="pnd-detail-metric-value">--</div>
+                        <div class="pnd-detail-metric-label">SOV</div>
+                    </div>
+                    <div class="pnd-detail-metric">
+                        <div id="pnd-detail-sna" class="pnd-detail-metric-value">--</div>
+                        <div class="pnd-detail-metric-label">SNA</div>
+                    </div>
+                </div>
+                <div class="pnd-detail-section">
+                    <div class="pnd-detail-section-title">¿Por qué este resultado?</div>
+                    <p id="pnd-detail-explanation" class="pnd-detail-explanation">Cargando...</p>
+                </div>
+                <div class="pnd-detail-section">
+                    <div class="pnd-detail-section-title">Lo que dice la gente</div>
+                    <div id="pnd-detail-tweets" class="pnd-detail-tweets">
+                        <div class="pnd-detail-tweet">Cargando tweets...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODAL HISTORICO DE LLAMADAS API ========== -->
+    <div id="history-modal-overlay" class="history-modal-overlay">
+        <div class="history-modal">
+            <div class="history-modal-header">
+                <h3 class="history-modal-title">Histórico de llamadas API</h3>
+                <button type="button" class="history-modal-close" id="history-modal-close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="history-modal-body">
+                <div id="history-list" class="history-list">
+                    <div class="history-loading">Cargando historial...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Historial de llamadas API
+        (function() {
+            const historyBtnForm = document.getElementById('view-history-btn-form');
+            const historyBtnResults = document.getElementById('view-history-btn');
+            const historyOverlay = document.getElementById('history-modal-overlay');
+            const historyClose = document.getElementById('history-modal-close');
+            const historyList = document.getElementById('history-list');
+
+            function openHistory() {
+                historyOverlay.classList.add('active');
+                loadHistory();
+            }
+
+            if (historyBtnForm) {
+                historyBtnForm.addEventListener('click', openHistory);
+            }
+            if (historyBtnResults) {
+                historyBtnResults.addEventListener('click', openHistory);
+            }
+
+            if (historyClose) {
+                historyClose.addEventListener('click', () => {
+                    historyOverlay.classList.remove('active');
+                });
+            }
+
+            if (historyOverlay) {
+                historyOverlay.addEventListener('click', (e) => {
+                    if (e.target === historyOverlay) {
+                        historyOverlay.classList.remove('active');
+                    }
+                });
+
+                // ESC para cerrar
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && historyOverlay.classList.contains('active')) {
+                        historyOverlay.classList.remove('active');
+                    }
+                });
+            }
+
+            async function loadHistory() {
+                historyList.innerHTML = '<div class="history-loading">Cargando historial...</div>';
+                try {
+                    const res = await fetch('/api/media/history?limit=20');
+                    const data = await res.json();
+
+                    if (!data.success || !data.api_calls || data.api_calls.length === 0) {
+                        historyList.innerHTML = '<div class="history-empty">No hay llamadas registradas</div>';
+                        return;
+                    }
+
+                    // Filtrar solo llamadas exitosas con tweets
+                    const validCalls = data.api_calls.filter(c => c.status === 'completed' && c.tweets_retrieved > 0);
+
+                    if (validCalls.length === 0) {
+                        historyList.innerHTML = '<div class="history-empty">No hay análisis con datos</div>';
+                        return;
+                    }
+
+                    historyList.innerHTML = validCalls.map(call => {
+                        // Agregar Z para indicar UTC si no tiene zona horaria
+                        const dateStr = call.fetched_at.includes('Z') || call.fetched_at.includes('+')
+                            ? call.fetched_at
+                            : call.fetched_at + 'Z';
+                        const date = new Date(dateStr);
+                        const formattedDate = date.toLocaleString('es-CO', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true,
+                            timeZone: 'America/Bogota'
+                        });
+                        const candidateName = call.candidate_name || call.politician || '-';
+                        const location = call.location || '-';
+                        const tweets = call.tweets_retrieved || 0;
+
+                        return `
+                            <div class="history-item" data-id="${call.id}" style="cursor: pointer;">
+                                <div class="history-item-main">
+                                    <span class="history-item-date">${formattedDate}</span>
+                                    <span class="history-item-meta">${candidateName} • ${location}</span>
+                                </div>
+                                <span class="history-item-tweets">${tweets} tweets</span>
+                            </div>
+                        `;
+                    }).join('');
+
+                    // Agregar click handlers
+                    historyList.querySelectorAll('.history-item[data-id]').forEach(item => {
+                        item.addEventListener('click', () => loadAnalysisFromHistory(item.dataset.id));
+                    });
+                } catch (err) {
+                    console.error('Error loading history:', err);
+                    historyList.innerHTML = '<div class="history-empty">Error al cargar historial</div>';
+                }
+            }
+
+            async function loadAnalysisFromHistory(apiCallId) {
+                historyOverlay.classList.remove('active');
+
+                // Mostrar loading
+                const resultsSection = document.getElementById('unified-results');
+                const loadingEl = document.getElementById('unified-loading');
+                if (loadingEl) {
+                    loadingEl.style.display = 'flex';
+                    loadingEl.querySelector('span:last-child').textContent = 'Cargando análisis histórico...';
+                }
+
+                try {
+                    const res = await fetch(`/api/media/analysis/${apiCallId}`);
+                    const data = await res.json();
+
+                    if (!data.success) {
+                        throw new Error(data.error || 'Error cargando análisis');
+                    }
+
+                    // Ocultar loading
+                    if (loadingEl) loadingEl.style.display = 'none';
+
+                    // Mostrar sección de resultados
+                    if (resultsSection) resultsSection.style.display = 'block';
+
+                    // Convertir datos y renderizar dashboard
+                    const dashboardData = convertDbDataToDashboard(data);
+                    renderUnifiedDashboard({
+                        mediaData: dashboardData.mediaData,
+                        forecastData: dashboardData.forecastData,
+                        trendingData: null,
+                        campaignData: dashboardData.campaignData,
+                        input: {
+                            location: data.location,
+                            topic: '',
+                            candidateName: data.candidate_name
+                        }
+                    });
+
+                    // Scroll a resultados
+                    resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+                } catch (err) {
+                    console.error('Error loading analysis:', err);
+                    if (loadingEl) loadingEl.style.display = 'none';
+                    alert('Error cargando el análisis: ' + err.message);
+                }
+            }
         })();
     </script>
 </body>

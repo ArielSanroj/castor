@@ -35,6 +35,19 @@ class ChartData(BaseModel):
     peaks_over_time: Optional[Dict[str, Any]] = None
 
 
+class TweetData(BaseModel):
+    """Tweet data for storage and display."""
+    tweet_id: str = ""
+    author_username: str = ""
+    author_name: Optional[str] = None
+    content: str = ""
+    sentiment_label: Optional[str] = None
+    pnd_topic: Optional[str] = None
+    retweet_count: int = 0
+    like_count: int = 0
+    reply_count: int = 0
+
+
 class CoreAnalysisResult(BaseModel):
     """
     Core analysis output shared by media and campaign products.
@@ -51,6 +64,11 @@ class CoreAnalysisResult(BaseModel):
     peaks: List[PeakEvent]
     chart_data: ChartData
 
+    # Raw tweet data for display in frontend modals
+    tweets_data: List[TweetData] = Field(default_factory=list)
+
     trending_topic: Optional[str] = None
     raw_query: Optional[str] = None
     narrative_metrics: Optional[Dict[str, Any]] = None  # Added for IVN and narrative indices
+    from_cache: bool = False
+    cached_at: Optional[datetime] = None

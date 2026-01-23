@@ -22,11 +22,7 @@ from services.background_jobs import init_background_jobs
 from app.services.analysis_core import AnalysisCorePipeline
 from app.services.topic_classifier_service import TopicClassifierService
 from app.services.chart_service import ChartService
-from services.twitter_service import TwitterService
-from services.sentiment_service import SentimentService
-from services.trending_service import TrendingService
-from services.database_service import DatabaseService
-from services.openai_service import OpenAIService
+# Service imports moved inside create_app to avoid circular imports
 
 # Initialize extensions
 cors = CORS()
@@ -145,6 +141,13 @@ def create_app(config_name: str = 'default') -> Flask:
     
     # Initialize shared pipeline (best-effort, non-fatal)
     try:
+        # Import services here to avoid circular imports
+        from services.twitter_service import TwitterService
+        from services.sentiment_service import SentimentService
+        from services.trending_service import TrendingService
+        from services.database_service import DatabaseService
+        from services.openai_service import OpenAIService
+
         topic_classifier = TopicClassifierService()
         chart_service = ChartService()
         twitter_service = TwitterService()
