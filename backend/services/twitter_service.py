@@ -15,6 +15,7 @@ from utils.circuit_breaker import (
     exponential_backoff,
     CircuitBreakerOpenError
 )
+from utils.bot_detector import get_bot_detector
 
 logger = logging.getLogger(__name__)
 
@@ -166,20 +167,42 @@ class TwitterService:
                             max_results=current_max,
                             start_time=start_time,
                             tweet_fields=['created_at', 'author_id', 'public_metrics', 'lang', 'geo'],
+                            user_fields=['created_at', 'description', 'location', 'profile_image_url',
+                                        'public_metrics', 'verified', 'username'],
+                            expansions=['author_id'],
                             next_token=pagination_token
                         )
-                    
+
                     response = self._call_twitter_api(_make_api_call)
-                    
+
                     if not response.data:
                         break
-                    
+
+                    # Build user lookup dict from includes
+                    users_by_id = {}
+                    if hasattr(response, 'includes') and response.includes and 'users' in response.includes:
+                        for user in response.includes['users']:
+                            users_by_id[user.id] = {
+                                'id': user.id,
+                                'username': user.username,
+                                'created_at': user.created_at.isoformat() if user.created_at else None,
+                                'description': user.description,
+                                'location': user.location,
+                                'profile_image_url': user.profile_image_url,
+                                'verified': getattr(user, 'verified', False),
+                                'followers_count': user.public_metrics.get('followers_count', 0) if user.public_metrics else 0,
+                                'following_count': user.public_metrics.get('following_count', 0) if user.public_metrics else 0,
+                                'tweet_count': user.public_metrics.get('tweet_count', 0) if user.public_metrics else 0,
+                            }
+
                     for tweet in response.data:
+                        author_data = users_by_id.get(tweet.author_id, {})
                         tweets.append({
                             'id': tweet.id,
                             'text': tweet.text,
                             'created_at': tweet.created_at.isoformat() if tweet.created_at else None,
                             'author_id': tweet.author_id,
+                            'author': author_data,
                             'public_metrics': tweet.public_metrics,
                             'lang': tweet.lang or lang
                         })
@@ -205,9 +228,18 @@ class TwitterService:
                 # If we had to request more than daily limit, only return and count what we use
                 tweets_to_use = tweets[:actual_limit]
                 record_twitter_usage(len(tweets_to_use))
-                logger.info(f"Retrieved {len(tweets)} tweets for query: {query}, using {len(tweets_to_use)}")
-                return tweets_to_use
-            
+
+                # Apply bot detection and credibility scoring
+                bot_detector = get_bot_detector()
+                filtered_tweets, bot_stats = bot_detector.filter_and_score_tweets(tweets_to_use)
+
+                logger.info(
+                    f"Retrieved {len(tweets)} tweets for query: {query}, "
+                    f"using {len(tweets_to_use)}, after bot filter: {len(filtered_tweets)} "
+                    f"(filtered {bot_stats['hard_filtered']} bots)"
+                )
+                return filtered_tweets
+
             logger.info(f"Retrieved {len(tweets)} tweets for query: {query}")
             return tweets
             

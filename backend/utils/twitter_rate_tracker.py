@@ -10,6 +10,19 @@ from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 
+def _get_limits():
+    """Get Twitter limits from config, with fallbacks."""
+    try:
+        from config import Config
+        daily_limit = getattr(Config, 'TWITTER_DAILY_TWEET_LIMIT', 3)
+        monthly_limit = getattr(Config, 'TWITTER_MONTHLY_LIMIT', 100)
+        logger.info(f"Twitter limits from config: daily={daily_limit}, monthly={monthly_limit}")
+        return daily_limit, monthly_limit
+    except (ImportError, AttributeError) as e:
+        # Fallback if config not available
+        logger.warning(f"Could not load config for Twitter limits, using fallbacks: {e}")
+        return 3, 100
+
 
 class TwitterRateTracker:
     """
@@ -19,8 +32,7 @@ class TwitterRateTracker:
     
     def __init__(self, storage_path: str = "/tmp/twitter_usage.json"):
         self.storage_path = Path(storage_path)
-        self.monthly_limit = 100
-        self.daily_limit = 3  # ~100/30 days
+        self.daily_limit, self.monthly_limit = _get_limits()
         
     def _load_usage(self) -> Dict[str, Any]:
         """Load usage data from file."""

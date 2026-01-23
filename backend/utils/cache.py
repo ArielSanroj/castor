@@ -173,6 +173,39 @@ def get(key: str) -> Any:
     return _deserialize(cached)
 
 
+def get_with_info(key: str) -> tuple:
+    """
+    Get cached value with cache info.
+
+    Returns:
+        tuple: (value, from_cache, cached_at_timestamp)
+        - value: The cached value or None
+        - from_cache: True if value came from cache
+        - cached_at_timestamp: Unix timestamp when cached, or None
+    """
+    if redis_client and hasattr(redis_client, "get"):
+        cached = redis_client.get(key)
+        if cached is None:
+            return None, False, None
+        # Redis doesn't store timestamp easily, so we return current time as approximation
+        return _deserialize(cached), True, time.time()
+
+    with _local_cache._lock:
+        entry = _local_cache._data.get(key)
+        if not entry:
+            return None, False, None
+        value, timestamp, ttl = entry
+        age = time.time() - timestamp
+        if age < ttl:
+            _local_cache._data.move_to_end(key)
+            return _deserialize(value), True, timestamp
+        if _local_cache.stale_ttl and age < ttl + _local_cache.stale_ttl:
+            _local_cache._data.move_to_end(key)
+            return _deserialize(value), True, timestamp
+        _local_cache._data.pop(key, None)
+        return None, False, None
+
+
 def cached(prefix: str, ttl: int = 60) -> Callable:
     """Decorator to cache function results."""
 

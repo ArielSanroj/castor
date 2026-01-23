@@ -33,10 +33,10 @@ class MediaAnalysisRequest(BaseModel):
         description="Usuario de X/Twitter. Ej: '@juanperez'",
     )
     max_tweets: int = Field(
-        default=15,
-        ge=1,  # Permitir desde 1 tweet (para respetar límite diario de 3)
-        le=20,  # Máximo estricto para Free tier
-        description="Límite de tweets a analizar (máx 20 para Free tier, recomendado 3/día).",
+        default=100,
+        ge=1,
+        le=500,  # Plan Basic: $200/mes = 15,000 tweets/mes, 500/día
+        description="Límite de tweets a analizar (máx 500 diarios para Plan Basic).",
     )
     time_window_days: int = Field(
         default=7,
@@ -76,27 +76,16 @@ class MediaAnalysisRequest(BaseModel):
     @field_validator('max_tweets')
     @classmethod
     def validate_max_tweets(cls, v: int) -> int:
-        """Validate max_tweets against Free tier limits."""
+        """Validate max_tweets against plan limits."""
         from config import Config
-        
-        # Strict enforcement for media endpoint (Free tier)
-        daily_limit = Config.TWITTER_DAILY_TWEET_LIMIT
-        
-        if v > daily_limit:
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.warning(
-                f"max_tweets={v} exceeds daily limit ({daily_limit}) for Free tier. "
-                f"Request may fail or consume monthly quota."
-            )
-        
-        # Hard limit for media endpoint
-        if v > 20:
+
+        max_per_request = Config.TWITTER_MAX_TWEETS_PER_REQUEST
+
+        if v > max_per_request:
             raise ValueError(
-                f"max_tweets={v} exceeds maximum allowed (20) for Free tier. "
-                f"Use campaign endpoint for higher limits."
+                f"max_tweets={v} exceeds maximum allowed ({max_per_request})."
             )
-        
+
         return v
     
     @field_validator('politician')
@@ -121,6 +110,19 @@ class MediaAnalysisRequest(BaseModel):
         return v
 
 
+class TweetSummary(BaseModel):
+    """Summary of a tweet for display in the frontend."""
+    tweet_id: str = ""
+    author_username: str = ""
+    author_name: Optional[str] = None
+    content: str = ""
+    sentiment_label: Optional[str] = None
+    pnd_topic: Optional[str] = None
+    retweet_count: int = 0
+    like_count: int = 0
+    reply_count: int = 0
+
+
 class MediaAnalysisSummary(BaseModel):
     overview: str
     key_stats: List[str] = Field(default_factory=list)
@@ -135,6 +137,8 @@ class MediaAnalysisMetadata(BaseModel):
     time_window_to: datetime
     trending_topic: Optional[str] = None
     raw_query: Optional[str] = None
+    from_cache: bool = False
+    cached_at: Optional[datetime] = None
 
 
 class MediaAnalysisResponse(BaseModel):
@@ -147,3 +151,6 @@ class MediaAnalysisResponse(BaseModel):
     chart_data: ChartData
 
     metadata: MediaAnalysisMetadata
+
+    # Tweets for displaying in the PND detail modal
+    tweets: List[TweetSummary] = Field(default_factory=list)

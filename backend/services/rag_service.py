@@ -539,6 +539,320 @@ Interpretación: {'La percepción ciudadana es mayormente favorable' if pos > 50
 
         return "\n".join(parts)
 
+    def index_tweets(
+        self,
+        api_call_id: str,
+        tweets: List[Dict[str, Any]],
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> int:
+        """
+        Indexar tweets individuales en el RAG para búsqueda semántica.
+        Agrupa tweets por tema PND para eficiencia.
+
+        Args:
+            api_call_id: ID del API call
+            tweets: Lista de tweets con contenido y metadatos
+            metadata: Metadatos adicionales (location, candidate, etc.)
+
+        Returns:
+            Número de documentos indexados
+        """
+        if not tweets:
+            return 0
+
+        meta = metadata or {}
+        location = meta.get("location", "Colombia")
+        candidate = meta.get("candidate_name", "")
+        date = meta.get("created_at", datetime.now(timezone.utc).isoformat())
+
+        documents = []
+
+        # Agrupar tweets por tema PND
+        tweets_by_topic: Dict[str, List[Dict]] = {}
+        for tweet in tweets:
+            topic = tweet.get("pnd_topic", "general") or "general"
+            if topic not in tweets_by_topic:
+                tweets_by_topic[topic] = []
+            tweets_by_topic[topic].append(tweet)
+
+        # Crear documento por cada grupo de tema (máx 10 tweets por documento)
+        for topic, topic_tweets in tweets_by_topic.items():
+            # Dividir en chunks si hay muchos tweets
+            chunk_size = 10
+            for i in range(0, len(topic_tweets), chunk_size):
+                chunk = topic_tweets[i:i + chunk_size]
+
+                # Contar sentimientos
+                pos_count = sum(1 for t in chunk if 'positiv' in (t.get('sentiment_label') or '').lower())
+                neg_count = sum(1 for t in chunk if 'negativ' in (t.get('sentiment_label') or '').lower())
+                neu_count = len(chunk) - pos_count - neg_count
+
+                # Formatear contenido
+                content_parts = [
+                    f"TWEETS SOBRE {topic.upper()} - {location} ({date})",
+                    f"Candidato/Tema: {candidate}" if candidate else "",
+                    f"Total tweets: {len(chunk)} | Positivos: {pos_count} | Negativos: {neg_count} | Neutrales: {neu_count}",
+                    "",
+                    "Opiniones de ciudadanos:"
+                ]
+
+                for t in chunk:
+                    author = t.get('author_username', 'usuario')
+                    content = t.get('content', '')[:280]  # Limitar longitud
+                    sentiment = t.get('sentiment_label', 'neutral')
+                    engagement = t.get('retweet_count', 0) + t.get('like_count', 0)
+
+                    content_parts.append(f"- @{author} [{sentiment}]: \"{content}\"")
+                    if engagement > 10:
+                        content_parts.append(f"  (Engagement: {engagement})")
+
+                doc_id = f"{api_call_id}_tweets_{topic}_{i // chunk_size}"
+                documents.append(Document(
+                    id=doc_id,
+                    content="\n".join(content_parts),
+                    metadata={
+                        "api_call_id": api_call_id,
+                        "type": "tweets",
+                        "chunk_type": "tweets",
+                        "pnd_topic": topic,
+                        "location": location,
+                        "candidate": candidate,
+                        "tweet_count": len(chunk),
+                        "sentiment_positive_count": pos_count,
+                        "sentiment_negative_count": neg_count,
+                        "created_at": date
+                    }
+                ))
+
+        if documents:
+            self.vector_store.add_documents(documents)
+            logger.info(f"Indexed {len(documents)} tweet documents for API call {api_call_id}")
+
+        return len(documents)
+
+    def index_pnd_metrics(
+        self,
+        api_call_id: str,
+        pnd_metrics: List[Dict[str, Any]],
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> int:
+        """
+        Indexar métricas PND en el RAG.
+
+        Args:
+            api_call_id: ID del API call
+            pnd_metrics: Lista de métricas por eje PND
+            metadata: Metadatos adicionales
+
+        Returns:
+            Número de documentos indexados
+        """
+        if not pnd_metrics:
+            return 0
+
+        meta = metadata or {}
+        location = meta.get("location", "Colombia")
+        candidate = meta.get("candidate_name", "")
+        date = meta.get("created_at", datetime.now(timezone.utc).isoformat())
+
+        documents = []
+
+        # Documento resumen de todos los ejes
+        summary_parts = [
+            f"MÉTRICAS PND COMPLETAS - {location} ({date})",
+            f"Candidato: {candidate}" if candidate else "",
+            "",
+            "Análisis por eje del Plan Nacional de Desarrollo:"
+        ]
+
+        for m in pnd_metrics:
+            axis = m.get('pnd_axis_display', m.get('pnd_axis', 'Desconocido'))
+            icce = m.get('icce', 0)
+            sov = m.get('sov', 0)
+            sna = m.get('sna', 0)
+            tweets = m.get('tweet_count', 0)
+            trend = m.get('trend', 'stable')
+
+            trend_text = "↑ subiendo" if trend == 'up' else "↓ bajando" if trend == 'down' else "→ estable"
+            sentiment_text = "positivo" if sna > 10 else "negativo" if sna < -10 else "neutral"
+
+            summary_parts.append(f"\n{axis}:")
+            summary_parts.append(f"  - ICCE: {icce:.1f}/100 (Fuerza narrativa)")
+            summary_parts.append(f"  - SOV: {sov:.1f}% (Presencia en conversación)")
+            summary_parts.append(f"  - SNA: {sna:+.1f}% (Sentimiento {sentiment_text})")
+            summary_parts.append(f"  - Tweets: {tweets} | Tendencia: {trend_text}")
+
+            # Samples de tweets si existen
+            samples = m.get('sample_tweets', [])
+            if samples:
+                summary_parts.append(f"  - Ejemplo: \"{samples[0][:100]}...\"" if len(samples[0]) > 100 else f"  - Ejemplo: \"{samples[0]}\"")
+
+        # Documento resumen
+        documents.append(Document(
+            id=f"{api_call_id}_pnd_summary",
+            content="\n".join(summary_parts),
+            metadata={
+                "api_call_id": api_call_id,
+                "type": "pnd_metrics",
+                "chunk_type": "pnd_summary",
+                "location": location,
+                "candidate": candidate,
+                "created_at": date
+            }
+        ))
+
+        # Documento individual por cada eje para búsquedas específicas
+        for m in pnd_metrics:
+            axis = m.get('pnd_axis_display', m.get('pnd_axis', 'Desconocido'))
+            axis_key = m.get('pnd_axis', axis.lower().replace(' ', '_'))
+            icce = m.get('icce', 0)
+            sov = m.get('sov', 0)
+            sna = m.get('sna', 0)
+
+            interpretation = []
+            if icce >= 60:
+                interpretation.append(f"El candidato tiene una posición FUERTE en {axis}")
+            elif icce < 45:
+                interpretation.append(f"El candidato tiene una posición DÉBIL en {axis}, requiere atención")
+            else:
+                interpretation.append(f"El candidato tiene una posición MODERADA en {axis}")
+
+            if sna > 15:
+                interpretation.append("El sentimiento ciudadano es MUY POSITIVO")
+            elif sna > 5:
+                interpretation.append("El sentimiento ciudadano es positivo")
+            elif sna < -15:
+                interpretation.append("El sentimiento ciudadano es MUY NEGATIVO, hay críticas fuertes")
+            elif sna < -5:
+                interpretation.append("El sentimiento ciudadano es negativo")
+            else:
+                interpretation.append("El sentimiento ciudadano es neutral/dividido")
+
+            content = f"""ANÁLISIS DEL EJE PND: {axis} - {location} ({date})
+Candidato: {candidate}
+
+MÉTRICAS:
+- ICCE (Índice de Capacidad Electoral): {icce:.1f}/100
+- SOV (Share of Voice): {sov:.1f}%
+- SNA (Sentimiento Neto Agregado): {sna:+.1f}%
+- Tweets analizados: {m.get('tweet_count', 0)}
+
+INTERPRETACIÓN:
+{chr(10).join('• ' + i for i in interpretation)}
+
+RECOMENDACIÓN:
+{'Mantener y capitalizar esta fortaleza narrativa' if icce >= 60 else 'Desarrollar propuestas y aumentar presencia en este tema' if icce < 45 else 'Incrementar acciones para consolidar posición'}
+"""
+
+            documents.append(Document(
+                id=f"{api_call_id}_pnd_{axis_key}",
+                content=content,
+                metadata={
+                    "api_call_id": api_call_id,
+                    "type": "pnd_metrics",
+                    "chunk_type": "pnd_axis",
+                    "pnd_axis": axis_key,
+                    "pnd_axis_display": axis,
+                    "icce": icce,
+                    "sov": sov,
+                    "sna": sna,
+                    "location": location,
+                    "candidate": candidate,
+                    "created_at": date
+                }
+            ))
+
+        if documents:
+            self.vector_store.add_documents(documents)
+            logger.info(f"Indexed {len(documents)} PND metric documents for API call {api_call_id}")
+
+        return len(documents)
+
+    def index_analysis_snapshot(
+        self,
+        api_call_id: str,
+        snapshot: Dict[str, Any],
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> int:
+        """
+        Indexar snapshot de análisis en el RAG.
+
+        Args:
+            api_call_id: ID del API call
+            snapshot: Datos del snapshot (ICCE, SNA, etc.)
+            metadata: Metadatos adicionales
+
+        Returns:
+            Número de documentos indexados
+        """
+        meta = metadata or {}
+        location = meta.get("location", "Colombia")
+        candidate = meta.get("candidate_name", "")
+        date = meta.get("created_at", datetime.now(timezone.utc).isoformat())
+
+        icce = snapshot.get('icce', 50)
+        sov = snapshot.get('sov', 0)
+        sna = snapshot.get('sna', 0)
+        momentum = snapshot.get('momentum', 0)
+        pos = snapshot.get('sentiment_positive', 0.33)
+        neg = snapshot.get('sentiment_negative', 0.33)
+        neu = snapshot.get('sentiment_neutral', 0.34)
+
+        # Interpretaciones
+        icce_level = "alto" if icce >= 60 else "bajo" if icce < 45 else "moderado"
+        momentum_text = "positivo (creciendo)" if momentum > 0.005 else "negativo (decreciendo)" if momentum < -0.005 else "estable"
+        sentiment_text = "favorable" if pos > neg + 0.1 else "desfavorable" if neg > pos + 0.1 else "mixto"
+
+        content = f"""RESUMEN EJECUTIVO DE ANÁLISIS - {location} ({date})
+Candidato/Tema: {candidate}
+
+INDICADORES CLAVE:
+- ICCE (Índice de Capacidad Electoral): {icce:.1f}/100 - Nivel {icce_level}
+- SOV (Share of Voice): {sov:.1f}% de la conversación
+- SNA (Sentimiento Neto): {sna:+.1f}%
+- Momentum: {momentum:+.3f} ({momentum_text})
+
+DISTRIBUCIÓN DE SENTIMIENTO:
+- Positivo: {pos*100:.1f}%
+- Neutral: {neu*100:.1f}%
+- Negativo: {neg*100:.1f}%
+- Balance general: {sentiment_text}
+
+RESUMEN:
+{snapshot.get('executive_summary', f'Análisis de conversación sobre {candidate} en {location}')}
+
+HALLAZGOS CLAVE:
+{chr(10).join('• ' + f for f in snapshot.get('key_findings', [])) or '• No hay hallazgos específicos'}
+
+TEMAS TRENDING:
+{', '.join(snapshot.get('trending_topics', [])) or 'No identificados'}
+
+EVALUACIÓN GENERAL:
+{'La posición narrativa es sólida, mantener estrategia actual' if icce >= 60 and sna > 0 else 'La posición narrativa es favorable pero puede mejorar' if icce >= 50 else 'Se requiere atención urgente a la estrategia de comunicación' if icce < 40 else 'Hay oportunidades de mejora en la narrativa'}
+"""
+
+        doc = Document(
+            id=f"{api_call_id}_snapshot",
+            content=content,
+            metadata={
+                "api_call_id": api_call_id,
+                "type": "analysis_snapshot",
+                "chunk_type": "executive_summary",
+                "icce": icce,
+                "sov": sov,
+                "sna": sna,
+                "momentum": momentum,
+                "location": location,
+                "candidate": candidate,
+                "created_at": date
+            }
+        )
+
+        self.vector_store.add_documents([doc])
+        logger.info(f"Indexed analysis snapshot for API call {api_call_id}")
+
+        return 1
+
     def retrieve(
         self,
         query: str,
