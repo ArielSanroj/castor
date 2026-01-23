@@ -93,6 +93,21 @@
             color: var(--accent, #C9A227);
             font-family: var(--font-display, 'Playfair Display', serif);
         }
+        .metadata-stat .timer-value {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            background: rgba(74, 124, 89, 0.15);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid rgba(74, 124, 89, 0.3);
+        }
+        #api-reset-timer {
+            animation: pulse-subtle 2s ease-in-out infinite;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
         .cache-badge {
             font-size: 0.65rem;
             font-weight: 700;
@@ -1767,7 +1782,7 @@
                         </div>
                         <div class="form-field" style="align-self: flex-end; display: flex; gap: 0.5rem;">
                             <button type="button" class="ghost-btn" id="unified-mock-btn" style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.5rem 1rem; font-weight: 600; cursor: pointer; background: transparent; color: #374151;">Muéstrame un ejemplo</button>
-                            <button type="submit" id="unified-submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Generar dashboard</button>
+                            <button type="submit" id="unified-submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Estrategia electoral</button>
                         </div>
                     </div>
                     <div id="unified-error" class="error" style="display:none; color: #b91c1c; font-size: 0.9rem; margin-top: 0.5rem;"></div>
@@ -1803,12 +1818,20 @@
                         <span id="meta-tweets-count" class="stat-value">--</span>
                     </div>
                     <div class="metadata-stat">
-                        <span class="stat-label">Fuentes</span>
+                        <span class="stat-label">Autores</span>
                         <span id="meta-sources-count" class="stat-value">--</span>
                     </div>
                     <div class="metadata-stat">
                         <span class="stat-label">Ventana</span>
                         <span id="meta-days-window" class="stat-value">--</span>
+                    </div>
+                    <div class="metadata-stat" id="twitter-api-usage">
+                        <span class="stat-label">API Hoy</span>
+                        <span id="meta-twitter-usage" class="stat-value">--/500</span>
+                    </div>
+                    <div class="metadata-stat" id="api-reset-timer" style="display: none;">
+                        <span class="stat-label">Reset en</span>
+                        <span id="reset-timer-value" class="stat-value timer-value">--:--:--</span>
                     </div>
                     <div class="metadata-stat" id="meta-cache-indicator" style="display: none;">
                         <span class="cache-badge">CACHE</span>
@@ -1987,6 +2010,7 @@
                         <h3><span id="game-candidate-name" style="color: var(--accent);">Abelardo de la Espriella</span> vs <span id="rival-name-display">Vicky Dávila</span></h3>
                         <select id="game-rival-select" class="rival-select">
                             <option value="Vicky Dávila" selected>Vicky Dávila (Movimiento Valientes)</option>
+                            <option value="Paloma Valencia">Paloma Valencia (Centro Democrático)</option>
                             <option value="Juan Carlos Pinzón">Juan Carlos Pinzón (Verde Oxígeno)</option>
                             <option value="Daniel Palacios">Daniel Palacios (Rescatemos a Colombia)</option>
                             <option value="Mauricio Cárdenas">Mauricio Cárdenas (Avanza Colombia)</option>
@@ -2106,74 +2130,105 @@
                     </div>
                 </div>
 
-                <!-- Acciones Estratégicas del Día -->
-                <div class="strategy-actions-section">
-                    <div class="summary-header">
-                        <h3>Plan de acción del día</h3>
-                        <p class="dashboard-subtitle">Tácticas priorizadas para ejecutar hoy.</p>
-                    </div>
-                    <div class="action-cards-grid">
-                        <div class="action-card action-priority">
-                            <div class="action-header">
-                                <span class="action-badge urgent">PRIORITARIO</span>
-                                <span class="action-time">Hoy antes de 12pm</span>
-                            </div>
-                            <p id="action-priority-text" class="action-text">Publicar video sobre seguridad en redes sociales con hashtag #SeguridadParaTodos</p>
-                            <div class="action-owner">Responsable: <strong>Comunicaciones</strong></div>
-                        </div>
-                        <div class="action-card action-media">
-                            <div class="action-header">
-                                <span class="action-badge media">MEDIOS</span>
-                                <span class="action-time">Hoy 7pm</span>
-                            </div>
-                            <p id="action-media-text" class="action-text">Entrevista en Blu Radio sobre propuestas de economía y empleo</p>
-                            <div class="action-owner">Responsable: <strong>Prensa</strong></div>
-                        </div>
-                        <div class="action-card action-digital">
-                            <div class="action-header">
-                                <span class="action-badge digital">DIGITAL</span>
-                                <span class="action-time">Mañana</span>
-                            </div>
-                            <p id="action-digital-text" class="action-text">Campaña de Twitter con testimonios ciudadanos sobre seguridad en Cali</p>
-                            <div class="action-owner">Responsable: <strong>Redes</strong></div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Mapa de Colombia -->
                 <div class="geo-panel">
                     <div class="geo-map-card">
                         <div class="geo-map-header">
-                            <h3>Mapa de Colombia - Popularidad por región</h3>
-                            <span class="geo-badge">Distribución geográfica</span>
+                            <h3>República de Colombia</h3>
+                            <span class="geo-badge">Conversación por región</span>
                         </div>
-                        <div id="geo-map" class="geo-map colombia-map" aria-label="Mapa de popularidad en Colombia">
-                            <!-- Mapa SVG de Colombia -->
-                            <svg viewBox="0 0 400 450" class="colombia-svg">
+                        <div id="geo-map" class="geo-map colombia-map" aria-label="Mapa de Colombia">
+                            <!-- Mapa SVG de Colombia - Forma real -->
+                            <svg viewBox="0 0 450 500" class="colombia-svg">
+                                <!-- Contorno de Colombia -->
+                                <path class="colombia-outline" fill="#1a1a2e" stroke="#4A7C59" stroke-width="2" d="
+                                    M85,95 L95,80 L120,70 L150,55 L180,50 L220,45 L260,50 L290,55 L310,65 L330,80
+                                    L345,70 L360,75 L370,90 L365,110 L350,125 L340,140 L350,160 L365,180
+                                    L380,200 L390,230 L395,260 L390,290 L380,320 L365,350 L345,380
+                                    L320,400 L290,415 L260,425 L230,435 L200,440 L170,435 L145,425
+                                    L125,410 L110,390 L100,365 L95,340 L100,310 L95,280 L85,250
+                                    L75,220 L70,190 L65,160 L70,130 L80,110 Z
+                                "/>
+
+                                <!-- Regiones con colores por intensidad -->
                                 <g id="colombia-regions">
-                                    <!-- Caribe -->
-                                    <path id="region-caribe" class="region" d="M120,50 L280,30 L300,80 L250,120 L150,110 L100,80 Z" data-region="Caribe" data-value="42"/>
-                                    <!-- Andina -->
-                                    <path id="region-andina" class="region highlight" d="M150,110 L250,120 L270,200 L250,280 L180,300 L130,250 L120,180 Z" data-region="Andina" data-value="68"/>
-                                    <!-- Pacifica -->
-                                    <path id="region-pacifica" class="region" d="M80,120 L130,130 L130,250 L100,300 L60,280 L50,200 Z" data-region="Pacífica" data-value="55"/>
-                                    <!-- Orinoquia -->
-                                    <path id="region-orinoquia" class="region" d="M270,120 L350,100 L380,180 L350,280 L270,250 L270,200 Z" data-region="Orinoquía" data-value="38"/>
-                                    <!-- Amazonia -->
-                                    <path id="region-amazonia" class="region" d="M180,300 L250,280 L350,280 L380,380 L280,420 L180,400 L130,350 Z" data-region="Amazonía" data-value="25"/>
+                                    <!-- Región Caribe -->
+                                    <path id="region-caribe" class="region" fill="rgba(74,124,89,0.3)" d="M150,55 L180,50 L220,45 L260,50 L290,55 L310,65 L330,80 L310,100 L280,115 L240,120 L200,115 L160,105 L140,90 Z">
+                                        <title>Región Caribe</title>
+                                    </path>
+                                    <!-- Región Andina -->
+                                    <path id="region-andina" class="region highlight" fill="rgba(74,124,89,0.6)" d="M140,90 L200,115 L240,120 L260,150 L250,200 L240,250 L220,290 L190,310 L160,300 L140,260 L130,210 L125,160 Z">
+                                        <title>Región Andina</title>
+                                    </path>
+                                    <!-- Región Pacífica -->
+                                    <path id="region-pacifica" class="region" fill="rgba(74,124,89,0.4)" d="M70,130 L125,160 L130,210 L140,260 L130,310 L110,350 L95,340 L85,300 L75,250 L70,200 L65,160 Z">
+                                        <title>Región Pacífica</title>
+                                    </path>
+                                    <!-- Región Orinoquía -->
+                                    <path id="region-orinoquia" class="region" fill="rgba(74,124,89,0.25)" d="M260,150 L310,100 L350,125 L365,180 L380,230 L370,280 L340,300 L300,290 L260,270 L250,220 Z">
+                                        <title>Región Orinoquía</title>
+                                    </path>
+                                    <!-- Región Amazonía -->
+                                    <path id="region-amazonia" class="region" fill="rgba(74,124,89,0.15)" d="M190,310 L260,270 L340,300 L365,350 L345,400 L290,430 L230,440 L180,430 L145,400 L130,360 L150,330 Z">
+                                        <title>Región Amazonía</title>
+                                    </path>
                                 </g>
+
                                 <!-- Ciudades principales -->
-                                <circle cx="180" cy="170" r="8" class="city-dot bogota"/>
-                                <text x="195" y="175" class="city-label">Bogotá</text>
-                                <circle cx="130" cy="220" r="6" class="city-dot"/>
-                                <text x="90" y="225" class="city-label">Cali</text>
-                                <circle cx="200" cy="140" r="6" class="city-dot"/>
-                                <text x="210" y="145" class="city-label">Medellín</text>
-                                <circle cx="220" cy="70" r="5" class="city-dot"/>
-                                <text x="230" y="75" class="city-label">Barranquilla</text>
+                                <g class="cities">
+                                    <!-- Bogotá (Capital) -->
+                                    <circle cx="205" cy="215" r="10" class="city-dot capital" fill="#C9A227" stroke="#fff" stroke-width="2"/>
+                                    <text x="220" y="220" class="city-label capital-label" fill="#C9A227" font-weight="bold">Bogotá</text>
+
+                                    <!-- Medellín -->
+                                    <circle cx="175" cy="160" r="7" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1.5"/>
+                                    <text x="135" y="155" class="city-label" fill="#e0e0e0">Medellín</text>
+
+                                    <!-- Cali -->
+                                    <circle cx="145" cy="275" r="7" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1.5"/>
+                                    <text x="105" y="280" class="city-label" fill="#e0e0e0">Cali</text>
+
+                                    <!-- Barranquilla -->
+                                    <circle cx="245" cy="70" r="6" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1.5"/>
+                                    <text x="255" y="65" class="city-label" fill="#e0e0e0">Barranquilla</text>
+
+                                    <!-- Cartagena -->
+                                    <circle cx="200" cy="75" r="6" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1.5"/>
+                                    <text x="155" y="70" class="city-label" fill="#e0e0e0">Cartagena</text>
+
+                                    <!-- Bucaramanga -->
+                                    <circle cx="240" cy="145" r="5" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="250" y="140" class="city-label small" fill="#e0e0e0">Bucaramanga</text>
+
+                                    <!-- Cúcuta -->
+                                    <circle cx="280" cy="125" r="5" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="290" y="120" class="city-label small" fill="#e0e0e0">Cúcuta</text>
+
+                                    <!-- Pereira -->
+                                    <circle cx="165" cy="210" r="4" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="125" y="215" class="city-label small" fill="#e0e0e0">Pereira</text>
+
+                                    <!-- Santa Marta -->
+                                    <circle cx="270" cy="60" r="5" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="280" y="55" class="city-label small" fill="#e0e0e0">Santa Marta</text>
+
+                                    <!-- Villavicencio -->
+                                    <circle cx="250" cy="240" r="4" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="260" y="245" class="city-label small" fill="#e0e0e0">Villavicencio</text>
+                                </g>
+
+                                <!-- Leyenda -->
+                                <g class="map-legend" transform="translate(20, 420)">
+                                    <rect x="0" y="0" width="15" height="15" fill="rgba(74,124,89,0.6)" stroke="#fff" stroke-width="0.5"/>
+                                    <text x="20" y="12" fill="#e0e0e0" font-size="10">Alta conversación</text>
+                                    <rect x="110" y="0" width="15" height="15" fill="rgba(74,124,89,0.3)" stroke="#fff" stroke-width="0.5"/>
+                                    <text x="130" y="12" fill="#e0e0e0" font-size="10">Media</text>
+                                    <rect x="180" y="0" width="15" height="15" fill="rgba(74,124,89,0.15)" stroke="#fff" stroke-width="0.5"/>
+                                    <text x="200" y="12" fill="#e0e0e0" font-size="10">Baja</text>
+                                </g>
                             </svg>
                         </div>
-                        <p class="geo-footnote">Intensidad del color indica fuerza de conversación (ICCE).</p>
+                        <p class="geo-footnote">Intensidad del color indica volumen de conversación en redes.</p>
                     </div>
                     <div class="geo-list-card">
                         <h3>Ciudades con más conversación</h3>
@@ -2562,76 +2617,104 @@
             }
         }
     </script>
-    <script src="/static/js/config.js?v=20260110b"></script>
-    <script src="/static/js/main.js?v=20260110b"></script>
-    <script src="/static/js/performance.js?v=20260110b" defer></script>
-    <script src="/static/js/landing.js?v=20260110b" defer></script>
-    <script src="/static/js/unified_dashboard.js?v=20260110b"></script>
-    <script src="/static/js/rag_chat.js?v=20260110b" defer></script>
+    <script src="/static/js/config.js?v=20260122"></script>
+    <script src="/static/js/main.js?v=20260122"></script>
+    <script src="/static/js/performance.js?v=20260122" defer></script>
+    <script src="/static/js/landing.js?v=20260122" defer></script>
+    <script src="/static/js/unified_dashboard.js?v=20260122"></script>
+    <script src="/static/js/rag_chat.js?v=20260122" defer></script>
 
     <!-- RAG Chat Button and Container - CASTOR Brand Colors -->
     <style>
         .rag-chat-fab {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: auto;
-            min-width: 60px;
-            height: 48px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #C9A227 0%, #D4AF37 100%);
+            bottom: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(201, 162, 39, 0.9);
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(201, 162, 39, 0.3);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 0 16px;
-            transition: all 0.3s ease;
+            gap: 0;
+            padding: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
+            overflow: hidden;
         }
         .rag-chat-fab:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 30px rgba(201, 162, 39, 0.5);
-            background: linear-gradient(135deg, #D4AF37 0%, #E8D48A 100%);
+            width: auto;
+            padding: 0 16px 0 12px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #C9A227 0%, #D4AF37 100%);
+            box-shadow: 0 4px 20px rgba(201, 162, 39, 0.4);
+            gap: 8px;
         }
         .rag-chat-fab svg {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             fill: white;
             flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+        .rag-chat-fab:hover svg {
+            transform: scale(1.05);
+        }
+        .rag-chat-fab-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+        .rag-chat-fab:hover .rag-chat-fab-logo {
+            transform: scale(1.08);
         }
         .rag-chat-fab-text {
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             white-space: nowrap;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .rag-chat-fab:hover .rag-chat-fab-text {
+            max-width: 150px;
+            opacity: 1;
         }
         .rag-chat-fab .badge {
             position: absolute;
-            top: -4px;
-            right: -4px;
-            background: #C9A227;
-            color: #0A0A0A;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 6px;
+            top: -2px;
+            right: -2px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
             display: none;
+            align-items: center;
+            justify-content: center;
         }
         .rag-chat-panel {
             position: fixed;
-            bottom: 100px;
-            right: 24px;
-            width: 400px;
-            max-width: calc(100vw - 48px);
-            height: 500px;
-            max-height: calc(100vh - 140px);
+            bottom: 72px;
+            right: 20px;
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            height: 450px;
+            max-height: calc(100vh - 100px);
             background: var(--panel, #141414);
-            border: 1px solid rgba(201, 162, 39, 0.2);
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(201, 162, 39, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             display: none;
             flex-direction: column;
             z-index: 999;
@@ -2639,11 +2722,16 @@
         }
         .rag-chat-panel.open {
             display: flex;
+            animation: slideUp 0.25s ease-out;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .rag-chat-header {
             background: linear-gradient(135deg, #C9A227 0%, #D4AF37 100%);
             color: #0A0A0A;
-            padding: 16px 20px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -2651,28 +2739,28 @@
         .rag-chat-header-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         .rag-chat-header-brand img {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
         }
         .rag-chat-header h3 {
             margin: 0;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 700;
         }
         .rag-chat-header-actions {
             display: flex;
-            gap: 8px;
+            gap: 4px;
         }
         .rag-chat-header button {
-            background: rgba(0,0,0,0.15);
+            background: rgba(0,0,0,0.1);
             border: none;
             color: #0A0A0A;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 6px;
             cursor: pointer;
             display: flex;
@@ -2681,22 +2769,22 @@
             transition: background 0.2s;
         }
         .rag-chat-header button:hover {
-            background: rgba(0,0,0,0.25);
+            background: rgba(0,0,0,0.2);
         }
         .rag-chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             background: var(--panel-alt, #1C1C1C);
         }
         .rag-message {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            max-width: 88%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
             line-height: 1.5;
         }
         .rag-message.user {
@@ -2727,8 +2815,36 @@
             font-size: 0.75rem;
             color: var(--muted, #9A8F7C);
         }
+        .rag-message p {
+            margin: 0 0 8px 0;
+        }
+        .rag-message p:last-child {
+            margin-bottom: 0;
+        }
+        .rag-message strong {
+            font-weight: 600;
+            color: #C9A227;
+        }
+        .rag-message em {
+            font-style: italic;
+        }
+        .rag-message code {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.85em;
+        }
+        .rag-message ul {
+            margin: 8px 0;
+            padding-left: 18px;
+        }
+        .rag-message li {
+            margin: 4px 0;
+            line-height: 1.4;
+        }
         .rag-chat-input-area {
-            padding: 12px 16px;
+            padding: 10px 12px;
             background: var(--panel, #141414);
             border-top: 1px solid var(--border, #2A2A2A);
             display: flex;
@@ -2736,10 +2852,10 @@
         }
         .rag-chat-input-area input {
             flex: 1;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border: 1px solid var(--border, #2A2A2A);
-            border-radius: 6px;
-            font-size: 0.9rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
             outline: none;
             background: var(--panel-alt, #1C1C1C);
             color: var(--text, #F5F5F0);
@@ -2756,14 +2872,14 @@
             background: linear-gradient(135deg, #C9A227 0%, #D4AF37 100%);
             border: none;
             color: #0A0A0A;
-            width: 40px;
-            height: 40px;
-            border-radius: 6px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s;
+            transition: all 0.2s;
         }
         .rag-chat-input-area button:hover {
             transform: scale(1.05);
@@ -2792,32 +2908,36 @@
         }
         @media (max-width: 480px) {
             .rag-chat-panel {
-                width: calc(100vw - 24px);
-                right: 12px;
-                bottom: 80px;
-                height: calc(100vh - 100px);
+                width: calc(100vw - 20px);
+                right: 10px;
+                bottom: 60px;
+                height: calc(100vh - 80px);
+                border-radius: 10px;
             }
             .rag-chat-fab {
-                right: 12px;
-                bottom: 12px;
-                padding: 0 12px;
+                right: 10px;
+                bottom: 10px;
+                width: 40px;
+                height: 40px;
             }
-            .rag-chat-fab-text {
-                font-size: 0.8rem;
+            .rag-chat-fab:hover {
+                width: 40px;
+                padding: 0;
+                border-radius: 50%;
+                gap: 0;
+            }
+            .rag-chat-fab:hover .rag-chat-fab-text {
+                max-width: 0;
+                opacity: 0;
             }
         }
     </style>
 
     <!-- Floating Chat Button -->
-    <button class="rag-chat-fab" id="rag-chat-toggle" aria-label="Preguntale a CASTOR">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-            <circle cx="8" cy="10" r="1.5"/>
-            <circle cx="12" cy="10" r="1.5"/>
-            <circle cx="16" cy="10" r="1.5"/>
-        </svg>
-        <span class="rag-chat-fab-text">Preguntale a CASTOR</span>
-        <span class="badge" id="rag-chat-badge">!</span>
+    <button class="rag-chat-fab" id="rag-chat-toggle" aria-label="Chat CASTOR" title="Chat CASTOR">
+        <img src="/static/images/logo.png" alt="CASTOR" class="rag-chat-fab-logo">
+        <span class="rag-chat-fab-text">CASTOR</span>
+        <span class="badge" id="rag-chat-badge"></span>
     </button>
 
     <!-- Chat Panel -->
@@ -2842,7 +2962,7 @@
         </div>
         <div class="rag-chat-messages" id="rag-chat-messages">
             <div class="rag-message assistant">
-                Hola! Soy CASTOR, tu estratega electoral con IA. Puedo ayudarte a analizar datos de campanas, sentimientos, tendencias y comparar tu posicion vs rivales. Que te gustaria saber?
+                Hola! Soy tu asistente CASTOR. Preguntame sobre analisis, tendencias o estrategia electoral.
             </div>
         </div>
         <div class="rag-chat-input-area">
@@ -2880,6 +3000,33 @@
                 panel.classList.remove('open');
             });
 
+            // Formatear Markdown a HTML
+            function formatMarkdown(text) {
+                if (!text) return '';
+                let html = text;
+                // Escapar HTML
+                html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                // Negritas: **texto**
+                html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                // Cursivas: *texto*
+                html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+                // Código: `código`
+                html = html.replace(/`(.+?)`/g, '<code>$1</code>');
+                // Listas con guiones
+                html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+                html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+                // Párrafos
+                html = html.replace(/\n\n+/g, '</p><p>');
+                // Saltos de línea
+                html = html.replace(/\n/g, '<br>');
+                html = '<p>' + html + '</p>';
+                // Limpiar
+                html = html.replace(/<p><\/p>/g, '');
+                html = html.replace(/<p>(<ul>)/g, '$1');
+                html = html.replace(/(<\/ul>)<\/p>/g, '$1');
+                return html;
+            }
+
             // Send message
             async function sendMessage() {
                 const query = input.value.trim();
@@ -2911,7 +3058,8 @@
                     }
 
                     const data = await response.json();
-                    let messageContent = data.answer || data.response || 'No pude procesar tu pregunta.';
+                    let rawContent = data.answer || data.response || 'No pude procesar tu pregunta.';
+                    let messageContent = formatMarkdown(rawContent);
 
                     // Add sources if available
                     if (data.sources && data.sources.length > 0) {
@@ -2947,44 +3095,68 @@
                 if (e.key === 'Enter') sendMessage();
             });
 
-            // Sync with database
+            // Sync with database - uses sync-latest for quick sync
             syncBtn.addEventListener('click', async () => {
                 syncBtn.disabled = true;
-                addMessage('Sincronizando con la base de datos...', 'system');
+                addMessage('Sincronizando con el ultimo analisis...', 'system');
 
                 try {
-                    const response = await fetch(`${window.API_BASE_URL}/api/chat/rag/sync`, {
+                    const response = await fetch(`${window.API_BASE_URL}/api/chat/rag/sync-latest`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' }
                     });
 
                     const data = await response.json();
                     if (data.success) {
-                        addMessage(`Sincronizacion completa. ${data.documents_indexed || 0} documentos indexados.`, 'system');
+                        const msg = data.message || `${data.documents_synced || 0} documentos indexados`;
+                        addMessage(`Listo! ${msg}. Total: ${data.total_indexed || 0} docs.`, 'system');
+                        badge.style.display = 'none';
                     } else {
-                        addMessage('Error en la sincronizacion.', 'system');
+                        addMessage(`Error: ${data.error || 'Error desconocido'}`, 'system');
                     }
                 } catch (error) {
-                    addMessage('Error al sincronizar con la base de datos.', 'system');
+                    addMessage('Error al conectar con el servidor.', 'system');
                     console.error('Sync error:', error);
                 }
 
                 syncBtn.disabled = false;
             });
 
-            // Auto-sync on page load (after a delay to not block rendering)
+            // Auto-sync on page load with latest analysis
             setTimeout(async () => {
                 try {
+                    // First check stats
                     const statsRes = await fetch(`${window.API_BASE_URL}/api/chat/rag/stats`);
                     const stats = await statsRes.json();
-                    if (stats.total_documents === 0) {
-                        // Show badge to indicate sync needed
-                        badge.style.display = 'block';
+
+                    if (stats.success && stats.documents_indexed > 0) {
+                        addMessage(`Base de conocimiento lista (${stats.documents_indexed} docs).`, 'system');
+                        badge.style.display = 'none';
+                    } else {
+                        // Try to sync with latest
+                        addMessage('Cargando datos del ultimo analisis...', 'system');
+                        const syncRes = await fetch(`${window.API_BASE_URL}/api/chat/rag/sync-latest`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        const syncData = await syncRes.json();
+
+                        if (syncData.success && syncData.documents_synced > 0) {
+                            addMessage(`Listo! ${syncData.message || 'Datos cargados'}`, 'system');
+                            badge.style.display = 'none';
+                        } else if (syncData.success) {
+                            addMessage('No hay analisis guardados. Genera un dashboard primero.', 'system');
+                            badge.style.display = 'block';
+                        } else {
+                            addMessage('Click en sincronizar para cargar datos.', 'system');
+                            badge.style.display = 'block';
+                        }
                     }
                 } catch (e) {
-                    console.log('RAG stats check failed:', e);
+                    console.log('RAG auto-sync failed:', e);
+                    addMessage('Listo para chatear. Click sincronizar si necesitas actualizar.', 'system');
                 }
-            }, 2000);
+            }, 1500);
         })();
     </script>
 
@@ -3178,12 +3350,12 @@
                     renderUnifiedDashboard({
                         mediaData: dashboardData.mediaData,
                         forecastData: dashboardData.forecastData,
-                        trendingData: null,
+                        trendingData: dashboardData.trendingData,
                         campaignData: dashboardData.campaignData,
                         input: {
-                            location: data.location,
+                            location: data.location || 'Colombia',
                             topic: '',
-                            candidateName: data.candidate_name
+                            candidateName: data.candidate_name || ''
                         }
                     });
 

@@ -182,6 +182,35 @@ class RAGChat {
                 text-decoration: underline;
             }
 
+            .chat-message p {
+                margin: 0 0 8px 0;
+            }
+            .chat-message p:last-child {
+                margin-bottom: 0;
+            }
+            .chat-message strong {
+                font-weight: 600;
+                color: #1a1a1a;
+            }
+            .chat-message em {
+                font-style: italic;
+            }
+            .chat-message code {
+                background: rgba(0,0,0,0.06);
+                padding: 2px 5px;
+                border-radius: 3px;
+                font-family: monospace;
+                font-size: 0.9em;
+            }
+            .chat-message ul {
+                margin: 8px 0;
+                padding-left: 20px;
+            }
+            .chat-message li {
+                margin: 4px 0;
+                line-height: 1.5;
+            }
+
             .rag-chat-sources {
                 padding: 12px;
                 background: #f0f0f0;
@@ -415,7 +444,7 @@ class RAGChat {
         const messageDiv = document.createElement('div');
         messageDiv.className = `chat-message ${role}`;
 
-        let html = content.replace(/\n/g, '<br>');
+        let html = this.formatMarkdown(content);
 
         if (role === 'assistant' && sources.length > 0) {
             html += `<span class="sources-link" onclick="ragChat.showSources(${JSON.stringify(sources).replace(/"/g, '&quot;')})">📎 Ver ${sources.length} fuentes</span>`;
@@ -424,6 +453,49 @@ class RAGChat {
         messageDiv.innerHTML = html;
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    formatMarkdown(text) {
+        if (!text) return '';
+
+        let html = text;
+
+        // Escapar HTML básico
+        html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // Negritas: **texto** o __texto__
+        html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+
+        // Cursivas: *texto* o _texto_
+        html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+
+        // Código inline: `código`
+        html = html.replace(/`(.+?)`/g, '<code>$1</code>');
+
+        // Procesar listas con guiones
+        html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+        html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+
+        // Procesar listas numeradas
+        html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+
+        // Párrafos: doble salto de línea
+        html = html.replace(/\n\n+/g, '</p><p>');
+
+        // Saltos de línea simples
+        html = html.replace(/\n/g, '<br>');
+
+        // Envolver en párrafo
+        html = '<p>' + html + '</p>';
+
+        // Limpiar párrafos vacíos
+        html = html.replace(/<p><\/p>/g, '');
+        html = html.replace(/<p>(<ul>)/g, '$1');
+        html = html.replace(/(<\/ul>)<\/p>/g, '$1');
+
+        return html;
     }
 
     showTypingIndicator() {
