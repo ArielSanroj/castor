@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  castor-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: castor-elecciones
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=production
+      - TWITTER_BEARER_TOKEN=${TWITTER_BEARER_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SECRET_KEY=${SECRET_KEY:-castor-secret-key-change-in-production}
+      - TWITTER_DAILY_TWEET_LIMIT=500
+      - TWITTER_MONTHLY_LIMIT=15000
+    volumes:
+      - castor-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - castor-network
+
+volumes:
+  castor-data:
+    driver: local
+
+networks:
+  castor-network:
+    driver: bridge
