@@ -117,6 +117,19 @@ PATTERN_LEGACY = re.compile(
     r'(?P<extra>\d+)?$'
 )
 
+# Patrón E-14 con marcadores X (formato visto en formularios reales)
+# Formato: "X 7-70-48-16 X" donde los números son identificadores parciales
+# Este formato NO contiene datos geográficos directos, es un checksum/identificador
+PATTERN_WITH_X = re.compile(
+    r'^X[\s-]*'
+    r'(?P<id1>\d{1,2})[\s-]*'
+    r'(?P<id2>\d{2,3})[\s-]*'
+    r'(?P<id3>\d{2})[\s-]*'
+    r'(?P<id4>\d{2,4})[\s-]*'
+    r'X?$',
+    re.IGNORECASE
+)
+
 # Mapeo de códigos de corporación
 CORPORACION_CODES = {
     '01': 'PRESIDENCIA',
@@ -197,6 +210,18 @@ def parse_qr_barcode(barcode: str) -> QRData:
         result.parse_status = QRParseStatus.SUCCESS
         result.confidence = 0.85
         logger.info(f"QR parsed (legacy): {result.polling_table_id}")
+        return result
+
+    # Intentar patrón con marcadores X (formato checksum)
+    # Este formato NO contiene datos geográficos, solo es identificador
+    # Los datos reales vienen del header OCR
+    match = PATTERN_WITH_X.match(barcode.strip())
+    if match:
+        # Guardar el raw barcode para referencia
+        result.raw_barcode = barcode
+        result.parse_status = QRParseStatus.PARTIAL
+        result.confidence = 0.60  # Baja confianza - necesita datos del header
+        logger.info(f"QR parsed (X format): {barcode} - requiere datos de header OCR")
         return result
 
     # Intentar extracción parcial
