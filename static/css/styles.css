@@ -4464,3 +4464,173 @@ button:focus-visible {
     display: grid;
     gap: 0.75rem;
 }
+
+/* ============================================================
+   CAMPAIGN TEAM DASHBOARD STYLES
+   Dashboard integrado para equipo de campaña electoral
+   ============================================================ */
+
+/* War Room Status Indicators */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-indicator.live {
+    background: rgba(74, 124, 89, 0.2);
+    color: var(--success);
+    border: 1px solid rgba(74, 124, 89, 0.3);
+}
+
+.status-indicator.live::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: pulse-live 2s ease-in-out infinite;
+}
+
+@keyframes pulse-live {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Electoral Progress Bars */
+.electoral-progress {
+    width: 100%;
+    height: 12px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.electoral-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.5s ease;
+}
+
+.electoral-progress-fill.gold {
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+}
+
+.electoral-progress-fill.success {
+    background: linear-gradient(90deg, var(--success), var(--success-light));
+}
+
+/* Data Cards for Electoral Results */
+.electoral-result-card {
+    background: var(--panel-alt);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.25s ease;
+}
+
+.electoral-result-card:hover {
+    border-color: var(--border-gold);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.electoral-result-card .rank {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+    color: var(--accent);
+    line-height: 1;
+}
+
+.electoral-result-card .candidate-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0.5rem 0;
+}
+
+.electoral-result-card .vote-count {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.electoral-result-card .vote-percentage {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Alert Priority Colors */
+.priority-critical { color: var(--error); }
+.priority-high { color: var(--warning); }
+.priority-medium { color: var(--accent); }
+.priority-low { color: var(--success); }
+
+.bg-priority-critical { background: rgba(139, 58, 58, 0.15); }
+.bg-priority-high { background: rgba(212, 160, 23, 0.15); }
+.bg-priority-medium { background: rgba(201, 162, 39, 0.15); }
+.bg-priority-low { background: rgba(74, 124, 89, 0.15); }
+
+/* Electoral Heatmap Legend */
+.heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.heatmap-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.heatmap-legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+/* Quick Stats Row */
+.quick-stats-row {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 1.5rem;
+    background: var(--panel);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.quick-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.quick-stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+.quick-stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.quick-stat-value.gold { color: var(--accent); }
+.quick-stat-value.success { color: var(--success); }
+.quick-stat-value.warning { color: var(--warning); }
+.quick-stat-value.error { color: var(--error); }

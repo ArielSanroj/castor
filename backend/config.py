@@ -60,6 +60,19 @@ class Config:
     # Anthropic Claude
     ANTHROPIC_API_KEY: Optional[str] = os.getenv('ANTHROPIC_API_KEY')
     CLAUDE_MODEL: str = os.getenv('CLAUDE_MODEL', 'claude-3-5-sonnet-20241022')
+    CLAUDE_VISION_MODEL: str = os.getenv('CLAUDE_VISION_MODEL', 'claude-sonnet-4-20250514')
+
+    # Electoral Control / E-14 OCR
+    E14_OCR_MAX_PAGES: int = int(os.getenv('E14_OCR_MAX_PAGES', '20'))
+    E14_OCR_TIMEOUT: int = int(os.getenv('E14_OCR_TIMEOUT', '120'))
+    E14_OCR_DPI: int = int(os.getenv('E14_OCR_DPI', '150'))
+
+    # Electoral API Security Limits
+    E14_COST_PER_PROCESS: float = float(os.getenv('E14_COST_PER_PROCESS', '0.10'))
+    E14_HOURLY_COST_LIMIT: float = float(os.getenv('E14_HOURLY_COST_LIMIT', '2.00'))
+    E14_DAILY_COST_LIMIT: float = float(os.getenv('E14_DAILY_COST_LIMIT', '5.00'))
+    E14_MAX_FILE_SIZE_MB: int = int(os.getenv('E14_MAX_FILE_SIZE_MB', '10'))
+    E14_MAX_PAGES: int = int(os.getenv('E14_MAX_PAGES', '20'))
 
     # Local LLM (Ollama)
     LOCAL_LLM_URL: str = os.getenv('LOCAL_LLM_URL', 'http://localhost:11434')

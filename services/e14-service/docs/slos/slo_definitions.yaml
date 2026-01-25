@@ -1,0 +1,376 @@
+# =============================================================================
+# CASTOR Electoral - Service Level Objectives (SLOs)
+# Gran Consulta Nacional 8 Marzo 2026
+# =============================================================================
+
+version: "1.0.0"
+last_updated: "2026-01-23"
+
+# -----------------------------------------------------------------------------
+# SERVICIO: Ingestion API (P0 - Crítico)
+# QAS: L1, A1, I1
+# -----------------------------------------------------------------------------
+ingestion_api:
+  description: "API de ingesta de formularios E-14"
+  criticality: P0
+
+  slos:
+    # L1 - Latencia de ingesta
+    - name: ingestion_latency_p95
+      description: "Tiempo para confirmar recepción de E-14"
+      target: 2000  # ms
+      unit: milliseconds
+      percentile: 95
+      measurement_window: 5m
+
+    - name: ingestion_latency_p99
+      description: "Latencia máxima aceptable"
+      target: 5000  # ms
+      unit: milliseconds
+      percentile: 99
+      measurement_window: 5m
+
+    # A1 - Disponibilidad
+    - name: ingestion_availability
+      description: "Uptime del servicio de ingesta"
+      target: 99.9  # %
+      unit: percentage
+      measurement_window: 30d
+      error_budget_hours_per_year: 8.76
+
+    # A1 - Tasa de error
+    - name: ingestion_error_rate
+      description: "Tasa de errores en ingesta"
+      target: 0.5  # %
+      unit: percentage
+      measurement_window: 1h
+
+    # I1 - Integridad
+    - name: evidence_integrity
+      description: "Documentos con hash verificable"
+      target: 100  # %
+      unit: percentage
+      measurement_window: 24h
+
+  alerts:
+    - condition: "ingestion_latency_p95 > 2500"
+      severity: warning
+      action: "Revisar carga y escalar si necesario"
+
+    - condition: "ingestion_latency_p95 > 4000"
+      severity: critical
+      action: "RUNBOOK: ingestion_degraded"
+
+    - condition: "ingestion_error_rate > 1"
+      severity: critical
+      action: "RUNBOOK: ingestion_errors"
+
+# -----------------------------------------------------------------------------
+# SERVICIO: OCR Pipeline (P1)
+# QAS: L2, S1
+# -----------------------------------------------------------------------------
+ocr_pipeline:
+  description: "Pipeline de OCR con Claude Vision"
+  criticality: P1
+
+  slos:
+    # L2 - Latencia OCR
+    - name: ocr_latency_p95
+      description: "Tiempo de extracción OCR"
+      target: 45000  # ms (45s)
+      unit: milliseconds
+      percentile: 95
+      measurement_window: 15m
+
+    - name: ocr_latency_p99
+      description: "Latencia máxima OCR"
+      target: 120000  # ms (2 min)
+      unit: milliseconds
+      percentile: 99
+      measurement_window: 15m
+
+    # S1 - Backlog
+    - name: ocr_queue_depth
+      description: "Profundidad máxima de cola"
+      target: 1000  # jobs
+      unit: count
+      measurement_window: 5m
+
+    - name: ocr_backlog_recovery
+      description: "Tiempo para drenar backlog 10x"
+      target: 20  # minutos
+      unit: minutes
+      measurement_window: 1h
+
+    # Throughput
+    - name: ocr_throughput
+      description: "E-14 procesados por minuto"
+      target: 60  # forms/min mínimo
+      unit: count_per_minute
+      measurement_window: 5m
+
+  alerts:
+    - condition: "ocr_queue_depth > 500"
+      severity: warning
+      action: "Iniciar autoscale OCR workers"
+
+    - condition: "ocr_queue_depth > 1000"
+      severity: critical
+      action: "RUNBOOK: ocr_backlog_critical"
+
+    - condition: "ocr_latency_p95 > 60000"
+      severity: warning
+      action: "Revisar API Anthropic y workers"
+
+# -----------------------------------------------------------------------------
+# SERVICIO: Validation Engine (P2)
+# QAS: I2, I3
+# -----------------------------------------------------------------------------
+validation_engine:
+  description: "Motor de validación y reconciliación"
+  criticality: P2
+
+  slos:
+    # Consistencia
+    - name: validation_consistency
+      description: "Resultados reproducibles desde chosen_form"
+      target: 100  # %
+      unit: percentage
+      measurement_window: 24h
+
+    # I3 - Reconstrucción
+    - name: reconstruction_time
+      description: "Tiempo para reconstruir resultado municipal"
+      target: 600  # segundos (10 min)
+      unit: seconds
+      percentile: 95
+      measurement_window: 1h
+
+    # Auditoría
+    - name: audit_coverage
+      description: "Cambios con audit trail completo"
+      target: 100  # %
+      unit: percentage
+      measurement_window: 24h
+
+  alerts:
+    - condition: "validation_consistency < 100"
+      severity: critical
+      action: "RUNBOOK: validation_inconsistency"
+
+    - condition: "audit_coverage < 100"
+      severity: critical
+      action: "Detener operaciones y auditar"
+
+# -----------------------------------------------------------------------------
+# SERVICIO: War Room Dashboard (P3)
+# QAS: L3, A2
+# -----------------------------------------------------------------------------
+war_room:
+  description: "Dashboard de sala de situación"
+  criticality: P3
+
+  slos:
+    # L3 - Latencia UI
+    - name: dashboard_latency_p95
+      description: "Tiempo de carga de dashboard"
+      target: 500  # ms
+      unit: milliseconds
+      percentile: 95
+      measurement_window: 5m
+
+    - name: dashboard_latency_p99
+      description: "Latencia máxima dashboard"
+      target: 1500  # ms
+      unit: milliseconds
+      percentile: 99
+      measurement_window: 5m
+
+    # A2 - Degradación controlada
+    - name: degraded_mode_latency
+      description: "Latencia en modo degradado (sin OLAP)"
+      target: 1500  # ms
+      unit: milliseconds
+      percentile: 95
+      measurement_window: 5m
+
+    # Cache hit rate
+    - name: cache_hit_rate
+      description: "Tasa de aciertos de caché"
+      target: 90  # %
+      unit: percentage
+      measurement_window: 15m
+
+  alerts:
+    - condition: "dashboard_latency_p95 > 800"
+      severity: warning
+      action: "Revisar caché y OLAP"
+
+    - condition: "cache_hit_rate < 70"
+      severity: warning
+      action: "Revisar estrategia de caché"
+
+# -----------------------------------------------------------------------------
+# SERVICIO: Database (P0)
+# QAS: A3, S2
+# -----------------------------------------------------------------------------
+database:
+  description: "PostgreSQL con alta disponibilidad"
+  criticality: P0
+
+  slos:
+    # A3 - RTO/RPO
+    - name: db_rto
+      description: "Recovery Time Objective"
+      target: 15  # minutos
+      unit: minutes
+
+    - name: db_rpo
+      description: "Recovery Point Objective"
+      target: 1  # minuto
+      unit: minutes
+
+    # S2 - Write throughput
+    - name: tally_write_throughput
+      description: "Tallies insertados por segundo"
+      target: 30000  # tallies/s
+      unit: count_per_second
+      measurement_window: 1m
+
+    - name: write_latency_p95
+      description: "Latencia de escritura"
+      target: 50  # ms
+      unit: milliseconds
+      percentile: 95
+      measurement_window: 5m
+
+    # Replicación
+    - name: replication_lag
+      description: "Lag de réplica"
+      target: 1000  # ms
+      unit: milliseconds
+      measurement_window: 1m
+
+  alerts:
+    - condition: "replication_lag > 5000"
+      severity: critical
+      action: "RUNBOOK: db_replication_lag"
+
+    - condition: "write_latency_p95 > 100"
+      severity: warning
+      action: "Revisar índices y particiones"
+
+# -----------------------------------------------------------------------------
+# SERVICIO: Security & Auth (P6)
+# QAS: Sec1, Sec2
+# -----------------------------------------------------------------------------
+security:
+  description: "Autenticación, autorización y PII"
+  criticality: P6
+
+  slos:
+    # Sec1 - RBAC
+    - name: unauthorized_access
+      description: "Accesos no autorizados"
+      target: 0  # count
+      unit: count
+      measurement_window: 24h
+
+    - name: authz_latency_p95
+      description: "Latencia de autorización"
+      target: 50  # ms
+      unit: milliseconds
+      percentile: 95
+      measurement_window: 5m
+
+    # Sec2 - PII
+    - name: pii_exposure
+      description: "Exposiciones de PII"
+      target: 0  # count
+      unit: count
+      measurement_window: 24h
+
+    # Audit completeness
+    - name: security_audit_coverage
+      description: "Eventos de seguridad auditados"
+      target: 100  # %
+      unit: percentage
+      measurement_window: 24h
+
+  alerts:
+    - condition: "unauthorized_access > 0"
+      severity: critical
+      action: "RUNBOOK: security_breach"
+
+    - condition: "pii_exposure > 0"
+      severity: critical
+      action: "RUNBOOK: pii_incident"
+
+# -----------------------------------------------------------------------------
+# SERVICIO: Operability (P6)
+# QAS: O1
+# -----------------------------------------------------------------------------
+operability:
+  description: "Monitoreo y control operativo"
+  criticality: P6
+
+  slos:
+    # O1 - Detección
+    - name: alert_detection_time
+      description: "Tiempo de detección de incidentes"
+      target: 60  # segundos
+      unit: seconds
+      measurement_window: 1h
+
+    # O1 - Respuesta
+    - name: alert_response_time
+      description: "Tiempo de respuesta a alertas"
+      target: 300  # segundos (5 min)
+      unit: seconds
+      measurement_window: 1h
+
+    # Autoscale
+    - name: autoscale_effectiveness
+      description: "Autoscale resuelve backlog"
+      target: 95  # %
+      unit: percentage
+      measurement_window: 24h
+
+  alerts:
+    - condition: "alert_detection_time > 120"
+      severity: warning
+      action: "Revisar configuración de alertas"
+
+# -----------------------------------------------------------------------------
+# SERVICIO: Maintainability (P5)
+# QAS: M1, M2
+# -----------------------------------------------------------------------------
+maintainability:
+  description: "Capacidad de evolución del sistema"
+  criticality: P5
+
+  slos:
+    # M1 - Nueva plantilla
+    - name: template_deploy_time
+      description: "Tiempo para desplegar nueva plantilla"
+      target: 24  # horas (1 día)
+      unit: hours
+
+    # M2 - Nueva regla
+    - name: rule_deploy_time
+      description: "Tiempo para desplegar nueva regla"
+      target: 2  # horas
+      unit: hours
+
+    # Rollback
+    - name: rollback_time
+      description: "Tiempo para hacer rollback"
+      target: 10  # minutos
+      unit: minutes
+
+    # Regression
+    - name: regression_suite_pass
+      description: "Suite de regresión pasando"
+      target: 100  # %
+      unit: percentage
+      measurement_window: per_deploy

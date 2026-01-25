@@ -1,0 +1,416 @@
+{
+  "event_type": "ocr.completed",
+  "schema_version": "1.2.0",
+  "produced_at": "2026-01-23T17:20:00Z",
+
+  "pipeline_context": {
+    "target_process": {
+      "process_type": "TERRITORIAL",
+      "process_date": "2023-10-29",
+      "contest_type": "ASSEMBLY",
+      "contest_scope": "DEPARTMENTAL"
+    },
+    "template_family": "E14",
+    "template_version": "E14_ASAMBLEA_MULTIPAGINA_V1",
+    "ruleset_version": "VALIDATION_CORE_V1"
+  },
+
+  "input_document": {
+    "source_file": "document (7).pdf",
+    "form_type": "E14",
+    "copy_type": "DELEGADOS",
+    "source_type": "WITNESS_UPLOAD",
+    "object_uri": "s3://evidence-bucket/e14/asamblea/93d8813b.pdf",
+    "sha256": "93d8813b...",
+    "total_pages": 6,
+    "pages": [
+      {
+        "page_no": 1,
+        "page_image_uri": "s3://evidence-bucket/e14/asamblea/93d8813b/page-1.png",
+        "page_sha256": "abc123...",
+        "political_group_code": "HEADER",
+        "description": "Encabezado + Nivelación + Partido 1"
+      },
+      {
+        "page_no": 2,
+        "page_image_uri": "s3://evidence-bucket/e14/asamblea/93d8813b/page-2.png",
+        "page_sha256": "def456...",
+        "political_group_code": "0002",
+        "description": "Partido 2 - Votos preferentes"
+      },
+      {
+        "page_no": 3,
+        "page_image_uri": "s3://evidence-bucket/e14/asamblea/93d8813b/page-3.png",
+        "page_sha256": "ghi789...",
+        "political_group_code": "0003",
+        "description": "Partido 3 - Votos preferentes"
+      },
+      {
+        "page_no": 4,
+        "page_image_uri": "s3://evidence-bucket/e14/asamblea/93d8813b/page-4.png",
+        "page_sha256": "jkl012...",
+        "political_group_code": "0004",
+        "description": "Partido 4 - Votos preferentes"
+      },
+      {
+        "page_no": 5,
+        "page_image_uri": "s3://evidence-bucket/e14/asamblea/93d8813b/page-5.png",
+        "page_sha256": "mno345...",
+        "political_group_code": "0005",
+        "description": "Partido 5 + Especiales"
+      },
+      {
+        "page_no": 6,
+        "page_image_uri": "s3://evidence-bucket/e14/asamblea/93d8813b/page-6.png",
+        "page_sha256": "pqr678...",
+        "political_group_code": "FIRMAS",
+        "description": "Firmas de jurados + Constancias"
+      }
+    ]
+  },
+
+  "document_header_extracted": {
+    "reported_election_date": "2023-10-29",
+    "reported_election_label": "ELECCIONES TERRITORIALES OCTUBRE 29 DE 2023",
+    "corporacion": "ASAMBLEA",
+    "dept_code": "73",
+    "dept_name": "TOLIMA",
+    "muni_code": "001",
+    "muni_name": "IBAGUE",
+    "zone_code": "01",
+    "station_code": "04",
+    "table_number": 15,
+    "place_name": "IE NORMAL SUPERIOR",
+    "page_count_reported": 6
+  },
+
+  "ocr_fields": [
+    {
+      "field_key": "TOTAL_SUFRAGANTES_E11",
+      "page_no": 1,
+      "value_int": 245,
+      "raw_text": "245",
+      "confidence": 0.95,
+      "needs_review": false
+    },
+    {
+      "field_key": "TOTAL_VOTOS_URNA",
+      "page_no": 1,
+      "value_int": 243,
+      "raw_text": "243",
+      "confidence": 0.94,
+      "needs_review": false
+    },
+
+    {
+      "_comment": "=== PARTIDO 1: CENTRO DEMOCRÁTICO (página 1) ===",
+      "field_key": "LIST_HEADER",
+      "page_no": 1,
+      "political_group_code": "0001",
+      "political_group_name": "CENTRO DEMOCRÁTICO",
+      "list_type": "CON_VOTO_PREFERENTE"
+    },
+    {
+      "field_key": "LIST_ONLY_VOTES",
+      "page_no": 1,
+      "ballot_option_type": "LIST_ONLY",
+      "political_group_code": "0001",
+      "value_int": 5,
+      "raw_text": "5",
+      "confidence": 0.88,
+      "needs_review": false,
+      "notes": "Votos solo por la lista (renglón 0)"
+    },
+    {
+      "field_key": "CANDIDATE_51",
+      "page_no": 1,
+      "ballot_option_type": "LIST_CANDIDATE",
+      "political_group_code": "0001",
+      "candidate_ordinal": 51,
+      "candidate_name": "PÉREZ GÓMEZ JUAN",
+      "value_int": 12,
+      "raw_text": "12",
+      "confidence": 0.91,
+      "needs_review": false
+    },
+    {
+      "field_key": "CANDIDATE_52",
+      "page_no": 1,
+      "ballot_option_type": "LIST_CANDIDATE",
+      "political_group_code": "0001",
+      "candidate_ordinal": 52,
+      "candidate_name": "RODRÍGUEZ LÓPEZ MARÍA",
+      "value_int": 8,
+      "raw_text": "8",
+      "confidence": 0.89,
+      "needs_review": false
+    },
+    {
+      "field_key": "CANDIDATE_53",
+      "page_no": 1,
+      "ballot_option_type": "LIST_CANDIDATE",
+      "political_group_code": "0001",
+      "candidate_ordinal": 53,
+      "candidate_name": "MARTÍNEZ SÁNCHEZ CARLOS",
+      "value_int": 3,
+      "raw_text": "*3",
+      "raw_mark": "*",
+      "confidence": 0.65,
+      "needs_review": true
+    },
+    {
+      "field_key": "LIST_TOTAL",
+      "page_no": 1,
+      "ballot_option_type": "LIST_ONLY",
+      "political_group_code": "0001",
+      "value_int": 28,
+      "raw_text": "28",
+      "confidence": 0.92,
+      "needs_review": false,
+      "notes": "Total del partido = LIST_ONLY + sum(CANDIDATES)"
+    },
+
+    {
+      "_comment": "=== PARTIDO 2: PACTO HISTÓRICO (página 2) ===",
+      "field_key": "LIST_HEADER",
+      "page_no": 2,
+      "political_group_code": "0002",
+      "political_group_name": "PACTO HISTÓRICO",
+      "list_type": "CON_VOTO_PREFERENTE"
+    },
+    {
+      "field_key": "LIST_ONLY_VOTES",
+      "page_no": 2,
+      "ballot_option_type": "LIST_ONLY",
+      "political_group_code": "0002",
+      "value_int": 15,
+      "raw_text": "15",
+      "confidence": 0.90,
+      "needs_review": false
+    },
+    {
+      "field_key": "CANDIDATE_51",
+      "page_no": 2,
+      "ballot_option_type": "LIST_CANDIDATE",
+      "political_group_code": "0002",
+      "candidate_ordinal": 51,
+      "value_int": 45,
+      "raw_text": "45",
+      "confidence": 0.93,
+      "needs_review": false
+    },
+    {
+      "field_key": "CANDIDATE_52",
+      "page_no": 2,
+      "ballot_option_type": "LIST_CANDIDATE",
+      "political_group_code": "0002",
+      "candidate_ordinal": 52,
+      "value_int": 22,
+      "raw_text": "22",
+      "confidence": 0.91,
+      "needs_review": false
+    },
+    {
+      "field_key": "LIST_TOTAL",
+      "page_no": 2,
+      "political_group_code": "0002",
+      "value_int": 82,
+      "raw_text": "82",
+      "confidence": 0.94,
+      "needs_review": false
+    },
+
+    {
+      "_comment": "=== Continúan partidos 3, 4, 5... (páginas 3-5) ===",
+      "_note": "Estructura idéntica: LIST_ONLY + CANDIDATES + LIST_TOTAL por partido"
+    },
+
+    {
+      "_comment": "=== VOTOS ESPECIALES (página 5, al final) ===",
+      "field_key": "VOTOS_EN_BLANCO",
+      "page_no": 5,
+      "ballot_option_type": "BLANK",
+      "value_int": 8,
+      "raw_text": "8",
+      "confidence": 0.88,
+      "needs_review": false
+    },
+    {
+      "field_key": "VOTOS_NULOS",
+      "page_no": 5,
+      "ballot_option_type": "NULL",
+      "value_int": 5,
+      "raw_text": "5",
+      "confidence": 0.85,
+      "needs_review": false
+    },
+    {
+      "field_key": "VOTOS_NO_MARCADOS",
+      "page_no": 5,
+      "ballot_option_type": "UNMARKED",
+      "value_int": 2,
+      "raw_text": "**2",
+      "raw_mark": "**",
+      "confidence": 0.55,
+      "needs_review": true
+    },
+    {
+      "field_key": "TOTAL_VOTOS_MESA",
+      "page_no": 5,
+      "ballot_option_type": "TOTAL",
+      "value_int": 243,
+      "raw_text": "243",
+      "confidence": 0.95,
+      "needs_review": false
+    },
+
+    {
+      "_comment": "=== CONSTANCIAS (página 6) ===",
+      "field_key": "HUBO_RECUENTO",
+      "page_no": 6,
+      "value_bool": false,
+      "raw_text": "NO",
+      "confidence": 0.80,
+      "needs_review": false
+    },
+    {
+      "field_key": "FIRMA_JURADO_1",
+      "page_no": 6,
+      "value_bool": true,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "field_key": "FIRMA_JURADO_2",
+      "page_no": 6,
+      "value_bool": true,
+      "confidence": 0.72,
+      "needs_review": false
+    },
+    {
+      "field_key": "FIRMA_JURADO_3",
+      "page_no": 6,
+      "value_bool": true,
+      "confidence": 0.78,
+      "needs_review": false
+    }
+  ],
+
+  "normalized_tallies": [
+    {
+      "_comment": "PARTIDO 1 - Centro Democrático",
+      "political_group_code": "0001",
+      "tallies": [
+        { "subject_type": "LIST_ONLY", "votes": 5 },
+        { "subject_type": "LIST_CANDIDATE", "candidate_ordinal": 51, "votes": 12 },
+        { "subject_type": "LIST_CANDIDATE", "candidate_ordinal": 52, "votes": 8 },
+        { "subject_type": "LIST_CANDIDATE", "candidate_ordinal": 53, "votes": 3 }
+      ],
+      "party_total": 28
+    },
+    {
+      "_comment": "PARTIDO 2 - Pacto Histórico",
+      "political_group_code": "0002",
+      "tallies": [
+        { "subject_type": "LIST_ONLY", "votes": 15 },
+        { "subject_type": "LIST_CANDIDATE", "candidate_ordinal": 51, "votes": 45 },
+        { "subject_type": "LIST_CANDIDATE", "candidate_ordinal": 52, "votes": 22 }
+      ],
+      "party_total": 82
+    },
+    {
+      "_comment": "... más partidos ...",
+      "remaining_parties_total": 118
+    },
+    {
+      "_comment": "ESPECIALES",
+      "specials": [
+        { "subject_type": "BLANK", "votes": 8 },
+        { "subject_type": "NULL", "votes": 5 },
+        { "subject_type": "UNMARKED", "votes": 2 },
+        { "subject_type": "TOTAL", "votes": 243 }
+      ]
+    }
+  ],
+
+  "validations": [
+    {
+      "rule_key": "E11_EQUALS_URNA",
+      "passed": true,
+      "severity": "HIGH",
+      "details": {
+        "total_sufragantes_e11": 245,
+        "total_urna": 243,
+        "delta": 2,
+        "note": "Diferencia de 2 votos es aceptable (incinerados o no depositados)"
+      }
+    },
+    {
+      "rule_key": "SUM_EQUALS_TOTAL",
+      "passed": true,
+      "severity": "HIGH",
+      "details": {
+        "sum_all_parties": 228,
+        "blank": 8,
+        "null": 5,
+        "unmarked": 2,
+        "sum_total": 243,
+        "reported_total": 243
+      }
+    },
+    {
+      "rule_key": "PARTY_SUM_CHECK",
+      "passed": true,
+      "severity": "MEDIUM",
+      "details": {
+        "note": "LIST_ONLY + sum(CANDIDATES) = PARTY_TOTAL para cada partido"
+      }
+    },
+    {
+      "rule_key": "LOW_CONFIDENCE_REVIEW_REQUIRED",
+      "passed": false,
+      "severity": "MEDIUM",
+      "details": {
+        "needs_review_count": 2,
+        "fields_with_marks": ["CANDIDATE_53 (0001)", "VOTOS_NO_MARCADOS"],
+        "threshold": 0.70
+      }
+    }
+  ],
+
+  "db_write_plan": {
+    "form_instance": {
+      "contest_id": "<contest_id_asamblea_tolima>",
+      "polling_table_id": "<polling_table_id>",
+      "form_type": "E14",
+      "source_type": "WITNESS",
+      "copy_type": "DELEGADOS",
+      "total_pages": 6,
+      "status": "OCR_COMPLETED"
+    },
+    "form_page_rows": "INSERT 6 rows (una por página)",
+    "ocr_field_rows": "INSERT ~50 rows (nivelación + partidos + candidatos + especiales)",
+    "vote_tally_rows": "INSERT ~40 rows (por cada ballot_option)",
+    "validation_result_rows": "INSERT 4 rows",
+    "alert_rows": [
+      {
+        "type": "OCR_LOW_CONF",
+        "severity": "MEDIUM",
+        "status": "OPEN",
+        "evidence": { "needs_review_count": 2 }
+      }
+    ]
+  },
+
+  "_meta": {
+    "description": "Payload de ejemplo para E-14 de Asamblea con voto preferente multi-página",
+    "key_differences_vs_consulta": [
+      "1. Múltiples páginas (6 vs 1-2)",
+      "2. Estructura por partido/lista en cada página",
+      "3. ballot_option_type incluye LIST_ONLY y LIST_CANDIDATE",
+      "4. Cada partido tiene: votos_lista + votos_candidatos[] + total_partido",
+      "5. Validación adicional: PARTY_SUM_CHECK"
+    ],
+    "source_document": "document (7).pdf - Asamblea Tolima 2023"
+  }
+}

@@ -1,0 +1,389 @@
+# =============================================================================
+# CASTOR Electoral - Metrics Dashboard Configuration
+# Compatible con Prometheus/Grafana, DataDog, CloudWatch
+# =============================================================================
+
+version: "1.0.0"
+last_updated: "2026-01-23"
+
+# -----------------------------------------------------------------------------
+# MÉTRICAS: Ingestion API
+# -----------------------------------------------------------------------------
+ingestion_metrics:
+  # Latencia
+  - name: castor_ingestion_duration_seconds
+    type: histogram
+    description: "Duración de ingesta de E-14"
+    labels: [method, status_code, copy_type]
+    buckets: [0.1, 0.25, 0.5, 1, 2, 5, 10]
+
+  # Contador de requests
+  - name: castor_ingestion_requests_total
+    type: counter
+    description: "Total de requests de ingesta"
+    labels: [method, status_code, copy_type, department]
+
+  # Errores
+  - name: castor_ingestion_errors_total
+    type: counter
+    description: "Errores de ingesta"
+    labels: [error_type, copy_type]
+
+  # Tamaño de archivo
+  - name: castor_ingestion_file_size_bytes
+    type: histogram
+    description: "Tamaño de archivos ingestados"
+    labels: [copy_type]
+    buckets: [100000, 500000, 1000000, 5000000, 10000000]
+
+  # Forms activos
+  - name: castor_forms_pending_total
+    type: gauge
+    description: "Formularios pendientes de procesar"
+    labels: [department, status]
+
+# -----------------------------------------------------------------------------
+# MÉTRICAS: OCR Pipeline
+# -----------------------------------------------------------------------------
+ocr_metrics:
+  # Latencia OCR
+  - name: castor_ocr_duration_seconds
+    type: histogram
+    description: "Duración de procesamiento OCR"
+    labels: [template_version, corporacion, status]
+    buckets: [5, 15, 30, 45, 60, 90, 120, 180]
+
+  # Cola
+  - name: castor_ocr_queue_depth
+    type: gauge
+    description: "Profundidad de cola OCR"
+    labels: [priority]
+
+  - name: castor_ocr_queue_wait_seconds
+    type: histogram
+    description: "Tiempo en cola antes de procesamiento"
+    labels: [priority]
+    buckets: [1, 5, 15, 30, 60, 120, 300]
+
+  # Workers
+  - name: castor_ocr_workers_active
+    type: gauge
+    description: "Workers OCR activos"
+    labels: [worker_pool]
+
+  # API Anthropic
+  - name: castor_anthropic_requests_total
+    type: counter
+    description: "Requests a API Anthropic"
+    labels: [model, status]
+
+  - name: castor_anthropic_cost_usd
+    type: counter
+    description: "Costo acumulado API Anthropic"
+    labels: [model, user_id]
+
+  - name: castor_anthropic_tokens_total
+    type: counter
+    description: "Tokens consumidos"
+    labels: [model, token_type]
+
+  # Confidence OCR
+  - name: castor_ocr_confidence
+    type: histogram
+    description: "Distribución de confidence OCR"
+    labels: [field_type, corporacion]
+    buckets: [0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99]
+
+  # Campos que necesitan review
+  - name: castor_ocr_needs_review_total
+    type: counter
+    description: "Campos marcados para revisión"
+    labels: [field_type, reason]
+
+# -----------------------------------------------------------------------------
+# MÉTRICAS: Validation Engine
+# -----------------------------------------------------------------------------
+validation_metrics:
+  # Validaciones ejecutadas
+  - name: castor_validation_executions_total
+    type: counter
+    description: "Validaciones ejecutadas"
+    labels: [rule_key, result, severity]
+
+  # Latencia de validación
+  - name: castor_validation_duration_seconds
+    type: histogram
+    description: "Duración de validación"
+    labels: [rule_set_version]
+    buckets: [0.01, 0.05, 0.1, 0.5, 1, 5]
+
+  # Alertas generadas
+  - name: castor_validation_alerts_total
+    type: counter
+    description: "Alertas de validación generadas"
+    labels: [alert_type, severity, department]
+
+  # Reconciliación
+  - name: castor_reconciliation_duration_seconds
+    type: histogram
+    description: "Duración de reconciliación"
+    labels: [scope]
+    buckets: [1, 10, 30, 60, 120, 300, 600]
+
+  - name: castor_reconciliation_discrepancies_total
+    type: counter
+    description: "Discrepancias encontradas"
+    labels: [discrepancy_type, department]
+
+# -----------------------------------------------------------------------------
+# MÉTRICAS: War Room Dashboard
+# -----------------------------------------------------------------------------
+dashboard_metrics:
+  # Latencia de página
+  - name: castor_dashboard_load_seconds
+    type: histogram
+    description: "Tiempo de carga de dashboard"
+    labels: [view, user_role]
+    buckets: [0.1, 0.25, 0.5, 1, 1.5, 2, 5]
+
+  # Cache
+  - name: castor_cache_hits_total
+    type: counter
+    description: "Cache hits"
+    labels: [cache_type, key_pattern]
+
+  - name: castor_cache_misses_total
+    type: counter
+    description: "Cache misses"
+    labels: [cache_type, key_pattern]
+
+  # Usuarios concurrentes
+  - name: castor_dashboard_users_active
+    type: gauge
+    description: "Usuarios activos en dashboard"
+    labels: [user_role, view]
+
+  # WebSocket
+  - name: castor_websocket_connections
+    type: gauge
+    description: "Conexiones WebSocket activas"
+    labels: [room_type]
+
+  - name: castor_websocket_messages_total
+    type: counter
+    description: "Mensajes WebSocket enviados"
+    labels: [message_type]
+
+# -----------------------------------------------------------------------------
+# MÉTRICAS: Database
+# -----------------------------------------------------------------------------
+database_metrics:
+  # Conexiones
+  - name: castor_db_connections_active
+    type: gauge
+    description: "Conexiones de BD activas"
+    labels: [pool, state]
+
+  # Latencia de queries
+  - name: castor_db_query_duration_seconds
+    type: histogram
+    description: "Duración de queries"
+    labels: [query_type, table]
+    buckets: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1, 5]
+
+  # Replicación
+  - name: castor_db_replication_lag_seconds
+    type: gauge
+    description: "Lag de replicación"
+    labels: [replica]
+
+  # Writes
+  - name: castor_db_writes_total
+    type: counter
+    description: "Escrituras a BD"
+    labels: [table, operation]
+
+  - name: castor_db_write_batch_size
+    type: histogram
+    description: "Tamaño de batch de escritura"
+    labels: [table]
+    buckets: [10, 50, 100, 500, 1000, 5000]
+
+  # Particiones
+  - name: castor_db_partition_size_bytes
+    type: gauge
+    description: "Tamaño de partición"
+    labels: [table, partition]
+
+# -----------------------------------------------------------------------------
+# MÉTRICAS: Security
+# -----------------------------------------------------------------------------
+security_metrics:
+  # Autenticación
+  - name: castor_auth_attempts_total
+    type: counter
+    description: "Intentos de autenticación"
+    labels: [result, method]
+
+  - name: castor_auth_duration_seconds
+    type: histogram
+    description: "Duración de autenticación"
+    labels: [method]
+    buckets: [0.01, 0.025, 0.05, 0.1, 0.25, 0.5]
+
+  # Autorización
+  - name: castor_authz_checks_total
+    type: counter
+    description: "Verificaciones de autorización"
+    labels: [resource, action, result]
+
+  - name: castor_authz_denied_total
+    type: counter
+    description: "Autorizaciones denegadas"
+    labels: [resource, action, user_role]
+
+  # Rate limiting
+  - name: castor_rate_limit_hits_total
+    type: counter
+    description: "Rate limit alcanzado"
+    labels: [endpoint, user_id]
+
+  # Audit
+  - name: castor_audit_events_total
+    type: counter
+    description: "Eventos de auditoría"
+    labels: [action, entity_type, actor_role]
+
+# -----------------------------------------------------------------------------
+# MÉTRICAS: Electoral (Negocio)
+# -----------------------------------------------------------------------------
+electoral_metrics:
+  # Progreso de escrutinio
+  - name: castor_forms_received_total
+    type: counter
+    description: "Formularios recibidos"
+    labels: [department, municipality, corporacion, copy_type]
+
+  - name: castor_forms_processed_total
+    type: counter
+    description: "Formularios procesados"
+    labels: [department, municipality, corporacion, status]
+
+  - name: castor_forms_validated_total
+    type: counter
+    description: "Formularios validados"
+    labels: [department, corporacion, validation_result]
+
+  # Cobertura
+  - name: castor_coverage_percentage
+    type: gauge
+    description: "Porcentaje de cobertura"
+    labels: [department, municipality, corporacion]
+
+  # Votos
+  - name: castor_votes_tallied_total
+    type: counter
+    description: "Votos contabilizados"
+    labels: [department, corporacion, ballot_option_type]
+
+  # Alertas electorales
+  - name: castor_electoral_alerts_total
+    type: counter
+    description: "Alertas electorales"
+    labels: [alert_type, severity, department]
+
+  - name: castor_electoral_alerts_open
+    type: gauge
+    description: "Alertas electorales abiertas"
+    labels: [alert_type, severity]
+
+# -----------------------------------------------------------------------------
+# DASHBOARDS RECOMENDADOS
+# -----------------------------------------------------------------------------
+dashboards:
+  # Dashboard principal War Room
+  - name: "CASTOR - War Room Principal"
+    refresh: 10s
+    panels:
+      - title: "Cobertura Nacional"
+        type: map
+        metric: castor_coverage_percentage
+
+      - title: "Forms Recibidos vs Procesados"
+        type: timeseries
+        metrics:
+          - castor_forms_received_total
+          - castor_forms_processed_total
+
+      - title: "Cola OCR"
+        type: gauge
+        metric: castor_ocr_queue_depth
+        thresholds: [500, 1000]
+
+      - title: "Alertas Abiertas por Severidad"
+        type: stat
+        metric: castor_electoral_alerts_open
+
+  # Dashboard de SLOs
+  - name: "CASTOR - SLO Dashboard"
+    refresh: 1m
+    panels:
+      - title: "Ingestion p95 (target: 2s)"
+        type: timeseries
+        query: "histogram_quantile(0.95, castor_ingestion_duration_seconds_bucket)"
+        threshold: 2
+
+      - title: "OCR p95 (target: 45s)"
+        type: timeseries
+        query: "histogram_quantile(0.95, castor_ocr_duration_seconds_bucket)"
+        threshold: 45
+
+      - title: "Dashboard p95 (target: 500ms)"
+        type: timeseries
+        query: "histogram_quantile(0.95, castor_dashboard_load_seconds_bucket)"
+        threshold: 0.5
+
+      - title: "Error Budget Remaining"
+        type: gauge
+        query: "1 - (sum(castor_ingestion_errors_total) / sum(castor_ingestion_requests_total))"
+
+  # Dashboard de Operaciones
+  - name: "CASTOR - Operations"
+    refresh: 30s
+    panels:
+      - title: "Workers OCR Activos"
+        type: stat
+        metric: castor_ocr_workers_active
+
+      - title: "Costo API Anthropic (24h)"
+        type: stat
+        query: "increase(castor_anthropic_cost_usd[24h])"
+
+      - title: "Conexiones BD"
+        type: gauge
+        metric: castor_db_connections_active
+
+      - title: "Replication Lag"
+        type: timeseries
+        metric: castor_db_replication_lag_seconds
+        threshold: 1
+
+  # Dashboard de Seguridad
+  - name: "CASTOR - Security"
+    refresh: 1m
+    panels:
+      - title: "Auth Failures"
+        type: counter
+        query: "castor_auth_attempts_total{result='failure'}"
+
+      - title: "Authorization Denied"
+        type: timeseries
+        metric: castor_authz_denied_total
+
+      - title: "Rate Limits Hit"
+        type: counter
+        metric: castor_rate_limit_hits_total
+
+      - title: "Audit Events"
+        type: timeseries
+        metric: castor_audit_events_total

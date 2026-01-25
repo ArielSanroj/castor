@@ -1,0 +1,193 @@
+version: '3.8'
+
+services:
+  # =============================================================================
+  # INFRASTRUCTURE
+  # =============================================================================
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: castor-postgres
+    environment:
+      POSTGRES_USER: castor
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-castor_dev}
+      POSTGRES_MULTIPLE_DATABASES: core_db,e14_db,dashboard_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-multiple-databases.sh:/docker-entrypoint-initdb.d/init-multiple-databases.sh
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U castor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - castor-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: castor-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - castor-network
+
+  # =============================================================================
+  # MICROSERVICES
+  # =============================================================================
+
+  core-service:
+    build:
+      context: ./services/core-service
+      dockerfile: Dockerfile
+    container_name: castor-core
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=${FLASK_ENV:-development}
+      - CORE_DATABASE_URL=postgresql://castor:${POSTGRES_PASSWORD:-castor_dev}@postgres:5432/core_db
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-${SECRET_KEY}}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - castor-network
+
+  e14-service:
+    build:
+      context: ./services/e14-service
+      dockerfile: Dockerfile
+    container_name: castor-e14
+    ports:
+      - "5002:5002"
+    environment:
+      - FLASK_ENV=${FLASK_ENV:-development}
+      - E14_DATABASE_URL=postgresql://castor:${POSTGRES_PASSWORD:-castor_dev}@postgres:5432/e14_db
+      - REDIS_URL=redis://redis:6379/1
+      - CORE_SERVICE_URL=http://core-service:5001
+      - SECRET_KEY=${SECRET_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-${SECRET_KEY}}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - e14_data:/app/data
+      - e14_downloads:/app/downloads
+      - e14_processed:/app/processed
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      core-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5002/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - castor-network
+
+  dashboard-service:
+    build:
+      context: ./services/dashboard-ia
+      dockerfile: Dockerfile
+    container_name: castor-dashboard
+    ports:
+      - "5003:5003"
+    environment:
+      - FLASK_ENV=${FLASK_ENV:-development}
+      - DASHBOARD_DATABASE_URL=postgresql://castor:${POSTGRES_PASSWORD:-castor_dev}@postgres:5432/dashboard_db
+      - REDIS_URL=redis://redis:6379/2
+      - CORE_SERVICE_URL=http://core-service:5001
+      - SECRET_KEY=${SECRET_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-${SECRET_KEY}}
+      - TWITTER_BEARER_TOKEN=${TWITTER_BEARER_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - dashboard_data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      core-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5003/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - castor-network
+
+  # =============================================================================
+  # API GATEWAY (Optional - for production)
+  # =============================================================================
+
+  nginx:
+    image: nginx:alpine
+    container_name: castor-gateway
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      core-service:
+        condition: service_healthy
+      e14-service:
+        condition: service_healthy
+      dashboard-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - castor-network
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  e14_data:
+    driver: local
+  e14_downloads:
+    driver: local
+  e14_processed:
+    driver: local
+  dashboard_data:
+    driver: local
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+
+networks:
+  castor-network:
+    driver: bridge
