@@ -1367,27 +1367,35 @@ class E14OCRService:
 
     def _pdf_to_images(self, pdf_data: bytes) -> List[str]:
         """
-        Convierte PDF a lista de imágenes en base64.
+        Convierte PDF a lista de imágenes en base64 con preprocesamiento.
+
+        Pipeline mejorado basado en TySE:
+        1. PDF → Imagen con DPI optimizado
+        2. Preprocesamiento: contraste, brillo, nitidez, edge enhance
+        3. Conversión a base64
 
         Returns:
             Lista de strings base64 (una por página)
         """
         try:
             from pdf2image import convert_from_bytes
+            import io
 
-            # Convertir PDF a imágenes PIL
+            # Convertir PDF a imágenes PIL con DPI optimizado
             pil_images = convert_from_bytes(
                 pdf_data,
-                dpi=150,  # Balance entre calidad y tamaño
+                dpi=200,  # Optimizado para OCR de dígitos manuscritos
                 fmt='PNG'
             )
 
-            # Convertir a base64
+            # Convertir a base64 con preprocesamiento
             base64_images = []
             for img in pil_images:
-                import io
+                # Aplicar preprocesamiento
+                processed_img = self._preprocess_image(img)
+
                 buffer = io.BytesIO()
-                img.save(buffer, format='PNG')
+                processed_img.save(buffer, format='PNG', optimize=True)
                 base64_str = base64.b64encode(buffer.getvalue()).decode('utf-8')
                 base64_images.append(base64_str)
 
@@ -1399,6 +1407,45 @@ class E14OCRService:
         except Exception as e:
             logger.error(f"Error convirtiendo PDF a imágenes: {e}")
             raise
+
+    def _preprocess_image(self, img) -> 'Image.Image':
+        """
+        Preprocesamiento de imagen para mejorar OCR de dígitos manuscritos.
+
+        Pipeline basado en TySE:
+        - Contraste +30% (dígitos más definidos)
+        - Brillo +10% (fondo más claro)
+        - Nitidez +50% (bordes más nítidos)
+        - Edge enhance (definir trazos)
+
+        Args:
+            img: PIL Image
+
+        Returns:
+            PIL Image preprocesada
+        """
+        from PIL import Image, ImageEnhance, ImageFilter
+
+        # 1. Convertir a RGB si es necesario
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
+
+        # 2. Aumentar contraste (30%) - hace los dígitos más oscuros
+        enhancer = ImageEnhance.Contrast(img)
+        img = enhancer.enhance(1.3)
+
+        # 3. Aumentar brillo (10%) - aclara el fondo
+        enhancer = ImageEnhance.Brightness(img)
+        img = enhancer.enhance(1.1)
+
+        # 4. Aumentar nitidez (50%) - define bordes de dígitos
+        enhancer = ImageEnhance.Sharpness(img)
+        img = enhancer.enhance(1.5)
+
+        # 5. Edge enhance - resalta trazos manuscritos
+        img = img.filter(ImageFilter.EDGE_ENHANCE)
+
+        return img
 
     def _call_claude_vision(self, images: List[str]) -> Dict[str, Any]:
         """
