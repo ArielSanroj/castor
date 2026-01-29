@@ -62,7 +62,7 @@ MIN_RAG_DOCUMENTS = 2
 MIN_RELEVANCE_SCORE = 0.4
 
 
-@chat_bp.route('/chat', methods=['POST'])
+@chat_bp.route('', methods=['POST'])
 @limiter.limit("10 per minute")  # Chat can be more frequent
 @jwt_required(optional=True)
 def chat():
@@ -119,7 +119,7 @@ def chat():
         }), 500
 
 
-@chat_bp.route('/chat/topic', methods=['POST'])
+@chat_bp.route('/topic', methods=['POST'])
 @limiter.limit("20 per minute")
 def chat_about_topic():
     """
@@ -271,7 +271,7 @@ def generate_fallback_answer(question: str, topic: str, context: dict, analysis_
 # RAG CHAT ENDPOINTS
 # =============================================================================
 
-@chat_bp.route('/chat/rag', methods=['POST'])
+@chat_bp.route('/rag', methods=['POST'])
 @limiter.limit("15 per minute")
 @jwt_required(optional=True)
 def rag_chat():
@@ -398,7 +398,7 @@ def rag_chat():
         }), 500
 
 
-@chat_bp.route('/chat/rag/index', methods=['POST'])
+@chat_bp.route('/rag/index', methods=['POST'])
 @limiter.limit("10 per minute")
 @jwt_required(optional=True)
 def rag_index():
@@ -460,7 +460,7 @@ def rag_index():
         }), 500
 
 
-@chat_bp.route('/chat/rag/stats', methods=['GET'])
+@chat_bp.route('/rag/stats', methods=['GET'])
 @limiter.limit("30 per minute")
 def rag_stats():
     """
@@ -496,7 +496,7 @@ def rag_stats():
         }), 500
 
 
-@chat_bp.route('/chat/rag/search', methods=['POST'])
+@chat_bp.route('/rag/search', methods=['POST'])
 @limiter.limit("20 per minute")
 def rag_search():
     """
@@ -611,7 +611,7 @@ Si no tienes información específica sobre un candidato, proporciona recomendac
     }), 503
 
 
-@chat_bp.route('/chat/rag/sync', methods=['POST'])
+@chat_bp.route('/rag/sync', methods=['POST'])
 @limiter.limit("5 per minute")
 @jwt_required(optional=True)
 def rag_sync():
@@ -668,7 +668,7 @@ def rag_sync():
         }), 500
 
 
-@chat_bp.route('/chat/rag/sync-latest', methods=['POST'])
+@chat_bp.route('/rag/sync-latest', methods=['POST'])
 @limiter.limit("10 per minute")
 @jwt_required(optional=True)
 def rag_sync_latest():
@@ -783,7 +783,7 @@ def rag_sync_latest():
         }), 500
 
 
-@chat_bp.route('/chat/rag/clear', methods=['POST'])
+@chat_bp.route('/rag/clear', methods=['POST'])
 @limiter.limit("2 per minute")
 @jwt_required()
 def rag_clear():
@@ -810,4 +810,324 @@ def rag_clear():
         return jsonify({
             "success": False,
             "error": "Error clearing index"
+        }), 500
+
+
+# =============================================================================
+# E-14 ELECTORAL RAG ENDPOINTS
+# =============================================================================
+
+@chat_bp.route('/rag/e14', methods=['POST'])
+@limiter.limit("20 per minute")
+@jwt_required(optional=True)
+def rag_e14_chat():
+    """
+    Chat especializado para consultas sobre formularios E-14 electorales.
+
+    Request body:
+    {
+        "message": "¿Cuántos votos tiene Vicky Dávila en Antioquia?",
+        "conversation_id": "optional-id",
+        "conversation_history": [...],
+        "top_k": 10,
+        "departamento": "ANTIOQUIA",
+        "municipio": "MEDELLIN",
+        "corporacion": "PRESIDENCIA"
+    }
+
+    Returns:
+        Respuesta con datos electorales de E-14
+    """
+    try:
+        payload = request.get_json() or {}
+
+        message = payload.get("message", "").strip()
+        if not message:
+            return jsonify({
+                "success": False,
+                "error": "El mensaje es requerido"
+            }), 400
+
+        conversation_history = payload.get("conversation_history", [])
+        top_k = payload.get("top_k", 10)
+        departamento = payload.get("departamento")
+        municipio = payload.get("municipio")
+        corporacion = payload.get("corporacion")
+        conversation_id = payload.get("conversation_id", str(uuid.uuid4()))
+
+        # Get RAG service
+        rag = get_rag()
+        if rag is None:
+            return jsonify({
+                "success": False,
+                "error": "RAG service unavailable"
+            }), 503
+
+        # Perform E-14 specialized chat
+        result = rag.chat_e14(
+            query=message,
+            conversation_history=conversation_history,
+            top_k=top_k,
+            departamento=departamento,
+            municipio=municipio,
+            corporacion=corporacion
+        )
+
+        return jsonify({
+            "success": True,
+            "answer": result["answer"],
+            "sources": result["sources"],
+            "e14_documents_found": result["e14_documents_found"],
+            "filters_applied": result["filters_applied"],
+            "conversation_id": conversation_id
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Error in E-14 RAG chat: {e}", exc_info=True)
+        return jsonify({
+            "success": False,
+            "error": f"Error procesando consulta electoral: {str(e)}"
+        }), 500
+
+
+@chat_bp.route('/rag/e14/index', methods=['POST'])
+@limiter.limit("30 per minute")
+@jwt_required(optional=True)
+def rag_e14_index():
+    """
+    Indexar un formulario E-14 procesado en el RAG.
+
+    Request body:
+    {
+        "extraction_id": "unique-id",
+        "extraction_data": {
+            "header": {...},
+            "nivelacion": {...},
+            "partidos": [...],
+            "votos_especiales": {...},
+            "overall_confidence": 0.95,
+            "fields_needing_review": 0
+        },
+        "metadata": {...}
+    }
+
+    Returns:
+        Número de documentos indexados
+    """
+    try:
+        payload = request.get_json() or {}
+
+        extraction_id = payload.get("extraction_id")
+        extraction_data = payload.get("extraction_data")
+        metadata = payload.get("metadata", {})
+
+        if not extraction_id:
+            return jsonify({
+                "success": False,
+                "error": "extraction_id es requerido"
+            }), 400
+
+        if not extraction_data:
+            return jsonify({
+                "success": False,
+                "error": "extraction_data es requerido"
+            }), 400
+
+        # Get RAG service
+        rag = get_rag()
+        if rag is None:
+            return jsonify({
+                "success": False,
+                "error": "RAG service unavailable"
+            }), 503
+
+        # Index the E-14 form
+        docs_indexed = rag.index_e14_form(
+            extraction_id=extraction_id,
+            extraction_data=extraction_data,
+            metadata=metadata
+        )
+
+        # Get mesa_id from header
+        header = extraction_data.get("header", {})
+        mesa_id = header.get("mesa_id", "unknown")
+
+        return jsonify({
+            "success": True,
+            "extraction_id": extraction_id,
+            "mesa_id": mesa_id,
+            "documents_indexed": docs_indexed,
+            "message": f"E-14 indexado exitosamente: {docs_indexed} documentos"
+        }), 201
+
+    except Exception as e:
+        logger.error(f"Error indexing E-14: {e}", exc_info=True)
+        return jsonify({
+            "success": False,
+            "error": f"Error indexando E-14: {str(e)}"
+        }), 500
+
+
+@chat_bp.route('/rag/e14/batch', methods=['POST'])
+@limiter.limit("5 per minute")
+@jwt_required(optional=True)
+def rag_e14_index_batch():
+    """
+    Indexar múltiples formularios E-14 en batch.
+
+    Request body:
+    {
+        "extractions": [
+            {"extraction_id": "id1", "header": {...}, ...},
+            {"extraction_id": "id2", "header": {...}, ...}
+        ],
+        "metadata": {...}
+    }
+    """
+    try:
+        payload = request.get_json() or {}
+
+        extractions = payload.get("extractions", [])
+        metadata = payload.get("metadata", {})
+
+        if not extractions:
+            return jsonify({
+                "success": False,
+                "error": "extractions array es requerido"
+            }), 400
+
+        # Get RAG service
+        rag = get_rag()
+        if rag is None:
+            return jsonify({
+                "success": False,
+                "error": "RAG service unavailable"
+            }), 503
+
+        # Index batch
+        result = rag.index_e14_batch(extractions, metadata)
+
+        return jsonify({
+            "success": True,
+            **result
+        }), 201
+
+    except Exception as e:
+        logger.error(f"Error in E-14 batch indexing: {e}", exc_info=True)
+        return jsonify({
+            "success": False,
+            "error": f"Error en indexación batch: {str(e)}"
+        }), 500
+
+
+@chat_bp.route('/rag/e14/stats', methods=['GET'])
+@limiter.limit("30 per minute")
+def rag_e14_stats():
+    """
+    Obtener estadísticas de formularios E-14 indexados.
+
+    Returns:
+        Estadísticas por corporación, departamento, alertas, etc.
+    """
+    try:
+        rag = get_rag()
+        if rag is None:
+            return jsonify({
+                "success": False,
+                "error": "RAG service unavailable"
+            }), 503
+
+        stats = rag.get_e14_stats()
+
+        return jsonify({
+            "success": True,
+            **stats
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Error getting E-14 stats: {e}", exc_info=True)
+        return jsonify({
+            "success": False,
+            "error": "Error obteniendo estadísticas"
+        }), 500
+
+
+@chat_bp.route('/rag/e14/search', methods=['POST'])
+@limiter.limit("30 per minute")
+def rag_e14_search():
+    """
+    Búsqueda directa en E-14 indexados sin generación de respuesta.
+
+    Request body:
+    {
+        "query": "votos Vicky Dávila",
+        "top_k": 10,
+        "departamento": "ANTIOQUIA",
+        "municipio": null,
+        "corporacion": "PRESIDENCIA",
+        "party_name": "Valientes"
+    }
+    """
+    try:
+        payload = request.get_json() or {}
+
+        query = payload.get("query", "").strip()
+        if not query:
+            return jsonify({
+                "success": False,
+                "error": "Query es requerido"
+            }), 400
+
+        top_k = payload.get("top_k", 10)
+        departamento = payload.get("departamento")
+        municipio = payload.get("municipio")
+        corporacion = payload.get("corporacion")
+        party_name = payload.get("party_name")
+
+        rag = get_rag()
+        if rag is None:
+            return jsonify({
+                "success": False,
+                "error": "RAG service unavailable"
+            }), 503
+
+        # Search E-14 documents
+        results = rag.search_e14(
+            query=query,
+            top_k=top_k,
+            departamento=departamento,
+            municipio=municipio,
+            corporacion=corporacion,
+            party_name=party_name
+        )
+
+        documents = [
+            {
+                "id": r.document.id,
+                "score": round(r.score, 4),
+                "rank": r.rank,
+                "content": r.document.content,
+                "metadata": r.document.metadata
+            }
+            for r in results
+        ]
+
+        return jsonify({
+            "success": True,
+            "query": query,
+            "filters": {
+                "departamento": departamento,
+                "municipio": municipio,
+                "corporacion": corporacion,
+                "party_name": party_name
+            },
+            "results": documents,
+            "total_found": len(documents)
+        }), 200
+
+    except Exception as e:
+        logger.error(f"Error in E-14 search: {e}", exc_info=True)
+        return jsonify({
+            "success": False,
+            "error": "Error en búsqueda"
         }), 500
