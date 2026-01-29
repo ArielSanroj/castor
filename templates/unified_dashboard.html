@@ -1632,6 +1632,229 @@
             font-size: 0.95rem;
             color: var(--text, #F5F7FA);
         }
+
+        /* ========== DATABASE TAB STYLES ========== */
+        .db-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .db-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+        .btn-refresh {
+            background: rgba(201, 162, 39, 0.15);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            color: var(--accent, #C9A227);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .btn-refresh:hover {
+            background: rgba(201, 162, 39, 0.25);
+        }
+        .db-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .db-stat-card {
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.1), rgba(201, 162, 39, 0.05));
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .db-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent, #C9A227);
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .db-stat-label {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+        .db-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .db-filters select, .db-filters input {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #2A3142);
+            color: var(--text, #F5F5F0);
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            min-width: 180px;
+        }
+        .db-filters input {
+            flex: 1;
+            min-width: 250px;
+        }
+        .db-table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border, #2A3142);
+        }
+        .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .db-table th {
+            background: rgba(201, 162, 39, 0.1);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent, #C9A227);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        .db-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .db-table tr:hover {
+            background: rgba(201, 162, 39, 0.05);
+        }
+        .db-table .db-loading {
+            text-align: center;
+            color: var(--muted);
+            padding: 2rem;
+        }
+        .db-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .db-btn {
+            background: transparent;
+            border: 1px solid var(--border, #2A3142);
+            color: var(--text, #F5F5F0);
+            padding: 0.35rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .db-btn:hover {
+            background: rgba(201, 162, 39, 0.15);
+            border-color: var(--accent);
+        }
+        .db-btn-danger:hover {
+            background: rgba(220, 53, 69, 0.15);
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .db-detail-panel {
+            margin-top: 1.5rem;
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #2A3142);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .db-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border, #2A3142);
+        }
+        .btn-back {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .btn-back:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .db-detail-title {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        .db-mesa-grid {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .db-mesa-card {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .db-mesa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .db-mesa-id {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .db-mesa-corp {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: rgba(201,162,39,0.15);
+            border-radius: 4px;
+            color: var(--accent);
+        }
+        .db-mesa-location {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        .db-mesa-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+        }
+        .db-mesa-stat {
+            color: var(--text);
+        }
+        .db-mesa-stat span {
+            color: var(--muted);
+        }
+        .db-top-partidos {
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .db-top-partidos h5 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+        .db-partido-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            padding: 0.25rem 0;
+        }
+        .db-partido-name {
+            color: var(--text);
+        }
+        .db-partido-votos {
+            color: var(--accent);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body class="landing" data-mode="unified" itemscope itemtype="https://schema.org/WebPage">
@@ -2053,12 +2276,13 @@
                 </div>
 
                 <div class="tabs dashboard-tabs">
-                    <button class="tab active" data-tab="summary">Resumen</button>
-                    <button class="tab" data-tab="game">Alternativas</button>
-                    <button class="tab" data-tab="topics">Temas</button>
-                    <button class="tab" data-tab="charts">Tendencias</button>
-                    <button class="tab" data-tab="results">Análisis detallado</button>
-                    <button class="tab" data-tab="methodology">Metodologia</button>
+                    <button class="tab active" data-tab="summary" onclick="switchTab('summary')">Resumen</button>
+                    <button class="tab" data-tab="game" onclick="switchTab('game')">Alternativas</button>
+                    <button class="tab" data-tab="topics" onclick="switchTab('topics')">Temas</button>
+                    <button class="tab" data-tab="charts" onclick="switchTab('charts')">Tendencias</button>
+                    <button class="tab" data-tab="results" onclick="switchTab('results')">Análisis detallado</button>
+                    <button class="tab" data-tab="methodology" onclick="switchTab('methodology')">Metodologia</button>
+                    <button class="tab" data-tab="database" onclick="switchTab('database')">📊 Base de Datos</button>
                 </div>
 
             <div id="tab-summary" class="tab-content active" style="display: block;">
@@ -2360,6 +2584,72 @@
                     </p>
                 </div>
             </div>
+
+            <!-- ========== TAB BASE DE DATOS RAG ========== -->
+            <div id="tab-database" class="tab-content" style="display: none;">
+                <div class="card dashboard-card">
+                    <div class="db-header">
+                        <h3>📊 Base de Datos RAG - E-14 Electorales</h3>
+                        <button class="btn-refresh" onclick="loadDatabaseStats()">🔄 Actualizar</button>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="db-stats-grid" id="db-stats-grid">
+                        <div class="db-stat-card">
+                            <div class="db-stat-value" id="db-total-docs">-</div>
+                            <div class="db-stat-label">Documentos</div>
+                        </div>
+                        <div class="db-stat-card">
+                            <div class="db-stat-value" id="db-total-mesas">-</div>
+                            <div class="db-stat-label">Mesas</div>
+                        </div>
+                        <div class="db-stat-card">
+                            <div class="db-stat-value" id="db-total-deptos">-</div>
+                            <div class="db-stat-label">Departamentos</div>
+                        </div>
+                    </div>
+
+                    <!-- Filtros -->
+                    <div class="db-filters">
+                        <select id="db-filter-corp" onchange="filterDatabase()">
+                            <option value="">Todas las corporaciones</option>
+                            <option value="SENADO">Senado</option>
+                            <option value="CAMARA">Cámara</option>
+                        </select>
+                        <input type="text" id="db-search" placeholder="🔍 Buscar departamento, municipio..." onkeyup="filterDatabase()">
+                    </div>
+
+                    <!-- Tabla de Departamentos -->
+                    <div class="db-table-container">
+                        <table class="db-table" id="db-table">
+                            <thead>
+                                <tr>
+                                    <th>Departamento</th>
+                                    <th>Mesas</th>
+                                    <th>Senado</th>
+                                    <th>Cámara</th>
+                                    <th>Docs</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="db-table-body">
+                                <tr><td colspan="6" class="db-loading">Cargando datos...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Panel de Detalle (oculto inicialmente) -->
+                    <div id="db-detail-panel" class="db-detail-panel" style="display: none;">
+                        <div class="db-detail-header">
+                            <button class="btn-back" onclick="closeDepartmentDetail()">← Volver</button>
+                            <h4 id="db-detail-title">Departamento</h4>
+                        </div>
+                        <div class="db-detail-content" id="db-detail-content">
+                            <!-- Se llena dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -2463,6 +2753,224 @@
     </script>
     <script>
         // ========== FUNCIONES DE ACCION DEL DASHBOARD ==========
+
+        // Tab switching function
+        function switchTab(tabName) {
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            // Add active to selected tab
+            const selectedTab = document.querySelector(`[data-tab="${tabName}"]`);
+            if (selectedTab) selectedTab.classList.add('active');
+
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.style.display = 'none';
+                c.classList.remove('active');
+            });
+
+            // Show selected tab content
+            const tabContent = document.getElementById(`tab-${tabName}`);
+            if (tabContent) {
+                tabContent.style.display = 'block';
+                tabContent.classList.add('active');
+            }
+
+            // Load database data when switching to database tab
+            if (tabName === 'database') {
+                loadDatabaseStats();
+            }
+        }
+
+        // ========== DATABASE TAB FUNCTIONS ==========
+        let dbData = { departments: [], allData: [] };
+
+        async function loadDatabaseStats() {
+            try {
+                const response = await fetch(`${window.API_BASE_URL}/api/chat/rag/e14/stats`);
+                const data = await response.json();
+
+                if (data.success) {
+                    // Update stats cards
+                    document.getElementById('db-total-docs').textContent = data.total_e14_documents || 0;
+
+                    const deptos = Object.keys(data.by_departamento || {});
+                    document.getElementById('db-total-deptos').textContent = deptos.length;
+
+                    // Calculate mesas (estimate: docs / avg docs per mesa)
+                    const totalDocs = data.total_e14_documents || 0;
+                    const avgDocsPerMesa = 25; // Approximate
+                    document.getElementById('db-total-mesas').textContent = Math.round(totalDocs / avgDocsPerMesa);
+
+                    // Build department table
+                    const byDepto = data.by_departamento || {};
+                    const byCorp = data.by_corporacion || {};
+
+                    dbData.departments = deptos.map(depto => ({
+                        name: depto,
+                        docs: byDepto[depto] || 0,
+                        senado: 0, // Will be calculated from search
+                        camara: 0
+                    }));
+
+                    // Load detailed data
+                    await loadDetailedData();
+
+                    renderDepartmentTable();
+                }
+            } catch (error) {
+                console.error('Error loading database stats:', error);
+                document.getElementById('db-table-body').innerHTML =
+                    '<tr><td colspan="6" class="db-loading">Error cargando datos</td></tr>';
+            }
+        }
+
+        async function loadDetailedData() {
+            try {
+                const response = await fetch(`${window.API_BASE_URL}/api/chat/rag/e14/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: 'resultados electorales', top_k: 200 })
+                });
+                const data = await response.json();
+
+                if (data.results) {
+                    // Normalize data - extract from metadata
+                    dbData.allData = data.results.map(r => ({
+                        id: r.id,
+                        content: r.content,
+                        score: r.score,
+                        departamento: r.metadata?.departamento || 'Desconocido',
+                        municipio: r.metadata?.municipio || 'Desconocido',
+                        corporacion: r.metadata?.corporacion || '',
+                        mesa_id: r.metadata?.mesa_id || '',
+                        chunk_type: r.metadata?.chunk_type || ''
+                    }));
+
+                    // Group by department and count corporaciones
+                    const deptoStats = {};
+                    dbData.allData.forEach(r => {
+                        const depto = r.departamento;
+                        const corp = r.corporacion;
+
+                        if (!deptoStats[depto]) {
+                            deptoStats[depto] = { senado: new Set(), camara: new Set(), mesas: new Set() };
+                        }
+
+                        if (corp === 'SENADO') deptoStats[depto].senado.add(r.mesa_id);
+                        if (corp === 'CAMARA') deptoStats[depto].camara.add(r.mesa_id);
+                        if (r.mesa_id) deptoStats[depto].mesas.add(r.mesa_id);
+                    });
+
+                    // Update department data
+                    dbData.departments.forEach(d => {
+                        const stats = deptoStats[d.name];
+                        if (stats) {
+                            d.senado = stats.senado.size;
+                            d.camara = stats.camara.size;
+                            d.mesas = stats.mesas.size;
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading detailed data:', error);
+            }
+        }
+
+        function renderDepartmentTable() {
+            const tbody = document.getElementById('db-table-body');
+            const filterCorp = document.getElementById('db-filter-corp').value;
+            const searchTerm = document.getElementById('db-search').value.toLowerCase();
+
+            let filtered = dbData.departments;
+
+            // Apply search filter
+            if (searchTerm) {
+                filtered = filtered.filter(d => d.name.toLowerCase().includes(searchTerm));
+            }
+
+            // Sort by docs descending
+            filtered.sort((a, b) => b.docs - a.docs);
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="db-loading">No se encontraron resultados</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(d => `
+                <tr>
+                    <td><strong>📍 ${d.name}</strong></td>
+                    <td>${d.mesas || '-'}</td>
+                    <td>${d.senado || 0}</td>
+                    <td>${d.camara || 0}</td>
+                    <td>${d.docs}</td>
+                    <td class="db-actions">
+                        <button class="db-btn" onclick="showDepartmentDetail('${d.name}')">👁️ Ver</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterDatabase() {
+            renderDepartmentTable();
+        }
+
+        async function showDepartmentDetail(deptoName) {
+            const panel = document.getElementById('db-detail-panel');
+            const content = document.getElementById('db-detail-content');
+            const title = document.getElementById('db-detail-title');
+
+            title.textContent = `${deptoName} - Detalle de Mesas`;
+            panel.style.display = 'block';
+
+            // Filter data for this department
+            const deptoData = dbData.allData.filter(d => d.departamento === deptoName);
+
+            // Group by mesa
+            const mesasMap = {};
+            deptoData.forEach(d => {
+                const mesaId = d.mesa_id || 'unknown';
+                if (!mesasMap[mesaId]) {
+                    mesasMap[mesaId] = {
+                        id: mesaId,
+                        municipio: d.municipio || 'Desconocido',
+                        corporacion: d.corporacion || '',
+                        items: []
+                    };
+                }
+                mesasMap[mesaId].items.push(d);
+            });
+
+            const mesas = Object.values(mesasMap);
+
+            if (mesas.length === 0) {
+                content.innerHTML = '<p>No hay datos detallados disponibles para este departamento.</p>';
+                return;
+            }
+
+            content.innerHTML = `
+                <div class="db-mesa-grid">
+                    ${mesas.map(mesa => `
+                        <div class="db-mesa-card">
+                            <div class="db-mesa-header">
+                                <span class="db-mesa-id">${mesa.id}</span>
+                                <span class="db-mesa-corp">${mesa.corporacion}</span>
+                            </div>
+                            <div class="db-mesa-location">${mesa.municipio}, ${deptoName}</div>
+                            <div class="db-mesa-stats">
+                                <span class="db-mesa-stat"><span>Docs:</span> ${mesa.items.length}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeDepartmentDetail() {
+            document.getElementById('db-detail-panel').style.display = 'none';
+        }
+
         function generateContent() {
             const panel = document.getElementById('rag-chat-panel');
             const input = document.getElementById('rag-chat-input');
@@ -2479,18 +2987,7 @@
         }
 
         function scrollToAlternatives() {
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            document.querySelector('[data-tab="game"]').classList.add('active');
-
-            document.querySelectorAll('.tab-content').forEach(c => {
-                c.style.display = 'none';
-                c.classList.remove('active');
-            });
-            const altTab = document.getElementById('tab-game');
-            altTab.style.display = 'block';
-            altTab.classList.add('active');
-
+            switchTab('game');
             document.getElementById('alternatives-section').scrollIntoView({ behavior: 'smooth' });
         }
 
