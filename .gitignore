@@ -90,3 +90,21 @@ pdfs_congreso_2022/
 actas_e14_masivo/pdfs*/
 e14_pdfs/
 data/e14_congreso_2022/
+
+# OCR Output (large generated files)
+output/
+backend/output/
+**/tesseract_results/
+**/batch_ocr_results/
+
+# Temporary extraction files
+backend/e14_extraction_*.json
+backend/test_e14_*.py
+test_*.py
+!backend/tests/test_*.py
+
+# Training data (large)
+backend/training_data/
+
+# CTO baseline
+.cto_baseline
