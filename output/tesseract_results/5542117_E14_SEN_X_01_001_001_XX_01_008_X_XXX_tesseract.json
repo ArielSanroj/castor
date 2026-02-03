@@ -1,0 +1,86 @@
+{
+  "extraction_id": "a877a5e6",
+  "filename": "5542117_E14_SEN_X_01_001_001_XX_01_008_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 25742,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "SEC. ESC. LA ESPERANZA NO 2 |",
+  "mesa": "008",
+  "partidos": [
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "bs. 0019 — PARTIDO NUEVO UBERALISMO",
+      "party_code": "",
+      "votes": 19,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ESPERANZA NO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "COLOMBIA JUSTA LIBRES",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "0001 PARTIDO LIBERAL COLOMBIANO",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.75,
+      "needs_review": true
+    },
+    {
+      "party_name": "ESPERANAA NO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO DE LA UNIÓN POR LA GENT",
+      "party_code": "",
+      "votes": 98,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS”",
+      "party_code": "",
+      "votes": 156,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 1673,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A :\n710594362010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA |\n| [m] > 0 JURADOS DE VOTACION |\nM8, DELEGADOS o\nEA q ELECCIONES CONGRESO Ss\nEE y 13 DE MARZO DE 2022\ncdo REGISTRADURÍA\nO E ts ca a SENADO\n| DEPARTAMENTO: 01 - ANTIOQUIA |\nMUNICIPIO: 001 - MEDELLIN\n| LUGAR: SEC. ESC. LA ESPERANZA NO 2 |\n| ZONA: 01 PUESTO: 01 MESA: 008 |\n| X 3-34-21-17 XA |\nTOTAL TOTAL TOTAL\n| SUFRAGANTES VOTOS VOTOS\n| FORMATO E-11 EN LA URNA INCINERADOS |\nCIRCUNSCRIPCIÓN NACIONAL |\n| | LISTA SIN VOTO PREFERENTE po\n| => 0013 PARTIDO COMUNES | )\n| 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA. ar | l=[-|14 |\n\n--- PAGE BREAK ---\nA no\n710594362010211 Ver: 01 Pag: 02 de 11.\nACTA DE ESCRUTINIO DE LOS EA |\nep JURADOS DE VOTACIÓN |\nST ELECCIONES CONGRESO ¡\nDA ER NS l\n13 DE MARZO DE 2022 12 |\nMN O poto: sE SENADO a\nMUNICIPIO: 001 - MEDELLIN ,\nLUGAR: SEC. ESC. LA ESPERANZA NO 2 |\nZONA: 01 PUESTO: 01 MESA: 008 |\nX 5-54-21-17 X |\n| o LISTACONVOTO PREFERENTE | OS |\n0255 COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA | |\n0 — _ ¿ | «f== VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA : |\n| N a i A | |\n| A ÓN\n| | 1 — | _ 2 3 | | A o |\n| Ls o OS | o. : |\nOS | e | o | o\no | | a | oa V | |\nOS > a | | o o. | | o\no | o | | e | | |\n| 10 | 43 7 | | | | (\na a o o\no NN | . o » |\n0 13 | 46 o |\n14 | | 7 — — 1 8 | | o\nOS | Ve | OS | o\n6 49 | E |\nO 2 - —UY as o |\nAR 51 | | 85 | | |\n19 | | | sa | 86 | | o\n| | a 3 | 87 | o\na | Cao > a : | |\nOS i oa | | a | | o\npa | o Ñ | o\n| 24 | | 57 | | a | | |\na | | 0 3 o o\n| a O |\nA | | a | a | |\n| 28 | | o | | : 95 | | | |\n| 29. E 96. | o\na | OS | | a | V 2%\nA y . | a |\nLo | a 0 in o 3 |\n¡ 33 | 87 | | 100 |\n0 TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS V\nMo rom: 50cs KIT 59,436 civtz10356 ME\n\n--- PAGE BREAK ---\nA e\n| 710594362010311 Ver: 01 Pag: 03 de 11 *\n| ACTA DE ESCRUTINIO DE LOS E-:14 V\nEli JURADOS DE VOTACIÓN |\nA EE ELECCIONES CONGRESO 7\no 13 DE MARZO DE 2022\nra = Jr REGISTRADURÍA\nO a e SENADO Peor\nMUNICIPIO: 001 - MEDELLIN |\nLUGAR: SEC. ESC. LA ESPERANZA NO 2\nZONA: 01 PUESTO: 01 MESA: 008 |\nX 5-54-21-17 X\no LISTA CON VOTO PREFERENTE o\n- 1140 . FUERZA CIUDADANA LA FUERZA DEL CAMBIO |\n| 0 | | | ¿— VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA | |\n7 1 o | o ] A\no, AN AN\no a | o |\nOS a o |\n| A, . a | |\nIA 42 O\na | o — o |\n| mo 44 78 | |\n| o 45 79 | o |\n| 44 | 86 80 | | |\nss =- — 1 ar | | a |\n16 NN 82 o |\nCa A\n| 18 | | : 51 | | | Ba | o\n| 9. ss o\nA o\nA Br |\na OS a | |\n2 o A 89 IS\nA A.\n| ET | o | 9 | | . |\n| 7 | | 9 | | ea | | |\no a | AN\n| ( 30 | | 61 | 00 | | |\n3 | | a\nV TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMo roms KIT 59,436 civtzross7 MN\n\n--- PAGE BREAK ---\nANN e\n710594362010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA 1\nmE] URADOS DE VOTACIÓN |\ndel ELECCIONES CONGRESO !\ne A 13 DE MARZO DE 2022 RES |\nEIA, o REGISTRADURÍA '\n[aga SENADO Pe |\nE\nMUNICIPIO: 001 - MEDELLIN ¡\nLUGAR: SEC. ESC. LA ESPERANZA NO 2\nZONA: 01 PUESTO: 01 MESA: 008 |\nX 5-54-21-17 X )\no LISTA CON VOTO PREFERENTE o o\n| — CÓST 0003 PARTIDO CAMBIO RADICAL | |\n0 | a | — | 3 | E VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA | 0\ne a o !\nAS a 0%\ne | | AS o\nA a a OS\nso | cs -_.- 7 E | | o\nOS a |\no a ¡ | ÓN |\na o o | |\n9 | | 43 | | a | |\nA O DN E:\n44 O A. | | |\n42 o 46 | 80 . O:\n| aa o e | a o\nTS | 38 o , 82 | |\n| o. o e ( A\na o |\nIS 510 IN |\nÓN 52 o 86 | | o |\n| OS IN O\n| 20 | 5 | a |\na as | o ¡\no OS so\n23 A 1 | 57 o A\n| 24 | o : A 7\no OS A\nOS | a o\nLa | o o\n8 | o ro\n| 30 a o |\n| . | OS a o\n32 | 66 TN o |\n0034 E |\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nLISTA SIN VOTO PREFERENTE | | |\no O VOTOSPORLA AGRUPACIÓN POLÍTICA o | MA 0\n| | UN LÍSTA SIN VOTO PREFERENTE | |\n| bs. 0019  — PARTIDO NUEVO UBERALISMO\n| | 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA mul |\n( Mo soon: 50130 KIT 59 436 Civt210358 Ml\n\n--- PAGE BREAK ---\nA e\n710594362010511 Ver: 01 Pag: 05 de 11 (\nACTA DE ESCRUTINIO DE LOS Eta !\n[jpg] JURADOS DEVOTACIÓN :\nÉ RO ELECCIONES CONGRESO |\nRE F-—— 13 DE MARZO DE 2022 e |\nlar REGISTRADA\ntre SENADO (\nMUNICIPIO: 001 - MEDELLIN |\n| LUGAR: SEC. ESC. LA ESPERANZA NO 2\nZONA: 01 PUESTO: 01 MESA: 008 ¡\nX 5-54-21-17 X (\n| o Ml LISTA SIN VOTO PREFERENTE o | |\n| | hd - 4130 ESTAMOS LISTAS COLOMBIA |\n| 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA a [-T-]5] i\n| | | LISTA SIN VOTO PREFERENTE | A\n| | TN - 1039 MOVIMIENTO UNITARIO METAPOLIFTICO | )\n| 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA muii» >] | | ¡\n? LISTA CON VOTO PREFERENTE 1 | |\n| aa 0231 COALICIÓN MIRA - COLOMBIA JUSTA LIBRES 1\n0 0 | | dfe== “VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\n| 4 26 57. |\nos o a A\n6 | | - 29 | | | 61 o |\n7 0. | | 63 | | | |\n8 | 31 | | e |\n9 | 33 | o\na Lo | a | |\nmo | | 36 | | | zo | | 0\n14 39 75 ( ¡\no | , a | o | | (\n| 10 | o Lo | o . | i o\nOS | OS | | 00 | | j !\n21 | | 9 | | | 100. | | | 7\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS 1\n0 |\n!\n|\ny\n| Mm. rom: 50. KIT 59.436 Civ1210359 ml\n\n--- PAGE BREAK ---\nANS e\n710594362010611 Ver: 01 Pag: 06 de 11:\n\nACTA DE ESCRUTINIO DE LOS EA ]\n\n(m]re=[m] , JURADOS DE VOTACIÓN :\n+] bio : REGISTRADURÍA ¡\nObra SENADO NN\nMUNICIPIO: 001 - MEDELLIN ¡\nLUGAR: SEC. ESC. LA ESPERANZA ",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

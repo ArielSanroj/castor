@@ -1,0 +1,352 @@
+{
+  "sample_id": "d5290457",
+  "sha256": "c359a187b2e0430646304f8d3c29b2546c76047bce47c483c58b7d90bacb9607",
+  "source": "training_data/e14_source/document.pdf",
+  "pages": 2,
+  "extraction": {
+    "extraction_id": "2141bff7-2837-43f6-af2f-087f54f2f98e",
+    "source_file": "uploaded_bytes",
+    "source_sha256": "c359a187b2e0430646304f8d3c29b2546c76047bce47c483c58b7d90bacb9607",
+    "extracted_at": "2026-01-23 17:16:55.824082",
+    "model_version": "claude-sonnet-4-20250514",
+    "processing_time_ms": 26872,
+    "header": {
+      "barcode": "710630372010102",
+      "version": null,
+      "page_info": null,
+      "copy_type": "DELEGADOS",
+      "election_name": "ELECCIONES TERRITORIALES OCTUBRE 29 DE 2023",
+      "election_date": "OCTUBRE 29 DE 2023",
+      "corporacion": "GOBERNACION",
+      "departamento_code": "01",
+      "departamento_name": "ANTIOQUIA",
+      "municipio_code": "001",
+      "municipio_name": "MEDELLIN",
+      "lugar": "I.E. BARRIO SANTA CRUZ",
+      "zona": "04",
+      "puesto": "01",
+      "mesa": "002"
+    },
+    "nivelacion": {
+      "total_sufragantes_e11": 157,
+      "total_votos_urna": 157,
+      "total_votos_incinerados": null,
+      "confidence_sufragantes": 0.95,
+      "confidence_urna": 0.95,
+      "confidence_incinerados": null
+    },
+    "partidos": [
+      {
+        "party_code": "0001",
+        "party_name": "LUIS EMILIO PEREZ GUTIERREZ - PIENSA EN GRANDE",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 26,
+        "votos_candidatos": [],
+        "total_votos": 26,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0002",
+        "party_name": "JULIAN BEDOYA PULGARIN",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 2,
+        "votos_candidatos": [],
+        "total_votos": 2,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0003",
+        "party_name": "JORGE ALBERTO GOMEZ GALLEGO - DIGNIDAD Y COMPROMISO",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [],
+        "total_votos": 1,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0004",
+        "party_name": "ESTEBAN RESTREPO TABORDA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 17,
+        "votos_candidatos": [],
+        "total_votos": 17,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0005",
+        "party_name": "ROBINSON ALONSO GIRALDO MIRA - FUERZA CIUDADANA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0006",
+        "party_name": "LUIS FERNANDO SUAREZ VELEZ",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 15,
+        "votos_candidatos": [],
+        "total_votos": 15,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0007",
+        "party_name": "MAURICIO TOBON FRANCO - PARECHE",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [],
+        "total_votos": 1,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0008",
+        "party_name": "CRISTIAN HALABY FERNANDEZ",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [],
+        "total_votos": 1,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0009",
+        "party_name": "JUAN DIEGO GOMEZ JIMENEZ",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 3,
+        "votos_candidatos": [],
+        "total_votos": 3,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0010",
+        "party_name": "ANDRES JULIAN RENDON CARDONA - UN CENTRO POLÍTICO SOCIAL",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 72,
+        "votos_candidatos": [],
+        "total_votos": 72,
+        "confidence_total": 0.9,
+        "needs_review": false
+      }
+    ],
+    "votos_especiales": {
+      "votos_blanco": 10,
+      "votos_nulos": 9,
+      "votos_no_marcados": 30,
+      "confidence_blanco": 0.9,
+      "confidence_nulos": 0.9,
+      "confidence_no_marcados": 0.9
+    },
+    "constancias": {
+      "hubo_recuento": false,
+      "recuento_solicitado_por": null,
+      "recuento_en_representacion_de": null,
+      "otras_constancias": null,
+      "num_jurados_firmantes": 6,
+      "jurados_info": []
+    },
+    "overall_confidence": 0.9,
+    "fields_needing_review": 0,
+    "total_pages": 2,
+    "pages_processed": 2
+  },
+  "validation": {
+    "extraction_id": "2141bff7-2837-43f6-af2f-087f54f2f98e",
+    "mesa_id": "01-001-04-01-002",
+    "validated_at": "2026-01-23 17:16:55.824268",
+    "validations": [
+      {
+        "rule_id": "NIV_001",
+        "rule_name": "NIVELACION_SUFRAGANTES_VS_URNA",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Sufragantes E-11 (157) ≥ Votos urna (157)",
+        "expected_value": 157,
+        "actual_value": 157,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "SUM_001",
+        "rule_name": "SUMA_VOTOS_IGUAL_URNA",
+        "passed": false,
+        "severity": "HIGH",
+        "message": "Suma computada (187) ≠ Urna (157). Delta: 30",
+        "expected_value": 157,
+        "actual_value": 187,
+        "delta": 30,
+        "details": {
+          "total_partidos": 138,
+          "votos_blanco": 10,
+          "votos_nulos": 9,
+          "votos_no_marcados": 30
+        }
+      },
+      {
+        "rule_id": "PARTY_0001",
+        "rule_name": "SUMA_PARTIDO_0001",
+        "passed": true,
+        "severity": "INFO",
+        "message": "LUIS EMILIO PEREZ GUTIERREZ - PIENSA EN GRANDE: Agrupación + Candidatos (26) = Total (26)",
+        "expected_value": 26,
+        "actual_value": 26,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0002",
+        "rule_name": "SUMA_PARTIDO_0002",
+        "passed": true,
+        "severity": "INFO",
+        "message": "JULIAN BEDOYA PULGARIN: Agrupación + Candidatos (2) = Total (2)",
+        "expected_value": 2,
+        "actual_value": 2,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0003",
+        "rule_name": "SUMA_PARTIDO_0003",
+        "passed": true,
+        "severity": "INFO",
+        "message": "JORGE ALBERTO GOMEZ GALLEGO - DIGNIDAD Y COMPROMISO: Agrupación + Candidatos (1) = Total (1)",
+        "expected_value": 1,
+        "actual_value": 1,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0004",
+        "rule_name": "SUMA_PARTIDO_0004",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ESTEBAN RESTREPO TABORDA: Agrupación + Candidatos (17) = Total (17)",
+        "expected_value": 17,
+        "actual_value": 17,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0005",
+        "rule_name": "SUMA_PARTIDO_0005",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ROBINSON ALONSO GIRALDO MIRA - FUERZA CIUDADANA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0006",
+        "rule_name": "SUMA_PARTIDO_0006",
+        "passed": true,
+        "severity": "INFO",
+        "message": "LUIS FERNANDO SUAREZ VELEZ: Agrupación + Candidatos (15) = Total (15)",
+        "expected_value": 15,
+        "actual_value": 15,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0007",
+        "rule_name": "SUMA_PARTIDO_0007",
+        "passed": true,
+        "severity": "INFO",
+        "message": "MAURICIO TOBON FRANCO - PARECHE: Agrupación + Candidatos (1) = Total (1)",
+        "expected_value": 1,
+        "actual_value": 1,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0008",
+        "rule_name": "SUMA_PARTIDO_0008",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CRISTIAN HALABY FERNANDEZ: Agrupación + Candidatos (1) = Total (1)",
+        "expected_value": 1,
+        "actual_value": 1,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0009",
+        "rule_name": "SUMA_PARTIDO_0009",
+        "passed": true,
+        "severity": "INFO",
+        "message": "JUAN DIEGO GOMEZ JIMENEZ: Agrupación + Candidatos (3) = Total (3)",
+        "expected_value": 3,
+        "actual_value": 3,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0010",
+        "rule_name": "SUMA_PARTIDO_0010",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ANDRES JULIAN RENDON CARDONA - UN CENTRO POLÍTICO SOCIAL: Agrupación + Candidatos (72) = Total (72)",
+        "expected_value": 72,
+        "actual_value": 72,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "EXCEED_001",
+        "rule_name": "VOTOS_NO_EXCEDEN_SUFRAGANTES",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Ningún partido excede sufragantes",
+        "expected_value": null,
+        "actual_value": null,
+        "delta": null,
+        "details": null
+      }
+    ],
+    "all_passed": false,
+    "critical_failures": 0,
+    "high_failures": 1,
+    "medium_failures": 0,
+    "low_failures": 0,
+    "alerts_generated": [
+      "HIGH: SUMA_VOTOS_IGUAL_URNA - Suma computada (187) ≠ Urna (157). Delta: 30"
+    ]
+  },
+  "metadata": {},
+  "ocr_success": true,
+  "ocr_error": null,
+  "processing_time_ms": 30087,
+  "created_at": "2026-01-23T17:16:55.825595",
+  "is_validated": false,
+  "is_corrected": false,
+  "corrections": []
+}

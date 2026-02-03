@@ -1,0 +1,235 @@
+{
+  "sample_id": "70c56f07",
+  "sha256": "5d77231127e2d77f4e71381ff23cfaff3bfc9dce2b81ec5eab021e41cb246bae",
+  "source": "training_data/e14_source/document (6).pdf",
+  "pages": 1,
+  "extraction": {
+    "extraction_id": "811ff26e-bcaf-487e-a021-f064fff53366",
+    "source_file": "uploaded_bytes",
+    "source_sha256": "5d77231127e2d77f4e71381ff23cfaff3bfc9dce2b81ec5eab021e41cb246bae",
+    "extracted_at": "2026-01-23 17:17:39.304122",
+    "model_version": "claude-sonnet-4-20250514",
+    "processing_time_ms": 16657,
+    "header": {
+      "barcode": "710063432010101",
+      "version": null,
+      "page_info": null,
+      "copy_type": "DELEGADOS",
+      "election_name": "ELECCIONES TERRITORIALES OCTUBRE 29 DE 2023",
+      "election_date": "2023-10-29",
+      "corporacion": "GOBERNACION",
+      "departamento_code": "17",
+      "departamento_name": "CHOCO",
+      "municipio_code": "010",
+      "municipio_name": "BAJO BAUDO (PIZARRO)",
+      "lugar": "PUESTO CABECERA MUNICIPAL",
+      "zona": "00",
+      "puesto": "00",
+      "mesa": "001"
+    },
+    "nivelacion": {
+      "total_sufragantes_e11": 198,
+      "total_votos_urna": 196,
+      "total_votos_incinerados": 0,
+      "confidence_sufragantes": 0.95,
+      "confidence_urna": 0.95,
+      "confidence_incinerados": null
+    },
+    "partidos": [
+      {
+        "party_code": "0001",
+        "party_name": "MARIO JAVIER MATURANA MORENO",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 2,
+        "votos_candidatos": [],
+        "total_votos": 2,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0002",
+        "party_name": "NUBIA CAROLINA CORDOBA CURI",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 46,
+        "votos_candidatos": [],
+        "total_votos": 46,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0003",
+        "party_name": "GILDER PALACIOS MOSQUERA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 4,
+        "votos_candidatos": [],
+        "total_votos": 4,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0004",
+        "party_name": "PATROCINIO SANCHEZ MONTES DE OCA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 138,
+        "votos_candidatos": [],
+        "total_votos": 138,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0005",
+        "party_name": "LUIS EMILIO ROMAÑA MOSQUERA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 3,
+        "votos_candidatos": [],
+        "total_votos": 3,
+        "confidence_total": 0.9,
+        "needs_review": false
+      }
+    ],
+    "votos_especiales": {
+      "votos_blanco": 2,
+      "votos_nulos": 1,
+      "votos_no_marcados": 0,
+      "confidence_blanco": 0.9,
+      "confidence_nulos": 0.9,
+      "confidence_no_marcados": 0.9
+    },
+    "constancias": {
+      "hubo_recuento": false,
+      "recuento_solicitado_por": null,
+      "recuento_en_representacion_de": null,
+      "otras_constancias": null,
+      "num_jurados_firmantes": 6,
+      "jurados_info": []
+    },
+    "overall_confidence": 0.92,
+    "fields_needing_review": 0,
+    "total_pages": 1,
+    "pages_processed": 1
+  },
+  "validation": {
+    "extraction_id": "811ff26e-bcaf-487e-a021-f064fff53366",
+    "mesa_id": "17-010-00-00-001",
+    "validated_at": "2026-01-23 17:17:39.304340",
+    "validations": [
+      {
+        "rule_id": "NIV_001",
+        "rule_name": "NIVELACION_SUFRAGANTES_VS_URNA",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Sufragantes E-11 (198) ≥ Votos urna (196)",
+        "expected_value": 198,
+        "actual_value": 196,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "SUM_001",
+        "rule_name": "SUMA_VOTOS_IGUAL_URNA",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Suma computada (196) = Urna (196). Delta: 0",
+        "expected_value": 196,
+        "actual_value": 196,
+        "delta": 0,
+        "details": {
+          "total_partidos": 193,
+          "votos_blanco": 2,
+          "votos_nulos": 1,
+          "votos_no_marcados": 0
+        }
+      },
+      {
+        "rule_id": "PARTY_0001",
+        "rule_name": "SUMA_PARTIDO_0001",
+        "passed": true,
+        "severity": "INFO",
+        "message": "MARIO JAVIER MATURANA MORENO: Agrupación + Candidatos (2) = Total (2)",
+        "expected_value": 2,
+        "actual_value": 2,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0002",
+        "rule_name": "SUMA_PARTIDO_0002",
+        "passed": true,
+        "severity": "INFO",
+        "message": "NUBIA CAROLINA CORDOBA CURI: Agrupación + Candidatos (46) = Total (46)",
+        "expected_value": 46,
+        "actual_value": 46,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0003",
+        "rule_name": "SUMA_PARTIDO_0003",
+        "passed": true,
+        "severity": "INFO",
+        "message": "GILDER PALACIOS MOSQUERA: Agrupación + Candidatos (4) = Total (4)",
+        "expected_value": 4,
+        "actual_value": 4,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0004",
+        "rule_name": "SUMA_PARTIDO_0004",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PATROCINIO SANCHEZ MONTES DE OCA: Agrupación + Candidatos (138) = Total (138)",
+        "expected_value": 138,
+        "actual_value": 138,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0005",
+        "rule_name": "SUMA_PARTIDO_0005",
+        "passed": true,
+        "severity": "INFO",
+        "message": "LUIS EMILIO ROMAÑA MOSQUERA: Agrupación + Candidatos (3) = Total (3)",
+        "expected_value": 3,
+        "actual_value": 3,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "EXCEED_001",
+        "rule_name": "VOTOS_NO_EXCEDEN_SUFRAGANTES",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Ningún partido excede sufragantes",
+        "expected_value": null,
+        "actual_value": null,
+        "delta": null,
+        "details": null
+      }
+    ],
+    "all_passed": true,
+    "critical_failures": 0,
+    "high_failures": 0,
+    "medium_failures": 0,
+    "low_failures": 0,
+    "alerts_generated": []
+  },
+  "metadata": {},
+  "ocr_success": true,
+  "ocr_error": null,
+  "processing_time_ms": 18024,
+  "created_at": "2026-01-23T17:17:39.304902",
+  "is_validated": false,
+  "is_corrected": false,
+  "corrections": []
+}

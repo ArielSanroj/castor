@@ -1,0 +1,79 @@
+{
+  "extraction_id": "cfe24be7",
+  "filename": "8707119_E14_SEN_X_01_001_001_XX_01_011_X_XXX (1).pdf",
+  "success": true,
+  "processing_time_ms": 28603,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "SEC. ESC. LA ESPERANZA NO 2",
+  "mesa": "011",
+  "partidos": [
+    {
+      "party_name": "ESPERANZA NO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "0013 PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "REGISTRADDRÍA",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO CAMBIO",
+      "party_code": "",
+      "votes": 3,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO INDÍGENA COLOMBIANO P.1.C i",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\" O",
+      "party_code": "",
+      "votes": 156,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 1747,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "mrBEER HH RE Y\nA e\n| 710594392010111 Ver. 01 Pag: 01 de 11 |\n| ACTA DE ESCRUTINIO DE LOS EA |\n| [=] ' [=] JURADOS DE VOTACION\n| e a ELECCIONES CONGRESO |\nre NT 13 DE MARZO DE 2022 ES\nMO Ad. SENADO\n| DEPARTAMENTO: 01 - ANTIOQUIA |\n| MUNICIPIO: 001 - MEDELLIN |\n| LUGAR: SEC. ESC. LA ESPERANZA NO 2\n| ZONA: 01 PUESTO: 01 MESA: 011 |\n| X 8-70-71-19 X |\nTOTAL TOTAL TOTAL\n| SUFRAGANTES VOTOS YOTOS\n| FORMATO E-+1 EN LA URNA | INCINERADOS |\n| CIRCUNSCRIPCIÓN NACIONAL\n| | | LISTA SIN VOTO PREFERENTE o\nj ES 0013 PARTIDO COMUNES\nO | VOTOS POR LA AGRUPACIÓN POLÍTICA | a\n| M No. Form: 59439 KIT 59,439 Crv1210424 Ml\n\n--- PAGE BREAK ---\nA no\n| 710594392010211 Ver: 01 Pag: 02 de 11 *\nACTA DE ESCRUTINIO DE LOS E-14 | |\n| O SEL % [a] JURADOS DE VOTACION |\nas UN\nbi) ELECCIONES CONGRESO\nUN ( ye, 13 DE MARZO DE 2022. ERE\nM0 Ls ci SENADO IÓ\n| MUNICIPIO: 001 - MEDELLIN 0\n| LUGAR: SEC. ESC. LA ESPERANZA NO 2 (\n| ZONA: 01 PUESTO: 01 MESA: 011 |\n| X 8-70-71-19 X |\no o LISTA CON VOTO PREFERENTE o\n| 0255 COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA | |\n| | OD y | o] | E | — VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\na o LA A IAAAÁ\nE E E O E a\no 0 e | | A\nO E E E E XEAO\nA 76 [— | |\na x ' | OS\nE y 4 mM - _—_———— E | | |\n12. TT NS\na | se | o A\n| 14 IT ar — 1 —_— |\n| 15 | O E CE |\n| A a o\n| Bo | : 5. es a | o\n0 IN A\n| 20 o a - 53 ————- Br —— (\nA:\n| O\n| 24 AA 57 AA a _ _—\nLo 50 | a _ |\n| E AAA A q ÁS | |\n28. A EIA - 95 | A E |\no PUE\n| 32 IS 65. TS PQ |\nE A A a\n! TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n! Ml No. Form. 59439 KIT 59 439 Civ1210425 MM |\n\n--- PAGE BREAK ---\nA e\n| 710594392010311 Ver 01 Pag: 03 de 11.\nACTA DE ESCRUTINIO DE LOS Ea |\n| [=] a 2 (1) JURADOS DE VOTACIÓN 0\nSA - ELECCIONES CONGRESO |\nA 13 DE MARZO DE 2022 :23- |\n[5] y ra REGISTRADDRÍA 1\nPI SENADO |\nI\nMUNICIPIO: 001 - MEDELLIN | 0\nLUGAR: SEC. ESC. LA ESPERANZA NO 2 |\nZONA: 01 PUESTO: 01 MESA: 011 !\nX 8-70-71-19 X |\n| EN LISTA CON VOTO PREFERENTE | A\n| 1140 FUERZA CIUDADANA LA FUERZA DEL CAMBIO | |\na MM y | A e VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA | |\n| A PON\n| o E a A\n. — ATA , | E |\nTT Z a — o Z _ ” 7\n| Y A AAA Ñ - |\n| A e | | > AAK<Á<XA\nA A A\n, | e |\n| 14. 46 TT 0 — o | |\n| 15 A 47 TT 81 ] A _ o: |\nA — e E > | |\n| A | o | o\n| 8 0 A | 0\na AT o A —ÁÓ\na a A\n| NN | AAA\n| a |\n| A > 90 l e - | |\n25 a $8 — __—_————— Mo _— Ñ | o\n| | A —— 92 Í_ |\n¡ (Lg EOI] A A A AAA o\nO 00 A\n| 31 AN |\n) TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS |\n¡\n| |\n| Mo soc: so0:> KIT 59,439 Civ12104265 Ml |\n\n--- PAGE BREAK ---\nA O .\n| 710594392010411 Ver: 01 Pag: 04 de 11 (\nACTA DE ESCRUTINIO DE LOS E-14 | |\nAE ocuamocenas, a\n| Aa” REGISTRADURÍA |\nlt SENADO e\n| |\nMUNICIPIO: 001 - MEDELLIN ;\nj LUGAR: SEC. ESC. LA ESPERANZA NO 2\n( ZONA: 01 PUESTO: 01 MESA: 011 |\n| X 8-70-71-19 X |\n| : LISTA CON VOTO PREFERENTE |\n| 0 << | 0003 - PARTIDO CAMBIO RADICAL o\n| 0 | » >» A == VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA Ne\n| o AááÁa ss QRO | A _—_—— A\nE — 36 —— 70 A ——\nAAA ATT A o\n5 a A\n6 Y Y A e > ——— — o\n7 A 4 A | 75 | A | ¡ NN\n8 > k | A 42 _—_— te LW |\n9 A A E > j | o\n| 10 » YX e O o\n11 E TO 79 A A\n12 AMIA 6 TT A A\n| 13 47 8 —\n| e ENANA. A ——Á |\nE OS 49. A |\n6 NN XA - o\nOS a | se | a\na CS | a OS 27 |\n2% AA Ñ —— _ | Ñ A\no A y AA — o\n| 2 | A 55 A | a | |\n24 A 58. > 8 | —_ . o\nO a SO AA\n| A A\na ———_—— 82 ————— y AX\n| 32 A 66 ss E\nES A 68 A y\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS |\n( | LISTA SIN VOTO PREFERENTE o\n| | (Sos 4073 TO SOS COLOMBIA. SECTOR ORGANIZADO DE LA\n0 VOTOS PORLA AGRUPACIÓN POLÍTICA a | |\n| | LISTA SIN VOTO PREFERENTE | o\n| EE 0019 PARTIDO NUEVO LIBERALISMO\n| 0 VOTOS POR LA AGRUPACIÓN POLÍTICA uml)\nMM ro romo KIT 59,439 civtzwos27 ME\n\n--- PAGE BREAK ---\nA O :\n| 710594392010511 Ver. 01 Pag: 05 de 11\n0 ACTA DE ESCRUTINIO DE LOS EA\nape. [mm] JURADOS DE VOTACIÓN\n04 DELEGADOS a\nELECCIONES CONGRESO\ne 2 Y 13 DE MARZO DE 2022 a\nEna Op REGISTRADURÍA\n— lml¡KMEE” SENADO IÓ\n| MUNICIPIO: 001 - MEDELLIN\n( LUGAR: SEC. ESC. LA ESPERANZA NO 2\n| ZONA: 01 PUESTO: 01 MESA: 011\nX 8-70-71-19 X\n| o LISTA SIN VOTO PREFERENTE o |\nhd 1130 ' ESTAMOS LISTAS COLOMBIA |\n( o | VOTOS POR LA AGRUPACIÓN POLÍTICA \"mmm\nps | LISTA SIN VOTO PREFERENTE\no Ka 1039 MOVIMIENTO UNITARIO METAPOLITICO |\n| | 0 VOTOS POR LA AGRUPACIÓN POLÍTICA o > ]\n| | | 0 LISTA CON VOTO PREFERENTE NN\no isa 0231 COALICIÓN MIRA - COLOMBIA JUSTA LIBRES |\n0 A | 2 «E VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\n| 2 As a 53 AAKX/A\n| E\n| a > A AAÁ\n| $ — O 2 A A |\n| a ÓN | y | o\n| | 8 TA 31 A 65 : Á—— |\n0 Y. AAA IN CI es ET |\n| 43 ——— 38: 7 a a | (\n| 14 po x Á 39 A . 75 e _——— | . (\nO Tn RA\n0 17 CIS 41 A — |\n| e o a a |\nA A IS\n| 21 - | _ | 49 | | | o 100 o \"E\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nCM rms KIT 59,439 civiz1o428 MM\n\n--- PAGE BREAK ---\nA LOL e\n0 710594392010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS E-14 |\nMos 0 JURADOS DE VOTACIÓN\nes Epa . ELECCIONES CONGRESO\n¿E Sr, sy 13 DE MARZO DE 2022 2\nO E a SENADO RÓS\nj MUNICIPIO: 001 - MEDELLIN\n| LUGAR: SEC. ESC. LA ESPERANZA NO 2\n| ZONA: 01 PUESTO: 01 MESA: 011\nX 8-70-71-19 X\n| LISTA CON VOTO PREFERENT",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

@@ -36,8 +36,8 @@ class ServiceClient:
 
         self.circuit_breaker = CircuitBreaker(
             failure_threshold=circuit_failure_threshold,
-            reset_timeout=circuit_reset_timeout,
-            expected_exceptions=(httpx.RequestError, httpx.HTTPStatusError)
+            recovery_timeout=circuit_reset_timeout,
+            expected_exception=Exception  # Catches all exceptions
         )
 
     def _should_retry(self, exception: Exception, attempt: int) -> bool:

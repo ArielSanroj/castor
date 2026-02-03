@@ -1,0 +1,58 @@
+{
+  "extraction_id": "eaa3f8a4",
+  "filename": "8874711_E14_SEN_X_01_001_001_XX_02_006_X_XXX (1).pdf",
+  "success": true,
+  "processing_time_ms": 25074,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "INST.EDUC, LA CANDELARIA",
+  "mesa": "006",
+  "partidos": [
+    {
+      "party_name": "EOAUCIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "LISTA CON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LAU\"",
+      "party_code": "",
+      "votes": 8,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "VOTOS NULOS",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 266,
+  "votos_blancos": 0,
+  "votos_nulos": 1,
+  "confidence": 0.95,
+  "raw_text": "- :\n710594702010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[mn] 2 , [a] JURADOS DE VOTACION\nEDESO DELEGADOS o\na E mo ELECCIONES CONGRESO od:\nI yr; o e\nA 13 DE MARZO DE 2022\ne REGISTRADURÍA\nO SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC, LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 006\nX 8-87-47-11 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA | INCINERADOS\nKEDAES 1/9 /2| —=[—=—\nCIRCUNSCRIPCIÓN NACIONAL\nA LISTA SIN VOTO PREFERENTE  —\nÍS] 0083 paro COMUNES\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA | a —|—-\n|\n|\nMO no. som: 59:70 KIT 59,470 civiza1137 MM\n\n--- PAGE BREAK ---\nA !\n710594702010211 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[0] ri [m] JURADOS DE VOTACION\n, a REGISTRADURÍA\nOe SENADO Arme\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 006\nX 8-87-47-11 X\na IISTACON VOTO PREFERENTE\n0255 [eoaución ALIANZA VERDE Y CENTRO ESPERANZA\no |—[—[2 ¡€ vorossoLOPORLA AGRUPACIÓN POLÍTICA -\n=== _ PA — ma ON e\n4 | 37 71 NN\n2 — 2\nSHA E\nOO\na 10 CO +\n40 loas po mo\n13 46 | 80\no | 47 81 o --\n17 — |5 84\nqa | 52 cd 86 lo\na lo los o 87 IN\n22 7 55 89 '\n> O — o E\n| 26 43 o cn o _ o ñ A\net o A o A — _\n30 97 o\n32 65 99 — yA\nTOTA! = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMo sor: soi KIT 59,470 cieizi113s MN\n\n--- PAGE BREAK ---\nAA o\n710594702010311 Ver: 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS\n[m] ippo JURADOS DE VOTACIÓN\ndE ELECCIONES CONGRESO\ne yal 13 DE MARZO DE 2022 sees\n: as REGISTRADURÍA ¡\n[ml SENADO IN\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC, LA CANDELARIA ¡\nZONA: 01 PUESTO: 02 MESA: 006 |\nX 8-87-47-11 X\nA — LISTA CON VOTO PREFERENTE\n1140 |ruenza CIUDADANA LA FUERZA DEL CAMBIO\no | == voTOSSOLOPORLA AGRUPACIÓN POLÍTICA\n4 o ] 35 o er | A\n7 40 y — 72 —\n9 42 NS\n10 do 17 o\n11 Po 45 78 NN\nCM ap. IN Ml\n15 47 91\n50 1] 83\n18 . 51 o 34 E\n19 > 52 BB E\n20 OS 53 | 96\n23 | 56 89\n25 JO 91\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMo rom: so<z0 KIT 59,470 civizaa1go MM\n\n--- PAGE BREAK ---\nA '\n710594702010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA\nbc [m1] JURADOS DE VOTACIÓN\nY y la REGISTRADURÍA\n[Sr SENADO ne co\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARÍA\nZONA: 01 PUESTO: 02 MESA: 006\nX 8-87-47-11 X\na. 7 LISTA CON VOTO PREFERENTE\n3 37 o ] 71 o o\n4 o y 38 o 72 o\n6 40 74 NN\nma =\n10 44 78\n11 o -— 45 -- o 79 NN\na E Ha\na | E - | ez\n16 50 394\n18 o JE 52 Ñ o 86 E\n19 Ñ 53 | o\nEo ES A o\n22 ] y | 56 o Í | a\n94 ol MN 58 o | ol 93. E\nE o O os\n30 ] 63 IN NN E\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n| O LISTA SIN VOTO PREFERENTE...\nLEN | 0019 raro NUEVO LIBERALISMO\n| o | vorosPORLAAGRUPACIÓN POLÍTICA — mmml-  [—] -[2|\nME o rom: s0s70 KIT 59,470 ciwizar1ao MM\n\n--- PAGE BREAK ---\n- y\n710594702010511 Ver 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS EA |\nod JURADOS DE VOTACIÓN\nMa\nci DELEGADOS\n\" sn + * Gita La -\nPi ii ELECCIONES CONGRESO ESPS\nSE a > 13 DE MARZO DE 2022 pes\n- AE REGISTRADURÍA\nOs SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 006\nX 8-87 -4d7-11 X\n_—o———————————— LISTASINVOTO PREFERENTE o\nha amo ESTAMOS LISTAS COLOMBIA\no 0 VOTOS POR LA AGRUPACIÓN POLÍTICA \"mmm ¡| —|2\nEEN 1039 | MOVIMIENTO UNITARIO METAPOLITICO\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA — md\nTITO TO TTTTCU O TUTTO TT LISTA CON VOTO PREFERENTE.\nri 0231 | COALICIÓN MIRA +» COLOMBIA JUSTA LIBRES\no |—t-| ul «Gan VOTOS SOLO PORLA AGRUPACIÓN POLÍTICA —\na ol | | se ||\nA E ho\nO sr | |\n6\n7 63\n8 65\n] 9 67\na 69 .\n| 17 41 79\n18 43 ] 81\n| 19 45 83\n| 20 47 90\na | | e Eon\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS —-|S\nMm rom: 50370 KIT 59,470 civiza1141 MM\n\n--- PAGE BREAK ---\nA :\n710594702010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[mz pm] JURADOS DE VOTACIÓN\nale Ab ELECCIONES CONGRESO\na 13 DE MARZO DE 2022 A\nTn; BEGISTRADURÍA\nOral SENADO\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 006\nX 8-87-47-11 X\n2.2 LISTA CON VOTO PREFERENTE\nZA 0001 [PARTIDO LIBERAL COLOMBIANO\nA ET e ==\no OS -e o\n5 TI 39\n6 4 73\n157 5N\nSEA\nJen\n14 48 81\nMoa 82 —\n17 51 84\n48 llos NN o 85 NN\n19 33 06\n22 88\n24 ] | 57 o 90\n| 25 | se A o\n| 28 67 94\n| 29 2 62 | 95 o\n31 o 97\na\na o A\nTOTAL. = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\no TT LISTA SIN VOTO PREFERENTE...\n1 | 1186 movmmenro GENTE NUEVA\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA — \"mo | [2\n7 —— \"LESTASIN VOTO PREFERENTE\nE e | MOVIMIENTO DE SALVACIÓN NACIONAL\n. 0 VOTOS POR LA AGRUPACIÓN POLÍTICA mal > AA\nA KIT 59,470 Civ1211142 Ml\n\n--- PAGE BREAK ---\nA '\n710594702010711 Ver. 01 Pag: 07 de 11\nACTA DE ESCRUTINIO DE LOS\n[m] is] JURADOS DE VOTACIÓN EA\na DELEGADOS )\n” APTA ELECCIONES CONGRESO\n\"gd Er 13 DE MARZO DE 2022 ,\nal REGISTRADURÍA\n[m]: AL sl SENADO MACIONAL DEL ESDLDO CIT\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC., LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 006\nX 8-87-47-11 X\n| AN LISTA CON VOTO PREFERENTE o]\n| EA 0011 | PARTIDO CENTRO DEMOCRÁTICO\n2 | 28 | 59 |\n3 ly 29 60\n, | o rar ON A |\no .—. .— 7 o. - .-L",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

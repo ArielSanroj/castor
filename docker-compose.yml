@@ -111,6 +111,12 @@ services:
     container_name: castor-dashboard
     ports:
       - "5003:5003"
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
     environment:
       - FLASK_ENV=${FLASK_ENV:-development}
       - DASHBOARD_DATABASE_URL=postgresql://castor:${POSTGRES_PASSWORD:-castor_dev}@postgres:5432/dashboard_db

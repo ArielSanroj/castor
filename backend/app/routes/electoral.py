@@ -253,6 +253,29 @@ def process_e14():
             validation_report=validation_report
         )
 
+        # =====================================================================
+        # INDEXAR E-14 EN RAG AUTOMÁTICAMENTE
+        # =====================================================================
+        try:
+            from services.rag_service import get_rag_service
+            rag = get_rag_service()
+            if rag:
+                # Convertir extraction a dict para indexar
+                extraction_dict = extraction.dict() if hasattr(extraction, 'dict') else extraction.model_dump()
+                docs_indexed = rag.index_e14_form(
+                    extraction_id=extraction.extraction_id,
+                    extraction_data=extraction_dict,
+                    metadata={
+                        "user_id": user_id,
+                        "source": "api_process",
+                        "validation_passed": validation_report.all_passed
+                    }
+                )
+                logger.info(f"E-14 {extraction.extraction_id} indexed to RAG: {docs_indexed} documents")
+        except Exception as rag_error:
+            # No fallar el request si RAG falla, solo loggear
+            logger.warning(f"Failed to index E-14 to RAG: {rag_error}")
+
         logger.info(f"E-14 processed successfully by user {user_id}: {extraction.extraction_id}")
         return jsonify(response.dict())
 
@@ -361,6 +384,28 @@ def process_e14_url():
             corporacion=corporacion,
             status="success"
         )
+
+        # =====================================================================
+        # INDEXAR E-14 EN RAG AUTOMÁTICAMENTE
+        # =====================================================================
+        rag_docs_indexed = 0
+        try:
+            from services.rag_service import get_rag_service
+            rag = get_rag_service()
+            if rag:
+                extraction_dict = extraction.dict() if hasattr(extraction, 'dict') else extraction.model_dump()
+                rag_docs_indexed = rag.index_e14_form(
+                    extraction_id=extraction.extraction_id,
+                    extraction_data=extraction_dict,
+                    metadata={
+                        "user_id": user_id,
+                        "source": "api_process_url",
+                        "validation_passed": validation_report.all_passed
+                    }
+                )
+                logger.info(f"E-14 {extraction.extraction_id} indexed to RAG: {rag_docs_indexed} documents")
+        except Exception as rag_error:
+            logger.warning(f"Failed to index E-14 to RAG: {rag_error}")
 
         # Respuesta simplificada
         return jsonify({

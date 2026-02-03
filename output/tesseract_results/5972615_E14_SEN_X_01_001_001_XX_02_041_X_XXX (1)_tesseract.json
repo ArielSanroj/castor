@@ -1,0 +1,72 @@
+{
+  "extraction_id": "c21f2a77",
+  "filename": "5972615_E14_SEN_X_01_001_001_XX_02_041_X_XXX (1).pdf",
+  "success": true,
+  "processing_time_ms": 28901,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "INST.EDUC. LA CANDELARIA",
+  "mesa": "041",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "LISTACON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 222,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "COMLCIN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "KISTACON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ATZA: 0001 PARTIDO LIBERAL COLOMBIANO",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MIRARE > A",
+      "party_code": "",
+      "votes": 5,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "LISTA CON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 500,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A '\n710595052010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA |\n[m]: E [m] JURADOS DE VOTACION\n\" pl\nal A Y DELEGADOS\n\" a E 1 ” ha A\npelas A. ELECCIONES CONGRESO\nA 13 DEMARZO DE 2022 ¡e\n: : E, in\nDORA SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 041\nX 5-97-26-15 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\no falrilaJ lr lrizlo o l=-i-!|\n\"LISTA SIN VOTO PREFERENTE — ]\n5] 0013 PARTIDO COMUNES\n( 0. | VOTOSPORLA AGRUPACIÓN POLÍTICA — ==) — | —\n'\nMi Ho. Form: 59505 KIT 59,505 Civ1211942 Ml\n\n--- PAGE BREAK ---\n- l\n710595052010211 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m]1 be [m1] JURADOS DE VOTACIÓN\nmara .\ner Er]! ELECCIONES CONGRESO\npur FA 13 DE MARZO DE 2022 2\n= 2 REGISTRADURÍA\nOA: SENADO aero\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 041\nX 5-97-26-15 X\nSa LISTACON VOTO PREFERENTE 222\n| 0255 | ComLcIn ALIANZA VERDE Y CENTRO ESPERANZA\nA Im i— 1] ASES a\n2 O O — — 69 —i]\n3 | | 7 As\n| 4 —- _ | 71 — US\n| E ls _— 7 — |— —\n| NN — | 30 Al — 74 —|—¡\nA Sep EEE\n| 9 TR pp —\n| 10 —l 33 | —l 7 —\n| 11 1 44 — | — | 78 — |\n| 12 | — | 45 — ll 79 ES —\n| 13 |— — | 46 E —|| 80 [— || —\n14 |— —il 47 — ll sa [||\n15 los [—Ii=] | s |—|-—\n| IP SS O ss |—|[—| —\nO a E E\nO O A E A O E O E E\nO s |—|—=|—| 86 |—|—1-—\nil s | - ca [|| —\nER lo | —!| 59 5 88\na SS a [||\n2 | == pl E ¡O El El E\n24 ll |— —|i—i—[| a\n26 ||| — _— ——| 9 TL] |\n2 ¡| —| 06 || de — [==\na —|= |. 62 LT Es A —Á —\n3 —li-il=i e lol ll 97 ¡—\nSEA ERA SEE\nCo AE\n3 TI—=|—l 6 P—I—|— [| 100 ||| p\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMb rom: 59505 KIT 59,505 ciizitosa MM\n\n--- PAGE BREAK ---\na '\n£10995052010311 Ver. 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS EA\nCler E [m] JURADOS DE VOTACION\nSd Mel, ELECCIONES CONGRESO 25\nA EC Ll Pd SENADO e\nMUNICIPIO: 001 - MEDELLIN\n| LUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 041\nX 5-97-26-15 X\n| a As LISTA CON VOTO PREFERENTE. _____—\n| al 1140 FUERZA CIUDADANA LA FUERZA DEL CAMBIO\nTA —| «uu VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\na [IT] BBB: = Y\nBRA\n| 3 | 66 —i—|—|\nol\n5 ml 37 69 =\nCREA\npola |=|=i- ES\n0 a l-|-!-— 4 76\n| a |—-|—|—-I a 7\n11 =I=|—= | 3 _ 78\n| 42 Iii ss l- mm |-\n| 1 |-|— 46 30\nfs: mE\n| 46 | q 48 E 82 | —\n| a I= tz a oi 84\n| 19 |=!Ii=|—i 5 — as |-— =\noa [||| ss = [0 TEE\nA — 5 — — a7 |— —\ny EE ss | Sas\n23 — [io 56 A 89 ==\n24 |— — 57 — — | 90 |—-\n25 + 58 E llos | —\nTa TATI E e\nmol e Tes ==\n302 |[=|-=|- | 6 — |- — 10 ]|— — |\n¡ a [| i=I|—=!I e —= ||\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n| Ml Na. Form: 59505 KIT 59,505 Civi211944 Ml\n\n--- PAGE BREAK ---\n- :\n710595052010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EXA |\n[u]: al [um] JURADOS DE VOTACIÓN\nE == ACT pS ELECCIONES CONGRESO o:\nE mn, WI 13 DE MARZO DE 2022\nA Cl [ers mr SENADO\n| DEPARTAMENTO: 01 - ANTIOQUIA\n| MUNICIPIO: 001 - MEDELLIN\n| LUGAR: INST.EDUC., LA CANDELARIA\n| ZONA: 01 PUESTO: 02 MESA: 041\n0 X 5-97-26-15 A\nTL KISTACON VOTO PREFERENTE 2\n| ¡ ES 0003 | PARTIDO CAMBIO RADICAL\nÑ Ely 8 | ss Ea MS -]- —\n5 |= lolo | | Bl]\ni 6 A - 40 E — | E 74 |— 5 E\n| 7 Ao ela m5 ll j|-\n| 8 —=|= | -l 43 |— o A O ES\na [—I— pd pp 4 E 18 | |-\n| O 45 7 = lv lili\n| 12 TT —| | 46 lll sa la 1\n13 | | - | 47 - —i =|| 81 ¡ |\nO il a 49 E == e |||\nA E | il ES O 217\n8 | =¡=>|—|j 52 aan 0 as\nZ0 -— — ES 9 = o. , 88 A nn a,\nCREER 3 z A ==>\nlaa | | — 58 - a q. => z\n26 E Papa l— Z — 94 | ¡|\n: 27 HA so | |—i 95 E\n28  ¡— 4 Zi | | —|¡— -\n: 29 an o E il Mi\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS 13\npl PO TT TO TT LISTA SIN VOTO PREFERENTE\n: | | (sos a e eo ORGANIZADO DE LA |\n; | OD |  VOTOSPORLA AGRUPACIÓN POLÍTICA — \"um\nfi | | (== 0019 | PARTIDO NUEVO LIBERALISMO |\nln A KIT 59,505 Civ1211945 mM\n\n--- PAGE BREAK ---\n-—- '\n\n710595052010511 Ver. 01 Pag: 05 de 11\n\nAGTA DE ESCRUTINIO DE LOS EA\n\n331] JURADOS DE VOTACIÓN\n\n\"4 LJ\"\na DELEGADOS A\nIA CDGE ELECCIONES CONGRESO ESes\nMi a AL 13 DE MARZO DE 2022 te\nala as REGISTRADURÍA\n: AM SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 041\nXA 5-»-97-26-15 X\n\nMÉ oo —..LISTASIN VOTO PREFERENTE\n\noa lao | esranos LISTAS COLOMBIA\n\nNS | VOTOS POR LA AGRUPACIÓN POLÍTICA PS\n\nLboooo_ LISTASINVOTO PREFERENTE\n\nLe 1039 | MOVIMIENTO UNITARIO METAPOLjTICO\n] 9 |  VOTOSPORLA AGRUPACIÓN POLÍTICA md»\npoo  LISTACONVOTOPREFERENTE__ 2\nmais COALICIÓN MIRA - COLOMBIA JUSTA LIBRES\n0 — | — \"7 | «quee VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\n\n4 | — ill o =P oa ||\n\nE O O PO LL |\n3 Il=|—|*“ 28 ||| 55 _  —\n\n4 «| => 26 da E e EOS 97 8 OS\n5 ar A 2 LL ¡—]i— 59 => —\n\np -— xn. —- ——Á — —. o —_—_ cr —\n\n1.6 le |—i-_l 2 |i| ll 5 |-— —\n\nE O O 30 |[—|—|] sa |—\nepa Ele]\nII NN 68 | —l\nMi as mm [| |—\n12 — | 37 =il— | an loli\n13 UIT TETERA TZ\nA 3 il=|ll 3 |. —\n15 || — sw I—i=i=ll 7 Il-|-\n00 Ml | ICI o E IS\n8 [== —=l[l a ¡—=[= —| um | |-\n\n19 | |— as ic l—=l as | |\n20 — a il i=l|l 9 |_i— |\n21 — | —j lo 49 ||| 100 _ lo |\n22 |— =7 sa |l—|l= | o\nTOTAL = VOTOS AG",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

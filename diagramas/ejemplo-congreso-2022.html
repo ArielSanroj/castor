@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test OCR - Congreso 2022</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); min-height: 100vh; color: #fff; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        header { text-align: center; padding: 40px 20px; background: rgba(255,255,255,0.05); border-radius: 20px; margin-bottom: 30px; }
+        h1 { font-size: 2.5em; background: linear-gradient(90deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+        .subtitle { color: #888; font-size: 1.1em; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: rgba(255,255,255,0.08); border-radius: 15px; padding: 25px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .stat-value { font-size: 2.5em; font-weight: bold; color: #00d4ff; }
+        .stat-label { color: #888; margin-top: 5px; }
+        .section { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 30px; margin-bottom: 30px; }
+        .section-title { font-size: 1.5em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
+        .badge { background: #7c3aed; padding: 5px 15px; border-radius: 20px; font-size: 0.7em; }
+        .badge.camara { background: #0891b2; }
+        .badge.senado { background: #7c3aed; }
+        .result-card { background: rgba(0,0,0,0.3); border-radius: 15px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #00d4ff; }
+        .result-card.error { border-left-color: #ef4444; }
+        .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .result-filename { font-weight: bold; font-size: 1.2em; }
+        .result-meta { display: flex; gap: 15px; color: #888; font-size: 0.9em; flex-wrap: wrap; }
+        .data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .data-section { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; }
+        .data-section h4 { color: #00d4ff; margin-bottom: 10px; font-size: 0.9em; text-transform: uppercase; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: #888; font-weight: normal; }
+        .partido-row { background: rgba(255,255,255,0.03); }
+        .partido-name { font-weight: bold; }
+        .votos { font-weight: bold; color: #10b981; font-size: 1.1em; }
+        .confidence { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; }
+        .confidence.high { background: #10b981; color: #fff; }
+        .confidence.medium { background: #f59e0b; color: #000; }
+        .confidence.low { background: #ef4444; color: #fff; }
+        .candidatos-list { margin-left: 20px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-top: 10px; }
+        .candidato { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .candidato:last-child { border-bottom: none; }
+        .error-msg { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; border-radius: 10px; padding: 15px; color: #fca5a5; }
+        .timestamp { text-align: center; color: #666; margin-top: 30px; font-size: 0.9em; }
+        .expand-btn { background: rgba(255,255,255,0.1); border: none; color: #fff; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 0.8em; }
+        .expand-btn:hover { background: rgba(255,255,255,0.2); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Test OCR - Congreso 2022</h1>
+            <p class="subtitle">Procesamiento de Formularios E-14 con Claude Vision</p>
+        </header>
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-value">12</div><div class="stat-label">PDFs Procesados</div></div>
+            <div class="stat-card"><div class="stat-value">12</div><div class="stat-label">Exitosos</div></div>
+            <div class="stat-card"><div class="stat-value">172,933</div><div class="stat-label">Tokens Totales</div></div>
+            <div class="stat-card"><div class="stat-value">$0.86</div><div class="stat-label">Costo Total USD</div></div>
+        </div>
+<div class="section"><h2 class="section-title"><span class="badge camara">CÁMARA</span>Formularios E-14 Cámara de Representantes</h2>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">camara.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 9 páginas</span>
+                        <span>⏱ 77.79s</span>
+                        <span>🔢 13,097 tokens</span>
+                        <span>💰 $0.0705</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>27 - SANTANDER</td></tr>
+                            <tr><th>Municipio</th><td>001 - BUCARAMANGA</td></tr>
+                            <tr><th>Puesto</th><td>IE MAIPORÉ SEDE B</td></tr>
+                            <tr><th>Mesa</th><td>004</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">205</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">206</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>9</td></tr>
+                            <tr><th>Votos Nulos</th><td>6</td></tr>
+                            <tr><th>No Marcados</th><td>3</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>19</td></tr>
+                            <tr><th>Candidatos</th><td>42</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">85%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (19 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0282</td>
+                                <td class="partido-name">COALICIÓN CENTRO ESPERANZA</td>
+                                <td class="votos">112</td>
+                                <td><span class="confidence high">80%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_0')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_0" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO SALVACIÓN NACIONAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0290</td>
+                                <td class="partido-name">PACTO HISTÓRICO</td>
+                                <td class="votos">120</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRÁTICO</td>
+                                <td class="votos">114</td>
+                                <td><span class="confidence high">80%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_4')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_4" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">114</td>
+                                <td><span class="confidence high">80%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_5')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_5" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">5</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1076</td>
+                                <td class="partido-name">LIGA DE GOBERNANTES ANTICORRUPCIÓN</td>
+                                <td class="votos">164</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0281</td>
+                                <td class="partido-name">COALICIÓN PARTIDOS CAMBIO RADICAL - COLOMBIA JUSTA</td>
+                                <td class="votos">112</td>
+                                <td><span class="confidence high">80%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_7')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_7" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">8</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">136</td>
+                                <td><span class="confidence high">80%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_8')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">18</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">8</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">10</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0004</td>
+                                <td class="partido-name">PARTIDO ALIANZA VERDE</td>
+                                <td class="votos">120</td>
+                                <td><span class="confidence high">80%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_9')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_9" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0167</td>
+                                <td class="partido-name">ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍ</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_10')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_10" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0185</td>
+                                <td class="partido-name">MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA AICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_11')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_11" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#205 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#206 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0183</td>
+                                <td class="partido-name">CABILDO INDÍGENA AYAWASHI</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_12')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_12" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0182</td>
+                                <td class="partido-name">RESGUARDO INDÍGENA ZENÚ DEL ALTO SAN JORGE</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0168</td>
+                                <td class="partido-name">RESGUARDO INDÍGENA ALTA Y MEDIA GUAJIRA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0156</td>
+                                <td class="partido-name">MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL MAIS</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_15')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_15" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#205 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#206 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0177</td>
+                                <td class="partido-name">PARTIDO INDÍGENA COLOMBIANO P.I.C</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_16')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_16" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0157</td>
+                                <td class="partido-name">CONSEJO COMUNITARIO MAYOR DE CASIMIRO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara_pdf_17')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara_pdf_17" class="candidatos-list hidden"><div class="candidato"><span>#301 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#302 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#303 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0102</td>
+                                <td class="partido-name">SOMOS IDENTIDAD</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+</tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">camara2.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 9 páginas</span>
+                        <span>⏱ 79.75s</span>
+                        <span>🔢 13,156 tokens</span>
+                        <span>💰 $0.0701</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>27 - SANTANDER</td></tr>
+                            <tr><th>Municipio</th><td>001 - BUCARAMANGA</td></tr>
+                            <tr><th>Puesto</th><td>IE MAIPORÉ SEDE B</td></tr>
+                            <tr><th>Mesa</th><td>010</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">189</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">188</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>7</td></tr>
+                            <tr><th>Votos Nulos</th><td>3</td></tr>
+                            <tr><th>No Marcados</th><td>1</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>20</td></tr>
+                            <tr><th>Candidatos</th><td>40</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">90%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (20 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0282</td>
+                                <td class="partido-name">COALICIÓN CENTRO ESPERANZA</td>
+                                <td class="votos">9</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_0')">Ver 6</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_0" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACIÓN NACIONAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0290</td>
+                                <td class="partido-name">PACTO HISTÓRICO</td>
+                                <td class="votos">8</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRÁTICO</td>
+                                <td class="votos">19</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_4')">Ver 6</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_4" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">8</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">16</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_5')">Ver 6</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_5" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">8</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1076</td>
+                                <td class="partido-name">LIGA DE GOBERNANTES ANTICORRUPCIÓN</td>
+                                <td class="votos">54</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0281</td>
+                                <td class="partido-name">COALICIÓN PARTIDOS CAMBIO RADICAL - COLOMBIA JUSTA</td>
+                                <td class="votos">7</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_7')">Ver 6</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_7" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">47</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_8')">Ver 6</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">24</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">19</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0004</td>
+                                <td class="partido-name">PARTIDO ALIANZA VERDE</td>
+                                <td class="votos">23</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_9')">Ver 5</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_9" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">7</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">8</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0167</td>
+                                <td class="partido-name">ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍ</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_10')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_10" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0186</td>
+                                <td class="partido-name">MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA 'AICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_11')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_11" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#205 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#206 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0183</td>
+                                <td class="partido-name">CABILDO INDÍGENA AWAGUASHI</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_12')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_12" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0182</td>
+                                <td class="partido-name">RESGUARDO INDÍGENA ZENÚ DEL ALTO SAN JORGE</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0168</td>
+                                <td class="partido-name">RESGUARDO INDÍGENA ALTA Y MEDIA GUAJIRA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0156</td>
+                                <td class="partido-name">MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL 'MAIS'</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_15')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_15" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#205 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#206 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0177</td>
+                                <td class="partido-name">PARTIDO INDÍGENA COLOMBIANO P.I.C</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_16')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_16" class="candidatos-list hidden"><div class="candidato"><span>#204 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0157</td>
+                                <td class="partido-name">CONSEJO COMUNITARIO MAYOR DE CASIMIRO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara2_pdf_17')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara2_pdf_17" class="candidatos-list hidden"><div class="candidato"><span>#301 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#302 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#303 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0102</td>
+                                <td class="partido-name">SOMOS IDENTIDAD</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0097</td>
+                                <td class="partido-name">CONSEJO COMUNITARIO DE LA COMUNIDAD NEGRA LIMONES</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+</tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">camara3.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 9 páginas</span>
+                        <span>⏱ 68.88s</span>
+                        <span>🔢 12,360 tokens</span>
+                        <span>💰 $0.0575</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>27 - SANTANDER</td></tr>
+                            <tr><th>Municipio</th><td>064 - CHARTA</td></tr>
+                            <tr><th>Puesto</th><td>PUESTO CABECERA MUNICIPAL</td></tr>
+                            <tr><th>Mesa</th><td>004</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">204</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">204</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>43</td></tr>
+                            <tr><th>Votos Nulos</th><td>49</td></tr>
+                            <tr><th>No Marcados</th><td>41</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>10</td></tr>
+                            <tr><th>Candidatos</th><td>28</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">85%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (10 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0282</td>
+                                <td class="partido-name">COALICIÓN CENTRO ESPERANZA</td>
+                                <td class="votos">4</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara3_pdf_0')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara3_pdf_0" class="candidatos-list hidden"><div class="candidato"><span>#104 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACIÓN NACIONAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0290</td>
+                                <td class="partido-name">PACTO HISTÓRICO</td>
+                                <td class="votos">6</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRÁTICO</td>
+                                <td class="votos">18</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara3_pdf_4')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara3_pdf_4" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">9</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">5</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">46</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara3_pdf_5')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara3_pdf_5" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">50</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">44</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">18</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1076</td>
+                                <td class="partido-name">LIGA DE GOBERNANTES ANTICORRUPCIÓN</td>
+                                <td class="votos">17</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0281</td>
+                                <td class="partido-name">COALICIÓN PARTIDOS CAMBIO RADICAL - COLOMBIA JUSTA</td>
+                                <td class="votos">31</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara3_pdf_7')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara3_pdf_7" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">8</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">31</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">63</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara3_pdf_8')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara3_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">12</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">49</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0004</td>
+                                <td class="partido-name">PARTIDO ALIANZA VERDE</td>
+                                <td class="votos">45</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara3_pdf_9')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara3_pdf_9" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#105 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#106 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#107 N/A</span><span class="votos">0</span></div></div></td></tr></tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">camara4.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 9 páginas</span>
+                        <span>⏱ 67.59s</span>
+                        <span>🔢 11,916 tokens</span>
+                        <span>💰 $0.0515</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>19 - HUILA</td></tr>
+                            <tr><th>Municipio</th><td>001 - NEIVA</td></tr>
+                            <tr><th>Puesto</th><td>I.E. PROMOCION SOCIAL</td></tr>
+                            <tr><th>Mesa</th><td>006</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">248</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">246</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>20</td></tr>
+                            <tr><th>Votos Nulos</th><td>6</td></tr>
+                            <tr><th>No Marcados</th><td>0</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>9</td></tr>
+                            <tr><th>Candidatos</th><td>17</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">90%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (9 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0003</td>
+                                <td class="partido-name">PARTIDO CAMBIO RADICAL</td>
+                                <td class="votos">42</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara4_pdf_0')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara4_pdf_0" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">26</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">5</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0290</td>
+                                <td class="partido-name">PACTO HISTORICO</td>
+                                <td class="votos">95</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara4_pdf_1')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara4_pdf_1" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">47</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">14</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">17</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0007</td>
+                                <td class="partido-name">PARTIDO POLITICO MIRA</td>
+                                <td class="votos">7</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara4_pdf_2')">Ver 2</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara4_pdf_2" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0019</td>
+                                <td class="partido-name">PARTIDO NUEVO LIBERALISMO</td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">60</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara4_pdf_4')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara4_pdf_4" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">17</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">15</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0257</td>
+                                <td class="partido-name">COALICION CENTRO ESPERANZA</td>
+                                <td class="votos">14</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara4_pdf_5')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara4_pdf_5" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">23</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara4_pdf_6')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara4_pdf_6" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">13</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">5</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACION NACIONAL</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRATICO</td>
+                                <td class="votos">15</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_camara4_pdf_8')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_camara4_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#101 N/A</span><span class="votos">9</span></div><div class="candidato"><span>#102 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#103 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#104 N/A</span><span class="votos">1</span></div></div></td></tr></tbody></table></div></div></div><div class="section"><h2 class="section-title"><span class="badge senado">SENADO</span>Formularios E-14 Senado de la República</h2>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">senado1.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 11 páginas</span>
+                        <span>⏱ 74.63s</span>
+                        <span>🔢 15,159 tokens</span>
+                        <span>💰 $0.0689</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>01 - ANTIOQUIA</td></tr>
+                            <tr><th>Municipio</th><td>001 - MEDELLIN</td></tr>
+                            <tr><th>Puesto</th><td>ESC. LA ESPERANZA NO 2</td></tr>
+                            <tr><th>Mesa</th><td>001</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">90</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">90</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>4</td></tr>
+                            <tr><th>Votos Nulos</th><td>9</td></tr>
+                            <tr><th>No Marcados</th><td>17</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>25</td></tr>
+                            <tr><th>Candidatos</th><td>0</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">92%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (25 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0259</td>
+                                <td class="partido-name">COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1140</td>
+                                <td class="partido-name">FUERZA CIUDADANA LA FUERZA DEL CAMBIO</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0003</td>
+                                <td class="partido-name">PARTIDO CAMBIO RADICAL</td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1073</td>
+                                <td class="partido-name">MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD </td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0019</td>
+                                <td class="partido-name">PARTIDO NUEVO LIBERALISMO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1130</td>
+                                <td class="partido-name">ESTAMOS LISTAS COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1039</td>
+                                <td class="partido-name">MOVIMIENTO UNITARIO METROPOLITICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0231</td>
+                                <td class="partido-name">COALICIÓN MIRA - COLOMBIA JUSTA LIBRES</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1186</td>
+                                <td class="partido-name">MOVIMIENTO GENTE NUEVA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACIÓN NACIONAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRÁTICO</td>
+                                <td class="votos">8</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">16</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0008</td>
+                                <td class="partido-name">PARTIDO DE LA UNIÓN POR LA GENTE "PARTIDO DE LA U"</td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0292</td>
+                                <td class="partido-name">PACTO HISTÓRICO</td>
+                                <td class="votos">10</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0184</td>
+                                <td class="partido-name">ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0151</td>
+                                <td class="partido-name">DEMOCRACIA DESDE ABAJO LA PALMA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0177</td>
+                                <td class="partido-name">PARTIDO INDÍGENA COLOMBIANO P.I.C</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0156</td>
+                                <td class="partido-name">MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL "MAIS"</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+</tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">senado2.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 11 páginas</span>
+                        <span>⏱ 109.91s</span>
+                        <span>🔢 15,230 tokens</span>
+                        <span>💰 $0.0767</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>16 - BOGOTA D.C.</td></tr>
+                            <tr><th>Municipio</th><td>001 - BOGOTA. D.C.</td></tr>
+                            <tr><th>Puesto</th><td>USAQUEN</td></tr>
+                            <tr><th>Mesa</th><td>001</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">134</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">134</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>4</td></tr>
+                            <tr><th>Votos Nulos</th><td>1</td></tr>
+                            <tr><th>No Marcados</th><td>3</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>24</td></tr>
+                            <tr><th>Candidatos</th><td>30</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">85%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (25 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0255</td>
+                                <td class="partido-name">COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">80%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado2_pdf_1')">Ver 9</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado2_pdf_1" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#2 N/A</span><span class="votos">0</span></div><div class="candidato"><span>#6 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#11 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#14 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#18 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#29 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#69 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1140</td>
+                                <td class="partido-name">FUERZA CIUDADANA LA FUERZA DEL CAMBIO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado2_pdf_2')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado2_pdf_2" class="candidatos-list hidden"><div class="candidato"><span>#22 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0003</td>
+                                <td class="partido-name">PARTIDO CAMBIO RADICAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado2_pdf_3')">Ver 2</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado2_pdf_3" class="candidatos-list hidden"><div class="candidato"><span>#0 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#12 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1073</td>
+                                <td class="partido-name">MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD </td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0018</td>
+                                <td class="partido-name">PARTIDO NUEVO LIBERALISMO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1130</td>
+                                <td class="partido-name">ESTAMOS LISTAS COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1039</td>
+                                <td class="partido-name">MOVIMIENTO UNITARIO METAPOLITICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0231</td>
+                                <td class="partido-name">COALICIÓN MIRA - COLOMBIA JUSTA LIBRES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado2_pdf_8')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado2_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#7 N/A</span><span class="votos">4</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado2_pdf_9')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado2_pdf_9" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#3 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#22 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#78 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1185</td>
+                                <td class="partido-name">MOVIMIENTO GENTE NUEVA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACIÓN NACIONAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRATICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">80%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado2_pdf_12')">Ver 11</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado2_pdf_12" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">23</span></div><div class="candidato"><span>#10 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#11 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#13 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#26 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#36 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#40 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#48 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#50 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#55 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#100 N/A</span><span class="votos">6</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0008</td>
+                                <td class="partido-name">PARTIDO DE LA UNIÓN POR LA GENTE "PARTIDO DE LA U"</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado2_pdf_14')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado2_pdf_14" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#13 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#70 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0292</td>
+                                <td class="partido-name">PACTO HISTÓRICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0184</td>
+                                <td class="partido-name">ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0151</td>
+                                <td class="partido-name">DEMOCRACIA DESDE ABAJO LA PALMA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0177</td>
+                                <td class="partido-name">PARTIDO INDÍGENA COLOMBIANO P.I.C</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0156</td>
+                                <td class="partido-name">MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL "MAIS"</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+</tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">senado3.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 11 páginas</span>
+                        <span>⏱ 111.74s</span>
+                        <span>🔢 15,233 tokens</span>
+                        <span>💰 $0.0733</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>BOGOTÁ D.C.</td></tr>
+                            <tr><th>Municipio</th><td>BOGOTÁ D.C.</td></tr>
+                            <tr><th>Puesto</th><td>USAQUÉN</td></tr>
+                            <tr><th>Mesa</th><td>054</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">812</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">801</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>13</td></tr>
+                            <tr><th>Votos Nulos</th><td>0</td></tr>
+                            <tr><th>No Marcados</th><td>0</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>25</td></tr>
+                            <tr><th>Candidatos</th><td>21</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">89%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (25 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0255</td>
+                                <td class="partido-name">COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado3_pdf_1')">Ver 11</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado3_pdf_1" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#2 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#9 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#10 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#11 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#14 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#30 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#42 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#54 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#55 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#100 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1140</td>
+                                <td class="partido-name">FUERZA CIUDADANA LA FUERZA DEL CAMBIO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado3_pdf_2')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado3_pdf_2" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">4</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0003</td>
+                                <td class="partido-name">PARTIDO CAMBIO RADICAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado3_pdf_3')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado3_pdf_3" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1073</td>
+                                <td class="partido-name">MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD </td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0019</td>
+                                <td class="partido-name">PARTIDO NUEVO LIBERALISMO</td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1130</td>
+                                <td class="partido-name">ESTAMOS LISTAS DIGNIDAD Y COMPROMISO</td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1039</td>
+                                <td class="partido-name">MOVIMIENTO UNITARIO METAPOLITICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0231</td>
+                                <td class="partido-name">COALICIÓN MIRA - COLOMBIA JUSTA LIBRES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado3_pdf_8')">Ver 2</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado3_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#5 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#10 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado3_pdf_9')">Ver 2</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado3_pdf_9" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#4 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1186</td>
+                                <td class="partido-name">MOVIMIENTO GENTE NUEVA</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACIÓN NACIONAL</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRÁTICO</td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado3_pdf_12')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado3_pdf_12" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">4</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado3_pdf_13')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado3_pdf_13" class="candidatos-list hidden"><div class="candidato"><span>#6 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#14 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#24 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0008</td>
+                                <td class="partido-name">PARTIDO DE LA UNIÓN POR LA GENTE "PARTIDO DE LA U"</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado3_pdf_14')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado3_pdf_14" class="candidatos-list hidden"><div class="candidato"><span>#2 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0292</td>
+                                <td class="partido-name">PACTO HISTÓRICO</td>
+                                <td class="votos">16</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0184</td>
+                                <td class="partido-name">ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0151</td>
+                                <td class="partido-name">DEMOCRACIA DESDE ABAJO LA PALMA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0177</td>
+                                <td class="partido-name">PARTIDO INDÍGENA COLOMBIANO P.I.C</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0156</td>
+                                <td class="partido-name">MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL "MAIS"</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+</tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">senado4.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 11 páginas</span>
+                        <span>⏱ 107.33s</span>
+                        <span>🔢 16,278 tokens</span>
+                        <span>💰 $0.0924</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>44 - CAQUETA</td></tr>
+                            <tr><th>Municipio</th><td>001 - FLORENCIA</td></tr>
+                            <tr><th>Puesto</th><td>I.E. JUAN BAUTISTA LA SALLE</td></tr>
+                            <tr><th>Mesa</th><td>006</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">196</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">196</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>11</td></tr>
+                            <tr><th>Votos Nulos</th><td>10</td></tr>
+                            <tr><th>No Marcados</th><td>12</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>25</td></tr>
+                            <tr><th>Candidatos</th><td>56</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">90%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (25 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNOS</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_0')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_0" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0255</td>
+                                <td class="partido-name">COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA</td>
+                                <td class="votos">20</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_1')">Ver 8</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_1" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#2 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#10 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#18 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#20 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#23 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#26 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1140</td>
+                                <td class="partido-name">FUERZA CIUDADANA Y LA FUERZA DEL CAMBIO</td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_2')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_2" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0003</td>
+                                <td class="partido-name">PARTIDO CAMBIO RADICAL</td>
+                                <td class="votos">19</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_3')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_3" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#5 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#9 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#10 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#30 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#31 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1073</td>
+                                <td class="partido-name">MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD </td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_4')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_4" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0019</td>
+                                <td class="partido-name">PARTIDO NUEVO LIBERALISMO</td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_5')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_5" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1130</td>
+                                <td class="partido-name">ESTAMOS LISTAS COLOMBIA</td>
+                                <td class="votos">4</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_6')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_6" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">4</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1039</td>
+                                <td class="partido-name">MOVIMIENTO UNITARIO METAPOLÍTICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_7')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_7" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0231</td>
+                                <td class="partido-name">COALICIÓN MIRA - COLOMBIA JUSTA LIBRES</td>
+                                <td class="votos">7</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_8')">Ver 2</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#4 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">16</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_9')">Ver 8</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_9" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#4 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#9 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#10 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#13 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#17 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#21 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#34 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1186</td>
+                                <td class="partido-name">MOVIMIENTO GENTE NUEVA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_10')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_10" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACIÓN NACIONAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_11')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_11" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRÁTICO</td>
+                                <td class="votos">24</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_12')">Ver 9</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_12" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">3</span></div><div class="candidato"><span>#1 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#4 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#6 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#12 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#15 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#20 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#28 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">26</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_13')">Ver 14</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_13" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">4</span></div><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#3 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#5 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#6 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#9 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#10 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#11 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#12 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#13 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#15 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#25 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#27 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0008</td>
+                                <td class="partido-name">PARTIDO DE LA UNIÓN POR LA GENTE 'PARTIDO DE LA U'</td>
+                                <td class="votos">4</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_14')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_14" class="candidatos-list hidden"><div class="candidato"><span>#15 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#19 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#33 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1292</td>
+                                <td class="partido-name">PACTO HISTÓRICO</td>
+                                <td class="votos">16</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_15')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_15" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">16</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0184</td>
+                                <td class="partido-name">ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_16')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_16" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0151</td>
+                                <td class="partido-name">DEMOCRACIA DESDE ABAJO LA PALMA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_17')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_17" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0177</td>
+                                <td class="partido-name">PARTIDO INDÍGENA COLOMBIANO P.I.C</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_18')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_18" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">0</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0156</td>
+                                <td class="partido-name">MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL 'MAIS'</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado4_pdf_19')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado4_pdf_19" class="candidatos-list hidden"><div class="candidato"><span>#0 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA</span><span class="votos">0</span></div></div></td></tr></tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">senado6.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 11 páginas</span>
+                        <span>⏱ 128.06s</span>
+                        <span>🔢 15,705 tokens</span>
+                        <span>💰 $0.0824</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>44 - CAQUETA</td></tr>
+                            <tr><th>Municipio</th><td>001 - FLORENCIA</td></tr>
+                            <tr><th>Puesto</th><td>I.E. JUAN BAUTISTA LA SALLE</td></tr>
+                            <tr><th>Mesa</th><td>003</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">181</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">181</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>21</td></tr>
+                            <tr><th>Votos Nulos</th><td>2</td></tr>
+                            <tr><th>No Marcados</th><td>8</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>24</td></tr>
+                            <tr><th>Candidatos</th><td>33</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">90%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (25 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNAS</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0255</td>
+                                <td class="partido-name">COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA</td>
+                                <td class="votos">20</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado6_pdf_1')">Ver 10</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado6_pdf_1" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#2 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#4 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#18 N/A</span><span class="votos">5</span></div><div class="candidato"><span>#22 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#23 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#50 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#79 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#93 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1140</td>
+                                <td class="partido-name">FUERZA CIUDADANA Y FUERZA DEL CAMBIO</td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado6_pdf_2')">Ver 2</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado6_pdf_2" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#19 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0003</td>
+                                <td class="partido-name">PARTIDO CAMBIO RADICAL</td>
+                                <td class="votos">25</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado6_pdf_3')">Ver 9</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado6_pdf_3" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#2 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#13 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#18 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#23 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#29 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#31 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#99 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1073</td>
+                                <td class="partido-name">MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD </td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0019</td>
+                                <td class="partido-name">PARTIDO NUEVO LIBERALISMO</td>
+                                <td class="votos">5</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1130</td>
+                                <td class="partido-name">ESTAMOS LISTAS COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1039</td>
+                                <td class="partido-name">MOVIMIENTO UNITARIO METAPOLÍTICO</td>
+                                <td class="votos">4</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0231</td>
+                                <td class="partido-name">COALICIÓN MIRA - COLOMBIA JUSTA LIBRES</td>
+                                <td class="votos">4</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado6_pdf_8')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado6_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">7</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado6_pdf_9')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado6_pdf_9" class="candidatos-list hidden"><div class="candidato"><span>#8 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#17 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#33 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#34 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1186</td>
+                                <td class="partido-name">MOVIMIENTO GENTE NUEVA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>6302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACIÓN NACIONAL</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRATICO</td>
+                                <td class="votos">26</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado6_pdf_12')">Ver 10</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado6_pdf_12" class="candidatos-list hidden"><div class="candidato"><span>#0 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#2 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#9 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#10 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#14 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#15 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#19 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#20 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#21 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#26 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">16</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado6_pdf_13')">Ver 9</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado6_pdf_13" class="candidatos-list hidden"><div class="candidato"><span>#0 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#2 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#3 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#5 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#8 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#13 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#15 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#25 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0008</td>
+                                <td class="partido-name">PARTIDO DE LA UNIDAD DE LA GENTE "PARTIDO DE LA U"</td>
+                                <td class="votos">5</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado6_pdf_14')">Ver 5</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado6_pdf_14" class="candidatos-list hidden"><div class="candidato"><span>#9 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#14 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#15 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#33 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#34 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0292</td>
+                                <td class="partido-name">PACTO HISTORICO</td>
+                                <td class="votos">34</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0184</td>
+                                <td class="partido-name">ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0151</td>
+                                <td class="partido-name">DEMOCRACIA DESDE ABAJO LA PALMA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0177</td>
+                                <td class="partido-name">PARTIDO INDÍGENA COLOMBIANO P.I.C</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado6_pdf_18')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado6_pdf_18" class="candidatos-list hidden"><div class="candidato"><span>#203 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0156</td>
+                                <td class="partido-name">MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL "MAIS"</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+</tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">senado7.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 11 páginas</span>
+                        <span>⏱ 125.42s</span>
+                        <span>🔢 15,396 tokens</span>
+                        <span>💰 $0.0792</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>54 - GUAVIARE</td></tr>
+                            <tr><th>Municipio</th><td>001 - SAN JOSE DEL GUAVIARE</td></tr>
+                            <tr><th>Puesto</th><td>I.E.ALFONSO LOPEZ PUMAREJO</td></tr>
+                            <tr><th>Mesa</th><td>004</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">111</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">111</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>6</td></tr>
+                            <tr><th>Votos Nulos</th><td>6</td></tr>
+                            <tr><th>No Marcados</th><td>8</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>25</td></tr>
+                            <tr><th>Candidatos</th><td>42</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">90%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (25 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0235</td>
+                                <td class="partido-name">COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA</td>
+                                <td class="votos">5</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado7_pdf_1')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado7_pdf_1" class="candidatos-list hidden"><div class="candidato"><span>#0 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#37 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#91 N/A</span><span class="votos">2</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1140</td>
+                                <td class="partido-name">FUERZA CIUDADANA Y FUERZA DEL CAMBIO</td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado7_pdf_2')">Ver 3</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado7_pdf_2" class="candidatos-list hidden"><div class="candidato"><span>#17 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#63 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#80 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0003</td>
+                                <td class="partido-name">PARTIDO CAMBIO RADICAL</td>
+                                <td class="votos">9</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado7_pdf_3')">Ver 8</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado7_pdf_3" class="candidatos-list hidden"><div class="candidato"><span>#2 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#12 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#18 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#21 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#28 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#36 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#65 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#99 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1073</td>
+                                <td class="partido-name">MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD </td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0019</td>
+                                <td class="partido-name">PARTIDO NUEVO LIBERALISMO</td>
+                                <td class="votos">4</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1130</td>
+                                <td class="partido-name">ESTAMOS LISTAS COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1039</td>
+                                <td class="partido-name">MOVIMIENTO UNITARIO METAPOLÍTICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0231</td>
+                                <td class="partido-name">COALICIÓN MIRA - COLOMBIA JUSTA LIBRES</td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado7_pdf_8')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado7_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">16</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado7_pdf_9')">Ver 11</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado7_pdf_9" class="candidatos-list hidden"><div class="candidato"><span>#0 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#8 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#9 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#17 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#23 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#32 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#56 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#65 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#67 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#99 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#100 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1186</td>
+                                <td class="partido-name">MOVIMIENTO GENTE NUEVA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACIÓN NACIONAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRÁTICO</td>
+                                <td class="votos">7</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado7_pdf_12')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado7_pdf_12" class="candidatos-list hidden"><div class="candidato"><span>#0 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#12 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#89 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#98 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">25</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado7_pdf_13')">Ver 7</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado7_pdf_13" class="candidatos-list hidden"><div class="candidato"><span>#0 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#5 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#6 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#8 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#9 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#12 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#100 N/A</span><span class="votos">11</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0008</td>
+                                <td class="partido-name">PARTIDO DE LA UNIÓN POR LA GENTE "PARTIDO DE LA U"</td>
+                                <td class="votos">5</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado7_pdf_14')">Ver 2</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado7_pdf_14" class="candidatos-list hidden"><div class="candidato"><span>#2 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#11 N/A</span><span class="votos">3</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0292</td>
+                                <td class="partido-name">PACTO HISTÓRICO</td>
+                                <td class="votos">12</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0184</td>
+                                <td class="partido-name">ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0151</td>
+                                <td class="partido-name">DEMOCRACIA DESDE ABAJO LA PALMA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0177</td>
+                                <td class="partido-name">PARTIDO INDÍGENA COLOMBIANO P.I.C</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0156</td>
+                                <td class="partido-name">MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL "MAIS"</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">100%</span></td>
+                                <td>-</td>
+                            </tr>
+</tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">senado8.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 11 páginas</span>
+                        <span>⏱ 116.7s</span>
+                        <span>🔢 14,546 tokens</span>
+                        <span>💰 $0.0664</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>27 - SANTANDER</td></tr>
+                            <tr><th>Municipio</th><td>001 - BUCARAMANGA</td></tr>
+                            <tr><th>Puesto</th><td>IE MAIPORÉ SEDE B</td></tr>
+                            <tr><th>Mesa</th><td>004</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">205</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">172</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>25</td></tr>
+                            <tr><th>Votos Nulos</th><td>4</td></tr>
+                            <tr><th>No Marcados</th><td>17</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>16</td></tr>
+                            <tr><th>Candidatos</th><td>0</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">88%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (16 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0255</td>
+                                <td class="partido-name">COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA</td>
+                                <td class="votos">39</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1140</td>
+                                <td class="partido-name">FUERZA CIUDADANA LA FUERZA DEL CAMBIO</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0003</td>
+                                <td class="partido-name">PARTIDO CAMBIO RADICAL</td>
+                                <td class="votos">9</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1073</td>
+                                <td class="partido-name">MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD </td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0019</td>
+                                <td class="partido-name">PARTIDO NUEVO LIBERALISMO</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1130</td>
+                                <td class="partido-name">ESTAMOS LISTAS COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1039</td>
+                                <td class="partido-name">MOVIMIENTO UNITARIO METAPOLITICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0231</td>
+                                <td class="partido-name">COALICIÓN MIRA - COLOMBIA JUSTA LIBRES</td>
+                                <td class="votos">4</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">34</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1186</td>
+                                <td class="partido-name">MOVIMIENTO GENTE NUEVA</td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACIÓN NACIONAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRÁTICO</td>
+                                <td class="votos">13</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">13</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0006</td>
+                                <td class="partido-name">PARTIDO DE LA UNIÓN POR LA GENTE "PARTIDO DE LA U"</td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0292</td>
+                                <td class="partido-name">PACTO HISTÓRICO</td>
+                                <td class="votos">30</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+</tbody></table></div></div>
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-filename">senado9.pdf</span>
+                    <div class="result-meta">
+                        <span>📄 11 páginas</span>
+                        <span>⏱ 87.51s</span>
+                        <span>🔢 14,857 tokens</span>
+                        <span>💰 $0.0711</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-section">
+                        <h4>📍 Ubicación</h4>
+                        <table>
+                            <tr><th>Departamento</th><td>27 - SANTANDER</td></tr>
+                            <tr><th>Municipio</th><td>001 - BUCARAMANGA</td></tr>
+                            <tr><th>Puesto</th><td>IE MAIPORE SEDE B</td></tr>
+                            <tr><th>Mesa</th><td>002</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📊 Nivelación</h4>
+                        <table>
+                            <tr><th>Total Sufragantes</th><td class="votos">168</td></tr>
+                            <tr><th>Total Votos Urna</th><td class="votos">153</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>🗳 Votos Especiales</h4>
+                        <table>
+                            <tr><th>Votos en Blanco</th><td>10</td></tr>
+                            <tr><th>Votos Nulos</th><td>10</td></tr>
+                            <tr><th>No Marcados</th><td>14</td></tr>
+                        </table>
+                    </div>
+                    <div class="data-section">
+                        <h4>📈 Metadata OCR</h4>
+                        <table>
+                            <tr><th>Partidos</th><td>16</td></tr>
+                            <tr><th>Candidatos</th><td>32</td></tr>
+                            <tr><th>Confianza</th><td><span class="confidence high">87%</span></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-section" style="margin-top: 20px;">
+                    <h4>🏛 Partidos y Candidatos (16 partidos)</h4>
+                    <table>
+                        <thead><tr><th>Código</th><th>Partido/Lista</th><th>Votos</th><th>Confianza</th><th>Candidatos</th></tr></thead>
+                        <tbody>
+
+                            <tr class="partido-row">
+                                <td>0013</td>
+                                <td class="partido-name">PARTIDO COMUNES</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0255</td>
+                                <td class="partido-name">COALICION ALIANZA VERDE Y CENTRO ESPERANZA</td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado9_pdf_1')">Ver 4</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado9_pdf_1" class="candidatos-list hidden"><div class="candidato"><span>#6 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#25 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#54 N/A</span><span class="votos">11</span></div><div class="candidato"><span>#100 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1140</td>
+                                <td class="partido-name">FUERZA CIUDADANA LA FUERZA DEL CAMBIO</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado9_pdf_2')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado9_pdf_2" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0003</td>
+                                <td class="partido-name">PARTIDO CAMBIO RADICAL</td>
+                                <td class="votos">2</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado9_pdf_3')">Ver 2</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado9_pdf_3" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#31 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1073</td>
+                                <td class="partido-name">MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD </td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0019</td>
+                                <td class="partido-name">PARTIDO NUEVO LIBERALISMO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1130</td>
+                                <td class="partido-name">ESTAMOS LISTAS COLOMBIA</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>1039</td>
+                                <td class="partido-name">MOVIMIENTO UNITARIO METAPOLITICO</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0231</td>
+                                <td class="partido-name">COALICION MIRA - COLOMBIA JUSTA LIBRES</td>
+                                <td class="votos">1</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado9_pdf_8')">Ver 1</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado9_pdf_8" class="candidatos-list hidden"><div class="candidato"><span>#6 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0001</td>
+                                <td class="partido-name">PARTIDO LIBERAL COLOMBIANO</td>
+                                <td class="votos">22</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado9_pdf_9')">Ver 5</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado9_pdf_9" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#3 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#4 N/A</span><span class="votos">4</span></div><div class="candidato"><span>#13 N/A</span><span class="votos">6</span></div><div class="candidato"><span>#34 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>1166</td>
+                                <td class="partido-name">MOVIMIENTO GENTE NUEVA</td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0302</td>
+                                <td class="partido-name">MOVIMIENTO DE SALVACION NACIONAL</td>
+                                <td class="votos">0</td>
+                                <td><span class="confidence high">95%</span></td>
+                                <td>-</td>
+                            </tr>
+
+                            <tr class="partido-row">
+                                <td>0011</td>
+                                <td class="partido-name">PARTIDO CENTRO DEMOCRATICO</td>
+                                <td class="votos">24</td>
+                                <td><span class="confidence high">80%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado9_pdf_12')">Ver 10</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado9_pdf_12" class="candidatos-list hidden"><div class="candidato"><span>#1 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#2 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#3 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#9 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#15 N/A</span><span class="votos">2</span></div><div class="candidato"><span>#16 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#17 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#40 N/A</span><span class="votos">5</span></div><div class="candidato"><span>#100 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0002</td>
+                                <td class="partido-name">PARTIDO CONSERVADOR COLOMBIANO</td>
+                                <td class="votos">16</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado9_pdf_13')">Ver 6</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado9_pdf_13" class="candidatos-list hidden"><div class="candidato"><span>#5 N/A</span><span class="votos">7</span></div><div class="candidato"><span>#7 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#10 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#11 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#20 N/A</span><span class="votos">3</span></div><div class="candidato"><span>#24 N/A</span><span class="votos">5</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0009</td>
+                                <td class="partido-name">PARTIDO DE LA UNION POR LA GENTE "PARTIDO DE LA U"</td>
+                                <td class="votos">3</td>
+                                <td><span class="confidence high">85%</span></td>
+                                <td><button class="expand-btn" onclick="toggleCandidatos('cand_senado9_pdf_14')">Ver 2</button></td>
+                            </tr>
+<tr><td colspan="5"><div id="cand_senado9_pdf_14" class="candidatos-list hidden"><div class="candidato"><span>#9 N/A</span><span class="votos">1</span></div><div class="candidato"><span>#11 N/A</span><span class="votos">1</span></div></div></td></tr>
+                            <tr class="partido-row">
+                                <td>0292</td>
+                                <td class="partido-name">PACTO HISTORICO</td>
+                                <td class="votos">11</td>
+                                <td><span class="confidence high">90%</span></td>
+                                <td>-</td>
+                            </tr>
+</tbody></table></div></div></div>
+        <p class="timestamp">Generado el 2026-01-29 12:56:29 | CASTOR ELECCIONES</p>
+    </div>
+    <script>function toggleCandidatos(id) { document.getElementById(id).classList.toggle('hidden'); }</script>
+</body>
+</html>

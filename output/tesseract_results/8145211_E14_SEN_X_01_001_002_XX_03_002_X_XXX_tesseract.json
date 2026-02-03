@@ -1,0 +1,135 @@
+{
+  "extraction_id": "cc2ff75c",
+  "filename": "8145211_E14_SEN_X_01_001_002_XX_03_002_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 31819,
+  "corporacion": "SENADO",
+  "departamento": "",
+  "municipio": "MEDELLIN",
+  "zona": "02",
+  "puesto": "SEC.ESC.AGRIPINA MONTES DEL VALLE |",
+  "mesa": "002",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 4140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "AGRIPINA MONTES DEL VA",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO CAMBIO RADICAL. O",
+      "party_code": "",
+      "votes": 3,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "SALUD SOS COLOMBIA",
+      "party_code": "",
+      "votes": 1073,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO NUEVO LIBERALISMO",
+      "party_code": "",
+      "votes": 19,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "VOTOSPORLA AGRUPACIÓN POLÍTICA",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "COALICIÓN MIRA",
+      "party_code": "",
+      "votes": 231,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "ANTIOQUÍA",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO LIBERAL COLOMBIANO",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "ANA. - 0302 MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "0011 PARTIDO CENTRO DEMOCRÁTICO O",
+      "party_code": "",
+      "votes": 11,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "VOTOS PORLA AGRUPACIÓN POLÍTICA",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "o 0 A ; PARTIDO INDÍGENA COLOMBIANO PLC",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 6342,
+  "votos_blancos": 10,
+  "votos_nulos": 0,
+  "confidence": 0.8999999999999999,
+  "raw_text": "A e\n710596912010111 Ver: 01 Pag: 01 de 14\n| ACTA DE ESCRUTINIO DE LOS EA |\nE] JURADOS DE VOTACIÓN\nA 2 DELEGADOS o\n| PT pd ELECCIONES CONGRESO\nPE 13 DE MARZO DE 2022 A |\na e RESTA 0\nMO ceo SENADO |\n| DEPARTAMENTO: 01 - ANTIOQUIA |\n| MUNICIPIO: 001 - MEDELLIN ;\n| LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE |\n| ZONA: 02 PUESTO: 03 MESA: 002 |\nX 8-14-52-11 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS YOTOS\n| | 0013 : PARTIDO COMUNES\n0 VOTOS PORLA AGRUPACIÓN POLÍTICA md 14 -J-\n| Mo soon: 5000 KIT 59,691 cwizrezzo MM\n\n--- PAGE BREAK ---\n! L\nl\n| 710596912010211 Ver: 01 Pag: 02de 11 1\nACTA DE ESCRUTINIO DE LOS EA |\nolry A 30 JURADOS DE VOTACION |\nApra DELEGADOS a |\nEt AL ELECCIONES CONGRESO qa !\npr E TY : 13 DE MARZO DE 2022 sE3> ]\n! “io REGISTRADURÍA |\n. IAAF. EE. EVA ICF .\n[ra SENADO\n¡\nDEPARTAMENTO: 01 - ANTIOQUIA |\nMUNICIPIO: 001 - MEDELLIN |\nLUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE |\nZONA: 02 PUESTO: 03 MESA: 002 |\n!\n|\nX 8-14-52-11 X ¡\nA CT USTA CON VOTO PREFERE E |\nWN 0255 : COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA po\nON A AAA A. qq á _OOII>-]->>_S>A\nSN E «f=== VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA | |\nO A ns o AÑ\nE A E\n| E: : | po ! | o TO | : ! Fo\nE E A\nO E\nA TN CN po\nE A O o\nA II A ra — 4\nCA II E\nE O\nE A A E E A\nA A A O A ¡\n| O ( 1 BZ ! | o BB: ¡ | E\nO E\nE O CI\nME A A\nA m ¡: | 1\nA A\nO E A A A\nO A\nA A\nA\nE O A\n| Ta EOS TU PIS TS CIO EP DE |\nE al a\nE O A NN\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [1112 |\n| ul\ny I\n| |\n|\n| Mo rom: ooo: KIT 59,691 Civ1216221 |\n\n--- PAGE BREAK ---\n710596912010311 Ver 01 Pag: 03 de 11 ¡\nACTA DE ESCRUTINIO DE LOS EA |\nlogia. a] JURADOS DE VOTACIÓN\nE- oe .\nrbd DELEGADOS\nEPA ELECCIONES CONGRESO pe |\nA EY 13 DE MARZO DE 2022 ro\nA REGISTRADURÍA |\nOjo e SENADO |\ny\n|\nDEPARTAMENTO: 01 - ANTIOQUIA |\nMUNICIPIO: 001 - MEDELLIN |\n| LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE !\n0 ZONA: 02 PUESTO: 03 MESA: 002 |\n! |\nX 8-14-52-11 X\nO ATT LÍSTA CON VOTO PREFERENTE 2d\n| 4140 : FUERZA CIUDADANA LA FUERZA DEL CAMBIO o\nA A VOTOS SOLOPORLA AGRUPACIÓN POLÍTICA q\nA A\nA A A\nO E\nO A A E IN\nO NN |\nA\nE O\nO A A O A\nE\nO A E\nA\nDE A\nA\nNO A\nE II E\n0 TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS |\n¡\n| |\n|\n0 |\n¡ |\ny |\n|\n1 !\n|\n| !\nt .\n1\n|\n| Mo oo 5000 KIT 59,691 civizas222 MY.\n\n--- PAGE BREAK ---\n| i\nk 710596912010411 Ver: 01 Pag: 04 de 11.\n| ACTA DE ESCRUTINIO DE LOS Eta |\nMor 0 JURADOS DE VOTACIÓN |\n«y ]!\nAR A FL ELECCIONES CONGRESO pa\n| A, ae 13 DE MARZO DE 2022 a |\ne “8 REGISTRADURÍA |\nO O Er SENADO q\n| ]\n( DEPARTAMENTO: 01 - ANTIOQUIA ¡\nh\n| MUNICIPIO: 001 - MEDELLIN |\n¡ LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE 1\n|\n| ZONA: 02 PUESTO: 03 MESA: 002\n: |\n|\n| X 8-14-52-11 X i\n] o an A —USTACON VOTO PREFERENTE a]\no CST - 0003 ; PARTIDO CAMBIO RADICAL. o\n| O «=== YOTOS SOLO POR LA AGRUPACIÓN POLÍTICA | |\nA E E A O\nIP O\nE E A\nNC |\n3 ) | E Y i | jp 81 | | | Lo?\nO A A\nPP O O\nO O 0 O A 0 O E O\nO E\nNN E O A\n+ E ) | po 59: ] | y E | ! o\nO A O\nA E\nA\nE O\nIN\nl [\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS ll |\ni A AA A A AAK4<4<A 3\nON — LISTA SIN VOTO PREFERENTE o\nIS (sos : MOVIMIENTO NACIONAL SECTOR ORGANIZADO DELA | |\no | 20S | 1073 : SALUD SOS COLOMBIA a\n| e 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA — ==)» oli y\nNa n A EOI A o —————_  _ _ _-.—_———————— A 1\n' | LISTA SIN VOTO PREFERENTE 7\no | : 0019 . PARTIDO NUEVO LIBERALISMO 3%\n0 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA — wi» [—]=] 72] |\nmM No. Form: 59691 KIT 59,691 Civ1216223 MM\n\n--- PAGE BREAK ---\n>\nE mM\n| 710596912010511 Ver. 01 Pag: 05de 11 |\n| ACTA DE ESCRUTINIO DE LOS\nMores do JURADOS DE VOTACIÓN\nMA DELEGADOS .\n4 =*3 m ' SA r\nHERA) ELECCIONES CONGRESO 2. |\n| |: L q : 13 DE MARZO DE 2022 0) y\n| ] a !\n- O REGISTRADURÍA 0\n| a FUNCIONAL. TASA. EFIPUDO: CIP. ]\nMO Ejaliras e 1 SENADO |\n¡ DEPARTAMENTO: 01 - ANTIOQUIA |\n0 MUNICIPIO: 001 - MEDELLIN |\n| LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE\n| ZONA: 02 PUESTO: 03 MESA: 002\n| X 8-14-52-11 X |\no MY] 4430 | ESTAMOS LISTAS COLOMBIA o\n| | 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA => | I]--—]\no ] y 4039 | MOVIMIENTO UNITARIO METAPOLITICO i\n| ¿0 :  VOTOSPORLA AGRUPACIÓN POLÍTICA — “mmm — | — |\n| ! | AA - 0231 : COALICIÓN MIRA - COLOMBIA JUSTA LIBRES o\n| A ( | df VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA — ;\nE A O\nA E\no j | po 30: e | 63 ' | | |\nA A A ——— | eo -\nE E | E | IL |\nV 40; : | E 35 | ! 1 4 69 | | :\n| O l 0 38 | ! | O | | :\nA : | O | 3 TR | | |\nE\nA - 2 9 ] 2 100; ) Fo\nA |\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [-—]-[5] |\n| |\n0 |\n| .\n| '\n] h\n| :\n' '\n|\n¡\n| A KIT 59.691 Civ1216224 Ml\n| :\n\n--- PAGE BREAK ---\n]\nMi n .\n| .\n| 710596912010611 Ver: 01 Pag: 06 de 11\n| ACTA DE ESCRUTINIO DE LOS\nV [5] : [a) JURADOS DE VOTACION\nY DELEGADOS o |\nY ELECCIONES CONGRESO SO\n| 13 DE MARZO DE 2022 e |\n[ul A AEE SENADO o\n¡ DEPARTAMENTO: 01 - ANTIOQUÍA |\n| MUNICIPIO: 001 - MEDELLIN |\n| LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE\n( ZONA: 02 PUESTO: 03 MESA: 002 |\n| .\n¡ X 8-14-52-11 X\n¡ 0 ] PA : 0001 : PARTIDO LIBERAL COLOMBIANO po\n] — ] 1 O:\n| E\n| CO O A A — ¡ e VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\nO E O E\n3 | 7 CN A E\nA\nO O E\nAA\nIS, | E Y A.\nA | CN\nIR\nO A E\nA |\n",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

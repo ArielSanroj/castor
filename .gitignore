@@ -83,3 +83,10 @@ temp/
 # Backup files
 *.backup
 *.old
+*.pdf
+output_e14/
+e14_congreso_2022/
+pdfs_congreso_2022/
+actas_e14_masivo/pdfs*/
+e14_pdfs/
+data/e14_congreso_2022/

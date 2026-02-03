@@ -1,0 +1,65 @@
+{
+  "extraction_id": "27185196",
+  "filename": "3688217_E14_SEN_X_01_001_001_XX_02_046_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 30825,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "INST,EDUC. LA CANDELARIA",
+  "mesa": "046",
+  "partidos": [
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 32,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "ÁS 1039 MOVIMIENTO UNITARIO METAPOLITICO",
+      "party_code": "",
+      "votes": 1039,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "0302 MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "LISTA CON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 22,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "pat 0177 PARTIDO INDÍGENA COLOMBIANO P.l.C",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "EISTASIN VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 1574,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "- :\n710595102010111 | Ver 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS\nOlrts] [nm] JURADOS DE VOTACION\n17\nSHA BDA ELECCIONES CONGRESO ESeS\nEa 13 DE MARZO DE 2022 [E\nAro + REGISTRADURÍA\nO SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST,EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 046\nX 3-68-82-17 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\n1 3]1l0 [== [—|\n> LISTA SINVOTO PREFERENTE\n' 0013 ] PARTIDO COMUNES\nVOTOS PORLA AGRUPACIÓN POLÍTICA a —|-|4A\nmM No. Farm: 59510 KIT 59,510 Civ1212057 M\n\n--- PAGE BREAK ---\n- y\n/10595102010211 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS 573\nln] ries] JURADOS DE VOTACIÓN\nE Edad DELEGADOS o\n[=] Ps SENADO Rd\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 046\nX 3-68-82-17 X\nA LISTACONVOTO PREFERENTE.\nINS 0255 | COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA\nHash HESaSS\n_— — 35 A — 69 =\na [olas | |—|—| 7 >\na elo ar jo — A 7 —\n.|- as [|| [om [-|-\nAA APD\na |— ed 41 = — 75\na [A — a | ol 7 |\nE o a A |\nuo. A A\no as | [14 00 (| - >=\ny pr [—[- 14 | sm [—\nIS A 48 | e |—\nAls Bl\nCER sE\ne | | |] —| -\nA — | [4 5 |—[- |.\nCIN E Tf poa q\no a [—=[—-|- [| sus |—|-/4 [| 91. |—\ndd\n[a — pss |—|—|4 [| oo\nMENA ++ a e o lo\na ooo pe [4 [| 92 [=>\na Pepe poa po a fr poo\ne [apo pepa [apo os [+ polo\nEa [7- =P] +\nfs aa BES BBES\na [Tio pe [os [-|-|-| 97 [== 7\no || a |- Es 4 [9 ===\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS —12l0\n| Ms rom:sos10 KIT 59,510 civiz1zoso MM\n\n--- PAGE BREAK ---\n-— :\n710595102010311 Ver: 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS Eta\n[m] pss ktm] JURADOS DE VOTACIÓN\nda, há ELECCIONES CONGRESO\n1 A 13 DE MARZO DE 2022\nOREdAE REGISTRADURÍA\nriL: . SENADO\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 046\nAX 3-68-82-17 X\n2 LISTA CON VOTO PREFERENTE a\nao FUERZA CIUDADANA LA FUERZA DEL CAMBIO\n0 «> — 4 fos. VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nca |—|- A 32 [l—=|I=[|-=l e —\nSEE SEO =E y\n3 — | — 35 66 a\n4 o 36 - 67 —\n0 38 | 7 —\ndl sw [I—|=[= | 72 =>\n9 [== laa lol —o¡ | 7 |— -\n40 _ _— 43 —| O E _\n0 sl [| 7 |\nam lo 45 | A zo |\n14 — | — 46 |“ — A E EN\n18 1-|- el — a lo | A\n16 == 48 | 82 =lo|_\nar [| | - 50 — 83 paa la\n9 '=|—|- 52 | — B5 |- —\n20 P=[= - 86 E —\nHa33 ESB HEcO\n22. 1 |—|— — 7 8g |— _\nBesa ess\nMA EE\nas (| [(— | 58 mia | |-\na o [—[= | se |(-|- [| 92 E\n29 —i—|—| 60 A ss\n32 |¡=|= ¡|! 61 | ¡- 400 a\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS |\nMi No. Form: 59510 KIT 59,510 Civ1212059 Mi\n\n--- PAGE BREAK ---\nt\n710595102010411 Ver 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m] , +10 JURADOS DE VOTACIÓN\nSILA\nESE, DELEGADOS |\n\"] E ,* 4 h\nPa BE, ELECCIONES CONGRESO 5\nEF 13 DE MARZO DE 2022 z\nEA O REGISTRADURÍA\n(m] ¿33 SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARÍA\nZONA: 01 PUESTO: 02 MESA: 046\nX 3-68-82-17 X\no LISTACON VOTO PREFERENTE\nCA | 0003 [parmo casio RADICAL\n| 0 1—=|- — | «fm VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nCa [e i—l4Q las | _ la ll so [|-|—|—\n4 — — 38 ¡—|- | 72 | _¡—|—\na Ll 73 ler ls\n8 l|lluizl a loil—i|al 76 |\n3 ds o 43 A A TÍ A\n2 Ib 486 | sa |||\no Ape a [== j=\nO sa (=== e [=I-\npo a ¡— [| — 49 | Al 83 —\n| 16 1. 50 — 84 -\n| 18 lo | 52 || 86 _\n| 19 | =|— 53 | _|— 87\n¡ 20 |— ii A E 88\n| A 2. -- — - o\n| a lol 85 ll | ell ss —\n¡ 2 |— 58 |[— |— 30 —\na\nMINE EL\nface aos ==\n| 24 |— pa 58 [| Is e ps\n| 26 | — 59 — a —\n| — l o o 94 ]\n| 27 l— IN Pl Pl 95 ¡— —\n| L£ O A\n| 28 | ls | |—!l—I 96 _\nroto ll\naa y es ¡| se [—[— |—|\n| 31 DS 64 E O os Poll\n: 32 | =il—Il 6 ¡| ii 100 ||\n_ -- a OS. E ES . A\n| 34 |— —!| 68 => e\n| . .—. =.o 0 lol\nTOTAL = VOTOS AGRU [—[- [1]\no TOTAL =V AGR PACIÓN + VOTOS CANDIDATOS —|-|4\nO LISTA SIN VOTO PREFERENTE. E\nEo] “br | MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA\npl | SE 1078 | HON SOS COLOMBIA oro vo 2\n( == ll 0019 [parmoo NUEVO LIBERALISMO\n; _—_—— A A ns\np 0 VOTOS POR LA AGRUPACIÓN POLÍTICA mmm\n| M\n: Ml No. Farm: 54510 KIT 59,510 Civ1212060 Ml\nt\n\n--- PAGE BREAK ---\n- :\n710595102010511 Ver: 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m] : ' m [m1] JURADOS DE VOTACION\nima DELEGADOS o\nrs ELECCIONES CONGRESO\nE 13 DE MARZO DE 2022 pa\naya: REGISTRADURÍA\nO SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 046\nX 3-68-82-17 X\nea LISTASIN VOTO PREFERENTE II.\nE 1130 [estamos LISTAS COLOMBIA\nD MN VOTOS PORLA AGRUPACIÓN POLÍTICA —> [—[-[2\nÁS 1039 | MOVIMIENTO UNITARIO METAPOLITICO\n0 oros PORLA AGRUPACIÓN POLÍTICA e\nEt 0231 COALICIÓN MIRA +» COLOMBIA JUSTA LIBRES\n0 — ¡— — > VOTOS: SOLO POR LA AGRUPACIÓN POLÍTICA\n== TPa EI] ]-[- E,\na o e AE\n3 BD |—|— 55 |.\n4 | ii 26 |- |— Dos | —\n6 | 29 — = 61\n7 — |¡— E 30 o O 63 _—\n8 =i= 7 31 O O E 65 —\n40 e —— 35 | —| 69 |_- —\n1 j — 36 | -—|— zo |—\n12 |— - 37 A 71 ol _\n2 | TAS\nMA A\n. 0 |- loe\n7 «LLE» |\nal ES EE\nMN\n24 | | 49 pl 100 l— a )\nciac08 Ml IO a | IO a a a\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS — [4\n| No. Form: 59510 KIT 59510 Civ1212061 M\n\n--- PAGE BRE",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

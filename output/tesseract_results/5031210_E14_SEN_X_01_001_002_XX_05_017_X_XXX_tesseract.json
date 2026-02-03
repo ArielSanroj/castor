@@ -1,0 +1,86 @@
+{
+  "extraction_id": "9c72f20a",
+  "filename": "5031210_E14_SEN_X_01_001_002_XX_05_017_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 29479,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "02",
+  "puesto": "|E.GUADALUPE",
+  "mesa": "017",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "ESCRUTINIO DE LOS",
+      "party_code": "",
+      "votes": 573,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ANTIOQUÍA",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "VOTO PREFERENT",
+      "party_code": "",
+      "votes": 7,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "Km 1185 MOVIMIENTO GENTE NUEVA",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\"",
+      "party_code": "",
+      "votes": 156,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA",
+      "party_code": "",
+      "votes": 250,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 1594,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "- :\n710597402010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS Eta\n[mjprer pa] JURADOS DE VOTACIÓN\nnn a! n\nTr DELEGADOS o\ndE ELECCIONES CONGRESO\n= E pia: 13 DE MARZO DE 2022 ES\nya: Sid\nEX: SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: |E.GUADALUPE\nZONA: 02 PUESTO: 05 MESA: 017\nX 5-03-12-10 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\nA ISTA SIN VOTO PREFERENTE\n[mb\n0013 | PARTIDO COMUNES\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA mum» Y | |\n|\n|\n,\n|\n|\n|\nl\n|\n|\n|\n|\nÍ\n: |\n|\nMM No. Forma: 59740 KIT 59,740 Civi217347 Ml\n\n--- PAGE BREAK ---\nA :\n| 710597402010211 Ver. 01 Pag: 02 de 11\n! ACTA DE ESCRUTINIO DE LOS 573\nlea] JURADOS DE VOTACIÓN\n- MOE TE A\n| ELECCIONES CONGRESO\n¡ q 13 DE MARZO DE 2022\nREGISTRADURÍA\nll E SENADO eo\n| DEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\ny LUGAR: [| E. GUADALUPE\n| ZONA: 02 PUESTO: 05 MESA: 017\n| X 5-03-12-10 X\n| \"LISTA CON VOTO PREFERENTE\nAEOMPSETE\npoa pop] [loss MC\nHEN o és [oo\nao fas ra po ||\"\nE EA\nE E AN\n) ES 39 rs po\nUEM pr [>\nHH 41\nE O E E\naa A — rr |]\npoa ojo] [ss A — 7\nola o [| | [el] la exit\nE A E E EC\nO A ICI\nas | O —\nION as és [oo +\n| 51 |\nO CI ECM\n: A O CIA\npo | al po poll es oo]\n| ZA 55 a po\nO CO A CO IO EC E E\nMO A\n: e po\nO A\n0\nO A E\n+\n30\n[a E\npo | a || AE EIA\nRE A ACA CTE\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS Slrla1Í\n) Mo rom: s97<0 KIT 59,740 civizazaso MM\n\n--- PAGE BREAK ---\nOn .\n710597402010311 Ver: 01 Pag: 03 de 11\na\nAi 2\naL, ELECCIONES CONGRESO\nrr: : 13 DE MARZO DE 2022 LE\nys 00! » REGISTRADURÍA\n[m] 133 Er0S SENADO Co\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: I.E.GUADALUPE\nZONA: 02 PUESTO: 05 MESA: 017\nX 5-03-12-10 X\nLISTA CON VOTO PREFERENTE\n| E FUERZA CIUDADANA LA FUERZA DEL CAMBIO\n! 0 MS «E VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\no A ja Y pep]\nEI DA ICE IC\nEE AA\n[| s 1) [e | | |\n| AA a [ep ||\n[ep se HA\nICO O CE ICA\nUC A O\nAC — E O CI\n| ME UC AI E 00 O\nMO CIO O O O CO E CE\npeo] CS ap\nA OD E CIA OI E EC E\nAN a CA\npa | ss e |||\n| E alle o\na E AC\nAO DECO A OC OO O EC EE\nIT CO CI\ncla l e (Je ||]\nIE CO\n— fe]\nICAA CS\nMECA CI IC\nCO OM alo\n| HA [e ||\n| o MECA\nO IC\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n1 MO no som: 5970 KIT 59,740 Civ1217349 Mi\n\n--- PAGE BREAK ---\nA :\n710597402010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA\nOo JURADOS DE VOTACION\nral rr DELEGADOS l\nELECCIONES CONGRESO\nE q L 13 DE MARZO DE 2022 ES\nas SENADO ADOS\n0 MUNICIPIO: 001 - MEDELLIN\nLUGAR: 1.E,GUADALUPE\n! ZONA: 02 PUESTO: 05 MESA: 017\nX 5-03-12-10 X\n¡ LISTA CON VOTO PREFERENTE\nMESS PARTIDO CAMBIO RADICAL\n| 0 lo o «um VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nE II A CS\npa poo do AA, lp\nDN O O EC\nO E IC\nIC O EC E\nCO O EC O E\n| A+ A rs pop]\nple po po pra lp\nO EA E E E A\nIEC A CA\n! CRES fe\nII E\nOC O CI A E CO\npas o || [«*.p | [el | |\n: A pelo]\n: — fe\n200 CCOO IE ME COS\nMI CA A\nE E\ne o CO AA\nEN le lrigrldle= lo |\nICO EC\nE II CA\nE o es pollo\nO foso pop\nE ICA CARA\nse [ope popa po\nE O IC EC\n32 5 fo po | [|\n0 34 o 68 T MN\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n2 LISTASINVOTO PREFERENTE 3 3 3 3\n( 0 VOTOS POR LA AGRUPACIÓN POLÍTICA mmm.\no “LISTA SINVOTO PREFERENTE\n! 0019 | PARTIDO NUEVO LIBERALISMO\n| VOTOS POR LA AGRUPACIÓN POLÍTICA ml IFE\n] MM so rom:sorwo KIT 59,740 Civ1217350 Ml\n\n--- PAGE BREAK ---\nA :\n| 105974020105911 Ver: 01 Pag: 05 de 11\n| ACTA DE ESCRUTINIO DE LOS Eta\n| E JURADOS DE VOTACION\nEp TERATTE\nNL A ELECCIONES CONGRESO E\nE > Ario 13 DE MARZO DE2022.—..-\nlla SENADO Po\n| DEPARTAMENTO: 01 - ANTIOQUIA\n| MUNICIPIO: 001 - MEDELLIN\n| LUGAR: |.E.GUADALUPE\nZONA; 02 PUESTO: 05 MESA: 017\n| X 5-03-12-10 X\n| 7 iSTA SIN VOTO PREFERENTE 7\n| ESTAMOS LISTAS COLOMBIA\n| VOTOS POR LA AGRUPACIÓN POLÍTICA muii PESVA\n( LISTA SIN VOTO PREFERENTE\nO EN\n| 0 VOTOS POR LA AGRUPACIÓN FOLÍTICA MUS\n| AA STA CON VOTO PREFERENTE\nPT TE oras ronca ae —\nal E — ICM\nOSA Cn a\n| oo ss oo\nCE Ho\na A\na ey\nAI E EC\n[sa] si] [*|. |\nE EC ICI\na | e lol\nmi 57 HH\npa a rap]\nMEC IC as polo\nE O IA\nHS SS nos\n| A E payo\nls] [e| | | |\nOC O E\nIE EC\nCO EC\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS | T | |\n| Mo room: 597<0 KIT 59,740 civizazas: MM\n\n--- PAGE BREAK ---\nA :\n| ¡\n710597402010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS EA |\nM1 Suar: JURADOS DE VOTACIÓN\nE Ps DELEGADOS Ñ\nPo e ELECCIONES CONGRESO\n-É Pr 13 DE MARZO DE 2022.\n— llas SENADO ramon\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: I.E.GUADALUPE\nZONA; 02 PUESTO: 05 MESA: 017\nX 5-03-12-10 X\n| coo LISTACONVOTO PREFERENTE\nJA Jen Juice\n| IND «== VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nap pd ss polo]\nEC O O pe po\nCI A EA ION\nA O\nCEE A roo |\nIC O\npalo] [«*. y +1 repo [o\n!\n| CI pap]\nAM A A A\nMOOD OS O 00 O A A CO\na — OC AO EC O\nIE O EC\nACCION E IE\ne A pt O\nA O\nne |] fas ||\nslo [o [ss] ] | [ej] |\nA E AA\n| A CI A\n¡ o A — a Y\n| o MIN PTETEN\nMECO E O EC E CC E\nE E\n| DIS il — as ||\nEC MIOS\nE: odo as\nEII IU ICA\nCO ICA A\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS MESES\n¡ A _—  LISTASINVOTO PREFERENTE  — _ 3 3 3 3 35353 o\n0 Km | 1185 | MOVIMIENTO GENTE NUEVA\nVOTOS POR LA. AGRUPACIÓN omo == [| | | |",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

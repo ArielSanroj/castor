@@ -34,14 +34,32 @@ limiter = Limiter(
 def init_rate_limiter(app):
     """
     Initialize rate limiter with Flask app.
-    
+
     Args:
         app: Flask application instance
     """
     limiter.init_app(app)
-    
+
     # Apply rate limits to specific endpoints
     # These can be overridden per route
     app.config['RATELIMIT_ENABLED'] = True
-    
+
+    # Exempt internal dashboard routes from strict rate limiting
+    # Campaign team dashboard makes many parallel calls on load
+    app.config['RATELIMIT_HEADERS_ENABLED'] = True
+
     return limiter
+
+
+def exempt_blueprint(blueprint):
+    """
+    Exempt an entire blueprint from rate limiting.
+    Use for internal dashboard routes that make many parallel calls.
+
+    Args:
+        blueprint: Flask blueprint to exempt
+    """
+    @blueprint.before_request
+    def exempt_from_rate_limit():
+        from flask import g
+        g._rate_limit_exempt = True

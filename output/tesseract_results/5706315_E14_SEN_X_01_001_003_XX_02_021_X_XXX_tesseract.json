@@ -1,0 +1,65 @@
+{
+  "extraction_id": "f3d502b7",
+  "filename": "5706315_E14_SEN_X_01_001_003_XX_02_021_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 29063,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "03",
+  "puesto": "SEC.ESC. MANUEL URIBE ANGEL |",
+  "mesa": "021",
+  "partidos": [
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO UNITARIO METAPOLÍTICO",
+      "party_code": "",
+      "votes": 77,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "CISTA CON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "SENADO",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MNECA 0002 I PARTIDO CONSERVADOR COLOMBIANO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 1512,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A e\n710598092010111 Ver: 01 Pag: 01 de 11 '\nACTA DE ESCRUTINIO DE LOS EA |\n[Jr] _ JURADOS DE VOTACIÓN !\n=y Ll\nno de DELEGADOS o |\na A Ef ELECCIONES CONGRESO Ley ]\nA E 13 DE MARZO DE 2022 ES 0\nfl 0 REGISTRADURÍA\n[ml SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN |\nLUGAR: SEC.ESC. MANUEL URIBE ANGEL |\nZONA: 03 PUESTO: 02 MESA: 021 |\nX 5-70-63-15 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS |\nFORMATO E-11 EN LA URNA INCINERADOS |\nEl\nCox\nET faces\nOCA\nMl No. Form: 59509 KIT 59,809 Civ1218934 MM\n\n--- PAGE BREAK ---\n- _\n710598092010211 Ver: DI Pag: 02de 11 |\nperimRfL ELECCIONES CONGRESO\ne dl 13 DE MARZO DE 2022 — A\nOp SENADO ÓN\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC.ESC. MANUEL URIBE ANGEL\nZONA: 03 PUESTO: 02 MESA: 021\nX 5-70-63-15 X\n——————— STA CONVOTO PREFERENTE\nON\n_ il «a VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nA CO CI\n: MEA O\nO O E\nO O E CN\n: ME MIA\na tq pa | lo] o\nEC O E\nOC O E IC\nMOCOS O CO CA\nDC O E CO\nKAEMI ICA\nE CI CAS\nE E CAS\nCOS ss [polo [ero poo\n== - ss | es | |]\nE EC CA\nSES ME\nDE A EC\nO EC O\nE CI CA\nRA || | [es | | ||\na -- e lp o\nJA ICA\nA é8 1 | | | A —\nMN es | | | fe] |.\nE EA CAI\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMm. som:sos0 KIT 59,809 civiziagas MM\n\n--- PAGE BREAK ---\n- :\n710598092010311 Ver: 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[1] Ls, [a] JURADOS DE VOTACIÓN\nnd. A RE ELECCIONES CONGRESO\n¡e ATA 13 DE MARZO DE 2022\nSENADO ÓN\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC.ESC. MANUEL URIBE ANGEL\nZONA: 03 PUESTO: 02 MESA: 0.21\nX 5-70-63-15 X\nLISTA CON VOTO PREFERENTE\n1140 FUERZA CIUDADANA LA FUERZA DEL CAMBIO\no. uN «== VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nKISETENNAE ==\nHAM ICI\nA\nICA\ne ERE\nOC E O\nHOM o LA — + —\nas | par]\nICI EC E\nE E EC\nts op: MO IC\na lol | os poo] fe | | >\nap] fs] |: [| | |\no MO IC\nas lo] [ajo ]l fe | pj\nE E\nSE\n99\nO CI E\nRE AC\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS || [A\nMo som: 59509 KIT 59,809 civizisozs MM\n\n--- PAGE BREAK ---\nMAUI _\n710598092010411 Ver: 01 Pag: 04 de 11 |\nACTA DE ESCRUTINIO DE más E-14 | |\nLl Fs el DELEGADOS A |\nAm ELE ELECCIONES CONGRESO 0\n[E Deir, 13 DE MARZO DE 2022 == |\nie al +» E REGISTRADURÍA |\nlr SENADO PR\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN y\nLUGAR: SEC.ESC. MANUEL URIBE ANGEL |\nZONA: 03 PUESTO: 02 MESA: 021 |\nX 5-70-63-15 X\nLISTA CON VOTO PREFERENTE |\nAM ES PARTIDO CAMBIO RADICAL |\no o o VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nap sol] fe]:\nMO CA CES\nPO CA E\n—- WEA AMD\no alado\nep felt wi\na —— apa idd\nAAA\nlo ml — mt]\nela «Y || [=. ||]\nall [el ll [» |] 1]\nA A\n1 —— A pep\nZ fe fe po\nME CA ICA\nep A — alo]\no MAA\ne oo fea, po pe] lolo\npm ap pe]|\npo fs | | y peto\nA — cas jp pe\nlides ooo fer\nalles (ef | y\nal fs ||. ef po\nA E a] pep ||\nNO CI\n| 29\nHA O IC\nE CI\n[a pl eS dodo lo\nLal: e pol\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n| LISTA SIN VOTO PREFERENTE\n0 0 VOTOS PORLA AGRUPACIÓN POLÍTICA \"wm — | |—\nA LIBTA SIN VOTO PREFERENTE\n| CER | 0019 | parTiDO NUEVO LIBERALISMO\n| al veresreniaremecineses >] [|]\nMl No. Form; 59809 KIT 59,809 | Civ1218937 Ml\n\n--- PAGE BREAK ---\nA _\n710598092010511 Ver: 01 Pag: 05 de 11 |\nACTA DE ESCRUTINIO re él EA ¡\nTL JURADOS DE VOTACIO |\nCA AD O ELEGADOS A\nOlite SENADO NS\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN (\nLUGAR: SEC.ESC. MANUEL URIBE ANGEL |\nZONA: 03 PUESTO: 02 MESA: 021\nX 5-70-63-15 X\nA _ AE\nE 1130 | ESTAMOS LISTAS COLOMBIA\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA > — | 18\no LISTA SIN VOTO PREFERENTE\nIN on MOVIMIENTO UNITARIO METAPOLÍTICO\nMIN VOTOS POR LA AGRUPACIÓN POLÍTICA \"mb |\n77 LISTA CON VOTÓ PREFERENTE\nven 0231 | COALICIÓN MIRA - COLOMBIA JUSTA LIBRES\n0 MES «fam VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nHH\ny a — |\nA EM\nAO E CES\nslap o] [so\nA E\nall [==] | | [ef y]\nBE ss ol feo |.\npoo llas | | yo o\nAO A E\nIO EC EA\noa pi [sp | | (a. ——\nMECA A\nna a lp AA\n|] NS\nA CC\nMAI EC\npe | | fe | po\npe MEC\nME o\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS |—|—-!|-|]\nMl No. Form: 59809 KIT 59,809 Clv1218938 |\n\n--- PAGE BREAK ---\nA o\n710598092010611 Ver: 01 Pag: 08 de 11 |\nmd DE ESCRUTINIO DE LOS EA |\n\"E JURADOS DE VOTACION |\nE ] A O DELEGADOS meo |\n. ES |\nREGI |\nOE ru SENADO A\nDEPARTAMENTO: 01 - ANTIOQUÍA |\nMUNICIPIO: 001 - MEDELLIN |\nLUGAR: SEC.ESC, MANUEL URIBE ANGEL\nZONA: 03 PUESTO: 02 MESA: 021 |\nX 5-70-63-15 X |\nTT CISTA CON VOTO PREFERENTE 1\nPA 0001 Í PARTIDO LIBERAL COLOMBIANO ¡\nKN NS «fm VOTOS SOLO POR LA A AGRUPACIÓN POLÍTICA\nAO A\nHARTA\nRR\nls ¡6 sa | |] [7\n+2 MO ———\nnit] | + e +\nTO\nCO CO\nDECIA O O CO O A\n12 so] pa\n«| | | [ep]\nA CN\nodas [o | | [e | |] [seo]\nas fs | lo pe po]\nFalso | [as]\nA ICI\nos as po\nDES ss [|| fe pp]\no A ca\nE polo OS\nDU A O CA\npa loo] ops pol] pa] oo\nMEN as] |]. Ep\n7 A — ss |\n28 ICO CA\n29 —— ee [oy | [esp | |\nKN IC IC\nOM ICI A\nuz A ICI EC\nle —+— IO\nEX CA AA\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS =lto\nTH LISTASIN VOTO PREFERENTE\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA wm — [—\n— LISTA SIN VOTO PREFERENTE\nLD 0302 | MOVIMIENTO DE SALVACIÓN NACIONAL\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA mum ¡| |—\nA KIT 59,809 civizisgao MM\n\n--- PAGE BREAK ---\nA _\n|\n710598092010711 Ver: 01 Pag",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

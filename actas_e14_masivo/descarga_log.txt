@@ -1,0 +1,79 @@
+/Users/arielsanroj/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+    ╔═══════════════════════════════════════════════════════╗
+    ║  DESCARGA DIRECTA - CONGRESO 2022 (NO INTERACTIVO)    ║
+    ║  SENADO + CAMARA (~210,000 PDFs)                      ║
+    ╠═══════════════════════════════════════════════════════╣
+    ║  - Modo automático (sin input manual)                 ║
+    ║  - Detecta CAPTCHA y espera que lo resuelvas          ║
+    ║  - Guarda progreso (puedes pausar con Ctrl+C)         ║
+    ║  - Continua donde quedaste                            ║
+    ╚═══════════════════════════════════════════════════════╝
+    
+[OK] Progreso: 130 puestos, 0 PDFs
+[*] Cargando puestos...
+[OK] 26520 puestos
+[*] Iniciando Chrome...
+[OK] Chrome listo
+[*] Navegando a https://e14_congreso_2022.registraduria.gov.co
+
+=======================================================
+  CONFIGURACION INICIAL (AUTOMATICA)
+=======================================================
+  Seleccionando primer puesto para activar sesión...
+  Consultando...
+
+  >>> RESUELVE EL CAPTCHA EN EL NAVEGADOR <<<
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  CAPTCHA DETECTADO
+  Resuelvelo en el navegador...
+  (Esperando máximo 600s)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[OK] Resultados detectados!
+=======================================================
+[OK] Sesion sincronizada
+
+[*] Puestos pendientes: 26390
+[*] PDFs ya descargados: 0
+
+[*] Iniciando... (Ctrl+C para pausar)
+
+
+>>> SENADO | 01 - ANTIOQUIA (99.88%)
+    Puestos: 0 | PDFs: 0
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  CAPTCHA DETECTADO
+  Resuelvelo en el navegador...
+  (Esperando máximo 300s)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[OK] Resultados detectados!
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  CAPTCHA DETECTADO
+  Resuelvelo en el navegador...
+  (Esperando máximo 300s)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[OK] Resultados detectados!
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  CAPTCHA DETECTADO
+  Resuelvelo en el navegador...
+  (Esperando máximo 300s)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[OK] Resultados detectados!
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  CAPTCHA DETECTADO
+  Resuelvelo en el navegador...
+  (Esperando máximo 300s)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[OK] Resultados detectados!
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  CAPTCHA DETECTADO
+  Resuelvelo en el navegador...
+  (Esperando máximo 300s)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

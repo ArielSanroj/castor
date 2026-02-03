@@ -1,0 +1,902 @@
+{
+  "sample_id": "9a1de66a",
+  "sha256": "701683785b61f301c384846425ed6350e0483b6fcc5da3753a12ac8807490ba1",
+  "source": "training_data/e14_source/document (4).pdf",
+  "pages": 5,
+  "extraction": {
+    "extraction_id": "a5548f29-c73d-44b2-9a67-5f345e38f767",
+    "source_file": "uploaded_bytes",
+    "source_sha256": "701683785b61f301c384846425ed6350e0483b6fcc5da3753a12ac8807490ba1",
+    "extracted_at": "2026-01-23 17:19:36.513865",
+    "model_version": "claude-sonnet-4-20250514",
+    "processing_time_ms": 42984,
+    "header": {
+      "barcode": "740146482010105",
+      "version": null,
+      "page_info": null,
+      "copy_type": "DELEGADOS",
+      "election_name": "ELECCIONES TERRITORIALES",
+      "election_date": "OCTUBRE 29 DE 2023",
+      "corporacion": "CONCEJO",
+      "departamento_code": "48",
+      "departamento_name": "LA GUAJIRA",
+      "municipio_code": "002",
+      "municipio_name": "ALBANIA",
+      "lugar": "HUARE HUAREN",
+      "zona": "99",
+      "puesto": "20",
+      "mesa": "004"
+    },
+    "nivelacion": {
+      "total_sufragantes_e11": 240,
+      "total_votos_urna": 240,
+      "total_votos_incinerados": 0,
+      "confidence_sufragantes": 0.95,
+      "confidence_urna": 0.95,
+      "confidence_incinerados": null
+    },
+    "partidos": [
+      {
+        "party_code": "0006",
+        "party_name": "PARTIDO ALIANZA SOCIAL INDEPENDIENTE \"ASI\"",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 2,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 14,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 4,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 20,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0024",
+        "party_name": "PARTIDO DEMOCRATA COLOMBIANO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 5,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 10,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0009",
+        "party_name": "PARTIDO POLO DEMOCRÁTICO ALTERNATIVO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 7,
+            "confidence": 0.85,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 10,
+        "confidence_total": 0.9,
+        "needs_review": true
+      },
+      {
+        "party_code": "0002",
+        "party_name": "PARTIDO CONSERVADOR COLOMBIANO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 5,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 6,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 12,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0016",
+        "party_name": "MOVIMIENTO ALIANZA DEMOCRÁTICA AMPLIA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 1,
+            "confidence": 0.85,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 7,
+        "confidence_total": 0.85,
+        "needs_review": true
+      },
+      {
+        "party_code": "0029",
+        "party_name": "NUEVA FUERZA DEMOCRÁTICA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 7,
+            "confidence": 0.85,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 10,
+            "confidence": 0.8,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 22,
+        "confidence_total": 0.85,
+        "needs_review": true
+      },
+      {
+        "party_code": "0003",
+        "party_name": "PARTIDO CAMBIO RADICAL",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 2,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 26,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 30,
+            "confidence": 0.95,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 60,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0012",
+        "party_name": "MOVIMIENTO ALTERNATIVO INDÍGENA Y SOCIAL \"MAIS\"",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 5,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 10,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 9,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 5,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 8,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 18,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 19,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 75,
+        "confidence_total": 0.9,
+        "needs_review": false
+      }
+    ],
+    "votos_especiales": {
+      "votos_blanco": 1,
+      "votos_nulos": 13,
+      "votos_no_marcados": 10,
+      "confidence_blanco": 0.95,
+      "confidence_nulos": 0.95,
+      "confidence_no_marcados": 0.9
+    },
+    "constancias": {
+      "hubo_recuento": false,
+      "recuento_solicitado_por": null,
+      "recuento_en_representacion_de": null,
+      "otras_constancias": null,
+      "num_jurados_firmantes": 6,
+      "jurados_info": []
+    },
+    "overall_confidence": 0.9,
+    "fields_needing_review": 3,
+    "total_pages": 5,
+    "pages_processed": 5
+  },
+  "validation": {
+    "extraction_id": "a5548f29-c73d-44b2-9a67-5f345e38f767",
+    "mesa_id": "48-002-99-20-004",
+    "validated_at": "2026-01-23 17:19:36.514848",
+    "validations": [
+      {
+        "rule_id": "NIV_001",
+        "rule_name": "NIVELACION_SUFRAGANTES_VS_URNA",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Sufragantes E-11 (240) ≥ Votos urna (240)",
+        "expected_value": 240,
+        "actual_value": 240,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "SUM_001",
+        "rule_name": "SUMA_VOTOS_IGUAL_URNA",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Suma computada (240) = Urna (240). Delta: 0",
+        "expected_value": 240,
+        "actual_value": 240,
+        "delta": 0,
+        "details": {
+          "total_partidos": 216,
+          "votos_blanco": 1,
+          "votos_nulos": 13,
+          "votos_no_marcados": 10
+        }
+      },
+      {
+        "rule_id": "PARTY_0006",
+        "rule_name": "SUMA_PARTIDO_0006",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO ALIANZA SOCIAL INDEPENDIENTE \"ASI\": Agrupación + Candidatos (20) = Total (20)",
+        "expected_value": 20,
+        "actual_value": 20,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0024",
+        "rule_name": "SUMA_PARTIDO_0024",
+        "passed": false,
+        "severity": "MEDIUM",
+        "message": "PARTIDO DEMOCRATA COLOMBIANO: Agrupación + Candidatos (11) ≠ Total (10)",
+        "expected_value": 11,
+        "actual_value": 10,
+        "delta": -1,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0009",
+        "rule_name": "SUMA_PARTIDO_0009",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO POLO DEMOCRÁTICO ALTERNATIVO: Agrupación + Candidatos (10) = Total (10)",
+        "expected_value": 10,
+        "actual_value": 10,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0002",
+        "rule_name": "SUMA_PARTIDO_0002",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO CONSERVADOR COLOMBIANO: Agrupación + Candidatos (12) = Total (12)",
+        "expected_value": 12,
+        "actual_value": 12,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0016",
+        "rule_name": "SUMA_PARTIDO_0016",
+        "passed": true,
+        "severity": "INFO",
+        "message": "MOVIMIENTO ALIANZA DEMOCRÁTICA AMPLIA: Agrupación + Candidatos (7) = Total (7)",
+        "expected_value": 7,
+        "actual_value": 7,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0029",
+        "rule_name": "SUMA_PARTIDO_0029",
+        "passed": true,
+        "severity": "INFO",
+        "message": "NUEVA FUERZA DEMOCRÁTICA: Agrupación + Candidatos (22) = Total (22)",
+        "expected_value": 22,
+        "actual_value": 22,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0003",
+        "rule_name": "SUMA_PARTIDO_0003",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO CAMBIO RADICAL: Agrupación + Candidatos (60) = Total (60)",
+        "expected_value": 60,
+        "actual_value": 60,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0012",
+        "rule_name": "SUMA_PARTIDO_0012",
+        "passed": true,
+        "severity": "INFO",
+        "message": "MOVIMIENTO ALTERNATIVO INDÍGENA Y SOCIAL \"MAIS\": Agrupación + Candidatos (75) = Total (75)",
+        "expected_value": 75,
+        "actual_value": 75,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "EXCEED_001",
+        "rule_name": "VOTOS_NO_EXCEDEN_SUFRAGANTES",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Ningún partido excede sufragantes",
+        "expected_value": null,
+        "actual_value": null,
+        "delta": null,
+        "details": null
+      }
+    ],
+    "all_passed": false,
+    "critical_failures": 0,
+    "high_failures": 0,
+    "medium_failures": 1,
+    "low_failures": 0,
+    "alerts_generated": [
+      "MEDIUM: SUMA_PARTIDO_0024 - PARTIDO DEMOCRATA COLOMBIANO: Agrupación + Candidatos (11) ≠ Total (10)"
+    ]
+  },
+  "metadata": {},
+  "ocr_success": true,
+  "ocr_error": null,
+  "processing_time_ms": 52914,
+  "created_at": "2026-01-23T17:19:36.515764",
+  "is_validated": false,
+  "is_corrected": false,
+  "corrections": []
+}

@@ -1,0 +1,4357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>CASTOR | Dashboard Control Electoral</title>
+    <meta name="description" content="Dashboard de Control Electoral. Monitoreo E-14, gestión de incidencias y litigio electoral.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="/static/css/styles.css?v=20260124">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+
+    <!-- Leaflet.js for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+    <meta name="theme-color" content="#FFFFFF">
+
+    <style>
+        /* ========== MANUAL DE MARCA CASTOR ========== */
+        :root {
+            --black: #111111;
+            --white: #FFFFFF;
+            --gray-warm: #BFB8AE;
+            --sand: #E6E1D8;
+            --bg: #FFFFFF;
+            --bg-secondary: #F9F8F6;
+            --panel: #FFFFFF;
+            --panel-hover: #F5F4F2;
+            --border: #E6E1D8;
+            --text: #111111;
+            --text-secondary: #444444;
+            --muted: #BFB8AE;
+            --accent: #111111;
+            --accent-hover: #333333;
+            --accent-light: rgba(17, 17, 17, 0.08);
+            --success: #2D5A3D;
+            --warning: #8B7355;
+            --danger: #8B3A3A;
+            --info: #4A5568;
+        }
+
+        /* ========== CONTROL ELECTORAL DASHBOARD ========== */
+        .campaign-team-dashboard {
+            min-height: 100vh;
+            background: var(--bg);
+        }
+
+        /* Tab Navigation */
+        .dashboard-tabs {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border, #2A2A2A);
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-secondary, #E0DED8);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--border-gold, rgba(201, 162, 39, 0.3));
+            background: rgba(201, 162, 39, 0.05);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
+            border-color: var(--accent, #C9A227);
+            color: var(--accent, #C9A227);
+        }
+
+        .tab-btn .badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 999px;
+            background: var(--error, #8B3A3A);
+            color: white;
+            font-weight: 700;
+        }
+
+        .tab-btn .badge.warning { background: var(--warning, #D4A017); }
+        .tab-btn .badge.success { background: var(--success, #4A7C59); }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Filters Bar */
+        .filters-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .filter-group label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .filter-group select {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 6px;
+            background: var(--panel, #141414);
+            color: var(--text, #F5F5F0);
+            font-size: 0.85rem;
+            min-width: 150px;
+        }
+
+        .filter-group select:focus {
+            border-color: var(--accent, #C9A227);
+            outline: none;
+        }
+
+        /* KPI Grid */
+        .kpi-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .kpi-mini {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+            padding: 1rem;
+            border-left: 3px solid var(--accent, #C9A227);
+        }
+
+        .kpi-mini.risk-high { border-left-color: var(--error, #8B3A3A); }
+        .kpi-mini.risk-medium { border-left-color: var(--warning, #D4A017); }
+        .kpi-mini.risk-low { border-left-color: var(--success, #4A7C59); }
+
+        .kpi-mini-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .kpi-mini-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--text, #F5F5F0);
+        }
+
+        /* Risk Cards */
+        .risk-section {
+            margin-bottom: 2rem;
+        }
+
+        .risk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .risk-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .risk-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .risk-indicator.high { background: var(--error, #8B3A3A); box-shadow: 0 0 8px rgba(139, 58, 58, 0.5); }
+        .risk-indicator.medium { background: var(--warning, #D4A017); }
+        .risk-indicator.low { background: var(--success, #4A7C59); }
+
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .risk-card {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 1.25rem;
+            transition: all 0.25s ease;
+        }
+
+        .risk-card:hover {
+            border-color: var(--border-gold);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .risk-card.high-risk {
+            border-left: 4px solid var(--error, #8B3A3A);
+            background: linear-gradient(135deg, rgba(139, 58, 58, 0.1), transparent);
+        }
+
+        .risk-card.medium-risk {
+            border-left: 4px solid var(--warning, #D4A017);
+            background: linear-gradient(135deg, rgba(212, 160, 23, 0.1), transparent);
+        }
+
+        .risk-card.low-risk {
+            border-left: 4px solid var(--success, #4A7C59);
+        }
+
+        .risk-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .risk-card-mesa {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+
+        .risk-badge {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .risk-badge.high {
+            background: rgba(139, 58, 58, 0.2);
+            color: var(--error, #8B3A3A);
+        }
+
+        .risk-badge.medium {
+            background: rgba(212, 160, 23, 0.2);
+            color: var(--warning, #D4A017);
+        }
+
+        .risk-badge.low {
+            background: rgba(74, 124, 89, 0.2);
+            color: var(--success, #4A7C59);
+        }
+
+        /* ========== ZONAS DE RIESGO MOE STYLES ========== */
+        .risk-data-source {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(90deg, rgba(201, 162, 39, 0.1), transparent);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .source-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.3rem 0.6rem;
+            background: var(--accent, #C9A227);
+            color: var(--bg, #0A0A0A);
+            border-radius: 4px;
+        }
+
+        .source-info {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .risk-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .risk-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .risk-kpi {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .risk-kpi.critical {
+            border-left: 4px solid #DC3545;
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.15), transparent);
+        }
+
+        .risk-kpi.high {
+            border-left: 4px solid #E65100;
+            background: linear-gradient(135deg, rgba(230, 81, 0, 0.1), transparent);
+        }
+
+        .risk-kpi.moderate {
+            border-left: 4px solid #D4A017;
+            background: linear-gradient(135deg, rgba(212, 160, 23, 0.1), transparent);
+        }
+
+        .risk-kpi.normal {
+            border-left: 4px solid #4A7C59;
+        }
+
+        .risk-kpi-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .risk-kpi-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .risk-kpi.critical .risk-kpi-icon svg { stroke: #DC3545; }
+        .risk-kpi.high .risk-kpi-icon svg { stroke: #E65100; }
+        .risk-kpi.moderate .risk-kpi-icon svg { stroke: #D4A017; }
+        .risk-kpi.normal .risk-kpi-icon svg { stroke: #4A7C59; }
+
+        .risk-kpi-content {
+            flex: 1;
+        }
+
+        .risk-kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            line-height: 1;
+        }
+
+        .risk-kpi.critical .risk-kpi-value { color: #DC3545; }
+        .risk-kpi.high .risk-kpi-value { color: #E65100; }
+        .risk-kpi.moderate .risk-kpi-value { color: #D4A017; }
+        .risk-kpi.normal .risk-kpi-value { color: #4A7C59; }
+
+        .risk-kpi-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text, #F5F5F0);
+            margin-top: 0.25rem;
+        }
+
+        .risk-kpi-desc {
+            font-size: 0.65rem;
+            color: var(--muted, #9A8F7C);
+            margin-top: 0.15rem;
+        }
+
+        /* Risk Matrix */
+        .risk-matrix-section {
+            margin-bottom: 2rem;
+        }
+
+        .matrix-legend-hint {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .risk-matrix-container {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .risk-matrix {
+            border-collapse: collapse;
+            background: var(--panel-alt, #1C1C1C);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .risk-matrix th, .risk-matrix td {
+            padding: 1rem 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border, #2A2A2A);
+        }
+
+        .matrix-corner {
+            background: var(--panel, #141414);
+        }
+
+        .matrix-header {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: var(--panel, #141414);
+            color: var(--text-secondary, #E0DED8);
+        }
+
+        .matrix-row-header {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: left !important;
+            background: var(--panel, #141414);
+            color: var(--text-secondary, #E0DED8);
+        }
+
+        .matrix-cell {
+            font-size: 1.25rem;
+            font-weight: 700;
+            min-width: 80px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .matrix-cell:hover {
+            transform: scale(1.05);
+        }
+
+        .matrix-cell.critical {
+            background: rgba(220, 53, 69, 0.3);
+            color: #DC3545;
+        }
+
+        .matrix-cell.critical.pulse {
+            animation: criticalPulse 2s infinite;
+        }
+
+        @keyframes criticalPulse {
+            0%, 100% { background: rgba(220, 53, 69, 0.3); }
+            50% { background: rgba(220, 53, 69, 0.5); }
+        }
+
+        .matrix-cell.high {
+            background: rgba(230, 81, 0, 0.25);
+            color: #E65100;
+        }
+
+        .matrix-cell.moderate {
+            background: rgba(212, 160, 23, 0.2);
+            color: #D4A017;
+        }
+
+        .matrix-cell.normal {
+            background: rgba(74, 124, 89, 0.15);
+            color: #4A7C59;
+        }
+
+        .matrix-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .matrix-legend .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary, #E0DED8);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.critical { background: #DC3545; }
+        .legend-dot.high { background: #E65100; }
+        .legend-dot.moderate { background: #D4A017; }
+        .legend-dot.normal { background: #4A7C59; }
+
+        /* Main Grid: Municipalities + Detail Panel */
+        .risk-main-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .risk-main-grid { grid-template-columns: 1fr; }
+        }
+
+        .critical-municipalities-section {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .filter-pills {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-pill {
+            padding: 0.35rem 0.75rem;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--text-secondary, #E0DED8);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-pill:hover, .filter-pill.active {
+            background: var(--accent, #C9A227);
+            border-color: var(--accent, #C9A227);
+            color: var(--bg, #0A0A0A);
+        }
+
+        .filter-pill.critical.active {
+            background: #DC3545;
+            border-color: #DC3545;
+        }
+
+        .filter-pill.high.active {
+            background: #E65100;
+            border-color: #E65100;
+        }
+
+        .municipalities-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .municipality-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .municipality-item:hover {
+            background: rgba(201, 162, 39, 0.1);
+        }
+
+        .municipality-item.selected {
+            background: rgba(201, 162, 39, 0.15);
+            border-left-color: var(--accent, #C9A227);
+        }
+
+        .municipality-item.extreme {
+            border-left-color: #DC3545;
+        }
+
+        .municipality-item.high {
+            border-left-color: #E65100;
+        }
+
+        .muni-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .muni-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text, #F5F5F0);
+        }
+
+        .muni-dept {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .muni-risk-badge {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .muni-risk-badge.extreme {
+            background: rgba(220, 53, 69, 0.2);
+            color: #DC3545;
+        }
+
+        .muni-risk-badge.high {
+            background: rgba(230, 81, 0, 0.2);
+            color: #E65100;
+        }
+
+        /* Department Groups */
+        .dept-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .dept-group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0.8rem;
+            background: rgba(201, 162, 39, 0.1);
+            border-left: 3px solid var(--accent, #C9A227);
+            margin-bottom: 0.25rem;
+        }
+
+        .dept-group-name {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--accent, #C9A227);
+        }
+
+        .dept-group-counts {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.65rem;
+        }
+
+        .dept-group-counts .count-extreme {
+            color: #DC3545;
+            font-weight: 600;
+        }
+
+        .dept-group-counts .count-high {
+            color: #E65100;
+            font-weight: 600;
+        }
+
+        .dept-group-municipalities {
+            padding-left: 0.5rem;
+        }
+
+        .dept-group-municipalities .municipality-item {
+            padding: 0.4rem 0.6rem;
+            margin-bottom: 2px;
+            border-left-width: 2px;
+        }
+
+        .dept-group-municipalities .muni-name {
+            font-size: 0.8rem;
+        }
+
+        /* Filter pill extreme style */
+        .filter-pill.extreme {
+            border-color: #DC3545;
+        }
+
+        .filter-pill.extreme.active,
+        .filter-pill.extreme:hover {
+            background: rgba(220, 53, 69, 0.2);
+            color: #DC3545;
+            border-color: #DC3545;
+        }
+
+        /* Municipality Detail Panel */
+        .municipality-detail-panel {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .detail-panel-header {
+            padding: 1rem;
+            background: linear-gradient(90deg, rgba(220, 53, 69, 0.15), transparent);
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .detail-panel-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text, #F5F5F0);
+            margin: 0 0 0.25rem 0;
+        }
+
+        .detail-dept {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .detail-panel-content {
+            padding: 1rem;
+            min-height: 300px;
+        }
+
+        .detail-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .detail-empty svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .detail-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-stat {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .detail-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text, #F5F5F0);
+        }
+
+        .detail-stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .detail-factors {
+            margin-top: 1rem;
+        }
+
+        .detail-factors h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--muted, #9A8F7C);
+            margin-bottom: 0.5rem;
+        }
+
+        .factor-tag {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            background: rgba(220, 53, 69, 0.15);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: var(--text-secondary, #E0DED8);
+            margin: 0.25rem;
+        }
+
+        .detail-armed-group {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: rgba(220, 53, 69, 0.1);
+            border-radius: 6px;
+            border-left: 3px solid #DC3545;
+        }
+
+        .armed-group-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .armed-group-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #DC3545;
+        }
+
+        /* Risk Factors Section */
+        .risk-factors-section {
+            margin-bottom: 2rem;
+        }
+
+        .risk-factors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .risk-factors-grid { grid-template-columns: 1fr; }
+        }
+
+        .risk-factor-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+        }
+
+        .factor-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 180px;
+        }
+
+        .factor-icon {
+            font-size: 1.1rem;
+        }
+
+        .factor-name {
+            font-size: 0.8rem;
+            color: var(--text-secondary, #E0DED8);
+        }
+
+        .factor-bar-container {
+            flex: 1;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .factor-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #DC3545, #E65100);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .factor-count {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text, #F5F5F0);
+            min-width: 30px;
+            text-align: right;
+        }
+
+        .risk-factor-bar:hover {
+            background: rgba(201, 162, 39, 0.1);
+            border-color: var(--accent, #C9A227);
+        }
+
+        /* Factor Popup */
+        .factor-popup {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            background: var(--panel, #121212);
+            border: 1px solid var(--accent, #C9A227);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            max-width: 500px;
+            max-height: 70vh;
+            overflow: hidden;
+        }
+
+        .factor-popup-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: linear-gradient(90deg, rgba(201, 162, 39, 0.2), transparent);
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .factor-popup-header h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent, #C9A227);
+        }
+
+        .factor-popup-count {
+            font-size: 0.75rem;
+            color: var(--muted, #888);
+        }
+
+        .factor-popup-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--muted, #888);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .factor-popup-close:hover {
+            color: var(--text, #F5F5F0);
+        }
+
+        .factor-popup-body {
+            padding: 1rem;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .factor-popup-dept {
+            margin-bottom: 1rem;
+        }
+
+        .factor-popup-dept:last-child {
+            margin-bottom: 0;
+        }
+
+        .factor-popup-dept-name {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text, #F5F5F0);
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .factor-popup-munis {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .factor-popup-muni {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text, #F5F5F0);
+        }
+
+        .factor-popup-muni.extreme {
+            background: rgba(220, 53, 69, 0.2);
+            color: #DC3545;
+        }
+
+        .factor-popup-muni.high {
+            background: rgba(230, 81, 0, 0.2);
+            color: #E65100;
+        }
+
+        /* Departments Ranking */
+        .departments-ranking {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .dept-rank-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent, #C9A227);
+        }
+
+        .dept-rank-position {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent, #C9A227);
+            min-width: 30px;
+        }
+
+        .dept-rank-info {
+            flex: 1;
+        }
+
+        .dept-rank-name {
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+
+        .dept-rank-stats {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.7rem;
+            color: var(--muted, #9A8F7C);
+            margin-top: 0.25rem;
+        }
+
+        .dept-rank-stat.extreme { color: #DC3545; }
+        .dept-rank-stat.high { color: #E65100; }
+
+        .loading-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .risk-card-location {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+            margin-bottom: 0.75rem;
+        }
+
+        .risk-card-reason {
+            font-size: 0.85rem;
+            color: var(--text-secondary, #E0DED8);
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+        }
+
+        .risk-card-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .risk-card-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .risk-card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border, #2A2A2A);
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-secondary, #E0DED8);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+        }
+
+        .btn-action:hover {
+            border-color: var(--accent, #C9A227);
+            color: var(--accent, #C9A227);
+        }
+
+        .btn-action.primary {
+            background: var(--accent, #C9A227);
+            border-color: var(--accent, #C9A227);
+            color: var(--bg, #0A0A0A);
+        }
+
+        .btn-action.primary:hover {
+            background: var(--accent-strong, #D4AF37);
+        }
+
+        .btn-action.danger {
+            border-color: var(--error, #8B3A3A);
+            color: var(--error, #8B3A3A);
+        }
+
+        .btn-action.danger:hover {
+            background: var(--error, #8B3A3A);
+            color: white;
+        }
+
+        /* Votes Table */
+        .votes-table-container {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .votes-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .votes-table th,
+        .votes-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .votes-table th {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted, #9A8F7C);
+            background: var(--panel, #141414);
+            position: sticky;
+            top: 0;
+        }
+
+        .votes-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .votes-table th.sortable:hover {
+            color: var(--accent, #C9A227);
+        }
+
+        .votes-table th .sort-icon {
+            margin-left: 0.25rem;
+            opacity: 0.5;
+        }
+
+        .votes-table th.sorted .sort-icon {
+            opacity: 1;
+            color: var(--accent, #C9A227);
+        }
+
+        .votes-table td {
+            font-size: 0.85rem;
+            color: var(--text, #F5F5F0);
+        }
+
+        .votes-table tr:hover td {
+            background: rgba(201, 162, 39, 0.05);
+        }
+
+        .votes-table .party-name {
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .vote-bar-cell {
+            min-width: 150px;
+        }
+
+        .vote-bar {
+            height: 8px;
+            background: var(--border, #2A2A2A);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .vote-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent, #C9A227), var(--accent-light, #E8D48A));
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+
+        /* Witness Call Tab */
+        .witness-section {
+            margin-bottom: 2rem;
+        }
+
+        .witness-map-placeholder {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .witness-map-placeholder svg {
+            width: 64px;
+            height: 64px;
+            color: var(--muted, #9A8F7C);
+            margin-bottom: 1rem;
+        }
+
+        .nearby-witnesses {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .witness-card {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+
+        .witness-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .witness-name {
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+
+        .witness-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .witness-status.available {
+            background: rgba(74, 124, 89, 0.2);
+            color: var(--success, #4A7C59);
+        }
+
+        .witness-status.busy {
+            background: rgba(212, 160, 23, 0.2);
+            color: var(--warning, #D4A017);
+        }
+
+        .witness-location {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+            margin-bottom: 0.5rem;
+        }
+
+        .witness-distance {
+            font-size: 0.75rem;
+            color: var(--accent, #C9A227);
+            margin-bottom: 1rem;
+        }
+
+        .witness-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Charts */
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-card {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+
+        /* OCR Problems List */
+        .ocr-problems-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .ocr-problem-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--panel, #141414);
+            border-radius: 6px;
+            border-left: 3px solid var(--danger, #DC3545);
+        }
+
+        .ocr-problem-item.medium {
+            border-left-color: var(--warning, #D4A017);
+        }
+
+        .ocr-problem-location {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .ocr-problem-mesa {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text, #F5F5F0);
+        }
+
+        .ocr-problem-geo {
+            font-size: 0.8rem;
+            color: var(--accent, #C9A227);
+            font-weight: 600;
+        }
+
+        .ocr-problem-place {
+            font-size: 0.7rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .ocr-problem-confidence {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.15rem;
+        }
+
+        .ocr-problem-value {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .ocr-problem-value.critical {
+            color: var(--danger, #DC3545);
+        }
+
+        .ocr-problem-value.warning {
+            color: var(--warning, #D4A017);
+        }
+
+        .ocr-problem-label {
+            font-size: 0.7rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .ocr-problem-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted, #9A8F7C);
+            font-size: 0.85rem;
+        }
+
+        .chart-subtitle {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+            margin-left: 0.5rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Real-time indicator */
+        .realtime-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--success, #4A7C59);
+        }
+
+        .realtime-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success, #4A7C59);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* Loading */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border, #2A2A2A);
+            border-top-color: var(--accent, #C9A227);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* Call Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #1E1E1E;
+            border: 2px solid #C9A227;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 162, 39, 0.3);
+            color: #F5F5F0;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--muted, #9A8F7C);
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 768px) {
+            .filters-bar { flex-direction: column; }
+            .filter-group select { width: 100%; }
+            .kpi-grid-compact { grid-template-columns: repeat(2, 1fr); }
+            .risk-grid { grid-template-columns: 1fr; }
+            .charts-row { grid-template-columns: 1fr; }
+        }
+
+        /* ========== CANDIDATES TRACKING STYLES ========== */
+        .candidates-tracking-section {
+            margin-bottom: 2rem;
+        }
+
+        .tracking-count {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .candidates-tracking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .candidate-track-card {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .candidate-track-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent, #C9A227), var(--accent-light, #E8D48A));
+        }
+
+        .candidate-track-card:hover {
+            border-color: var(--border-gold, rgba(201, 162, 39, 0.3));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .candidate-track-card.leading::before {
+            background: linear-gradient(90deg, var(--success, #4A7C59), #6BA87A);
+        }
+
+        .candidate-track-card.warning::before {
+            background: linear-gradient(90deg, var(--warning, #D4A017), #E8B832);
+        }
+
+        .candidate-track-card.danger::before {
+            background: linear-gradient(90deg, var(--error, #8B3A3A), #A85454);
+        }
+
+        .candidate-track-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .candidate-track-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+
+        .candidate-track-party {
+            font-size: 0.7rem;
+            color: var(--muted, #9A8F7C);
+            margin-top: 0.15rem;
+        }
+
+        .candidate-track-position {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(201, 162, 39, 0.15);
+            color: var(--accent, #C9A227);
+        }
+
+        .candidate-track-position.top-3 {
+            background: rgba(74, 124, 89, 0.2);
+            color: var(--success, #4A7C59);
+        }
+
+        .candidate-track-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .candidate-stat {
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+        }
+
+        .candidate-stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--accent, #C9A227);
+        }
+
+        .candidate-stat-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .candidate-track-progress {
+            margin-top: 0.75rem;
+        }
+
+        .candidate-progress-bar {
+            height: 6px;
+            background: var(--border, #2A2A2A);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .candidate-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent, #C9A227), var(--accent-light, #E8D48A));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .candidate-progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: var(--muted, #9A8F7C);
+            margin-top: 0.25rem;
+        }
+
+        .candidate-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .candidate-trend.up {
+            color: var(--success, #4A7C59);
+        }
+
+        .candidate-trend.down {
+            color: var(--error, #8B3A3A);
+        }
+
+        .candidate-trend.stable {
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* ========== E-14 LIVE FORM STYLES ========== */
+        .e14-live-section {
+            margin-bottom: 2rem;
+        }
+
+        /* E-14 Filter Bar */
+        .e14-filters-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            align-items: flex-end;
+        }
+
+        .e14-filters-bar .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            min-width: 140px;
+        }
+
+        .e14-filters-bar .filter-group label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .e14-filters-bar .filter-group select {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 6px;
+            background: var(--panel, #141414);
+            color: var(--text, #F5F5F0);
+            font-size: 0.85rem;
+        }
+
+        .e14-filters-bar .filter-group select:focus {
+            border-color: var(--accent, #C9A227);
+            outline: none;
+        }
+
+        /* ========== VOTES DETAIL SECTION (UNIFIED) ========== */
+        .votes-detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .votes-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .votes-detail-grid .chart-card {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .e14-live-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--success, #4A7C59);
+        }
+
+        .e14-form-card {
+            background: linear-gradient(135deg, var(--panel-alt, #1C1C1C), rgba(201, 162, 39, 0.03));
+            border: 2px solid var(--border-gold, rgba(201, 162, 39, 0.3));
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .e14-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(90deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .e14-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--accent, #C9A227);
+            letter-spacing: 0.05em;
+        }
+
+        .e14-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary, #E0DED8);
+            margin-top: 0.25rem;
+        }
+
+        .e14-header-right {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .e14-meta {
+            text-align: center;
+        }
+
+        .e14-meta-label {
+            display: block;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .e14-meta-value {
+            display: block;
+            font-size: 1.25rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--text, #F5F5F0);
+        }
+
+        .e14-confidence {
+            color: var(--success, #4A7C59) !important;
+        }
+
+        .e14-confidence.medium {
+            color: var(--warning, #D4A017) !important;
+        }
+
+        .e14-confidence.low {
+            color: var(--error, #8B3A3A) !important;
+        }
+
+        .e14-location-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 1.5rem;
+            background: var(--panel, #141414);
+            font-size: 0.8rem;
+            color: var(--text-secondary, #E0DED8);
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .e14-date {
+            color: var(--muted, #9A8F7C);
+        }
+
+        .e14-nivelacion {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .e14-nivel-item {
+            flex: 1;
+            min-width: 100px;
+            padding: 0.5rem 0.75rem;
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .e14-nivel-label {
+            display: block;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted, #9A8F7C);
+            margin-bottom: 0.25rem;
+        }
+
+        .e14-nivel-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--accent, #C9A227);
+        }
+
+        .e14-candidates-section {
+            padding: 1rem 1.5rem;
+        }
+
+        .e14-candidates-header {
+            display: grid;
+            grid-template-columns: 1fr 80px 80px;
+            gap: 1rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted, #9A8F7C);
+            border-bottom: 1px solid var(--border, #2A2A2A);
+            margin-bottom: 0.5rem;
+        }
+
+        .e14-candidates-grid {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .e14-candidate-row {
+            display: grid;
+            grid-template-columns: 1fr 80px 80px;
+            gap: 1rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            align-items: center;
+        }
+
+        .e14-candidate-row:hover {
+            background: rgba(201, 162, 39, 0.1);
+        }
+
+        .e14-candidate-row.updated {
+            animation: rowUpdate 1s ease;
+        }
+
+        @keyframes rowUpdate {
+            0% { background: rgba(74, 124, 89, 0.3); }
+            100% { background: transparent; }
+        }
+
+        .e14-candidate-row.needs-review {
+            background: rgba(139, 58, 58, 0.1);
+            border-left: 3px solid var(--error, #8B3A3A);
+        }
+
+        .e14-candidate-row.top-position {
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.1), transparent);
+        }
+
+        .e14-candidate-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .e14-candidate-position {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent, #C9A227);
+            min-width: 28px;
+        }
+
+        .e14-candidate-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .e14-candidate-party {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .e14-candidate-votes {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--accent, #C9A227);
+            text-align: right;
+        }
+
+        .e14-candidate-ocr {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            justify-content: flex-end;
+        }
+
+        .e14-ocr-bar {
+            width: 40px;
+            height: 6px;
+            background: var(--border, #2A2A2A);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .e14-ocr-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .e14-ocr-fill.high { background: var(--success, #4A7C59); }
+        .e14-ocr-fill.medium { background: var(--warning, #D4A017); }
+        .e14-ocr-fill.low { background: var(--error, #8B3A3A); }
+
+        .e14-ocr-value {
+            font-size: 0.7rem;
+            color: var(--muted, #9A8F7C);
+            min-width: 28px;
+            text-align: right;
+        }
+
+        .e14-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--panel, #141414);
+            border-top: 1px solid var(--border, #2A2A2A);
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .e14-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .e14-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* Animated update effect */
+        .e14-form-card.updating {
+            border-color: var(--success, #4A7C59);
+            box-shadow: 0 0 20px rgba(74, 124, 89, 0.3);
+        }
+
+        /* ========== WAR ROOM KPIs ========== */
+        .warroom-kpis {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .warroom-kpis { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .warroom-kpis { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .warroom-kpi {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .warroom-kpi::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent, #C9A227);
+        }
+
+        .warroom-kpi.success::before { background: var(--success, #4A7C59); }
+        .warroom-kpi.warning::before { background: var(--warning, #D4A017); }
+        .warroom-kpi.danger::before { background: var(--error, #8B3A3A); }
+        .warroom-kpi.info::before { background: #4A7C9F; }
+
+        .warroom-kpi-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--text, #F5F5F0);
+            line-height: 1.1;
+        }
+
+        .warroom-kpi-value.text-success { color: var(--success, #4A7C59); }
+        .warroom-kpi-value.text-warning { color: var(--warning, #D4A017); }
+        .warroom-kpi-value.text-danger { color: var(--error, #8B3A3A); }
+
+        .warroom-kpi-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted, #9A8F7C);
+            margin-top: 0.35rem;
+        }
+
+        /* ========== RECUENTO SECTION ========== */
+        .recuento-section {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .recuento-section .section-header {
+            margin-bottom: 1rem;
+        }
+
+        .recuento-section .section-title {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .recuento-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .recuento-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .recuento-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .recuento-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+
+        .recuento-value.si {
+            color: var(--warning, #D4A017);
+        }
+
+        .recuento-value.no {
+            color: var(--success, #4A7C59);
+        }
+
+        /* ========== INCIDENT QUEUE ========== */
+        .incident-queue-section {
+            margin-bottom: 2rem;
+        }
+
+        .incident-filters {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .incident-filter-btn {
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-secondary, #E0DED8);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .incident-filter-btn:hover {
+            border-color: var(--accent, #C9A227);
+            color: var(--accent, #C9A227);
+        }
+
+        .incident-filter-btn.active {
+            background: var(--accent, #C9A227);
+            border-color: var(--accent, #C9A227);
+            color: var(--bg, #0A0A0A);
+        }
+
+        .incident-filter-btn.p0.active {
+            background: var(--error, #8B3A3A);
+            border-color: var(--error, #8B3A3A);
+            color: white;
+        }
+
+        .incident-filter-btn.p1.active {
+            background: var(--warning, #D4A017);
+            border-color: var(--warning, #D4A017);
+            color: var(--bg, #0A0A0A);
+        }
+
+        .incident-table-container {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .incident-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .incident-table th,
+        .incident-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .incident-table th {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted, #9A8F7C);
+            background: var(--panel, #141414);
+            position: sticky;
+            top: 0;
+        }
+
+        .incident-table td {
+            font-size: 0.8rem;
+            color: var(--text, #F5F5F0);
+        }
+
+        .incident-table tr:hover td {
+            background: rgba(201, 162, 39, 0.05);
+        }
+
+        .severity-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .severity-badge.p0 {
+            background: rgba(139, 58, 58, 0.2);
+            color: var(--error, #8B3A3A);
+            animation: pulse-p0 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-p0 {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(139, 58, 58, 0.4); }
+            50% { box-shadow: 0 0 8px 2px rgba(139, 58, 58, 0.2); }
+        }
+
+        .severity-badge.p1 {
+            background: rgba(212, 160, 23, 0.2);
+            color: var(--warning, #D4A017);
+        }
+
+        .severity-badge.p2 {
+            background: rgba(154, 143, 124, 0.2);
+            color: var(--muted, #9A8F7C);
+        }
+
+        .severity-badge.p3 {
+            background: rgba(74, 124, 89, 0.2);
+            color: var(--success, #4A7C59);
+        }
+
+        .incident-type {
+            font-size: 0.7rem;
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .incident-mesa {
+            font-weight: 600;
+            color: var(--accent, #C9A227);
+        }
+
+        .incident-sla {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.75rem;
+        }
+
+        .incident-sla.urgent {
+            color: var(--error, #8B3A3A);
+        }
+
+        .incident-sla.warning {
+            color: var(--warning, #D4A017);
+        }
+
+        .incident-sla.ok {
+            color: var(--success, #4A7C59);
+        }
+
+        .incident-actions {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        .incident-action-btn {
+            padding: 0.35rem 0.5rem;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text-secondary, #E0DED8);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .incident-action-btn:hover {
+            border-color: var(--accent, #C9A227);
+            color: var(--accent, #C9A227);
+        }
+
+        .incident-action-btn.primary {
+            background: var(--accent, #C9A227);
+            border-color: var(--accent, #C9A227);
+            color: var(--bg, #0A0A0A);
+        }
+
+        .incident-action-btn.danger {
+            border-color: var(--error, #8B3A3A);
+            color: var(--error, #8B3A3A);
+        }
+
+        .incident-action-btn.danger:hover {
+            background: var(--error, #8B3A3A);
+            color: white;
+        }
+
+        .incident-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-left: auto;
+        }
+
+        .incident-stat {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .incident-stat strong {
+            color: var(--text, #F5F5F0);
+        }
+
+        .incident-stat.p0 strong { color: var(--error, #8B3A3A); }
+        .incident-stat.p1 strong { color: var(--warning, #D4A017); }
+
+        /* ========== CHOROPLETH MAP STYLES ========== */
+        .map-section {
+            margin-bottom: 2rem;
+        }
+
+        .map-filters-bar {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .map-filters-bar .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            min-width: 140px;
+        }
+
+        .map-filters-bar .filter-group label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .map-filters-bar .filter-group select {
+            padding: 0.5rem;
+            background: var(--bg, #0A0A0A);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 6px;
+            color: var(--text, #F5F5F0);
+            font-size: 0.85rem;
+        }
+
+        .map-container-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 1rem;
+            min-height: 450px;
+        }
+
+        @media (max-width: 1024px) {
+            .map-container-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .map-card {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .map-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--panel, #141414);
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .map-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .map-mode-selector {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        .map-mode-btn {
+            padding: 0.35rem 0.65rem;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text-secondary, #E0DED8);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .map-mode-btn:hover {
+            border-color: var(--accent, #C9A227);
+            color: var(--accent, #C9A227);
+        }
+
+        .map-mode-btn.active {
+            background: var(--accent, #C9A227);
+            border-color: var(--accent, #C9A227);
+            color: var(--bg, #0A0A0A);
+        }
+
+        #colombia-map {
+            height: 400px;
+            background: var(--panel-alt, #1C1C1C);
+        }
+
+        .map-legend {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0.5rem;
+            background: var(--panel, #141414);
+            border-top: 1px solid var(--border, #2A2A2A);
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #1C1C1C;
+        }
+
+        /* Department Info Panel */
+        .dept-info-panel {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dept-info-header {
+            padding: 1rem;
+            background: linear-gradient(90deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .dept-info-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent, #C9A227);
+            margin-bottom: 0.25rem;
+        }
+
+        .dept-info-subtitle {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .dept-info-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .dept-info-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--muted, #9A8F7C);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .dept-info-empty svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Department Preview Stats */
+        .dept-preview-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .dept-stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0.75rem;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 6px;
+        }
+
+        .dept-stat-label {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .dept-stat-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text, #F5F5F0);
+        }
+
+        .dept-stat-value.danger {
+            color: var(--error, #DC3545);
+        }
+
+        .dept-stat-value.warning {
+            color: var(--warning, #D4A017);
+        }
+
+        .dept-preview-hint {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+            background: rgba(201, 162, 39, 0.1);
+            border-radius: 6px;
+            border: 1px dashed rgba(201, 162, 39, 0.3);
+        }
+
+        .dept-info-panel.preview-active {
+            border-color: var(--accent, #C9A227);
+            box-shadow: 0 0 15px rgba(201, 162, 39, 0.15);
+        }
+
+        .dept-kpis {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .dept-kpi {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        .dept-kpi-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--text, #F5F5F0);
+        }
+
+        .dept-kpi-value.success { color: var(--success, #4A7C59); }
+        .dept-kpi-value.warning { color: var(--warning, #D4A017); }
+        .dept-kpi-value.danger { color: var(--error, #8B3A3A); }
+
+        .dept-kpi-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted, #9A8F7C);
+            margin-top: 0.2rem;
+        }
+
+        .dept-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary, #E0DED8);
+            margin: 1rem 0 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .dept-incidents-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .dept-incident-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        .dept-incident-item .severity-badge {
+            font-size: 0.6rem;
+        }
+
+        .dept-incident-mesa {
+            flex: 1;
+            color: var(--text-secondary, #E0DED8);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dept-incident-type {
+            font-size: 0.65rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* Incident Detail Modal */
+        .incident-detail-content {
+            padding: 1rem;
+        }
+
+        .incident-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .incident-detail-label {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .incident-detail-value {
+            font-size: 0.85rem;
+            color: var(--text, #F5F5F0);
+            font-weight: 500;
+        }
+
+        /* ========== MESA DETAIL MODAL ========== */
+        .mesa-modal {
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mesa-modal .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .mesa-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(90deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .mesa-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .mesa-header-id {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent, #C9A227);
+            font-family: var(--font-display);
+        }
+
+        .mesa-header-location {
+            font-size: 0.8rem;
+            color: var(--text-secondary, #E0DED8);
+        }
+
+        .mesa-header-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .mesa-status-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .mesa-status-badge.validated {
+            background: rgba(74, 124, 89, 0.2);
+            color: var(--success, #4A7C59);
+        }
+
+        .mesa-status-badge.needs-review {
+            background: rgba(212, 160, 23, 0.2);
+            color: var(--warning, #D4A017);
+        }
+
+        .mesa-status-badge.high-risk {
+            background: rgba(139, 58, 58, 0.2);
+            color: var(--error, #8B3A3A);
+        }
+
+        .mesa-confidence-display {
+            text-align: center;
+        }
+
+        .mesa-confidence-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        .mesa-confidence-value.high { color: var(--success, #4A7C59); }
+        .mesa-confidence-value.medium { color: var(--warning, #D4A017); }
+        .mesa-confidence-value.low { color: var(--error, #8B3A3A); }
+
+        .mesa-confidence-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            color: var(--muted, #9A8F7C);
+        }
+
+        .mesa-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border, #2A2A2A);
+        }
+
+        @media (max-width: 768px) {
+            .mesa-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mesa-section {
+            background: var(--panel-alt, #1C1C1C);
+            padding: 1rem;
+        }
+
+        .mesa-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted, #9A8F7C);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mesa-section-title svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* OCR Fields List */
+        .ocr-fields-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .ocr-field-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+        }
+
+        .ocr-field-row.needs-review {
+            background: rgba(139, 58, 58, 0.15);
+            border-left: 3px solid var(--error, #8B3A3A);
+        }
+
+        .ocr-field-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary, #E0DED8);
+        }
+
+        .ocr-field-value {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ocr-field-number {
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--text, #F5F5F0);
+        }
+
+        .ocr-field-confidence {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+        }
+
+        .ocr-field-confidence.high {
+            background: rgba(74, 124, 89, 0.2);
+            color: var(--success, #4A7C59);
+        }
+
+        .ocr-field-confidence.medium {
+            background: rgba(212, 160, 23, 0.2);
+            color: var(--warning, #D4A017);
+        }
+
+        .ocr-field-confidence.low {
+            background: rgba(139, 58, 58, 0.2);
+            color: var(--error, #8B3A3A);
+        }
+
+        /* Validations List */
+        .validations-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .validation-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .validation-row.passed {
+            color: var(--success, #4A7C59);
+        }
+
+        .validation-row.failed {
+            background: rgba(139, 58, 58, 0.15);
+            color: var(--error, #8B3A3A);
+        }
+
+        .validation-icon {
+            font-size: 1rem;
+        }
+
+        .validation-message {
+            flex: 1;
+            color: var(--text-secondary, #E0DED8);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        .comparison-table th {
+            padding: 0.5rem;
+            text-align: left;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted, #9A8F7C);
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .comparison-table td {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border, #2A2A2A);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .candidate-col {
+            color: var(--text, #F5F5F0);
+        }
+
+        .comparison-table .number-col {
+            text-align: right;
+            font-family: var(--font-display);
+            font-weight: 600;
+        }
+
+        .comparison-table .delta-col {
+            text-align: right;
+        }
+
+        .delta-positive {
+            color: var(--success, #4A7C59);
+        }
+
+        .delta-negative {
+            color: var(--error, #8B3A3A);
+        }
+
+        .delta-zero {
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* Incidents in Mesa Detail */
+        .mesa-incidents-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .mesa-incident-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+        }
+
+        .mesa-incident-desc {
+            flex: 1;
+            font-size: 0.75rem;
+            color: var(--text-secondary, #E0DED8);
+        }
+
+        /* Mesa Actions Footer */
+        .mesa-actions-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: var(--panel, #141414);
+            border-top: 1px solid var(--border, #2A2A2A);
+        }
+
+        .mesa-actions-left {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .mesa-actions-right {
+            display: flex;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body class="campaign-team-dashboard">
+    <a href="#main-content" class="skip-link">Ir al contenido principal</a>
+
+    <!-- Header -->
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="nav-left">
+                <a href="/" class="brand">
+                    <img src="/static/images/logo.png" alt="CASTOR Logo" width="40" height="40" style="border-radius: 8px;">
+                    <div>
+                        <strong>CASTOR</strong>
+                        <small>Control Electoral</small>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-center">
+                <a href="/">Inicio</a>
+                <a href="/dashboard">Dashboard IA</a>
+                <a href="/api/team/dashboard" class="nav-highlight">Control Electoral</a>
+            </div>
+            <div class="nav-right">
+                <div class="realtime-indicator">
+                    <span class="realtime-dot"></span>
+                    <span id="last-update-time">--:--</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" style="padding: clamp(1rem, 4vw, 2.5rem);">
+        <div style="max-width: 1400px; margin: 0 auto;">
+
+            <!-- Page Header -->
+            <div style="margin-bottom: 1.5rem;">
+                <h1 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Dashboard Control Electoral</h1>
+                <p style="color: var(--muted); font-size: 0.85rem;">Monitoreo E-14 en tiempo real - Gestión de incidencias y litigio electoral</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="dashboard-tabs" role="tablist">
+                <button class="tab-btn active" data-tab="contienda" role="tab" aria-selected="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    Contienda Electoral
+                </button>
+                <button class="tab-btn" data-tab="zonas-riesgo" role="tab" aria-selected="false">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    Zonas de Riesgo
+                    <span class="badge" id="risk-badge" style="display: none;">0</span>
+                </button>
+                <button class="tab-btn" data-tab="llamar-testigo" role="tab" aria-selected="false">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    Llamar Testigo
+                </button>
+                <button class="tab-btn" data-tab="base-datos" role="tab" aria-selected="false">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                    </svg>
+                    Base de Datos E-14
+                    <span class="badge" id="db-badge" style="background: var(--accent);">RAG</span>
+                </button>
+            </div>
+
+            <!-- ==================== CONTIENDA ELECTORAL TAB ==================== -->
+            <section id="contienda" class="tab-content active" role="tabpanel">
+
+                <!-- Filters -->
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Departamento</label>
+                        <select id="filter-dept">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Municipio</label>
+                        <select id="filter-muni">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Puesto</label>
+                        <select id="filter-puesto">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Mesa</label>
+                        <select id="filter-mesa">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Riesgo OCR</label>
+                        <select id="filter-risk">
+                            <option value="">Todos</option>
+                            <option value="high">Alto (&lt;70%)</option>
+                            <option value="medium">Medio (70-85%)</option>
+                            <option value="low">Bajo (&gt;85%)</option>
+                        </select>
+                    </div>
+                    <button class="btn-action" onclick="applyFilters()" style="margin-top: auto;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                        </svg>
+                        Filtrar
+                    </button>
+                    <button class="btn-action" onclick="clearFilters()" style="margin-top: auto;">
+                        Limpiar
+                    </button>
+                </div>
+
+                <!-- KPIs del E-14 (datos reales) -->
+                <div class="warroom-kpis">
+                    <div class="warroom-kpi">
+                        <div class="warroom-kpi-value" id="kpi-sufragantes">--</div>
+                        <div class="warroom-kpi-label">Total Sufragantes</div>
+                    </div>
+                    <div class="warroom-kpi">
+                        <div class="warroom-kpi-value" id="kpi-votos-urna">--</div>
+                        <div class="warroom-kpi-label">Votos en Urna</div>
+                    </div>
+                    <div class="warroom-kpi">
+                        <div class="warroom-kpi-value" id="kpi-votos-validos">--</div>
+                        <div class="warroom-kpi-label">Votos Válidos</div>
+                    </div>
+                    <div class="warroom-kpi">
+                        <div class="warroom-kpi-value" id="kpi-votos-blanco">--</div>
+                        <div class="warroom-kpi-label">Votos Blanco</div>
+                    </div>
+                    <div class="warroom-kpi">
+                        <div class="warroom-kpi-value" id="kpi-votos-nulos">--</div>
+                        <div class="warroom-kpi-label">Votos Nulos</div>
+                    </div>
+                    <div class="warroom-kpi">
+                        <div class="warroom-kpi-value" id="kpi-no-marcados">--</div>
+                        <div class="warroom-kpi-label">No Marcados</div>
+                    </div>
+                </div>
+
+                <!-- Información de Recuento -->
+                <div class="recuento-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                <path d="M3 3v5h5"/>
+                                <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+                                <path d="M16 21h5v-5"/>
+                            </svg>
+                            Estado de Recuento
+                        </h3>
+                    </div>
+                    <div class="recuento-info">
+                        <div class="recuento-item">
+                            <span class="recuento-label">¿Hubo Recuento?</span>
+                            <span class="recuento-value" id="recuento-hubo">--</span>
+                        </div>
+                        <div class="recuento-item">
+                            <span class="recuento-label">Solicitado por</span>
+                            <span class="recuento-value" id="recuento-solicitado">--</span>
+                        </div>
+                        <div class="recuento-item">
+                            <span class="recuento-label">En representación de</span>
+                            <span class="recuento-value" id="recuento-representacion">--</span>
+                        </div>
+                        <div class="recuento-item">
+                            <span class="recuento-label">Jurados Firmantes</span>
+                            <span class="recuento-value" id="recuento-jurados">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1. Candidatos en Seguimiento (PRIMERO) -->
+                <div class="candidates-tracking-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            Candidatos en Seguimiento
+                        </h2>
+                        <span class="tracking-count">9 candidatos</span>
+                    </div>
+
+                    <div class="candidates-tracking-grid" id="candidates-tracking-grid">
+                        <!-- Placeholder mientras carga -->
+                        <div class="candidate-track-card" style="border-left: 4px solid #E91E63;">
+                            <div class="candidate-track-header">
+                                <div>
+                                    <div class="candidate-track-name">Cargando candidatos...</div>
+                                    <div class="candidate-track-party">Espere por favor</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Formulario E-14 en Vivo (CON FILTROS) -->
+                <div class="e14-live-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                            Formulario E-14 en Vivo
+                        </h2>
+                        <div class="e14-live-status">
+                            <span class="realtime-dot"></span>
+                            <span id="e14-update-time">--:--</span>
+                        </div>
+                    </div>
+
+                    <!-- E-14 Filter Bar -->
+                    <div class="e14-filters-bar">
+                        <div class="filter-group">
+                            <label>Departamento</label>
+                            <select id="e14-filter-dept" onchange="filterE14ByDept()">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Municipio</label>
+                            <select id="e14-filter-muni" onchange="filterE14ByMuni()">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Puesto</label>
+                            <select id="e14-filter-puesto" onchange="filterE14ByPuesto()">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Mesa</label>
+                            <select id="e14-filter-mesa" onchange="filterE14ByMesa()">
+                                <option value="">Todas</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Riesgo</label>
+                            <select id="e14-filter-risk" onchange="filterE14ByRisk()">
+                                <option value="">Todos</option>
+                                <option value="high">Alto</option>
+                                <option value="medium">Medio</option>
+                                <option value="low">Bajo</option>
+                            </select>
+                        </div>
+                        <button class="btn-action" onclick="clearE14Filters()" style="margin-top: auto;">
+                            Limpiar
+                        </button>
+                    </div>
+
+                    <div class="e14-form-card" id="e14-form-container">
+                        <!-- E-14 Header -->
+                        <div class="e14-header">
+                            <div class="e14-header-left">
+                                <div class="e14-title"><span id="e14-forms-count">0</span> Formularios E-14 Procesados</div>
+                                <div class="e14-subtitle" id="e14-election-name">Cargando...</div>
+                            </div>
+                            <div class="e14-header-right">
+                                <div class="e14-meta">
+                                    <span class="e14-meta-label">Confianza Promedio</span>
+                                    <span class="e14-meta-value e14-confidence" id="e14-confidence">--%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- E-14 Location Info -->
+                        <div class="e14-location-bar">
+                            <span id="e14-location">
+                                <strong id="e14-dept">--</strong> &bull;
+                                <span id="e14-muni">--</span> &bull;
+                                <span id="e14-puesto">--</span> &bull;
+                                Mesa <span id="e14-mesa">--</span> &bull;
+                                Zona <span id="e14-zona">--</span>
+                            </span>
+                            <span class="e14-date" id="e14-date">--</span>
+                        </div>
+
+                        <!-- E-14 Nivelacion Summary -->
+                        <div class="e14-nivelacion">
+                            <div class="e14-nivel-item">
+                                <span class="e14-nivel-label">Total Sufragantes</span>
+                                <span class="e14-nivel-value" id="e14-sufragantes">--</span>
+                            </div>
+                            <div class="e14-nivel-item">
+                                <span class="e14-nivel-label">Votos en Urna</span>
+                                <span class="e14-nivel-value" id="e14-urna">--</span>
+                            </div>
+                            <div class="e14-nivel-item">
+                                <span class="e14-nivel-label">Votos Válidos</span>
+                                <span class="e14-nivel-value" id="e14-validos">--</span>
+                            </div>
+                            <div class="e14-nivel-item">
+                                <span class="e14-nivel-label">Blancos</span>
+                                <span class="e14-nivel-value" id="e14-blancos">--</span>
+                            </div>
+                            <div class="e14-nivel-item">
+                                <span class="e14-nivel-label">Nulos</span>
+                                <span class="e14-nivel-value" id="e14-nulos">--</span>
+                            </div>
+                        </div>
+
+                        <!-- E-14 Candidates Grid -->
+                        <div class="e14-candidates-section">
+                            <div class="e14-candidates-header">
+                                <span>Candidatos / Partidos</span>
+                                <span>Votos</span>
+                                <span>Confianza OCR</span>
+                            </div>
+                            <div class="e14-candidates-grid" id="e14-candidates-grid">
+                                <div class="e14-loading">
+                                    <div class="loading-spinner" style="width: 32px; height: 32px;"></div>
+                                    <span>Cargando datos E-14...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- E-14 Footer -->
+                        <div class="e14-footer">
+                            <span id="e14-extraction-info">Procesando...</span>
+                            <button class="btn-action" onclick="refreshE14Data()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="23 4 23 10 17 10"/>
+                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                </svg>
+                                Actualizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Detalle de Votos + Votos por Partido (UNIFICADO) -->
+                <div class="votes-detail-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 20V10"/>
+                                <path d="M18 20V4"/>
+                                <path d="M6 20v-4"/>
+                            </svg>
+                            Detalle de Votos y Partidos
+                        </h2>
+                        <span style="font-size: 0.8rem; color: var(--muted);" id="table-count">-- registros</span>
+                    </div>
+
+                    <div class="votes-detail-grid">
+                        <!-- Votos por Partido Chart -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <span class="chart-title">Votos por Partido</span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="party-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Ubicaciones con Problemas OCR -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <span class="chart-title">Ubicaciones con Problemas OCR</span>
+                                <span class="chart-subtitle" id="ocr-problems-count">(&lt;90% confianza)</span>
+                            </div>
+                            <div class="ocr-problems-list" id="ocr-problems-list" style="max-height: 280px; overflow-y: auto;">
+                                <div class="ocr-problem-empty">Cargando ubicaciones...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Votes Table -->
+                    <div class="votes-table-container" style="max-height: 400px; overflow-y: auto; margin-top: 1rem;">
+                        <table class="votes-table" id="votes-table">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="party">Partido/Lista <span class="sort-icon">↕</span></th>
+                                    <th class="sortable" data-sort="votes">Votos <span class="sort-icon">↕</span></th>
+                                    <th class="sortable" data-sort="percentage">% <span class="sort-icon">↕</span></th>
+                                    <th>Barra</th>
+                                    <th class="sortable" data-sort="confidence">Confianza OCR <span class="sort-icon">↕</span></th>
+                                    <th>Riesgo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="votes-tbody">
+                                <tr><td colspan="6" style="text-align: center; color: var(--muted);">Cargando...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 4. Cola de Incidentes -->
+                <div class="incident-queue-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            Cola de Incidentes
+                        </h2>
+                        <div class="incident-stats">
+                            <span class="incident-stat p0">P0: <strong id="incident-p0-count">0</strong></span>
+                            <span class="incident-stat p1">P1: <strong id="incident-p1-count">0</strong></span>
+                            <span class="incident-stat">Total: <strong id="incident-total-count">0</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="incident-filters">
+                        <button class="incident-filter-btn active" data-filter="all">Todos</button>
+                        <button class="incident-filter-btn p0" data-filter="P0">P0</button>
+                        <button class="incident-filter-btn p1" data-filter="P1">P1</button>
+                        <button class="incident-filter-btn" data-filter="P2">P2</button>
+                        <button class="incident-filter-btn" data-filter="OPEN">Abiertos</button>
+                        <button class="incident-filter-btn" data-filter="ASSIGNED">Asignados</button>
+                        <button class="btn-action" onclick="refreshIncidents()" style="margin-left: auto;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            Actualizar
+                        </button>
+                    </div>
+
+                    <div class="incident-table-container" style="max-height: 350px; overflow-y: auto;">
+                        <table class="incident-table" id="incident-table">
+                            <thead>
+                                <tr>
+                                    <th title="Severidad: Prioridad del incidente">Severidad</th>
+                                    <th>Mesa</th>
+                                    <th>Tipo de Incidente</th>
+                                    <th>Ubicación</th>
+                                    <th title="Confianza OCR">Conf. OCR</th>
+                                    <th title="Tiempo transcurrido">Tiempo</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="incident-tbody">
+                                <tr><td colspan="7" style="text-align: center; color: var(--muted);">Cargando incidentes...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 5. Mapa Electoral Colombia (AL FINAL) -->
+                <div class="map-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            Mapa Electoral Colombia
+                        </h2>
+                    </div>
+
+                    <!-- Filtros del Mapa -->
+                    <div class="map-filters-bar">
+                        <div class="filter-group">
+                            <label>Departamento</label>
+                            <select id="map-filter-dept" onchange="filterMapByDept()">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Municipio</label>
+                            <select id="map-filter-muni" onchange="filterMapByMuni()">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Zona</label>
+                            <select id="map-filter-zona" onchange="filterMapByZona()">
+                                <option value="">Todas</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Puesto</label>
+                            <select id="map-filter-puesto" onchange="filterMapByPuesto()">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <button class="btn-action" onclick="clearMapFilters()" style="margin-top: auto;">
+                            Limpiar Filtros
+                        </button>
+                    </div>
+
+                    <div class="map-container-wrapper">
+                        <!-- Map Card -->
+                        <div class="map-card">
+                            <div class="map-header">
+                                <span class="map-title">Cobertura por Departamento</span>
+                                <div class="map-mode-selector">
+                                    <button class="map-mode-btn active" data-mode="coverage" title="Cobertura de mesas procesadas">Cobertura</button>
+                                    <button class="map-mode-btn" data-mode="risk" title="Porcentaje de mesas en riesgo">Riesgo</button>
+                                    <button class="map-mode-btn" data-mode="discrepancy" title="Discrepancia vs RNEC">Δ RNEC</button>
+                                    <button class="map-mode-btn" data-mode="votes" title="Votos del candidato seleccionado">Votos</button>
+                                </div>
+                            </div>
+                            <div id="colombia-map"></div>
+                            <div class="map-legend" id="map-legend">
+                                <div class="legend-item"><span class="legend-color" style="background: #4A7C59;"></span> Alto (>80%)</div>
+                                <div class="legend-item"><span class="legend-color" style="background: #7CB342;"></span> Medio-Alto (60-80%)</div>
+                                <div class="legend-item"><span class="legend-color" style="background: #D4A017;"></span> Medio (40-60%)</div>
+                                <div class="legend-item"><span class="legend-color" style="background: #E65100;"></span> Bajo (20-40%)</div>
+                                <div class="legend-item"><span class="legend-color" style="background: #8B3A3A;"></span> Crítico (<20%)</div>
+                            </div>
+                        </div>
+
+                        <!-- Department Info Panel -->
+                        <div class="dept-info-panel" id="dept-info-panel">
+                            <div class="dept-info-header">
+                                <div class="dept-info-title" id="dept-panel-title">Seleccione un Departamento</div>
+                                <div class="dept-info-subtitle" id="dept-panel-subtitle">Hover sobre un punto para vista previa</div>
+                            </div>
+                            <div class="dept-info-content" id="dept-info-content">
+                                <div class="dept-info-empty">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                    <p>Pase el mouse sobre un punto del mapa para ver vista previa, o haga click para ver detalles completos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ==================== ZONAS DE RIESGO TAB ==================== -->
+            <section id="zonas-riesgo" class="tab-content" role="tabpanel">
+
+                <!-- Header con fuente de datos -->
+                <div class="risk-data-source">
+                    <span class="source-badge">Fuente: MOE 2023 + Alertas 2026</span>
+                    <span class="source-info">166 municipios con riesgo electoral identificado</span>
+                </div>
+
+                <!-- KPIs MOE -->
+                <div class="risk-kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="risk-kpi critical">
+                        <div class="risk-kpi-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <div class="risk-kpi-content">
+                            <div class="risk-kpi-value" id="risk-extreme-count">--</div>
+                            <div class="risk-kpi-label">RIESGO EXTREMO</div>
+                            <div class="risk-kpi-desc">Clasificación MOE</div>
+                        </div>
+                    </div>
+                    <div class="risk-kpi high">
+                        <div class="risk-kpi-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        </div>
+                        <div class="risk-kpi-content">
+                            <div class="risk-kpi-value" id="risk-high-count">--</div>
+                            <div class="risk-kpi-label">RIESGO ALTO</div>
+                            <div class="risk-kpi-desc">Clasificación MOE</div>
+                        </div>
+                    </div>
+                    <div class="risk-kpi normal">
+                        <div class="risk-kpi-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <div class="risk-kpi-content">
+                            <div class="risk-kpi-value" id="risk-total-count">--</div>
+                            <div class="risk-kpi-label">TOTAL MUNICIPIOS</div>
+                            <div class="risk-kpi-desc">Con alerta MOE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Factores de Riesgo (MOE) -->
+                <div class="risk-factors-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="20" x2="18" y2="10"/>
+                                <line x1="12" y1="20" x2="12" y2="4"/>
+                                <line x1="6" y1="20" x2="6" y2="14"/>
+                            </svg>
+                            Factores de Riesgo por Tipo
+                        </h2>
+                    </div>
+                    <div class="risk-factors-grid" id="risk-factors-grid">
+                        <div class="risk-factor-bar">
+                            <div class="factor-info">
+                                <span class="factor-icon armed">⚔️</span>
+                                <span class="factor-name">Grupos Armados</span>
+                            </div>
+                            <div class="factor-bar-container">
+                                <div class="factor-bar-fill" id="factor-armed" style="width: 0%"></div>
+                            </div>
+                            <span class="factor-count" id="factor-armed-count">0</span>
+                        </div>
+                        <div class="risk-factor-bar">
+                            <div class="factor-info">
+                                <span class="factor-icon economy">💰</span>
+                                <span class="factor-name">Economía Ilegal</span>
+                            </div>
+                            <div class="factor-bar-container">
+                                <div class="factor-bar-fill" id="factor-economy" style="width: 0%"></div>
+                            </div>
+                            <span class="factor-count" id="factor-economy-count">0</span>
+                        </div>
+                        <div class="risk-factor-bar">
+                            <div class="factor-info">
+                                <span class="factor-icon trashumantismo">🚶</span>
+                                <span class="factor-name">Trashumantismo</span>
+                            </div>
+                            <div class="factor-bar-container">
+                                <div class="factor-bar-fill" id="factor-trashumantismo" style="width: 0%"></div>
+                            </div>
+                            <span class="factor-count" id="factor-trashumantismo-count">0</span>
+                        </div>
+                        <div class="risk-factor-bar">
+                            <div class="factor-info">
+                                <span class="factor-icon leader">🎯</span>
+                                <span class="factor-name">Ataques a Líderes</span>
+                            </div>
+                            <div class="factor-bar-container">
+                                <div class="factor-bar-fill" id="factor-leaders" style="width: 0%"></div>
+                            </div>
+                            <span class="factor-count" id="factor-leaders-count">0</span>
+                        </div>
+                        <div class="risk-factor-bar">
+                            <div class="factor-info">
+                                <span class="factor-icon mobility">🚧</span>
+                                <span class="factor-name">Restricción Movilidad</span>
+                            </div>
+                            <div class="factor-bar-container">
+                                <div class="factor-bar-fill" id="factor-mobility" style="width: 0%"></div>
+                            </div>
+                            <span class="factor-count" id="factor-mobility-count">0</span>
+                        </div>
+                        <div class="risk-factor-bar">
+                            <div class="factor-info">
+                                <span class="factor-icon border">🌐</span>
+                                <span class="factor-name">Vulnerabilidad Fronteriza</span>
+                            </div>
+                            <div class="factor-bar-container">
+                                <div class="factor-bar-fill" id="factor-border" style="width: 0%"></div>
+                            </div>
+                            <span class="factor-count" id="factor-border-count">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Departamentos más afectados -->
+                <div class="affected-departments-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 3v18h18"/>
+                                <path d="M18 17V9"/>
+                                <path d="M13 17V5"/>
+                                <path d="M8 17v-3"/>
+                            </svg>
+                            Departamentos más Afectados
+                        </h2>
+                    </div>
+                    <div class="departments-ranking" id="departments-ranking">
+                        <div class="loading-state">Cargando...</div>
+                    </div>
+                </div>
+
+                <!-- Municipios en Riesgo -->
+                <div class="risk-main-grid">
+                    <!-- Lista de Municipios Críticos -->
+                    <div class="critical-municipalities-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                Municipios en Riesgo
+                            </h2>
+                            <div class="filter-pills">
+                                <button class="filter-pill active" data-filter="all">Todos</button>
+                                <button class="filter-pill extreme" data-filter="EXTREME">Extremo</button>
+                                <button class="filter-pill high" data-filter="HIGH">Alto</button>
+                            </div>
+                        </div>
+                        <div class="municipalities-list" id="critical-municipalities-list">
+                            <div class="loading-state">Cargando municipios...</div>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Detalle del Municipio -->
+                    <div class="municipality-detail-panel" id="municipality-detail-panel">
+                        <div class="detail-panel-header">
+                            <h3 id="detail-municipality-name">Seleccione un municipio</h3>
+                            <span class="detail-dept" id="detail-department">--</span>
+                        </div>
+                        <div class="detail-panel-content" id="detail-panel-content">
+                            <div class="detail-empty">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                <p>Seleccione un municipio de la lista para ver detalles de riesgo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ==================== LLAMAR TESTIGO TAB ==================== -->
+            <section id="llamar-testigo" class="tab-content" role="tabpanel">
+
+                <!-- Witness Management Header -->
+                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <h2 class="section-title" style="margin-bottom: 0.25rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 010 7.75"/>
+                            </svg>
+                            Gestion de Testigos
+                        </h2>
+                        <p style="color: var(--muted); font-size: 0.8rem; margin: 0;">
+                            <span id="witness-stats-summary">-- testigos registrados | -- con push activo</span>
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn-action primary" onclick="toggleRegisterForm()" style="display: flex; align-items: center; gap: 0.5rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                <circle cx="8.5" cy="7" r="4"/>
+                                <line x1="20" y1="8" x2="20" y2="14"/>
+                                <line x1="23" y1="11" x2="17" y2="11"/>
+                            </svg>
+                            Registrar Testigo
+                        </button>
+                        <button class="btn-action" onclick="loadWitnessesFromAPI()" style="display: flex; align-items: center; gap: 0.5rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 4v6h-6"/>
+                                <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+                            </svg>
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Register Witness Form -->
+                <div id="register-witness-form" style="display: none; background: var(--panel-alt, #1a1a1a); border: 1px solid var(--border-gold, rgba(201, 162, 39, 0.3)); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem; font-size: 1rem; color: var(--accent, #C9A227);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+                            <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                            <circle cx="8.5" cy="7" r="4"/>
+                            <line x1="20" y1="8" x2="20" y2="14"/>
+                            <line x1="23" y1="11" x2="17" y2="11"/>
+                        </svg>
+                        Nuevo Testigo Electoral
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div>
+                            <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.3rem;">Nombre Completo *</label>
+                            <input type="text" id="witness-name" placeholder="Ej: Juan Pérez" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text);">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.3rem;">Teléfono *</label>
+                            <input type="tel" id="witness-phone" placeholder="Ej: 3001234567" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text);">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.3rem;">Correo Electrónico</label>
+                            <input type="email" id="witness-email" placeholder="Ej: juan@email.com" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text);">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.3rem;">Departamento</label>
+                            <select id="witness-dept" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text);">
+                                <option value="">Seleccionar...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem; justify-content: flex-end;">
+                        <button class="btn-action" onclick="toggleRegisterForm()">Cancelar</button>
+                        <button class="btn-action primary" onclick="registerWitness()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.3rem;">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Registrar
+                        </button>
+                    </div>
+                    <p id="register-message" style="margin: 0.5rem 0 0; font-size: 0.85rem; display: none;"></p>
+                </div>
+
+                <!-- Critical Mesa Selection -->
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        </svg>
+                        Mesas Criticas que Requieren Testigo
+                    </h2>
+                </div>
+
+                <div class="filters-bar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <label>Seleccionar Mesa Crítica</label>
+                        <select id="critical-mesa-select" style="min-width: 300px;">
+                            <option value="">-- Seleccione una mesa --</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Ubicación</label>
+                        <input type="text" id="mesa-location" readonly style="padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text); min-width: 250px;" placeholder="Seleccione una mesa">
+                    </div>
+                </div>
+
+                <!-- Nearby Witnesses -->
+                <div class="witness-section">
+                    <div class="section-header">
+                        <h3 class="section-title">Testigos Cercanos Disponibles</h3>
+                        <span style="font-size: 0.8rem; color: var(--muted);" id="witnesses-count">-- testigos en la zona</span>
+                    </div>
+
+                    <div class="witness-map-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        <p style="color: var(--muted); font-size: 0.9rem;">Mapa de ubicación de testigos</p>
+                        <p style="color: var(--muted); font-size: 0.75rem;">Seleccione una mesa crítica para ver testigos cercanos</p>
+                    </div>
+
+                    <div class="nearby-witnesses" id="witnesses-grid">
+                        <div class="empty-state">
+                            <p>Seleccione una mesa crítica para ver testigos disponibles en la zona</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call Log -->
+                <div class="section-header" style="margin-top: 2rem;">
+                    <h3 class="section-title">Historial de Llamados</h3>
+                </div>
+                <div class="votes-table-container" style="max-height: 300px; overflow-y: auto;">
+                    <table class="votes-table" id="call-log-table">
+                        <thead>
+                            <tr>
+                                <th>Hora</th>
+                                <th>Mesa</th>
+                                <th>Testigo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="call-log-tbody">
+                            <tr><td colspan="5" style="text-align: center; color: var(--muted);">No hay llamados registrados</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+            <!-- ==================== BASE DE DATOS E-14 TAB ==================== -->
+            <section id="base-datos" class="tab-content" role="tabpanel">
+                <div class="section-header">
+                    <h2 class="section-title">Base de Datos RAG - E-14 Electorales</h2>
+                    <button class="btn-action" onclick="loadE14Database()" style="gap: 0.5rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                        </svg>
+                        Actualizar
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #C9A227, #D4AF37);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="e14-total-docs">--</div>
+                            <div class="stat-label">Documentos Indexados</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4A7C59, #5D9A6B);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="e14-total-mesas">--</div>
+                            <div class="stat-label">Mesas E-14</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #5B7BB3, #7A9AD0);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="e14-total-deptos">--</div>
+                            <div class="stat-label">Departamentos</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #8B5A5A, #A86E6E);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="e14-total-corps">--</div>
+                            <div class="stat-label">Corporaciones</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-bar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <label>Corporación</label>
+                        <select id="e14-filter-corp" onchange="filterE14Table()">
+                            <option value="">Todas</option>
+                            <option value="SENADO">Senado</option>
+                            <option value="CAMARA">Cámara</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="flex: 1;">
+                        <label>Buscar</label>
+                        <input type="text" id="e14-search" placeholder="Buscar departamento, municipio, partido..." onkeyup="filterE14Table()">
+                    </div>
+                </div>
+
+                <!-- Department Table -->
+                <div class="votes-table-container">
+                    <table class="votes-table" id="e14-dept-table">
+                        <thead>
+                            <tr>
+                                <th>Departamento</th>
+                                <th>Mesas</th>
+                                <th>Senado</th>
+                                <th>Cámara</th>
+                                <th>Documentos</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="e14-dept-tbody">
+                            <tr><td colspan="6" style="text-align: center; color: var(--muted); padding: 2rem;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom: 0.5rem; opacity: 0.5;">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                                </svg>
+                                <br>Cargando datos de E-14...
+                            </td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Detail Panel (hidden initially) -->
+                <div id="e14-detail-panel" style="display: none; margin-top: 1.5rem; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <button onclick="closeE14Detail()" style="background: transparent; border: 1px solid var(--border); color: var(--text); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer;">← Volver</button>
+                            <h3 id="e14-detail-title" style="margin: 0; font-size: 1.1rem;">Detalle</h3>
+                        </div>
+                    </div>
+                    <div id="e14-detail-content">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Call Witness Modal -->
+    <div class="modal-overlay" id="call-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirmar Llamado a Testigo</h3>
+                <button class="modal-close" onclick="closeCallModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1rem;">¿Desea enviar llamado al testigo?</p>
+                <div style="background: var(--panel); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <p style="margin: 0 0 0.5rem;"><strong>Testigo:</strong> <span id="modal-witness-name">--</span></p>
+                    <p style="margin: 0 0 0.5rem;"><strong>Mesa destino:</strong> <span id="modal-mesa-id">--</span></p>
+                    <p style="margin: 0;"><strong>Ubicación:</strong> <span id="modal-location">--</span></p>
+                </div>
+                <div class="filter-group">
+                    <label>Mensaje adicional (opcional)</label>
+                    <textarea id="call-message" rows="2" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text); resize: none;" placeholder="Instrucciones especiales..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-action" onclick="closeCallModal()">Cancelar</button>
+                <button class="btn-action primary" onclick="confirmCall()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/>
+                    </svg>
+                    Enviar Llamado
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate QR Modal -->
+    <div class="modal-overlay" id="qr-modal">
+        <div class="modal-box" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                    </svg>
+                    Generar QR de Registro
+                </h3>
+                <button class="modal-close" onclick="closeQRModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="qr-form-section">
+                    <p style="color: var(--muted); margin-bottom: 1rem; font-size: 0.9rem;">
+                        Genera un codigo QR para que los testigos se registren escaneandolo con su celular.
+                    </p>
+                    <div class="filter-group" style="margin-bottom: 1rem;">
+                        <label>Departamento (opcional)</label>
+                        <select id="qr-dept-filter" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text);">
+                            <option value="">Todos los departamentos</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="margin-bottom: 1rem;">
+                        <label>Municipio (opcional)</label>
+                        <select id="qr-muni-filter" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text);">
+                            <option value="">Todos los municipios</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="margin-bottom: 1rem;">
+                        <label>Usos maximos</label>
+                        <select id="qr-max-uses" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text);">
+                            <option value="1">1 uso (recomendado)</option>
+                            <option value="5">5 usos</option>
+                            <option value="10">10 usos</option>
+                            <option value="50">50 usos</option>
+                            <option value="100">100 usos</option>
+                        </select>
+                    </div>
+                    <button class="btn-action primary" onclick="generateQRCode()" style="width: 100%;">
+                        Generar Codigo QR
+                    </button>
+                </div>
+                <div id="qr-result-section" style="display: none; text-align: center;">
+                    <div style="background: white; padding: 20px; border-radius: 12px; display: inline-block; margin-bottom: 1rem;">
+                        <img id="qr-image" src="" alt="Codigo QR" style="max-width: 200px; display: block;">
+                    </div>
+                    <p style="margin-bottom: 0.5rem; font-weight: 600;">Escanea este codigo QR</p>
+                    <p style="color: var(--muted); font-size: 0.8rem; margin-bottom: 1rem;" id="qr-url-display">--</p>
+                    <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                        <button class="btn-action" onclick="copyQRLink()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                            </svg>
+                            Copiar Enlace
+                        </button>
+                        <button class="btn-action" onclick="downloadQR()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Descargar
+                        </button>
+                        <button class="btn-action primary" onclick="generateNewQR()">
+                            Generar Otro
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incident Detail Modal -->
+    <div class="modal-overlay" id="incident-modal">
+        <div class="modal-box" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Detalle de Incidente <span id="incident-modal-id">#--</span></h3>
+                <button class="modal-close" onclick="closeIncidentModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="incident-detail-content">
+                    <div class="incident-detail-row">
+                        <span class="incident-detail-label">Severidad</span>
+                        <span class="incident-detail-value"><span class="severity-badge" id="incident-modal-severity">--</span></span>
+                    </div>
+                    <div class="incident-detail-row">
+                        <span class="incident-detail-label">Tipo</span>
+                        <span class="incident-detail-value incident-type" id="incident-modal-type">--</span>
+                    </div>
+                    <div class="incident-detail-row">
+                        <span class="incident-detail-label">Mesa</span>
+                        <span class="incident-detail-value incident-mesa" id="incident-modal-mesa">--</span>
+                    </div>
+                    <div class="incident-detail-row">
+                        <span class="incident-detail-label">Ubicación</span>
+                        <span class="incident-detail-value" id="incident-modal-location">--</span>
+                    </div>
+                    <div class="incident-detail-row">
+                        <span class="incident-detail-label">Descripción</span>
+                        <span class="incident-detail-value" id="incident-modal-description">--</span>
+                    </div>
+                    <div class="incident-detail-row">
+                        <span class="incident-detail-label">Confianza OCR</span>
+                        <span class="incident-detail-value" id="incident-modal-confidence">--</span>
+                    </div>
+                    <div class="incident-detail-row">
+                        <span class="incident-detail-label">Tiempo Restante SLA</span>
+                        <span class="incident-detail-value" id="incident-modal-sla">--</span>
+                    </div>
+                    <div class="incident-detail-row">
+                        <span class="incident-detail-label">Estado</span>
+                        <span class="incident-detail-value" id="incident-modal-status">--</span>
+                    </div>
+                </div>
+                <div class="filter-group" style="margin-top: 1rem;">
+                    <label>Notas de resolución</label>
+                    <textarea id="incident-notes" rows="2" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--text); resize: none;" placeholder="Agregar notas..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-action danger" onclick="escalateIncident()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    </svg>
+                    Escalar
+                </button>
+                <button class="btn-action" onclick="assignIncident()">Asignar</button>
+                <button class="btn-action primary" onclick="resolveIncident()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Resolver
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mesa Detail Modal -->
+    <div class="modal-overlay" id="mesa-detail-modal">
+        <div class="modal-box mesa-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Detalle de Mesa</h3>
+                <button class="modal-close" onclick="closeMesaDetailModal()">&times;</button>
+            </div>
+
+            <!-- Mesa Header Bar -->
+            <div class="mesa-header-bar">
+                <div class="mesa-header-left">
+                    <div class="mesa-header-id" id="mesa-detail-id">--</div>
+                    <div class="mesa-header-location" id="mesa-detail-location">Cargando...</div>
+                </div>
+                <div class="mesa-header-right">
+                    <span class="mesa-status-badge" id="mesa-detail-status">--</span>
+                    <div class="mesa-confidence-display">
+                        <div class="mesa-confidence-value" id="mesa-detail-confidence">--%</div>
+                        <div class="mesa-confidence-label">Confianza OCR</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <!-- Content Grid -->
+                <div class="mesa-content-grid">
+                    <!-- OCR Fields Section -->
+                    <div class="mesa-section">
+                        <div class="mesa-section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            Valores Extraídos (OCR)
+                        </div>
+                        <div class="ocr-fields-list" id="mesa-ocr-fields">
+                            <div style="color: var(--muted); text-align: center; padding: 1rem;">Cargando...</div>
+                        </div>
+                    </div>
+
+                    <!-- Validations Section -->
+                    <div class="mesa-section">
+                        <div class="mesa-section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            Validaciones
+                        </div>
+                        <div class="validations-list" id="mesa-validations">
+                            <div style="color: var(--muted); text-align: center; padding: 1rem;">Cargando...</div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Section (Full Width) -->
+                    <div class="mesa-section" style="grid-column: 1 / -1;">
+                        <div class="mesa-section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="20" x2="18" y2="10"/>
+                                <line x1="12" y1="20" x2="12" y2="4"/>
+                                <line x1="6" y1="20" x2="6" y2="14"/>
+                            </svg>
+                            Comparación Fuentes (Testigo vs RNEC)
+                        </div>
+                        <table class="comparison-table" id="mesa-comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Candidato</th>
+                                    <th style="text-align: right;">Testigo</th>
+                                    <th style="text-align: right;">RNEC</th>
+                                    <th style="text-align: right;">Delta</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mesa-comparison-body">
+                                <tr><td colspan="4" style="text-align: center; color: var(--muted);">Cargando...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Incidents Section -->
+                    <div class="mesa-section" style="grid-column: 1 / -1;">
+                        <div class="mesa-section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            Incidentes Activos
+                        </div>
+                        <div class="mesa-incidents-list" id="mesa-incidents-list">
+                            <div style="color: var(--muted); font-size: 0.8rem;">Sin incidentes activos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions Footer -->
+            <div class="mesa-actions-footer">
+                <div class="mesa-actions-left">
+                    <button class="btn-action danger" onclick="createMesaIncident()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        </svg>
+                        Crear Incidente
+                    </button>
+                    <button class="btn-action" onclick="callWitnessForMesa()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/>
+                        </svg>
+                        Llamar Testigo
+                    </button>
+                </div>
+                <div class="mesa-actions-right">
+                    <button class="btn-action" onclick="escalateMesaToLegal()">Escalar Legal</button>
+                    <button class="btn-action primary" onclick="markMesaResolved()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Marcar Resuelto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/campaign_team_dashboard.js?v=7"></script>
+</body>
+</html>

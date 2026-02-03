@@ -1,0 +1,10 @@
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=001&dept_code=11&muni_code=342&mesa=147&copy=002
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=003&dept_code=27&muni_code=621&mesa=083&copy=001
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=002&dept_code=05&muni_code=115&mesa=156&copy=001
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=004&dept_code=31&muni_code=778&mesa=042&copy=002
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=001&dept_code=15&muni_code=203&mesa=189&copy=001
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=005&dept_code=09&muni_code=456&mesa=091&copy=002
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=002&dept_code=23&muni_code=567&mesa=124&copy=001
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=003&dept_code=07&muni_code=234&mesa=178&copy=002
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=001&dept_code=29&muni_code=345&mesa=065&copy=001
+https://divulgacione14.registraduria.gov.co/api/acta/pdf?corporacion=004&dept_code=13&muni_code=789&mesa=112&copy=002

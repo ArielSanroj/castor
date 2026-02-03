@@ -1,0 +1,135 @@
+{
+  "extraction_id": "79433532",
+  "filename": "7925912_E14_SEN_X_01_001_001_XX_04_024_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 25795,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "SEC. ESC. MEDELLIN",
+  "mesa": "024",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 53,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO GAMBIO",
+      "party_code": "",
+      "votes": 3,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "RED. 0019 PARTIDO NUEVO LIBERALISMO",
+      "party_code": "",
+      "votes": 19,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "Í 1039 MOVIMIENTO UNITARIO METAPOLITICO",
+      "party_code": "",
+      "votes": 1039,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "y ee 1186 MOVIMIENTO GENTE NUEVA",
+      "party_code": "",
+      "votes": 1186,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "0302 MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "i LA 0011 , PARTIDO GENTRO DEMOCRÁTICO o",
+      "party_code": "",
+      "votes": 11,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "0002 PARTIDO CONSERVADOR COLOMBIANO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO A",
+      "party_code": "",
+      "votes": 8,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "Y 0292 PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "bi 0177 PARTIDO INDIGENA COLOMBIANO PC",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIA",
+      "party_code": "",
+      "votes": 156,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA — !",
+      "party_code": "",
+      "votes": 185,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "JURAÍO",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 4829,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A _\n710595612010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[=] pr [Em] JURADOS DE VOTACIÓN\nPros\nLA\ncr ad ELECCIONES CONGRESO o.\nTar: 13 DE MARZO DE 2022 SEEN\no REGISTRADURÍA\nOpt SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. MEDELLIN\nZONA: 01 PUESTO: 04 MESA: 024\nX 7-92-59-12 A\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\nTA ATA SIN VOTO PREFERENTE\n| ts\n| 8 0053. | PARTIDO COMUNES |\n. . o. -.. - —m- 2 m.—- a\n| 0 I VOTOS POR LA AGRUPACIÓN POLÍTICA \"mmm OBIO\n|\n|\nMM No. Form: 59581 KIT 59,561 Civ1213230 Ml\n\n--- PAGE BREAK ---\nA :\n7105926120102711 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[EJpñe5 pm] JURADOS DE VOTACIÓN\nE E DELEGADOS o\nSTA AAA + ELECCIONES CONGRESO\no 13 DE MARZO DE 2022 E\nOsito SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. MEDELLIN\nZONA: 01 PUESTO: 04 MESA: 024\nX 7-92-59-12 Á\na a.  LISTACONVOTO PREFERENTE ll\n| 0255 COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA (\n5 od | 3] | . e ALA 4\no TESÓN! 3 | EN BoA TN\nAB i 46 | | ] A en | o\ne | j Ml Po 52 o | as | o\nCA E ICA\n|  ——k . ot. |! aaa o) A O.\nlaa lolo ¿o 1] 90 | |\nA 7 E od\n30 | y 63 o] 7 | o\naj A A E | o |\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMM No. Form: 59561 KIT 59,561 Civ1213231 Ml\n\n--- PAGE BREAK ---\nA :\n710595612010311 Ver: 01 Pag: 03 de 11\n| ACTA DE ESCRUTINIO DE LOS EA\n[24m] JURADOS DE VOTACIÓN\nPri\nqa] DELEGADOS\nal. Sa ELECCIONES CONGRESO od\nGEA SE 13DEMARZO DE 2022 PE\nya DO REGISTRADURÍA\nOra SENADO\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. MEDELLIN\nZONA: 01 PUESTO: 04 MESA: 024\nX 7-92-59-12 X\n| A LISTA CON VOTO PREFERENTE !\no, ¡ - 1140 ; FUERZA CIUDADANA LA FUERZA DEL CAMBIO |\nLo. O mA do. o. | |\np 0 | | | == VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\nO O O E o\n| | po” l, y 1 — | | |\nA 66 A!\n' : ; E : ! MA E is Sais 2.\nNESANEIONS\n| 6 o 38 IS\n| To) | | 40; j 2 | | |\ngd a | IN\n10 | | | 430: 77\n| a E E O Y . a . / 4 ho.\nbo. , , | . : - A | A 4\nAZ | ( E | | 79 | | |\n| 14 | | | | 86 |: Bo\nA E A E E . + >> . ' ! l po o.\n15 47: | Ba ! 7 | ¡\n| NN IN BB |\nBd | No a E | |\n19 | | | [52 | | est\nMN ¡[8 | | |\na | | | sa 1] A 87. | e Ñ\n23 | A\n24 | sr | | | 90\n25 | 58 | o | 91 |\no , : OS O : :\n27 o BB 92 7\nE | 4 99 |\n30 | | IC [ 100 | ] | |\nO\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS EJEFIEA\nMm rom: s0ss KIT 59,561 civizig232 MM\n\n--- PAGE BREAK ---\nA :\n710595612010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[n] : . > [m1] JURADOS DE VOTACIÓN\ne A\nJA ELECCIONES CONGRESO Port\nA Pr A\nmr BRL 13 DE MARZO DE 2022 A\n3 O REGISTRADURÍA\nOlas: SENADO neon\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. MEDELLIN\nZONA: 01 PUESTO: 04 MESA: 024\nX 7-92-59-12 X\n| ¿SL 0003 : PARTIDO GAMBIO RADICAL |\ngo 1] [1 == VOTOS SOLO PORLA AGRUPACIÓN POLÍTICA |\n- q a | pr ( : am y! o. L.-.- ¡ 77\npo 2 o po 36: | 0 1 70 |\n—— ñ -] po o a . 2 LL 8! _—. . + 7 21 o.\n3 | 37 | Pd\nCA IEA\n2 14 | O A\nIS A | | 74) | |\n| Y | ) 4 | | l 150:\na Ñ A\n| 9, | i 1 43 | | | 71 | o\nao a 78 | | |\nLo pom de. Po. , , o .. o —. o Ak. r\nA o 45 | me | o\n2 | 46 IN | po.\n| | mor. A: > LE - j o . - ml —.- | |\n| | 13 | | | | 47: | ¡8 | ¡\n—. — — —+ -— , ..— o. -—-— . . . . .. ¿ .. | => -A — po -—--\na | LO: o | 82 | o\nAGS | A Ml Ñ\n| | 7 52. | Lo 86 | |\n| | 19 : t y E | | yo Br | ]\n| 20 | 54 po, Us r y\nLo La | ] ss po do] ! 89 | il V |\n22 | Po, 56 poro 90 | |\n23 | | | 57 | | Pao,\n— 2. o — ' -. — O $, mo... 4 . . .-\n: 24 | UL 58 a A:\nMET 1 BS | AN | Loy\n| 28 | | 61 | | 1 96 |\n+ J- i e - .m -. : - 21 o .— a .\na o | 62 OS 7 | | |\nE 1 9 |\n¡ 31: | | obs | | | 99 | |\n| 32 | | | ¡ 56: | | 1 100 | | | (\n344 | | 68 o\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS All |\no a LISTA SIN VOTO PREFERENTE o o\n| | SE95 4073 | MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA |\n| 0 VOTOS POR LA AGRUPACIÓN POLÍTICA mum» PERA\nLT STA SIN VOTO PREFERENTE\n| Red. | 0019 | PARTIDO NUEVO LIBERALISMO |\no o VOTOS POR LA AGRUPACIÓN POLÍTICA > ETS |\nMM Na. Forma: 59561 KIT 59, 561 Civ1213233 M\n\n--- PAGE BREAK ---\nA :\n710595612010511 Ver. 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS EA\nDro JURADOS DE VOTACIÓN\na A. DELEGADOS o\nma ELECCIONES CONGRESO\na 13 DE MARZO DE 2022 E\nREGISTRADURÍA\n[] , SENADO\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. MEDELLIN\nZONA: 01 PUESTO: 04 MESA: 024\nX Y7-92-59-12 X\n| a LISTASIN VOTO PREFERENTE |\n| | hd ! 1130 | ESTAMOS LISTAS COLOMBIA |\nEo O HS TASINNOnO PREFERENTE |\n| | Í 1039 ¡| MOVIMIENTO UNITARIO METAPOLITICO\n| 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA  \"um» ERA]\ned | 9937 | COALICIÓN MIRA - COLOMBIA JUSTA LIBRES |\n| 0 | | df — VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA — '\n| | : 4 4 . ro — ml\n] ¡ | !\n- -| E O 24 í mor + :\nO A O | y\n| g 1 4 Br do, 65 1 |\nA . — a —-. — A: e A — | . — A —\n| 11 1 | 36 | | 70\n| 13 38 o] 73 | y\na N ii 39 > | ¡O | |\n15 | o | 40 pr | m7 Le |\nA E q ze | UN\n18 | | 43; | dB | !\n1 Eh. .-- — -+ 7 _. 4 : -- E. s.m.\n| 201] | L 87 | | + | 90 o\nO bm di O IE MA Ll\n| 22 1 A | | UN\nSa do dodo J\nTOTAL = VOTOS AG",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

@@ -1,0 +1,4602 @@
+[
+  {
+    "filename": "camara.pdf",
+    "corporacion": "CAMARA",
+    "pages": 9,
+    "status": "success",
+    "processing_time_s": 77.79,
+    "tokens": {
+      "input": 10493,
+      "output": 2604
+    },
+    "cost_usd": 0.0705,
+    "data": {
+      "header": {
+        "corporacion": "CAMARA",
+        "departamento": "27 - SANTANDER",
+        "municipio": "001 - BUCARAMANGA",
+        "zona": "01",
+        "puesto": "IE MAIPORÉ SEDE B",
+        "mesa": "004"
+      },
+      "nivelacion": {
+        "total_sufragantes": 205,
+        "total_votos_urna": 206
+      },
+      "partidos": [
+        {
+          "codigo": "0282",
+          "nombre": "COALICIÓN CENTRO ESPERANZA",
+          "votos": 112,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.8,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO SALVACIÓN NACIONAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0290",
+          "nombre": "PACTO HISTÓRICO",
+          "votos": 120,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNES",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRÁTICO",
+          "votos": 114,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 6
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.8,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 114,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 5
+            }
+          ],
+          "confidence": 0.8,
+          "needs_review": false
+        },
+        {
+          "codigo": "1076",
+          "nombre": "LIGA DE GOBERNANTES ANTICORRUPCIÓN",
+          "votos": 164,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0281",
+          "nombre": "COALICIÓN PARTIDOS CAMBIO RADICAL - COLOMBIA JUSTA LIBRES - MIRA - DE LA U",
+          "votos": 112,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 8
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 3
+            }
+          ],
+          "confidence": 0.8,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 136,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 18
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 8
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 10
+            }
+          ],
+          "confidence": 0.8,
+          "needs_review": false
+        },
+        {
+          "codigo": "0004",
+          "nombre": "PARTIDO ALIANZA VERDE",
+          "votos": 120,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.8,
+          "needs_review": false
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANICOL",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0185",
+          "nombre": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA AICO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 205,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 206,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0183",
+          "nombre": "CABILDO INDÍGENA AYAWASHI",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0182",
+          "nombre": "RESGUARDO INDÍGENA ZENÚ DEL ALTO SAN JORGE",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0168",
+          "nombre": "RESGUARDO INDÍGENA ALTA Y MEDIA GUAJIRA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL MAIS",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 205,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 206,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0157",
+          "nombre": "CONSEJO COMUNITARIO MAYOR DE CASIMIRO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 301,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 302,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 303,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0102",
+          "nombre": "SOMOS IDENTIDAD",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 9,
+        "votos_nulos": 6,
+        "votos_no_marcados": 3
+      },
+      "metadata": {
+        "total_partidos": 19,
+        "total_candidatos": 42,
+        "overall_confidence": 0.85,
+        "fields_needing_review": 0
+      }
+    }
+  },
+  {
+    "filename": "camara2.pdf",
+    "corporacion": "CAMARA",
+    "pages": 9,
+    "status": "success",
+    "processing_time_s": 79.75,
+    "tokens": {
+      "input": 10605,
+      "output": 2551
+    },
+    "cost_usd": 0.0701,
+    "data": {
+      "header": {
+        "corporacion": "CAMARA",
+        "departamento": "27 - SANTANDER",
+        "municipio": "001 - BUCARAMANGA",
+        "zona": "01",
+        "puesto": "IE MAIPORÉ SEDE B",
+        "mesa": "010"
+      },
+      "nivelacion": {
+        "total_sufragantes": 189,
+        "total_votos_urna": 188
+      },
+      "partidos": [
+        {
+          "codigo": "0282",
+          "nombre": "COALICIÓN CENTRO ESPERANZA",
+          "votos": 9,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 6
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0290",
+          "nombre": "PACTO HISTÓRICO",
+          "votos": 8,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNES",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRÁTICO",
+          "votos": 19,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 6
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 8
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 16,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 6
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 8
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1076",
+          "nombre": "LIGA DE GOBERNANTES ANTICORRUPCIÓN",
+          "votos": 54,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0281",
+          "nombre": "COALICIÓN PARTIDOS CAMBIO RADICAL - COLOMBIA JUSTA LIBRES - MIRA - DE LA U",
+          "votos": 7,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 47,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 24
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 107,
+              "nombre": "",
+              "votos": 19
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0004",
+          "nombre": "PARTIDO ALIANZA VERDE",
+          "votos": 23,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 7
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 105,
+              "nombre": "",
+              "votos": 8
+            },
+            {
+              "numero": 106,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANICO",
+          "votos": 1,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0186",
+          "nombre": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA 'AICO'",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 205,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 206,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0183",
+          "nombre": "CABILDO INDÍGENA AWAGUASHI",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0182",
+          "nombre": "RESGUARDO INDÍGENA ZENÚ DEL ALTO SAN JORGE",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0168",
+          "nombre": "RESGUARDO INDÍGENA ALTA Y MEDIA GUAJIRA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL 'MAIS'",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 205,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 206,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+          "votos": 1,
+          "candidatos": [
+            {
+              "numero": 204,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0157",
+          "nombre": "CONSEJO COMUNITARIO MAYOR DE CASIMIRO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 301,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 302,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 303,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0102",
+          "nombre": "SOMOS IDENTIDAD",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0097",
+          "nombre": "CONSEJO COMUNITARIO DE LA COMUNIDAD NEGRA LIMONES",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 7,
+        "votos_nulos": 3,
+        "votos_no_marcados": 1
+      },
+      "metadata": {
+        "total_partidos": 20,
+        "total_candidatos": 40,
+        "overall_confidence": 0.9,
+        "fields_needing_review": 0
+      }
+    }
+  },
+  {
+    "filename": "camara3.pdf",
+    "corporacion": "CAMARA",
+    "pages": 9,
+    "status": "success",
+    "processing_time_s": 68.88,
+    "tokens": {
+      "input": 10661,
+      "output": 1699
+    },
+    "cost_usd": 0.0575,
+    "data": {
+      "header": {
+        "corporacion": "CAMARA",
+        "departamento": "27 - SANTANDER",
+        "municipio": "064 - CHARTA",
+        "zona": "00",
+        "puesto": "PUESTO CABECERA MUNICIPAL",
+        "mesa": "004"
+      },
+      "nivelacion": {
+        "total_sufragantes": 204,
+        "total_votos_urna": 204
+      },
+      "partidos": [
+        {
+          "codigo": "0282",
+          "nombre": "COALICIÓN CENTRO ESPERANZA",
+          "votos": 4,
+          "candidatos": [
+            {
+              "numero": 104,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 105,
+              "nombre": null,
+              "votos": 2
+            },
+            {
+              "numero": 106,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": null,
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0290",
+          "nombre": "PACTO HISTÓRICO",
+          "votos": 6,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNES",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRÁTICO",
+          "votos": 18,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": null,
+              "votos": 9
+            },
+            {
+              "numero": 102,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 103,
+              "nombre": null,
+              "votos": 1
+            },
+            {
+              "numero": 104,
+              "nombre": null,
+              "votos": 5
+            },
+            {
+              "numero": 105,
+              "nombre": null,
+              "votos": 1
+            },
+            {
+              "numero": 106,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": null,
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 46,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": null,
+              "votos": 50
+            },
+            {
+              "numero": 102,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 103,
+              "nombre": null,
+              "votos": 1
+            },
+            {
+              "numero": 104,
+              "nombre": null,
+              "votos": 44
+            },
+            {
+              "numero": 105,
+              "nombre": null,
+              "votos": 4
+            },
+            {
+              "numero": 106,
+              "nombre": null,
+              "votos": 4
+            },
+            {
+              "numero": 107,
+              "nombre": null,
+              "votos": 18
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1076",
+          "nombre": "LIGA DE GOBERNANTES ANTICORRUPCIÓN",
+          "votos": 17,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0281",
+          "nombre": "COALICIÓN PARTIDOS CAMBIO RADICAL - COLOMBIA JUSTA LIBRES - MIRA - DE LA U",
+          "votos": 31,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 102,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 103,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 104,
+              "nombre": null,
+              "votos": 8
+            },
+            {
+              "numero": 105,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 106,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": null,
+              "votos": 31
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 63,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": null,
+              "votos": 12
+            },
+            {
+              "numero": 102,
+              "nombre": null,
+              "votos": 2
+            },
+            {
+              "numero": 103,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 104,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 105,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 106,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": null,
+              "votos": 49
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0004",
+          "nombre": "PARTIDO ALIANZA VERDE",
+          "votos": 45,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": null,
+              "votos": 2
+            },
+            {
+              "numero": 102,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 103,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 104,
+              "nombre": null,
+              "votos": 1
+            },
+            {
+              "numero": 105,
+              "nombre": null,
+              "votos": 2
+            },
+            {
+              "numero": 106,
+              "nombre": null,
+              "votos": 0
+            },
+            {
+              "numero": 107,
+              "nombre": null,
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 43,
+        "votos_nulos": 49,
+        "votos_no_marcados": 41
+      },
+      "metadata": {
+        "total_partidos": 10,
+        "total_candidatos": 28,
+        "overall_confidence": 0.85,
+        "fields_needing_review": 5
+      }
+    }
+  },
+  {
+    "filename": "camara4.pdf",
+    "corporacion": "CAMARA",
+    "pages": 9,
+    "status": "success",
+    "processing_time_s": 67.59,
+    "tokens": {
+      "input": 10605,
+      "output": 1311
+    },
+    "cost_usd": 0.0515,
+    "data": {
+      "header": {
+        "corporacion": "CAMARA",
+        "departamento": "19 - HUILA",
+        "municipio": "001 - NEIVA",
+        "zona": "01",
+        "puesto": "I.E. PROMOCION SOCIAL",
+        "mesa": "006"
+      },
+      "nivelacion": {
+        "total_sufragantes": 248,
+        "total_votos_urna": 246
+      },
+      "partidos": [
+        {
+          "codigo": "0003",
+          "nombre": "PARTIDO CAMBIO RADICAL",
+          "votos": 42,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 26
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 5
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0290",
+          "nombre": "PACTO HISTORICO",
+          "votos": 95,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 47
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 14
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 17
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0007",
+          "nombre": "PARTIDO POLITICO MIRA",
+          "votos": 7,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 6
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0019",
+          "nombre": "PARTIDO NUEVO LIBERALISMO",
+          "votos": 3,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 60,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 17
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 15
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 3
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0257",
+          "nombre": "COALICION CENTRO ESPERANZA",
+          "votos": 14,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 23,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 13
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 5
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACION NACIONAL",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRATICO",
+          "votos": 15,
+          "candidatos": [
+            {
+              "numero": 101,
+              "nombre": "",
+              "votos": 9
+            },
+            {
+              "numero": 102,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 103,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 104,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 20,
+        "votos_nulos": 6,
+        "votos_no_marcados": 0
+      },
+      "metadata": {
+        "total_partidos": 9,
+        "total_candidatos": 17,
+        "overall_confidence": 0.9,
+        "fields_needing_review": 0
+      }
+    }
+  },
+  {
+    "filename": "senado1.pdf",
+    "corporacion": "SENADO",
+    "pages": 11,
+    "status": "success",
+    "processing_time_s": 74.63,
+    "tokens": {
+      "input": 13209,
+      "output": 1950
+    },
+    "cost_usd": 0.0689,
+    "data": {
+      "header": {
+        "corporacion": "SENADO",
+        "departamento": "01 - ANTIOQUIA",
+        "municipio": "001 - MEDELLIN",
+        "zona": "01",
+        "puesto": "ESC. LA ESPERANZA NO 2",
+        "mesa": "001"
+      },
+      "nivelacion": {
+        "total_sufragantes": 90,
+        "total_votos_urna": 90
+      },
+      "partidos": [
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNES",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0259",
+          "nombre": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1140",
+          "nombre": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0003",
+          "nombre": "PARTIDO CAMBIO RADICAL",
+          "votos": 2,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1073",
+          "nombre": "MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD SOS COLOMBIA",
+          "votos": 2,
+          "candidatos": [],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "0019",
+          "nombre": "PARTIDO NUEVO LIBERALISMO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "1130",
+          "nombre": "ESTAMOS LISTAS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "1039",
+          "nombre": "MOVIMIENTO UNITARIO METROPOLITICO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0231",
+          "nombre": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 3,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1186",
+          "nombre": "MOVIMIENTO GENTE NUEVA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRÁTICO",
+          "votos": 8,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 16,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0008",
+          "nombre": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LA U\"",
+          "votos": 2,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0292",
+          "nombre": "PACTO HISTÓRICO",
+          "votos": 10,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0184",
+          "nombre": "ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0151",
+          "nombre": "DEMOCRACIA DESDE ABAJO LA PALMA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0166",
+          "nombre": "MANDATO AMBIENTAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANICOL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0181",
+          "nombre": "RESGUARDO CAMPO ALEGRE",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0186",
+          "nombre": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA \"AICO\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0026",
+          "nombre": "O.S.A ORGANIZACIÓN SOCIO-POLÍTICA ANCESTRAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 4,
+        "votos_nulos": 9,
+        "votos_no_marcados": 17
+      },
+      "metadata": {
+        "total_partidos": 25,
+        "total_candidatos": 0,
+        "overall_confidence": 0.92,
+        "fields_needing_review": 0
+      }
+    }
+  },
+  {
+    "filename": "senado2.pdf",
+    "corporacion": "SENADO",
+    "pages": 11,
+    "status": "success",
+    "processing_time_s": 109.91,
+    "tokens": {
+      "input": 12649,
+      "output": 2581
+    },
+    "cost_usd": 0.0767,
+    "data": {
+      "header": {
+        "corporacion": "SENADO",
+        "departamento": "16 - BOGOTA D.C.",
+        "municipio": "001 - BOGOTA. D.C.",
+        "zona": "01",
+        "puesto": "USAQUEN",
+        "mesa": "001"
+      },
+      "nivelacion": {
+        "total_sufragantes": 134,
+        "total_votos_urna": 134
+      },
+      "partidos": [
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNES",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0255",
+          "nombre": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 2,
+              "nombre": "",
+              "votos": 0
+            },
+            {
+              "numero": 6,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 11,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 14,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 18,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 29,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 69,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.8,
+          "needs_review": true
+        },
+        {
+          "codigo": "1140",
+          "nombre": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 22,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0003",
+          "nombre": "PARTIDO CAMBIO RADICAL",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 12,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1073",
+          "nombre": "MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD SOS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0018",
+          "nombre": "PARTIDO NUEVO LIBERALISMO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1130",
+          "nombre": "ESTAMOS LISTAS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1039",
+          "nombre": "MOVIMIENTO UNITARIO METAPOLITICO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0231",
+          "nombre": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 4
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 3,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 22,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 78,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1185",
+          "nombre": "MOVIMIENTO GENTE NUEVA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRATICO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 23
+            },
+            {
+              "numero": 10,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 11,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 13,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 26,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 36,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 40,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 48,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 50,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 55,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 100,
+              "nombre": "",
+              "votos": 6
+            }
+          ],
+          "confidence": 0.8,
+          "needs_review": true
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0008",
+          "nombre": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LA U\"",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 13,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 70,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0292",
+          "nombre": "PACTO HISTÓRICO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0184",
+          "nombre": "ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0151",
+          "nombre": "DEMOCRACIA DESDE ABAJO LA PALMA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0166",
+          "nombre": "MANDATO AMBIENTAL",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 201,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANICO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0181",
+          "nombre": "RESGUARDO CAMPO ALEGRE",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0186",
+          "nombre": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA \"AICO\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0026",
+          "nombre": "O.S.A ORGANIZACIÓN SOCIO-POLÍTICA ANCESTRAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 4,
+        "votos_nulos": 1,
+        "votos_no_marcados": 3
+      },
+      "metadata": {
+        "total_partidos": 24,
+        "total_candidatos": 30,
+        "overall_confidence": 0.85,
+        "fields_needing_review": 2
+      }
+    }
+  },
+  {
+    "filename": "senado3.pdf",
+    "corporacion": "SENADO",
+    "pages": 11,
+    "status": "success",
+    "processing_time_s": 111.74,
+    "tokens": {
+      "input": 12929,
+      "output": 2304
+    },
+    "cost_usd": 0.0733,
+    "data": {
+      "header": {
+        "corporacion": "SENADO",
+        "departamento": "BOGOTÁ D.C.",
+        "municipio": "BOGOTÁ D.C.",
+        "zona": "01",
+        "puesto": "USAQUÉN",
+        "mesa": "054"
+      },
+      "nivelacion": {
+        "total_sufragantes": 812,
+        "total_votos_urna": 801
+      },
+      "partidos": [
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNES",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0255",
+          "nombre": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 1,
+              "votos": 4
+            },
+            {
+              "numero": 2,
+              "votos": 1
+            },
+            {
+              "numero": 9,
+              "votos": 2
+            },
+            {
+              "numero": 10,
+              "votos": 2
+            },
+            {
+              "numero": 11,
+              "votos": 1
+            },
+            {
+              "numero": 14,
+              "votos": 2
+            },
+            {
+              "numero": 30,
+              "votos": 1
+            },
+            {
+              "numero": 42,
+              "votos": 2
+            },
+            {
+              "numero": 54,
+              "votos": 1
+            },
+            {
+              "numero": 55,
+              "votos": 1
+            },
+            {
+              "numero": 100,
+              "votos": 3
+            }
+          ],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "1140",
+          "nombre": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 1,
+              "votos": 4
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0003",
+          "nombre": "PARTIDO CAMBIO RADICAL",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 1,
+              "votos": 3
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1073",
+          "nombre": "MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD SOS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0019",
+          "nombre": "PARTIDO NUEVO LIBERALISMO",
+          "votos": 2,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1130",
+          "nombre": "ESTAMOS LISTAS DIGNIDAD Y COMPROMISO",
+          "votos": 3,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1039",
+          "nombre": "MOVIMIENTO UNITARIO METAPOLITICO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0231",
+          "nombre": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 5,
+              "votos": 1
+            },
+            {
+              "numero": 10,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 1,
+              "votos": 3
+            },
+            {
+              "numero": 4,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1186",
+          "nombre": "MOVIMIENTO GENTE NUEVA",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRÁTICO",
+          "votos": 2,
+          "candidatos": [
+            {
+              "numero": 1,
+              "votos": 4
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 6,
+              "votos": 1
+            },
+            {
+              "numero": 14,
+              "votos": 1
+            },
+            {
+              "numero": 24,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0008",
+          "nombre": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LA U\"",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 2,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0292",
+          "nombre": "PACTO HISTÓRICO",
+          "votos": 16,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0184",
+          "nombre": "ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0151",
+          "nombre": "DEMOCRACIA DESDE ABAJO LA PALMA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0166",
+          "nombre": "MANDATO AMBIENTAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANCOL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0181",
+          "nombre": "RESGUARDO CAMPO ALEGRE",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0185",
+          "nombre": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA \"AICO\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0026",
+          "nombre": "O.S.A ORGANIZACIÓN SOCIO-POLÍTICA ANCESTRAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 13,
+        "votos_nulos": 0,
+        "votos_no_marcados": 0
+      },
+      "metadata": {
+        "total_partidos": 25,
+        "total_candidatos": 21,
+        "overall_confidence": 0.89,
+        "fields_needing_review": 0
+      }
+    }
+  },
+  {
+    "filename": "senado4.pdf",
+    "corporacion": "SENADO",
+    "pages": 11,
+    "status": "success",
+    "processing_time_s": 107.33,
+    "tokens": {
+      "input": 12649,
+      "output": 3629
+    },
+    "cost_usd": 0.0924,
+    "data": {
+      "header": {
+        "corporacion": "SENADO",
+        "departamento": "44 - CAQUETA",
+        "municipio": "001 - FLORENCIA",
+        "zona": "01",
+        "puesto": "I.E. JUAN BAUTISTA LA SALLE",
+        "mesa": "006"
+      },
+      "nivelacion": {
+        "total_sufragantes": 196,
+        "total_votos_urna": 196
+      },
+      "partidos": [
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNOS",
+          "votos": 1,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0255",
+          "nombre": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+          "votos": 20,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 2,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 10,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 18,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 20,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 23,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 26,
+              "nombre": "",
+              "votos": 3
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1140",
+          "nombre": "FUERZA CIUDADANA Y LA FUERZA DEL CAMBIO",
+          "votos": 2,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0003",
+          "nombre": "PARTIDO CAMBIO RADICAL",
+          "votos": 19,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 5,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 9,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 10,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 30,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 31,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1073",
+          "nombre": "MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD SOS COLOMBIA",
+          "votos": 3,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 3
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0019",
+          "nombre": "PARTIDO NUEVO LIBERALISMO",
+          "votos": 2,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1130",
+          "nombre": "ESTAMOS LISTAS COLOMBIA",
+          "votos": 4,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 4
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1039",
+          "nombre": "MOVIMIENTO UNITARIO METAPOLÍTICO",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0231",
+          "nombre": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+          "votos": 7,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 4,
+              "nombre": "",
+              "votos": 3
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 16,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 4,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 9,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 10,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 13,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 17,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 21,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 34,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1186",
+          "nombre": "MOVIMIENTO GENTE NUEVA",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRÁTICO",
+          "votos": 24,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 3
+            },
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 6
+            },
+            {
+              "numero": 4,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 6,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 12,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 15,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 20,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 28,
+              "nombre": "",
+              "votos": 3
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 26,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 4
+            },
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 3,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 5,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 6,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 9,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 10,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 11,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 12,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 13,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 15,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 25,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 27,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0008",
+          "nombre": "PARTIDO DE LA UNIÓN POR LA GENTE 'PARTIDO DE LA U'",
+          "votos": 4,
+          "candidatos": [
+            {
+              "numero": 15,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 19,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 33,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1292",
+          "nombre": "PACTO HISTÓRICO",
+          "votos": 16,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 16
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0184",
+          "nombre": "ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0151",
+          "nombre": "DEMOCRACIA DESDE ABAJO LA PALMA",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL 'MAIS'",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0166",
+          "nombre": "MANDATO AMBIENTAL",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANCAI",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0161",
+          "nombre": "RESGUARDO CAMPO ALEGRE",
+          "votos": 2,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0186",
+          "nombre": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA 'AICO'",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0026",
+          "nombre": "O.S.A ORGANIZACIÓN SOCIOPOLÍTICA ANCESTRAL",
+          "votos": 0,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA",
+              "votos": 0
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 11,
+        "votos_nulos": 10,
+        "votos_no_marcados": 12
+      },
+      "metadata": {
+        "total_partidos": 25,
+        "total_candidatos": 56,
+        "overall_confidence": 0.9,
+        "fields_needing_review": 0
+      }
+    }
+  },
+  {
+    "filename": "senado6.pdf",
+    "corporacion": "SENADO",
+    "pages": 11,
+    "status": "success",
+    "processing_time_s": 128.06,
+    "tokens": {
+      "input": 12761,
+      "output": 2944
+    },
+    "cost_usd": 0.0824,
+    "data": {
+      "header": {
+        "corporacion": "SENADO",
+        "departamento": "44 - CAQUETA",
+        "municipio": "001 - FLORENCIA",
+        "zona": "01",
+        "puesto": "I.E. JUAN BAUTISTA LA SALLE",
+        "mesa": "003"
+      },
+      "nivelacion": {
+        "total_sufragantes": 181,
+        "total_votos_urna": 181
+      },
+      "partidos": [
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNAS",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0255",
+          "nombre": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+          "votos": 20,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 2,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 4,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 18,
+              "nombre": "",
+              "votos": 5
+            },
+            {
+              "numero": 22,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 23,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 50,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 79,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 93,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1140",
+          "nombre": "FUERZA CIUDADANA Y FUERZA DEL CAMBIO",
+          "votos": 3,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 19,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0003",
+          "nombre": "PARTIDO CAMBIO RADICAL",
+          "votos": 25,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 2,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 6
+            },
+            {
+              "numero": 13,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 18,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 23,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 29,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 31,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 99,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1073",
+          "nombre": "MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD SOS COLOMBIA",
+          "votos": 2,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0019",
+          "nombre": "PARTIDO NUEVO LIBERALISMO",
+          "votos": 5,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1130",
+          "nombre": "ESTAMOS LISTAS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1039",
+          "nombre": "MOVIMIENTO UNITARIO METAPOLÍTICO",
+          "votos": 4,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0231",
+          "nombre": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+          "votos": 4,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 7,
+          "candidatos": [
+            {
+              "numero": 8,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 17,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 33,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 34,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1186",
+          "nombre": "MOVIMIENTO GENTE NUEVA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "6302",
+          "nombre": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRATICO",
+          "votos": 26,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "",
+              "votos": 6
+            },
+            {
+              "numero": 2,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 9,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 10,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 14,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 15,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 19,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 20,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 21,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 26,
+              "nombre": "",
+              "votos": 3
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 16,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 2,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 3,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 5,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 8,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 13,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 15,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 25,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0008",
+          "nombre": "PARTIDO DE LA UNIDAD DE LA GENTE \"PARTIDO DE LA U\"",
+          "votos": 5,
+          "candidatos": [
+            {
+              "numero": 9,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 14,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 15,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 33,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 34,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0292",
+          "nombre": "PACTO HISTORICO",
+          "votos": 34,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0184",
+          "nombre": "ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0151",
+          "nombre": "DEMOCRACIA DESDE ABAJO LA PALMA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+          "votos": 1,
+          "candidatos": [
+            {
+              "numero": 203,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0166",
+          "nombre": "MANDATO AMBIENTAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANCOL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0181",
+          "nombre": "RESGUARDO CAMPO ALEGRE",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0186",
+          "nombre": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA \"AICO\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0026",
+          "nombre": "ORGANIZACIÓN SOCIO-POLÍTICA ANCESTRAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 21,
+        "votos_nulos": 2,
+        "votos_no_marcados": 8
+      },
+      "metadata": {
+        "total_partidos": 24,
+        "total_candidatos": 33,
+        "overall_confidence": 0.9,
+        "fields_needing_review": 0
+      }
+    }
+  },
+  {
+    "filename": "senado7.pdf",
+    "corporacion": "SENADO",
+    "pages": 11,
+    "status": "success",
+    "processing_time_s": 125.42,
+    "tokens": {
+      "input": 12649,
+      "output": 2747
+    },
+    "cost_usd": 0.0792,
+    "data": {
+      "header": {
+        "corporacion": "SENADO",
+        "departamento": "54 - GUAVIARE",
+        "municipio": "001 - SAN JOSE DEL GUAVIARE",
+        "zona": "01",
+        "puesto": "I.E.ALFONSO LOPEZ PUMAREJO",
+        "mesa": "004"
+      },
+      "nivelacion": {
+        "total_sufragantes": 111,
+        "total_votos_urna": 111
+      },
+      "partidos": [
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNES",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0235",
+          "nombre": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+          "votos": 5,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 7,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 37,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 91,
+              "nombre": "",
+              "votos": 2
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1140",
+          "nombre": "FUERZA CIUDADANA Y FUERZA DEL CAMBIO",
+          "votos": 3,
+          "candidatos": [
+            {
+              "numero": 17,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 63,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 80,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0003",
+          "nombre": "PARTIDO CAMBIO RADICAL",
+          "votos": 9,
+          "candidatos": [
+            {
+              "numero": 2,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 12,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 18,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 21,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 28,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 36,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 65,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 99,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1073",
+          "nombre": "MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD SOS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0019",
+          "nombre": "PARTIDO NUEVO LIBERALISMO",
+          "votos": 4,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1130",
+          "nombre": "ESTAMOS LISTAS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "1039",
+          "nombre": "MOVIMIENTO UNITARIO METAPOLÍTICO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0231",
+          "nombre": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+          "votos": 3,
+          "candidatos": [
+            {
+              "numero": 1,
+              "nombre": "",
+              "votos": 3
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 16,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "",
+              "votos": 6
+            },
+            {
+              "numero": 8,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 9,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 17,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 23,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 32,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 56,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 65,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 67,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 99,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 100,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.85,
+          "needs_review": true
+        },
+        {
+          "codigo": "1186",
+          "nombre": "MOVIMIENTO GENTE NUEVA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRÁTICO",
+          "votos": 7,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 12,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 89,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 98,
+              "nombre": "",
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 25,
+          "candidatos": [
+            {
+              "numero": 0,
+              "nombre": "",
+              "votos": 3
+            },
+            {
+              "numero": 5,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 6,
+              "nombre": "",
+              "votos": 4
+            },
+            {
+              "numero": 8,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 9,
+              "nombre": "",
+              "votos": 1
+            },
+            {
+              "numero": 12,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 100,
+              "nombre": "",
+              "votos": 11
+            }
+          ],
+          "confidence": 0.85,
+          "needs_review": true
+        },
+        {
+          "codigo": "0008",
+          "nombre": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LA U\"",
+          "votos": 5,
+          "candidatos": [
+            {
+              "numero": 2,
+              "nombre": "",
+              "votos": 2
+            },
+            {
+              "numero": 11,
+              "nombre": "",
+              "votos": 3
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0292",
+          "nombre": "PACTO HISTÓRICO",
+          "votos": 12,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0184",
+          "nombre": "ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0151",
+          "nombre": "DEMOCRACIA DESDE ABAJO LA PALMA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0166",
+          "nombre": "MANDATO AMBIENTAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA -ANCOL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0181",
+          "nombre": "RESGUARDO CAMPO ALEGRE",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0186",
+          "nombre": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA \"AICO\"",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        },
+        {
+          "codigo": "0026",
+          "nombre": "O.S.A ORGANIZACIÓN SOCIO-POLÍTICA ANCESTRAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 1.0,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 6,
+        "votos_nulos": 6,
+        "votos_no_marcados": 8
+      },
+      "metadata": {
+        "total_partidos": 25,
+        "total_candidatos": 42,
+        "overall_confidence": 0.9,
+        "fields_needing_review": 2
+      }
+    }
+  },
+  {
+    "filename": "senado8.pdf",
+    "corporacion": "SENADO",
+    "pages": 11,
+    "status": "success",
+    "processing_time_s": 116.7,
+    "tokens": {
+      "input": 12649,
+      "output": 1897
+    },
+    "cost_usd": 0.0664,
+    "data": {
+      "header": {
+        "corporacion": "SENADO",
+        "departamento": "27 - SANTANDER",
+        "municipio": "001 - BUCARAMANGA",
+        "zona": "01",
+        "puesto": "IE MAIPORÉ SEDE B",
+        "mesa": "004"
+      },
+      "nivelacion": {
+        "total_sufragantes": 205,
+        "total_votos_urna": 172
+      },
+      "partidos": [
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNES",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0255",
+          "nombre": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+          "votos": 39,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1140",
+          "nombre": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "0003",
+          "nombre": "PARTIDO CAMBIO RADICAL",
+          "votos": 9,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1073",
+          "nombre": "MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD SOS COLOMBIA",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "0019",
+          "nombre": "PARTIDO NUEVO LIBERALISMO",
+          "votos": 1,
+          "candidatos": [],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "1130",
+          "nombre": "ESTAMOS LISTAS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1039",
+          "nombre": "MOVIMIENTO UNITARIO METAPOLITICO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0231",
+          "nombre": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+          "votos": 4,
+          "candidatos": [],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 34,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1186",
+          "nombre": "MOVIMIENTO GENTE NUEVA",
+          "votos": 3,
+          "candidatos": [],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRÁTICO",
+          "votos": 13,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 13,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0006",
+          "nombre": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LA U\"",
+          "votos": 2,
+          "candidatos": [],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "0292",
+          "nombre": "PACTO HISTÓRICO",
+          "votos": 30,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 25,
+        "votos_nulos": 4,
+        "votos_no_marcados": 17
+      },
+      "circunscripciones_especiales": [
+        {
+          "codigo": "0184",
+          "nombre": "ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA",
+          "votos": 0,
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0151",
+          "nombre": "DEMOCRACIA DESDE ABAJO LA PALMA",
+          "votos": 0,
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+          "votos": 0,
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\"",
+          "votos": 0,
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0166",
+          "nombre": "MANDATO AMBIENTAL",
+          "votos": 0,
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANCAIC",
+          "votos": 0,
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0181",
+          "nombre": "RESGUARDO CAMPO ALEGRE",
+          "votos": 0,
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0186",
+          "nombre": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA \"AICO\"",
+          "votos": 0,
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0026",
+          "nombre": "ORGANIZACIÓN SOCIOPOLÍTICA ANCESTRAL",
+          "votos": 0,
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "metadata": {
+        "total_partidos": 16,
+        "total_candidatos": 0,
+        "overall_confidence": 0.88,
+        "fields_needing_review": 0
+      }
+    }
+  },
+  {
+    "filename": "senado9.pdf",
+    "corporacion": "SENADO",
+    "pages": 11,
+    "status": "success",
+    "processing_time_s": 87.51,
+    "tokens": {
+      "input": 12649,
+      "output": 2208
+    },
+    "cost_usd": 0.0711,
+    "data": {
+      "header": {
+        "corporacion": "SENADO",
+        "departamento": "27 - SANTANDER",
+        "municipio": "001 - BUCARAMANGA",
+        "zona": "01",
+        "puesto": "IE MAIPORE SEDE B",
+        "mesa": "002"
+      },
+      "nivelacion": {
+        "total_sufragantes": 168,
+        "total_votos_urna": 153
+      },
+      "partidos": [
+        {
+          "codigo": "0013",
+          "nombre": "PARTIDO COMUNES",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0255",
+          "nombre": "COALICION ALIANZA VERDE Y CENTRO ESPERANZA",
+          "votos": 2,
+          "candidatos": [
+            {
+              "numero": 6,
+              "votos": 1
+            },
+            {
+              "numero": 25,
+              "votos": 1
+            },
+            {
+              "numero": 54,
+              "votos": 11
+            },
+            {
+              "numero": 100,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "1140",
+          "nombre": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+          "votos": 1,
+          "candidatos": [
+            {
+              "numero": 1,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0003",
+          "nombre": "PARTIDO CAMBIO RADICAL",
+          "votos": 2,
+          "candidatos": [
+            {
+              "numero": 1,
+              "votos": 1
+            },
+            {
+              "numero": 31,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "1073",
+          "nombre": "MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA SALUD SOS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0019",
+          "nombre": "PARTIDO NUEVO LIBERALISMO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "1130",
+          "nombre": "ESTAMOS LISTAS COLOMBIA",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "1039",
+          "nombre": "MOVIMIENTO UNITARIO METAPOLITICO",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0231",
+          "nombre": "COALICION MIRA - COLOMBIA JUSTA LIBRES",
+          "votos": 1,
+          "candidatos": [
+            {
+              "numero": 6,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0001",
+          "nombre": "PARTIDO LIBERAL COLOMBIANO",
+          "votos": 22,
+          "candidatos": [
+            {
+              "numero": 1,
+              "votos": 1
+            },
+            {
+              "numero": 3,
+              "votos": 4
+            },
+            {
+              "numero": 4,
+              "votos": 4
+            },
+            {
+              "numero": 13,
+              "votos": 6
+            },
+            {
+              "numero": 34,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "1166",
+          "nombre": "MOVIMIENTO GENTE NUEVA",
+          "votos": 3,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        },
+        {
+          "codigo": "0302",
+          "nombre": "MOVIMIENTO DE SALVACION NACIONAL",
+          "votos": 0,
+          "candidatos": [],
+          "confidence": 0.95,
+          "needs_review": false
+        },
+        {
+          "codigo": "0011",
+          "nombre": "PARTIDO CENTRO DEMOCRATICO",
+          "votos": 24,
+          "candidatos": [
+            {
+              "numero": 1,
+              "votos": 2
+            },
+            {
+              "numero": 2,
+              "votos": 3
+            },
+            {
+              "numero": 3,
+              "votos": 1
+            },
+            {
+              "numero": 7,
+              "votos": 1
+            },
+            {
+              "numero": 9,
+              "votos": 2
+            },
+            {
+              "numero": 15,
+              "votos": 2
+            },
+            {
+              "numero": 16,
+              "votos": 1
+            },
+            {
+              "numero": 17,
+              "votos": 1
+            },
+            {
+              "numero": 40,
+              "votos": 5
+            },
+            {
+              "numero": 100,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.8,
+          "needs_review": true
+        },
+        {
+          "codigo": "0002",
+          "nombre": "PARTIDO CONSERVADOR COLOMBIANO",
+          "votos": 16,
+          "candidatos": [
+            {
+              "numero": 5,
+              "votos": 7
+            },
+            {
+              "numero": 7,
+              "votos": 1
+            },
+            {
+              "numero": 10,
+              "votos": 1
+            },
+            {
+              "numero": 11,
+              "votos": 1
+            },
+            {
+              "numero": 20,
+              "votos": 3
+            },
+            {
+              "numero": 24,
+              "votos": 5
+            }
+          ],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "0009",
+          "nombre": "PARTIDO DE LA UNION POR LA GENTE \"PARTIDO DE LA U\"",
+          "votos": 3,
+          "candidatos": [
+            {
+              "numero": 9,
+              "votos": 1
+            },
+            {
+              "numero": 11,
+              "votos": 1
+            }
+          ],
+          "confidence": 0.85,
+          "needs_review": false
+        },
+        {
+          "codigo": "0292",
+          "nombre": "PACTO HISTORICO",
+          "votos": 11,
+          "candidatos": [],
+          "confidence": 0.9,
+          "needs_review": false
+        }
+      ],
+      "votos_especiales": {
+        "votos_blanco": 10,
+        "votos_nulos": 10,
+        "votos_no_marcados": 14
+      },
+      "circunscripciones_indigenas": [
+        {
+          "codigo": "0184",
+          "nombre": "ASOCIACION DE CABILDOS INDIGENAS POR COLOMBIA",
+          "votos": 0
+        },
+        {
+          "codigo": "0151",
+          "nombre": "DEMOCRACIA DESDE ABAJO LA PALMA",
+          "votos": 0
+        },
+        {
+          "codigo": "0177",
+          "nombre": "PARTIDO INDIGENA COLOMBIANO P.I.C",
+          "votos": 0
+        },
+        {
+          "codigo": "0156",
+          "nombre": "MOVIMIENTO ALTERNATIVO INDIGENA SOCIAL \"MAIS\"",
+          "votos": 0
+        },
+        {
+          "codigo": "0165",
+          "nombre": "MANDATO AMBIENTAL",
+          "votos": 0
+        },
+        {
+          "codigo": "0167",
+          "nombre": "ASOCIACION NACIONAL DE CABILDOS Y AUTORIDADES INDIGENAS EN COLOMBIA ANCOL",
+          "votos": 0
+        },
+        {
+          "codigo": "0181",
+          "nombre": "RESGUARDO CAMPO ALEGRE",
+          "votos": 0
+        },
+        {
+          "codigo": "0185",
+          "nombre": "MOVIMIENTO AUTORIDADES INDIGENAS DE COLOMBIA AICO",
+          "votos": 0
+        },
+        {
+          "codigo": "0026",
+          "nombre": "ORGANIZACION SOCIO-POLITICA ANCESTRAL",
+          "votos": 0
+        }
+      ],
+      "metadata": {
+        "total_partidos": 16,
+        "total_candidatos": 32,
+        "overall_confidence": 0.87,
+        "fields_needing_review": 1
+      }
+    }
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "total_processed": 486,
+  "success": 486,
+  "failed": 0,
+  "total_time_seconds": 14100.756999999998,
+  "avg_time_per_pdf": 29.013903292181066,
+  "avg_confidence": 0.9792181069958844,
+  "min_confidence": 0.6,
+  "max_confidence": 1.0,
+  "avg_partidos": 10.300411522633745
+}

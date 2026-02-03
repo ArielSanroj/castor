@@ -1,0 +1,3907 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>CASTOR | IA Electoral - Dashboard de Estrategia</title>
+    <meta name="description" content="Dashboard de estrategia electoral con IA. Conoce tu ventaja electoral y comparala con tus rivales. Estrategias y planes de accion diarios.">
+    <meta name="keywords" content="IA electoral, estrategia politica, dashboard electoral, comparacion rivales, estrategias electorales, forecast narrativo, ICCE, momentum">
+    <meta name="author" content="Castor Elecciones">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://castor-elecciones.com/dashboard">
+    <meta property="og:title" content="CASTOR | IA Electoral - Dashboard de Estrategia">
+    <meta property="og:description" content="Dashboard de estrategia electoral con IA. Conoce tu ventaja electoral y comparala con tus rivales. Estrategias diarias.">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CASTOR | IA Electoral">
+    <meta name="twitter:description" content="Estrategia electoral con IA. Conoce tu ventaja electoral, estrategias diarias y planes de accion.">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/logo.png">
+    <link rel="shortcut icon" href="/static/images/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <link rel="preload" href="/static/css/styles.css?v=20260122b" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" as="style">
+
+    <link rel="stylesheet" href="/static/css/styles.css?v=20260122b">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+
+    <meta name="theme-color" content="#0A0E1A">
+
+    <style>
+        /* ========== MANUAL DE MARCA CASTOR ========== */
+        /* Minimalismo, alto contraste, sobriedad */
+        :root {
+            /* Colores principales */
+            --black: #111111;
+            --white: #FFFFFF;
+            /* Colores secundarios */
+            --gray-warm: #BFB8AE;
+            --sand: #E6E1D8;
+            /* Aplicación */
+            --bg: #FFFFFF;
+            --bg-secondary: #F9F8F6;
+            --panel: #FFFFFF;
+            --panel-hover: #F5F4F2;
+            --border: #E6E1D8;
+            --text: #111111;
+            --text-secondary: #444444;
+            --muted: #BFB8AE;
+            --accent: #111111;
+            --accent-hover: #333333;
+            --accent-light: rgba(17, 17, 17, 0.08);
+            --success: #2D5A3D;
+            --warning: #8B7355;
+            --danger: #8B3A3A;
+            --info: #4A5568;
+            --font-heading: 'Source Sans 3', sans-serif;
+            --font-body: 'Source Sans 3', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+        }
+
+        /* ========== BARRA DE METADATA / ULTIMA ACTUALIZACION ========== */
+        .data-metadata-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--black);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm, 0 1px 2px rgba(17, 17, 17, 0.05));
+        }
+        .metadata-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .metadata-icon {
+            color: var(--accent, var(--black, #111111));
+            display: flex;
+            align-items: center;
+        }
+        .metadata-timestamp {
+            font-size: 0.9rem;
+            color: var(--text, #F5F5F0);
+            font-weight: 600;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
+        }
+        .metadata-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .metadata-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .metadata-stat .stat-label {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .metadata-stat .stat-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--accent, var(--black, #111111));
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .metadata-stat .timer-value {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            background: rgba(74, 124, 89, 0.15);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid rgba(74, 124, 89, 0.3);
+        }
+        #api-reset-timer {
+            animation: pulse-subtle 2s ease-in-out infinite;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .cache-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            background: rgba(139, 115, 85, 0.2);
+            color: #9A8F7C;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+        }
+        @media (max-width: 600px) {
+            .data-metadata-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .metadata-right {
+                gap: 1rem;
+            }
+        }
+
+        /* ========== BOTON VER HISTORICO ========== */
+        .history-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.75rem;
+            margin-left: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--black, #111111);
+            background: rgba(17, 17, 17, 0.1);
+            border: 1px solid rgba(17, 17, 17, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+        .history-btn:hover {
+            background: rgba(17, 17, 17, 0.2);
+            border-color: rgba(17, 17, 17, 0.5);
+        }
+        .history-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ========== MODAL HISTORICO ========== */
+        .history-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .history-modal-overlay.active {
+            display: flex;
+        }
+        .history-modal {
+            background: var(--surface, #141824);
+            border: 1px solid rgba(17, 17, 17, 0.3);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .history-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(17, 17, 17, 0.2);
+            background: rgba(17, 17, 17, 0.05);
+        }
+        .history-modal-title {
+            font-family: var(--font-display, 'Playfair Display', serif);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+        .history-modal-close {
+            background: none;
+            border: none;
+            color: var(--muted, #9A8F7C);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+        .history-modal-close:hover {
+            color: var(--text, #F5F5F0);
+        }
+        .history-modal-body {
+            padding: 1rem 1.5rem;
+            overflow-y: auto;
+            max-height: calc(80vh - 60px);
+        }
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(17, 17, 17, 0.05);
+            border: 1px solid rgba(17, 17, 17, 0.15);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .history-item:hover {
+            background: rgba(17, 17, 17, 0.1);
+            border-color: rgba(17, 17, 17, 0.3);
+        }
+        .history-item-main {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .history-item-date {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent, var(--black, #111111));
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .history-item-meta {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .history-item-tweets {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+            background: rgba(17, 17, 17, 0.15);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+        .history-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .history-loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* ========== NIVEL 1: LA DECISION DE HOY ========== */
+        .decision-hero-section {
+            background: linear-gradient(135deg, rgba(17, 17, 17, 0.06), rgba(17, 17, 17, 0.02));
+            border: 1px solid rgba(17, 17, 17, 0.25);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .decision-hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #8B7355, var(--black, #111111), #E8D48A, var(--black, #111111), #8B7355);
+        }
+        .decision-hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .decision-hero-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .priority-indicator {
+            padding: 0.4rem 0.9rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
+        }
+        .priority-today {
+            background: linear-gradient(135deg, var(--black, #111111), #333333);
+            color: #0A0A0A;
+        }
+        .priority-48h {
+            background: rgba(17, 17, 17, 0.15);
+            color: #E8D48A;
+            border: 1px solid rgba(17, 17, 17, 0.3);
+        }
+        .priority-watch {
+            background: rgba(154, 143, 124, 0.15);
+            color: #9A8F7C;
+            border: 1px solid rgba(154, 143, 124, 0.3);
+        }
+        .decision-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text, #F5F5F0);
+            font-family: var(--font-display, 'Playfair Display', serif);
+            letter-spacing: 0.02em;
+        }
+        .decision-confidence {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(74, 124, 89, 0.15);
+            border: 1px solid rgba(74, 124, 89, 0.3);
+            border-radius: 6px;
+        }
+        .confidence-dot {
+            width: 8px;
+            height: 8px;
+            background: #4A7C59;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .decision-hero-main {
+            margin-bottom: 1.5rem;
+        }
+        .decision-main-text {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--text, #F5F5F0);
+            line-height: 1.5;
+            margin: 0;
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .decision-hero-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: rgba(17, 17, 17, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(17, 17, 17, 0.1);
+        }
+        .decision-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .meta-icon {
+            font-size: 1rem;
+            color: var(--accent, var(--black, #111111));
+        }
+        .meta-label {
+            color: var(--muted, #9A8F7C);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .meta-value {
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+        .meta-value.positive {
+            color: #4A7C59;
+        }
+        .decision-hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
+        }
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--black, #111111), #333333);
+            color: #0A0A0A;
+        }
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(17, 17, 17, 0.35);
+            background: linear-gradient(135deg, #333333, #E8D48A);
+        }
+        .action-btn.secondary {
+            background: rgba(74, 124, 89, 0.12);
+            border: 1px solid rgba(74, 124, 89, 0.3);
+            color: #5D9A6D;
+        }
+        .action-btn.secondary:hover {
+            background: rgba(74, 124, 89, 0.2);
+            border-color: rgba(74, 124, 89, 0.5);
+        }
+        .action-btn.ghost {
+            background: transparent;
+            border: 1px solid var(--border, #2A2A2A);
+            color: var(--muted, #9A8F7C);
+        }
+        .action-btn.ghost:hover {
+            border-color: var(--accent, var(--black, #111111));
+            color: var(--accent, var(--black, #111111));
+        }
+        .action-btn.small {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+        .decision-hero-warning {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(17, 17, 17, 0.06);
+            border: 1px solid rgba(17, 17, 17, 0.2);
+            border-left: 3px solid var(--black, #111111);
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+            color: #E8D48A;
+        }
+
+        /* Estrategia detallada */
+        .strategy-objective {
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: rgba(74, 124, 89, 0.08);
+            border-radius: 8px;
+            border-left: 3px solid #4A7C59;
+        }
+        .objective-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #5D9A6D;
+            margin: 0 0 0.5rem 0;
+        }
+        .objective-text {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text, #F5F5F0);
+            line-height: 1.5;
+        }
+        .strategy-actions-detail {
+            margin-bottom: 1.5rem;
+        }
+        .actions-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent, var(--black, #111111));
+            margin: 0 0 1rem 0;
+        }
+        .actions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .action-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 8px;
+            transition: border-color 0.2s;
+        }
+        .action-item:hover {
+            border-color: rgba(17, 17, 17, 0.3);
+        }
+        .action-number {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            background: linear-gradient(135deg, var(--black, #111111), #333333);
+            color: #0A0A0A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .action-content strong {
+            display: block;
+            color: var(--text, #F5F5F0);
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+        .action-content p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--muted, #9A8F7C);
+            line-height: 1.4;
+        }
+        .impact-highlight {
+            background: rgba(74, 124, 89, 0.1);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            border: 1px solid rgba(74, 124, 89, 0.2);
+        }
+        .action-btn.success {
+            background: linear-gradient(135deg, #4A7C59, #5D9A6D);
+            color: #fff;
+        }
+        .action-btn.success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(74, 124, 89, 0.35);
+        }
+
+        /* Posts generados */
+        .generated-posts-area {
+            margin: 1.5rem 0;
+            padding: 1.25rem;
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 10px;
+        }
+        .posts-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent, var(--black, #111111));
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .posts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .post-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .post-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted, #9A8F7C);
+        }
+        .post-time {
+            font-size: 0.7rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .post-text {
+            font-size: 0.9rem;
+            color: var(--text, #F5F5F0);
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+            white-space: pre-wrap;
+        }
+        .post-hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .hashtag {
+            font-size: 0.75rem;
+            color: #1DA1F2;
+            background: rgba(29, 161, 242, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        .post-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border, #2A2A2A);
+        }
+        .post-action-btn {
+            font-size: 0.7rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .post-action-btn.copy {
+            background: rgba(17, 17, 17, 0.15);
+            color: var(--accent, var(--black, #111111));
+        }
+        .post-action-btn.copy:hover {
+            background: rgba(17, 17, 17, 0.25);
+        }
+        .post-action-btn.edit {
+            background: rgba(154, 143, 124, 0.15);
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* ========== NIVEL 2: CONTEXTO KPIs ========== */
+        .context-kpis-section {
+            margin-bottom: 2rem;
+        }
+        .context-kpis-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        @media (max-width: 900px) {
+            .context-kpis-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 500px) {
+            .context-kpis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .context-kpi-card {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all 0.25s ease;
+        }
+        .context-kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-color: rgba(17, 17, 17, 0.2);
+        }
+        .kpi-icon-wrapper {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .kpi-icon-wrapper.kpi-icce {
+            background: rgba(17, 17, 17, 0.12);
+            color: var(--black, #111111);
+        }
+        .kpi-icon-wrapper.kpi-momentum {
+            background: rgba(74, 124, 89, 0.12);
+            color: #4A7C59;
+        }
+        .kpi-icon-wrapper.kpi-sentiment {
+            background: rgba(139, 115, 85, 0.15);
+            color: #8B7355;
+        }
+        .kpi-icon-wrapper.kpi-forecast {
+            background: rgba(17, 17, 17, 0.12);
+            color: #333333;
+        }
+        .kpi-content {
+            flex: 1;
+        }
+        .kpi-label-new {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+            margin: 0 0 0.35rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .kpi-value-new {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+            margin: 0;
+            line-height: 1.2;
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .kpi-state {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin: 0.3rem 0 0 0;
+        }
+        .kpi-state.positive {
+            color: #5D9A6D;
+        }
+        .kpi-state.negative {
+            color: #A85454;
+        }
+        .kpi-state.neutral {
+            color: var(--muted, #9A8F7C);
+        }
+
+        /* ========== NIVEL 3: COMPARACION RIVAL ========== */
+        .rival-comparison-section {
+            background: var(--panel-alt, #1C1C1C);
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .rival-header {
+            margin-bottom: 1.5rem;
+        }
+        .rival-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+        .rival-title-row h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--text, #F5F5F0);
+            font-family: var(--font-display, 'Playfair Display', serif);
+            font-weight: 500;
+        }
+        .rival-select {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border, #2A2A2A);
+            background: var(--panel, #141414);
+            color: var(--text, #F5F5F0);
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
+        }
+        .rival-select:focus {
+            border-color: var(--accent, var(--black, #111111));
+            outline: none;
+        }
+        .rival-insight {
+            color: var(--text-secondary, #E0DED8);
+            font-size: 0.9rem;
+            margin: 0;
+            padding: 0.75rem 1rem;
+            background: rgba(17, 17, 17, 0.05);
+            border-left: 3px solid var(--black, #111111);
+            border-radius: 0 6px 6px 0;
+        }
+        .rival-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .rival-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .rival-radar-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        .rival-gaps-card {
+            padding: 1rem;
+        }
+        .gaps-title {
+            font-weight: 600;
+            color: var(--text, #F5F7FA);
+            margin: 0 0 1rem 0;
+            font-size: 0.95rem;
+        }
+        .gaps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .gap-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .gap-label {
+            width: 120px;
+            font-size: 0.85rem;
+            color: var(--text, #F5F7FA);
+        }
+        .gap-bar-container {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .gap-bar {
+            height: 100%;
+            border-radius: 4px;
+        }
+        .gap-bar.positive {
+            background: linear-gradient(90deg, #4A7C59, #5D9A6D);
+        }
+        .gap-bar.negative {
+            background: linear-gradient(90deg, #8B3A3A, #A85454);
+        }
+        .gap-value {
+            width: 60px;
+            text-align: right;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .gap-item.gap-positive .gap-value {
+            color: #5D9A6D;
+        }
+        .gap-item.gap-negative .gap-value {
+            color: #A85454;
+        }
+        .gaps-recommendation {
+            margin: 1rem 0 0 0;
+            padding: 0.75rem 1rem;
+            background: rgba(17, 17, 17, 0.06);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #E8D48A;
+            border: 1px solid rgba(17, 17, 17, 0.15);
+        }
+
+        /* ========== SECCION FORTALEZAS Y DEBILIDADES ========== */
+        .campaign-strength-section {
+            margin-bottom: 2rem;
+        }
+        .section-header-compact {
+            margin-bottom: 1.25rem;
+        }
+        .section-header-compact h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text, #F5F5F0);
+        }
+        .section-header-compact .subtitle {
+            font-size: 0.9rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .strength-weakness-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .strength-weakness-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .strength-card, .weakness-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .strength-card {
+            border-left: 4px solid var(--accent, var(--black, #111111));
+        }
+        .weakness-card {
+            border-left: 4px solid var(--error, #8B3A3A);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-icon.positive {
+            background: rgba(17, 17, 17, 0.15);
+            color: var(--accent, var(--black, #111111));
+        }
+        .card-icon.negative {
+            background: rgba(139, 58, 58, 0.15);
+            color: var(--error, #8B3A3A);
+        }
+        .strength-list, .weakness-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+        }
+        .strength-item, .weakness-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .strength-item:last-child, .weakness-item:last-child {
+            border-bottom: none;
+        }
+        .item-label {
+            font-weight: 500;
+            color: var(--text, #F5F5F0);
+        }
+        .item-value {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .item-value.positive {
+            color: var(--accent, var(--black, #111111));
+        }
+        .item-value.negative {
+            color: var(--error, #8B3A3A);
+        }
+        .card-summary {
+            font-size: 0.85rem;
+            color: var(--muted, #9A8F7C);
+            margin: 0;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* ========== KPIS CAMPAÑA ========== */
+        .campaign-kpis-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .campaign-kpi {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border-gold, rgba(201,162,39,0.3));
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        .campaign-kpi .kpi-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent, var(--black, #111111));
+            letter-spacing: 0.05em;
+        }
+        .campaign-kpi .kpi-number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text, #F5F5F0);
+            display: block;
+            margin: 0.25rem 0;
+        }
+        .campaign-kpi .kpi-desc {
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .campaign-kpi .kpi-context {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+        .campaign-kpi .kpi-context.positive {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+        .campaign-kpi .kpi-context.moderate {
+            background: rgba(234, 179, 8, 0.15);
+            color: #eab308;
+        }
+        .campaign-kpi .kpi-context.negative {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        /* ========== PND ANALYSIS ========== */
+        .pnd-analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .pnd-analysis-grid { grid-template-columns: 1fr; }
+        }
+        .pnd-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .pnd-strengths { border-left: 4px solid var(--accent, var(--black, #111111)); }
+        .pnd-weaknesses { border-left: 4px solid var(--error, #8B3A3A); }
+        .pnd-card-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .pnd-icon { font-size: 1rem; }
+        .pnd-icon.positive { color: var(--accent, var(--black, #111111)); }
+        .pnd-icon.negative { color: var(--error, #8B3A3A); }
+        .pnd-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .pnd-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .pnd-eje { font-weight: 500; font-size: 0.9rem; }
+        .pnd-metrics { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .metric-pill {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .metric-pill.positive { background: rgba(201,162,39,0.15); color: var(--accent); }
+        .metric-pill.negative { background: rgba(139,58,58,0.15); color: var(--error); }
+        .metric-pill.neutral { background: rgba(154,143,124,0.15); color: var(--muted); }
+
+        /* ========== TABLA 10 EJES PND ========== */
+        .metrics-legend {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            background: rgba(201,162,39,0.05);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .legend-item strong {
+            color: var(--accent, var(--black, #111111));
+        }
+        .pnd-full-table {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .pnd-table-header {
+            display: grid;
+            grid-template-columns: 40px 1.5fr 80px 80px 80px 100px 70px;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(201,162,39,0.1);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent, var(--black, #111111));
+        }
+        @media (max-width: 768px) {
+            .pnd-table-header {
+                grid-template-columns: 30px 1fr 60px 60px 60px 70px 50px;
+                font-size: 0.65rem;
+                padding: 0.5rem;
+            }
+        }
+        .pnd-table-body {
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .pnd-row {
+            display: grid;
+            grid-template-columns: 40px 1.5fr 80px 80px 80px 100px 70px;
+            gap: 0.5rem;
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .pnd-row:hover {
+            background: rgba(201,162,39,0.05);
+        }
+        .pnd-ver-mas-btn {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--black, #111111);
+            background: rgba(17, 17, 17, 0.1);
+            border: 1px solid rgba(17, 17, 17, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pnd-ver-mas-btn:hover {
+            background: rgba(17, 17, 17, 0.2);
+            border-color: var(--black, #111111);
+        }
+
+        /* Modal de detalles del eje PND */
+        .pnd-detail-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .pnd-detail-modal-overlay.active {
+            display: flex;
+        }
+        .pnd-detail-modal {
+            background: var(--surface, #141824);
+            border: 1px solid rgba(17, 17, 17, 0.3);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        .pnd-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(17, 17, 17, 0.2);
+            background: rgba(17, 17, 17, 0.08);
+        }
+        .pnd-detail-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #F5F5F0;
+        }
+        .pnd-detail-close {
+            background: none;
+            border: none;
+            color: #9A8F7C;
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+        }
+        .pnd-detail-close:hover {
+            color: #F5F5F0;
+        }
+        .pnd-detail-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: calc(85vh - 70px);
+        }
+        .pnd-detail-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .pnd-detail-metric {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(17, 17, 17, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(17, 17, 17, 0.15);
+        }
+        .pnd-detail-metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black, #111111);
+            font-family: 'Playfair Display', serif;
+        }
+        .pnd-detail-metric-label {
+            font-size: 0.75rem;
+            color: #9A8F7C;
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+        }
+        .pnd-detail-section {
+            margin-bottom: 1.5rem;
+        }
+        .pnd-detail-section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--black, #111111);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .pnd-detail-explanation {
+            font-size: 0.95rem;
+            color: #F5F5F0;
+            line-height: 1.6;
+        }
+        .pnd-detail-tweets {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .pnd-detail-tweet {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid var(--black, #111111);
+            font-size: 0.9rem;
+            color: #F5F5F0;
+            line-height: 1.5;
+        }
+        .pnd-detail-tweet-meta {
+            font-size: 0.75rem;
+            color: #9A8F7C;
+            margin-top: 0.5rem;
+        }
+        .pnd-detail-tweet-meta .sentiment-positivo,
+        .pnd-detail-tweet-meta .sentiment-positive {
+            color: #22c55e;
+            font-weight: 600;
+        }
+        .pnd-detail-tweet-meta .sentiment-negativo,
+        .pnd-detail-tweet-meta .sentiment-negative {
+            color: #ef4444;
+            font-weight: 600;
+        }
+        .pnd-detail-tweet-meta .sentiment-neutral {
+            color: #eab308;
+            font-weight: 600;
+        }
+        .pnd-row:last-child {
+            border-bottom: none;
+        }
+        .pnd-row.loading {
+            opacity: 0.5;
+        }
+        @media (max-width: 768px) {
+            .pnd-row {
+                grid-template-columns: 30px 1fr 60px 60px 60px 70px 50px;
+                font-size: 0.85rem;
+                padding: 0.5rem;
+            }
+        }
+        .col-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .status-indicator.strong { background: var(--accent, var(--black, #111111)); }
+        .status-indicator.moderate { background: var(--muted, #9A8F7C); }
+        .status-indicator.weak { background: var(--error, #8B3A3A); }
+        .col-eje-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text, #F5F5F0);
+        }
+        .col-metric {
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .col-metric.positive { color: var(--accent, var(--black, #111111)); }
+        .col-metric.negative { color: var(--error, #8B3A3A); }
+        .col-metric.neutral { color: var(--muted, #9A8F7C); }
+        .col-trend {
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        .trend-up { color: var(--accent, var(--black, #111111)); }
+        .trend-down { color: var(--error, #8B3A3A); }
+        .trend-stable { color: var(--muted, #9A8F7C); }
+
+        /* Resumen PND */
+        .pnd-summary-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .pnd-summary-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .pnd-summary-card.positive {
+            background: rgba(201,162,39,0.1);
+            border: 1px solid rgba(201,162,39,0.3);
+        }
+        .pnd-summary-card.negative {
+            background: rgba(139,58,58,0.1);
+            border: 1px solid rgba(139,58,58,0.3);
+        }
+        .summary-icon {
+            font-size: 1rem;
+        }
+        .pnd-summary-card.positive .summary-icon { color: var(--accent, var(--black, #111111)); }
+        .pnd-summary-card.negative .summary-icon { color: var(--error, #8B3A3A); }
+        .summary-label {
+            color: var(--muted, #9A8F7C);
+        }
+        .summary-value {
+            font-weight: 600;
+            color: var(--text, #F5F5F0);
+        }
+
+        /* ========== RIVAL COMPARISON TABLE ========== */
+        .rival-pnd-comparison {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        @media (max-width: 900px) {
+            .rival-pnd-comparison { grid-template-columns: 1fr; }
+        }
+        .rival-comparison-table {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .comparison-header-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 1.5fr 0.8fr;
+            background: rgba(201,162,39,0.08);
+            padding: 0.75rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+        }
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 1.5fr 0.8fr;
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+            font-size: 0.85rem;
+        }
+        .comparison-row:last-child { border-bottom: none; }
+        .col-eje { font-weight: 500; }
+        .col-tu, .col-rival { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+        .metric-mini {
+            font-size: 0.65rem;
+            padding: 0.15rem 0.35rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+        }
+        .col-diff { font-weight: 700; text-align: center; }
+        .col-diff.positive { color: var(--accent); }
+        .col-diff.negative { color: var(--error); }
+
+        /* ========== INSIGHTS MEJORADOS ========== */
+        .insights-improved {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .insight-item {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+        }
+        .insight-item.insight-key { border-left: 4px solid #3B82F6; }
+        .insight-item.insight-opportunity { border-left: 4px solid var(--accent, var(--black, #111111)); }
+        .insight-item.insight-risk { border-left: 4px solid var(--error, #8B3A3A); }
+        .insight-icon-wrap {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .insight-key .insight-icon-wrap { background: rgba(59,130,246,0.15); color: #3B82F6; }
+        .insight-opportunity .insight-icon-wrap { background: rgba(201,162,39,0.15); color: var(--accent); }
+        .insight-risk .insight-icon-wrap { background: rgba(139,58,58,0.15); color: var(--error); }
+        .insight-content { flex: 1; }
+        .insight-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; color: var(--muted); }
+        .insight-desc { font-size: 0.85rem; margin: 0.25rem 0 0; line-height: 1.4; }
+
+        /* ========== NARRATIVE SECTION ========== */
+        .narrative-section { margin-bottom: 1.5rem; }
+        .narrative-summary-box {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border-gold, rgba(201,162,39,0.2));
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .narrative-text { font-size: 0.9rem; line-height: 1.5; margin: 0; color: var(--text-secondary); }
+        .section-subtitle { font-size: 0.85rem; font-weight: 600; margin: 1rem 0 0.75rem; color: var(--text); }
+        .narrative-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.75rem;
+        }
+        @media (max-width: 900px) {
+            .narrative-metrics-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .narrative-metric {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .metric-name { font-size: 0.7rem; color: var(--muted); display: block; }
+        .metric-val { font-size: 1rem; font-weight: 600; color: var(--text); display: block; margin-top: 0.25rem; }
+
+        /* ========== ACTION CARDS ========== */
+        .action-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        @media (max-width: 900px) {
+            .action-cards-grid { grid-template-columns: 1fr; }
+        }
+        .action-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .action-card.action-priority { border-top: 3px solid var(--error, #8B3A3A); }
+        .action-card.action-media { border-top: 3px solid var(--accent, var(--black, #111111)); }
+        .action-card.action-digital { border-top: 3px solid #3B82F6; }
+        .action-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+        .action-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+        }
+        .action-badge.urgent { background: rgba(139,58,58,0.2); color: var(--error); }
+        .action-badge.media { background: rgba(201,162,39,0.2); color: var(--accent); }
+        .action-badge.digital { background: rgba(59,130,246,0.2); color: #3B82F6; }
+        .action-time { font-size: 0.75rem; color: var(--muted); }
+        .action-text { font-size: 0.85rem; margin: 0 0 0.75rem; line-height: 1.4; }
+        .action-owner { font-size: 0.75rem; color: var(--muted); }
+        .action-owner strong { color: var(--text); }
+
+        /* ========== MAPA COLOMBIA ========== */
+        .colombia-map { padding: 1rem; }
+        .colombia-svg { width: 100%; max-height: 280px; }
+        .region {
+            fill: rgba(201,162,39,0.2);
+            stroke: var(--border, #1E2433);
+            stroke-width: 1;
+            transition: fill 0.3s;
+        }
+        .region.highlight { fill: rgba(201,162,39,0.5); }
+        .region:hover { fill: rgba(201,162,39,0.4); cursor: pointer; }
+        .city-dot { fill: var(--accent, var(--black, #111111)); }
+        .city-dot.bogota { fill: var(--text, #F5F5F0); r: 8; }
+        .city-label { font-size: 10px; fill: var(--text-secondary); }
+
+        /* ========== NIVEL 5: PROFUNDIDAD ========== */
+        .depth-section {
+            margin-top: 2rem;
+        }
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 900px) {
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .insight-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .insight-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+        .insight-key .insight-badge {
+            background: rgba(17, 17, 17, 0.12);
+            color: var(--black, #111111);
+        }
+        .insight-opportunity .insight-badge {
+            background: rgba(74, 124, 89, 0.12);
+            color: #5D9A6D;
+        }
+        .insight-risk .insight-badge {
+            background: rgba(139, 58, 58, 0.15);
+            color: #A85454;
+        }
+        .insight-text {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text, #F5F7FA);
+            line-height: 1.5;
+        }
+
+        /* ========== ALTERNATIVAS ========== */
+        .alternatives-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .alternatives-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .alternative-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .alternative-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .alternative-owner {
+            font-size: 0.8rem;
+            color: var(--muted, #8892B0);
+            padding: 0.25rem 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        .alternative-text {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text, #F5F7FA);
+        }
+        .alternative-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--muted, #8892B0);
+        }
+        .rival-signal-card, .trigger-card {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #1E2433);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .signal-badge, .trigger-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .signal-badge {
+            background: rgba(139, 58, 58, 0.12);
+            color: #A85454;
+        }
+        .trigger-badge {
+            background: rgba(17, 17, 17, 0.12);
+            color: #333333;
+        }
+        .signal-text, .trigger-text {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text, #F5F7FA);
+        }
+
+        /* ========== DATABASE TAB STYLES ========== */
+        .db-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .db-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+        .btn-refresh {
+            background: rgba(17, 17, 17, 0.15);
+            border: 1px solid rgba(17, 17, 17, 0.3);
+            color: var(--accent, var(--black, #111111));
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .btn-refresh:hover {
+            background: rgba(17, 17, 17, 0.25);
+        }
+        .db-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .db-stat-card {
+            background: linear-gradient(135deg, rgba(17, 17, 17, 0.1), rgba(17, 17, 17, 0.05));
+            border: 1px solid rgba(17, 17, 17, 0.2);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .db-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent, var(--black, #111111));
+            font-family: var(--font-display, 'Playfair Display', serif);
+        }
+        .db-stat-label {
+            font-size: 0.8rem;
+            color: var(--muted, #9A8F7C);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+        .db-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .db-filters select, .db-filters input {
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #2A3142);
+            color: var(--text, #F5F5F0);
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            min-width: 180px;
+        }
+        .db-filters input {
+            flex: 1;
+            min-width: 250px;
+        }
+        .db-table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border, #2A3142);
+        }
+        .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .db-table th {
+            background: rgba(17, 17, 17, 0.1);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent, var(--black, #111111));
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        .db-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .db-table tr:hover {
+            background: rgba(17, 17, 17, 0.05);
+        }
+        .db-table .db-loading {
+            text-align: center;
+            color: var(--muted);
+            padding: 2rem;
+        }
+        .db-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .db-btn {
+            background: transparent;
+            border: 1px solid var(--border, #2A3142);
+            color: var(--text, #F5F5F0);
+            padding: 0.35rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .db-btn:hover {
+            background: rgba(17, 17, 17, 0.15);
+            border-color: var(--accent);
+        }
+        .db-btn-danger:hover {
+            background: rgba(220, 53, 69, 0.15);
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .db-detail-panel {
+            margin-top: 1.5rem;
+            background: var(--panel-alt, #1A1F2E);
+            border: 1px solid var(--border, #2A3142);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .db-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border, #2A3142);
+        }
+        .btn-back {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .btn-back:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .db-detail-title {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        .db-mesa-grid {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .db-mesa-card {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .db-mesa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .db-mesa-id {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .db-mesa-corp {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            background: rgba(201,162,39,0.15);
+            border-radius: 4px;
+            color: var(--accent);
+        }
+        .db-mesa-location {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        .db-mesa-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+        }
+        .db-mesa-stat {
+            color: var(--text);
+        }
+        .db-mesa-stat span {
+            color: var(--muted);
+        }
+        .db-top-partidos {
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .db-top-partidos h5 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+        .db-partido-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            padding: 0.25rem 0;
+        }
+        .db-partido-name {
+            color: var(--text);
+        }
+        .db-partido-votos {
+            color: var(--accent);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="landing" data-mode="unified" itemscope itemtype="https://schema.org/WebPage">
+    <header class="main-header" role="banner">
+        <nav class="main-nav" role="navigation" aria-label="Navegacion principal">
+            <div class="nav-left">
+                <a class="brand" href="/" aria-label="Ir a inicio de Castor Elecciones">
+                    <img src="/static/images/logo.png"
+                         alt="Castor Elecciones - Logo"
+                         width="54"
+                         height="54"
+                         loading="eager">
+                    <div>
+                        <strong>CASTOR</strong>
+                        <small style="display: block; font-size: 0.7rem; color: #8892B0;">IA Electoral</small>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-right" style="display: flex; gap: 1rem; align-items: center;">
+                <a href="/api/team/dashboard" class="ghost-btn" style="padding: 0.5rem 1.25rem; font-size: 0.9rem; text-decoration: none; display: inline-block; background: rgba(201,162,39,0.15); border: 1px solid var(--accent); color: var(--accent);">Control Electoral</a>
+                <a href="/webpage" class="ghost-btn" style="padding: 0.5rem 1.25rem; font-size: 0.9rem; text-decoration: none; display: inline-block;">Salir</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <a href="#main-content" class="skip-link">Ir al contenido principal</a>
+
+        <section class="panel dashboard-intro" aria-labelledby="hero-title">
+            <div class="section-header">
+                <p class="eyebrow" role="doc-subtitle">IA ELECTORAL · ESTRATEGIA · RIVALES · PLANES DE ACCION</p>
+                <h1 id="hero-title">Dashboard de Estrategia Electoral</h1>
+                <p class="subtitle">Conoce tu ventaja electoral, y comparala con tus rivales. Recibe estrategias y planes de accion diarios para ganar la contienda electoral.</p>
+            </div>
+        </section>
+
+        <section class="panel" aria-labelledby="dashboard-form-title">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 id="dashboard-form-title">Conoce el pulso electoral</h2>
+                    <p class="subtitle">Define ciudad, temática en discusión y tendencia que quieres proyectar.</p>
+                </div>
+                <button type="button" id="view-history-btn-form" title="Ver historial de llamadas API"
+                    style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; margin-top: 0.5rem; font-size: 0.85rem; font-weight: 600; color: var(--black, #111111); background: rgba(17, 17, 17, 0.15); border: 1px solid var(--black, #111111); border-radius: 6px; cursor: pointer;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--black, #111111)">
+                        <path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                    </svg>
+                    Ver histórico
+                </button>
+            </div>
+
+            <div class="card compact-card" style="max-width: 1200px; margin: 0 auto;">
+                <form id="unified-form">
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-location" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Ubicación *</label>
+                            <select id="unified-location" name="location" required
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem; background: white;">
+                                <option value="Colombia" selected>Colombia (Nacional)</option>
+                                <optgroup label="Principales ciudades">
+                                    <option value="Bogotá">Bogotá D.C.</option>
+                                    <option value="Medellín">Medellín</option>
+                                    <option value="Cali">Cali</option>
+                                    <option value="Barranquilla">Barranquilla</option>
+                                    <option value="Cartagena">Cartagena</option>
+                                    <option value="Bucaramanga">Bucaramanga</option>
+                                    <option value="Cúcuta">Cúcuta</option>
+                                    <option value="Pereira">Pereira</option>
+                                    <option value="Santa Marta">Santa Marta</option>
+                                    <option value="Ibagué">Ibagué</option>
+                                </optgroup>
+                                <optgroup label="Otras ciudades">
+                                    <option value="Manizales">Manizales</option>
+                                    <option value="Villavicencio">Villavicencio</option>
+                                    <option value="Pasto">Pasto</option>
+                                    <option value="Neiva">Neiva</option>
+                                    <option value="Armenia">Armenia</option>
+                                    <option value="Montería">Montería</option>
+                                    <option value="Valledupar">Valledupar</option>
+                                    <option value="Popayán">Popayán</option>
+                                    <option value="Sincelejo">Sincelejo</option>
+                                    <option value="Tunja">Tunja</option>
+                                </optgroup>
+                                <optgroup label="Regiones">
+                                    <option value="Costa Caribe">Costa Caribe</option>
+                                    <option value="Eje Cafetero">Eje Cafetero</option>
+                                    <option value="Antioquia">Antioquia</option>
+                                    <option value="Valle del Cauca">Valle del Cauca</option>
+                                    <option value="Santander">Santander</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-topic" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Temática</label>
+                            <select id="unified-topic" name="topic"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem; background: white;">
+                                <option value="" selected>Todas las temáticas</option>
+                                <optgroup label="Ejes del Plan Nacional de Desarrollo">
+                                    <option value="Seguridad">Seguridad</option>
+                                    <option value="Economía y Empleo">Economía y Empleo</option>
+                                    <option value="Educación">Educación</option>
+                                    <option value="Salud">Salud</option>
+                                    <option value="Infraestructura">Infraestructura</option>
+                                    <option value="Gobernanza y Transparencia">Gobernanza y Transparencia</option>
+                                    <option value="Paz y Reinserción">Paz y Reinserción</option>
+                                    <option value="Igualdad y Equidad">Igualdad y Equidad</option>
+                                    <option value="Medio Ambiente">Medio Ambiente</option>
+                                    <option value="Alimentación">Alimentación</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-candidate" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Candidato</label>
+                            <input id="unified-candidate" name="candidate_name" type="text" placeholder="Nombre del candidato" value="Abelardo de la Espriella"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                        <div class="form-field" style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-politician" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Usuario X/Twitter</label>
+                            <input id="unified-politician" name="politician" type="text" placeholder="@usuario" value="@ABDELAESPRIELLA"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div class="form-field" style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-max-tweets" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Tweets a traer</label>
+                            <select id="unified-max-tweets" name="max_tweets"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem; background: white;">
+                                <option value="50">50 tweets</option>
+                                <option value="100" selected>100 tweets</option>
+                                <option value="250">250 tweets</option>
+                                <option value="300">300 tweets</option>
+                                <option value="400">400 tweets</option>
+                                <option value="500">500 tweets (máx. diario)</option>
+                            </select>
+                        </div>
+                        <div class="form-field" style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-days-back" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días atrás <span style="color: #9CA3AF; font-weight: 400;">(máx. 90)</span></label>
+                            <input id="unified-days-back" name="days_back" type="number" min="7" max="90" value="30"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                        <div class="form-field" style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 0.25rem;">
+                            <label for="unified-forecast-days" style="font-size: 0.85rem; font-weight: 600; color: #374151;">Días a proyectar <span style="color: #9CA3AF; font-weight: 400;">(máx. 30)</span></label>
+                            <input id="unified-forecast-days" name="forecast_days" type="number" min="7" max="30" value="14"
+                                   style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.4rem 0.6rem; font-size: 0.9rem;">
+                        </div>
+                        <div class="form-field" style="align-self: flex-end; display: flex; gap: 0.5rem;">
+                            <button type="button" class="ghost-btn" id="unified-mock-btn" style="border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.5rem 1rem; font-weight: 600; cursor: pointer; background: transparent; color: #374151;">Muéstrame un ejemplo</button>
+                            <button type="submit" id="unified-submit-btn" class="primary-btn" style="border-radius: 0.5rem; border: none; padding: 0.5rem 1.25rem; font-weight: 600; cursor: pointer; background: #111827; color: #f9fafb;">Estrategia electoral</button>
+                        </div>
+                    </div>
+                    <div id="unified-error" class="error" style="display:none; color: #b91c1c; font-size: 0.9rem; margin-top: 0.5rem;"></div>
+                    <div id="unified-loading" style="display:none; margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem; align-items: center; gap: 0.5rem;">
+                        <span class="spinner" aria-hidden="true"></span>
+                        <span>Entendiendo lo que está pasando en los flujos de datos...</span>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="unified-results" class="panel" style="display: none;">
+
+            <!-- ========== BARRA DE METADATA / ULTIMA ACTUALIZACION ========== -->
+            <div id="data-metadata-bar" class="data-metadata-bar">
+                <div class="metadata-left">
+                    <span class="metadata-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                    </span>
+                    <span id="context-timestamp" class="metadata-timestamp">Ultima actualizacion: --</span>
+                    <button type="button" id="view-history-btn" class="history-btn" title="Ver historial de llamadas API">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                        </svg>
+                        Ver histórico
+                    </button>
+                </div>
+                <div class="metadata-right">
+                    <div class="metadata-stat">
+                        <span class="stat-label">Tweets</span>
+                        <span id="meta-tweets-count" class="stat-value">--</span>
+                    </div>
+                    <div class="metadata-stat">
+                        <span class="stat-label">Autores</span>
+                        <span id="meta-sources-count" class="stat-value">--</span>
+                    </div>
+                    <div class="metadata-stat">
+                        <span class="stat-label">Ventana</span>
+                        <span id="meta-days-window" class="stat-value">--</span>
+                    </div>
+                    <div class="metadata-stat" id="twitter-api-usage">
+                        <span class="stat-label">API Hoy</span>
+                        <span id="meta-twitter-usage" class="stat-value">--/500</span>
+                    </div>
+                    <div class="metadata-stat" id="api-reset-timer" style="display: none;">
+                        <span class="stat-label">Reset en</span>
+                        <span id="reset-timer-value" class="stat-value timer-value">--:--:--</span>
+                    </div>
+                    <div class="metadata-stat" id="meta-cache-indicator" style="display: none;">
+                        <span class="cache-badge">CACHE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== NIVEL 1: TU CAMPAÑA - 10 EJES PND ========== -->
+            <div class="campaign-strength-section" id="campaign-strength">
+                <div class="section-header-compact">
+                    <h2>Tu campaña</h2>
+                    <p class="subtitle">Análisis por los 10 ejes del Plan Nacional de Desarrollo</p>
+                </div>
+
+                <!-- KPIs Globales -->
+                <div class="campaign-kpis-row">
+                    <div class="campaign-kpi">
+                        <span class="kpi-name">ICCE</span>
+                        <span id="campaign-icce" class="kpi-number">--</span>
+                        <span class="kpi-desc">Fuerza narrativa</span>
+                        <span id="campaign-icce-context" class="kpi-context">--</span>
+                    </div>
+                    <div class="campaign-kpi">
+                        <span class="kpi-name">SOV</span>
+                        <span id="campaign-sov" class="kpi-number">--</span>
+                        <span class="kpi-desc">Share of Voice</span>
+                        <span id="campaign-sov-context" class="kpi-context">--</span>
+                    </div>
+                    <div class="campaign-kpi">
+                        <span class="kpi-name">SNA</span>
+                        <span id="campaign-sna" class="kpi-number">--</span>
+                        <span class="kpi-desc">Sentimiento Neto Agregado</span>
+                        <span id="campaign-sna-context" class="kpi-context">--</span>
+                    </div>
+                </div>
+
+                <!-- Leyenda de métricas -->
+                <div class="metrics-legend">
+                    <span class="legend-item"><strong>ICCE:</strong> Índice Compuesto de Capacidad Electoral (0-100)</span>
+                    <span class="legend-item"><strong>SOV:</strong> Share of Voice - % de conversación</span>
+                    <span class="legend-item"><strong>SNA:</strong> Sentimiento Neto Agregado (-100 a +100)</span>
+                </div>
+
+                <!-- Tabla de 10 Ejes PND -->
+                <div class="pnd-full-table">
+                    <div class="pnd-table-header">
+                        <div class="col-status"></div>
+                        <div class="col-eje-name">Eje PND</div>
+                        <div class="col-metric">ICCE</div>
+                        <div class="col-metric">SOV</div>
+                        <div class="col-metric">SNA</div>
+                        <div class="col-trend">Tendencia</div>
+                        <div class="col-action"></div>
+                    </div>
+                    <div id="pnd-ejes-table" class="pnd-table-body">
+                        <!-- Renderizado dinámicamente por JS -->
+                        <div class="pnd-row loading">
+                            <div class="col-status"></div>
+                            <div class="col-eje-name">Cargando ejes PND...</div>
+                            <div class="col-metric">--</div>
+                            <div class="col-metric">--</div>
+                            <div class="col-metric">--</div>
+                            <div class="col-trend">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen rápido -->
+                <div class="pnd-summary-row">
+                    <div class="pnd-summary-card positive">
+                        <span class="summary-icon">▲</span>
+                        <span class="summary-label">Fortalezas:</span>
+                        <span id="pnd-top-strength" class="summary-value">--</span>
+                    </div>
+                    <div class="pnd-summary-card negative">
+                        <span class="summary-icon">▼</span>
+                        <span class="summary-label">Oportunidad:</span>
+                        <span id="pnd-top-weakness" class="summary-value">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== NIVEL 2: LA ESTRATEGIA DE HOY ========== -->
+            <div id="decision-hero" class="decision-hero-section">
+                <div class="decision-hero-header">
+                    <div class="decision-hero-badge">
+                        <span class="priority-indicator priority-today">HOY</span>
+                        <span class="decision-label">La estrategia de hoy</span>
+                    </div>
+                    <div class="decision-topic" id="decision-topic-badge">
+                        <span id="decision-topic-text">Tema: Seguridad ciudadana</span>
+                    </div>
+                </div>
+
+                <!-- Objetivo estratégico -->
+                <div class="strategy-objective">
+                    <h3 class="objective-title">Objetivo</h3>
+                    <p id="decision-objective" class="objective-text">Posicionar tu propuesta de seguridad ciudadana como la más sólida del debate, aprovechando el momentum actual y la conversación activa en redes sobre el tema.</p>
+                </div>
+
+                <!-- Acciones detalladas -->
+                <div class="strategy-actions-detail">
+                    <h3 class="actions-title">Plan de acción</h3>
+                    <div id="decision-actions-list" class="actions-list">
+                        <div class="action-item">
+                            <span class="action-number">1</span>
+                            <div class="action-content">
+                                <strong>Publicar video de propuesta</strong>
+                                <p>Video de 60 segundos explicando tu plan de aumento de pie de fuerza, con datos concretos y ejemplos de ciudades donde funcionó.</p>
+                            </div>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">2</span>
+                            <div class="action-content">
+                                <strong>Campaña en X (Twitter)</strong>
+                                <p>Publicar 3 posts con hashtags locales (#SeguridadCali, #ColombiaSinMiedo) espaciados cada 4 horas para maximizar alcance.</p>
+                            </div>
+                        </div>
+                        <div class="action-item">
+                            <span class="action-number">3</span>
+                            <div class="action-content">
+                                <strong>Entrevista en medios regionales</strong>
+                                <p>Agendar entrevista en Blu Radio mañana 7am para amplificar el mensaje a audiencia del Valle del Cauca.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impacto esperado -->
+                <div class="decision-hero-meta">
+                    <div class="decision-meta-item impact-highlight">
+                        <span class="meta-icon">↑</span>
+                        <span class="meta-label">Impacto esperado</span>
+                        <span id="decision-impact" class="meta-value positive">+12 pts ICCE</span>
+                    </div>
+                </div>
+
+                <!-- Área de posts generados -->
+                <div id="generated-posts-area" class="generated-posts-area" style="display: none;">
+                    <h4 class="posts-title">Posts generados para X</h4>
+                    <div id="generated-posts-list" class="posts-list">
+                        <!-- Posts generados por JS -->
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="decision-hero-actions">
+                    <button class="action-btn primary" id="btn-generate-content" onclick="generateXPosts()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        Generar posts para X
+                    </button>
+                    <button class="action-btn success" id="btn-execute" onclick="executeStrategy()" style="display: none;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        Ejecutar estrategia
+                    </button>
+                    <button class="action-btn secondary" id="btn-send-email" onclick="sendByEmail()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        Enviar por correo
+                    </button>
+                    <button class="action-btn ghost" id="btn-see-alternatives" onclick="scrollToAlternatives()">
+                        Ver alternativas
+                    </button>
+                </div>
+
+                <div class="decision-hero-warning" id="decision-warning">
+                    <span class="warning-icon">⚠️</span>
+                    <span id="decision-warning-text">Ventana óptima: si no actúas, perderás momentum en 7-10 días.</span>
+                </div>
+            </div>
+
+
+            <!-- ========== NIVEL 4: RIVALES - COMPARACION ========== -->
+            <div class="rival-comparison-section" id="rival-section">
+                <div class="rival-header">
+                    <div class="rival-title-row">
+                        <h3><span id="game-candidate-name" style="color: var(--accent);">Abelardo de la Espriella</span> vs <span id="rival-name-display">Vicky Dávila</span></h3>
+                        <select id="game-rival-select" class="rival-select">
+                            <option value="Vicky Dávila" selected>Vicky Dávila (Movimiento Valientes)</option>
+                            <option value="Paloma Valencia">Paloma Valencia (Centro Democrático)</option>
+                            <option value="Juan Carlos Pinzón">Juan Carlos Pinzón (Verde Oxígeno)</option>
+                            <option value="Daniel Palacios">Daniel Palacios (Rescatemos a Colombia)</option>
+                            <option value="Mauricio Cárdenas">Mauricio Cárdenas (Avanza Colombia)</option>
+                            <option value="David Luna">David Luna (Sí Hay Un Camino)</option>
+                            <option value="Juan Manuel Galán">Juan Manuel Galán (Nuevo Liberalismo)</option>
+                            <option value="Aníbal Gaviria">Aníbal Gaviria (Fuerza de las Regiones)</option>
+                            <option value="Juan Daniel Oviedo">Juan Daniel Oviedo (Con Toda por Colombia)</option>
+                            <option value="Sergio Fajardo">Sergio Fajardo (Independiente)</option>
+                            <option value="Gustavo Bolívar">Gustavo Bolívar (Pacto Histórico)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Comparación por Ejes PND -->
+                <div class="rival-pnd-comparison">
+                    <div class="rival-comparison-table">
+                        <div class="comparison-header-row">
+                            <div class="col-eje">Eje PND</div>
+                            <div class="col-tu">Tu campaña</div>
+                            <div class="col-rival">Rival</div>
+                            <div class="col-diff">Diferencia</div>
+                        </div>
+                        <div id="rival-pnd-rows" class="comparison-body">
+                            <!-- Los 10 ejes PND se cargan dinámicamente -->
+                        </div>
+                    </div>
+                    <div class="rival-radar-card">
+                        <canvas id="game-radar-chart" height="220"></canvas>
+                    </div>
+                </div>
+
+                <p class="gaps-recommendation" id="gaps-recommendation">Refuerza mensajes en Economía donde tienes ventaja. Prepara respuesta en Seguridad y Medio Ambiente.</p>
+            </div>
+
+            <!-- ========== NIVEL 5: PROFUNDIDAD (Tabs) ========== -->
+            <div class="depth-section">
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <h2>Analisis detallado</h2>
+                    <p class="subtitle">Explora los datos a fondo cuando lo necesites.</p>
+                </div>
+
+                <div class="tabs dashboard-tabs">
+                    <button class="tab active" data-tab="summary" onclick="switchTab('summary')">Resumen</button>
+                    <button class="tab" data-tab="game" onclick="switchTab('game')">Alternativas</button>
+                    <button class="tab" data-tab="topics" onclick="switchTab('topics')">Temas</button>
+                    <button class="tab" data-tab="charts" onclick="switchTab('charts')">Tendencias</button>
+                    <button class="tab" data-tab="results" onclick="switchTab('results')">Análisis detallado</button>
+                    <button class="tab" data-tab="methodology" onclick="switchTab('methodology')">Metodologia</button>
+                    <button class="tab" data-tab="database" onclick="switchTab('database')">📊 Base de Datos</button>
+                </div>
+
+            <div id="tab-summary" class="tab-content active" style="display: block;">
+
+                <!-- Insights Mejorados -->
+                <div class="insights-improved">
+                    <div class="insight-item insight-key">
+                        <div class="insight-icon-wrap">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        </div>
+                        <div class="insight-content">
+                            <span class="insight-label">INSIGHT CLAVE</span>
+                            <p id="narrative-summary" class="insight-desc">La narrativa de seguridad está funcionando mejor en ciudades intermedias como Cali y Barranquilla.</p>
+                        </div>
+                    </div>
+                    <div class="insight-item insight-opportunity">
+                        <div class="insight-icon-wrap">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                        </div>
+                        <div class="insight-content">
+                            <span class="insight-label">OPORTUNIDAD</span>
+                            <p id="narrative-opportunity" class="insight-desc">Amplificar mensajes de economía en medios regionales del Valle del Cauca.</p>
+                        </div>
+                    </div>
+                    <div class="insight-item insight-risk">
+                        <div class="insight-icon-wrap">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                        </div>
+                        <div class="insight-content">
+                            <span class="insight-label">RIESGO</span>
+                            <p id="narrative-risk" class="insight-desc">Críticas sobre medio ambiente en redes requieren respuesta en las próximas 24h.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen + Métricas Narrativas -->
+                <div class="narrative-section">
+                    <div class="narrative-summary-box">
+                        <p id="narrative-summary-detail" class="narrative-text">Cargando análisis comparativo...</p>
+                        <div class="summary-tags" id="summary-tags"></div>
+                    </div>
+
+                    <h4 class="section-subtitle">Métricas narrativas</h4>
+                    <div class="narrative-metrics-grid">
+                        <div class="narrative-metric">
+                            <span class="metric-name">Fuerza narrativa</span>
+                            <span id="narrative-strength" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Tendencia semanal</span>
+                            <span id="narrative-trend" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Proyección</span>
+                            <span id="narrative-projection" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Posición narrativa</span>
+                            <span id="narrative-position" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Riesgo</span>
+                            <span id="narrative-risk-detail" class="metric-val">-</span>
+                        </div>
+                        <div class="narrative-metric">
+                            <span class="metric-name">Tono</span>
+                            <span id="narrative-tone" class="metric-val">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mapa de Colombia -->
+                <div class="geo-panel">
+                    <div class="geo-map-card">
+                        <div class="geo-map-header">
+                            <h3>República de Colombia</h3>
+                            <span class="geo-badge">Conversación por región</span>
+                        </div>
+                        <div id="geo-map" class="geo-map colombia-map" aria-label="Mapa de Colombia">
+                            <!-- Mapa SVG de Colombia - Forma real -->
+                            <svg viewBox="0 0 450 500" class="colombia-svg">
+                                <!-- Contorno de Colombia -->
+                                <path class="colombia-outline" fill="#1a1a2e" stroke="#4A7C59" stroke-width="2" d="
+                                    M85,95 L95,80 L120,70 L150,55 L180,50 L220,45 L260,50 L290,55 L310,65 L330,80
+                                    L345,70 L360,75 L370,90 L365,110 L350,125 L340,140 L350,160 L365,180
+                                    L380,200 L390,230 L395,260 L390,290 L380,320 L365,350 L345,380
+                                    L320,400 L290,415 L260,425 L230,435 L200,440 L170,435 L145,425
+                                    L125,410 L110,390 L100,365 L95,340 L100,310 L95,280 L85,250
+                                    L75,220 L70,190 L65,160 L70,130 L80,110 Z
+                                "/>
+
+                                <!-- Regiones con colores por intensidad -->
+                                <g id="colombia-regions">
+                                    <!-- Región Caribe -->
+                                    <path id="region-caribe" class="region" fill="rgba(74,124,89,0.3)" d="M150,55 L180,50 L220,45 L260,50 L290,55 L310,65 L330,80 L310,100 L280,115 L240,120 L200,115 L160,105 L140,90 Z">
+                                        <title>Región Caribe</title>
+                                    </path>
+                                    <!-- Región Andina -->
+                                    <path id="region-andina" class="region highlight" fill="rgba(74,124,89,0.6)" d="M140,90 L200,115 L240,120 L260,150 L250,200 L240,250 L220,290 L190,310 L160,300 L140,260 L130,210 L125,160 Z">
+                                        <title>Región Andina</title>
+                                    </path>
+                                    <!-- Región Pacífica -->
+                                    <path id="region-pacifica" class="region" fill="rgba(74,124,89,0.4)" d="M70,130 L125,160 L130,210 L140,260 L130,310 L110,350 L95,340 L85,300 L75,250 L70,200 L65,160 Z">
+                                        <title>Región Pacífica</title>
+                                    </path>
+                                    <!-- Región Orinoquía -->
+                                    <path id="region-orinoquia" class="region" fill="rgba(74,124,89,0.25)" d="M260,150 L310,100 L350,125 L365,180 L380,230 L370,280 L340,300 L300,290 L260,270 L250,220 Z">
+                                        <title>Región Orinoquía</title>
+                                    </path>
+                                    <!-- Región Amazonía -->
+                                    <path id="region-amazonia" class="region" fill="rgba(74,124,89,0.15)" d="M190,310 L260,270 L340,300 L365,350 L345,400 L290,430 L230,440 L180,430 L145,400 L130,360 L150,330 Z">
+                                        <title>Región Amazonía</title>
+                                    </path>
+                                </g>
+
+                                <!-- Ciudades principales -->
+                                <g class="cities">
+                                    <!-- Bogotá (Capital) -->
+                                    <circle cx="205" cy="215" r="10" class="city-dot capital" fill="var(--black, #111111)" stroke="#fff" stroke-width="2"/>
+                                    <text x="220" y="220" class="city-label capital-label" fill="var(--black, #111111)" font-weight="bold">Bogotá</text>
+
+                                    <!-- Medellín -->
+                                    <circle cx="175" cy="160" r="7" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1.5"/>
+                                    <text x="135" y="155" class="city-label" fill="#e0e0e0">Medellín</text>
+
+                                    <!-- Cali -->
+                                    <circle cx="145" cy="275" r="7" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1.5"/>
+                                    <text x="105" y="280" class="city-label" fill="#e0e0e0">Cali</text>
+
+                                    <!-- Barranquilla -->
+                                    <circle cx="245" cy="70" r="6" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1.5"/>
+                                    <text x="255" y="65" class="city-label" fill="#e0e0e0">Barranquilla</text>
+
+                                    <!-- Cartagena -->
+                                    <circle cx="200" cy="75" r="6" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1.5"/>
+                                    <text x="155" y="70" class="city-label" fill="#e0e0e0">Cartagena</text>
+
+                                    <!-- Bucaramanga -->
+                                    <circle cx="240" cy="145" r="5" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="250" y="140" class="city-label small" fill="#e0e0e0">Bucaramanga</text>
+
+                                    <!-- Cúcuta -->
+                                    <circle cx="280" cy="125" r="5" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="290" y="120" class="city-label small" fill="#e0e0e0">Cúcuta</text>
+
+                                    <!-- Pereira -->
+                                    <circle cx="165" cy="210" r="4" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="125" y="215" class="city-label small" fill="#e0e0e0">Pereira</text>
+
+                                    <!-- Santa Marta -->
+                                    <circle cx="270" cy="60" r="5" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="280" y="55" class="city-label small" fill="#e0e0e0">Santa Marta</text>
+
+                                    <!-- Villavicencio -->
+                                    <circle cx="250" cy="240" r="4" class="city-dot" fill="#4A7C59" stroke="#fff" stroke-width="1"/>
+                                    <text x="260" y="245" class="city-label small" fill="#e0e0e0">Villavicencio</text>
+                                </g>
+
+                                <!-- Leyenda -->
+                                <g class="map-legend" transform="translate(20, 420)">
+                                    <rect x="0" y="0" width="15" height="15" fill="rgba(74,124,89,0.6)" stroke="#fff" stroke-width="0.5"/>
+                                    <text x="20" y="12" fill="#e0e0e0" font-size="10">Alta conversación</text>
+                                    <rect x="110" y="0" width="15" height="15" fill="rgba(74,124,89,0.3)" stroke="#fff" stroke-width="0.5"/>
+                                    <text x="130" y="12" fill="#e0e0e0" font-size="10">Media</text>
+                                    <rect x="180" y="0" width="15" height="15" fill="rgba(74,124,89,0.15)" stroke="#fff" stroke-width="0.5"/>
+                                    <text x="200" y="12" fill="#e0e0e0" font-size="10">Baja</text>
+                                </g>
+                            </svg>
+                        </div>
+                        <p class="geo-footnote">Intensidad del color indica volumen de conversación en redes.</p>
+                    </div>
+                    <div class="geo-list-card">
+                        <h3>Ciudades con más conversación</h3>
+                        <ol id="geo-list" class="geo-list"></ol>
+                        <p id="geo-context" class="dashboard-subtitle" style="margin-top: 0.75rem;"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-game" class="tab-content" style="display: none;">
+                <div class="summary-header">
+                    <h3>Alternativas tacticas</h3>
+                    <p class="dashboard-subtitle">Otras acciones que puedes tomar segun el contexto.</p>
+                </div>
+
+                <div class="alternatives-grid" id="alternatives-section">
+                    <div class="alternative-card" data-priority="medium">
+                        <div class="alternative-header">
+                            <span class="priority-badge priority-48h">Proximas 48h</span>
+                            <span class="alternative-owner">Digital</span>
+                        </div>
+                        <p id="alt-1-text" class="alternative-text">Proponer economia: mensaje de costo de vida + entrevista regional</p>
+                        <div class="alternative-meta">
+                            <span class="alt-impact">Impacto: +8 pts</span>
+                            <span class="alt-cost">Costo: Bajo</span>
+                        </div>
+                        <button class="action-btn small" onclick="selectAlternative(1)">Usar esta estrategia</button>
+                    </div>
+
+                    <div class="alternative-card" data-priority="low">
+                        <div class="alternative-header">
+                            <span class="priority-badge priority-watch">En observacion</span>
+                            <span class="alternative-owner">Territorio</span>
+                        </div>
+                        <p id="alt-2-text" class="alternative-text">Desviar a salud: financiacion hospitalaria + visita a clinica</p>
+                        <div class="alternative-meta">
+                            <span class="alt-impact">Impacto: +5 pts</span>
+                            <span class="alt-cost">Costo: Alto</span>
+                        </div>
+                        <button class="action-btn small" onclick="selectAlternative(2)">Usar esta estrategia</button>
+                    </div>
+                </div>
+
+                <div class="rival-signal-card">
+                    <span class="signal-badge">SENAL DEL RIVAL</span>
+                    <p id="game-rival-signal" class="signal-text">El rival domina seguridad con pico de conversacion (+12%). Preparar respuesta.</p>
+                </div>
+
+                <div class="trigger-card">
+                    <span class="trigger-badge">TRIGGER DE ACCION</span>
+                    <p id="game-trigger" class="trigger-text">Si ICCE cae >8 pts o SNA baja -10 en seguridad, activar respuesta en 48h.</p>
+                </div>
+            </div>
+
+            <div id="tab-results" class="tab-content" style="display: none;">
+                <div class="analysis-accordion">
+                    <button class="accordion-toggle" type="button" data-target="exec-summary">Informe ejecutivo</button>
+                    <div class="accordion-panel" id="exec-summary">
+                        <p id="analysis-exec-summary" class="dashboard-text">-</p>
+                    </div>
+
+                    <button class="accordion-toggle" type="button" data-target="data-analysis">Analisis de Datos</button>
+                    <div class="accordion-panel" id="data-analysis">
+                        <p id="analysis-data" class="dashboard-text">-</p>
+                    </div>
+
+                    <button class="accordion-toggle" type="button" data-target="strategic-plan">Plan Electoral</button>
+                    <div class="accordion-panel" id="analysis-plan">
+                        <p id="analysis-plan-text" class="dashboard-text">-</p>
+                    </div>
+
+                    <button class="accordion-toggle" type="button" data-target="speech">Discurso Electoral</button>
+                    <div class="accordion-panel" id="speech">
+                        <p id="analysis-speech" class="dashboard-text">-</p>
+                    </div>
+
+                    <button class="accordion-toggle" type="button" data-target="suggested-chart">Análisis de Sentimientos</button>
+                    <div class="accordion-panel" id="suggested-chart">
+                        <p id="analysis-chart" class="dashboard-text">-</p>
+                    </div>
+
+                    <button class="accordion-toggle" type="button" data-target="general-situation">Analisis general</button>
+                    <div class="accordion-panel" id="general-situation">
+                        <p id="analysis-general" class="dashboard-text">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-topics" class="tab-content" style="display: none;">
+                <div class="card dashboard-card">
+                    <h3>Temas principales</h3>
+                    <div id="topics-table" class="topics-table"></div>
+                </div>
+            </div>
+
+            <div id="tab-charts" class="tab-content" style="display: none;">
+                <div class="dashboard-grid">
+                    <div class="card dashboard-card">
+                        <h3>Tracción y tendencias</h3>
+                        <p id="chart-series-subtitle" class="dashboard-subtitle"></p>
+                        <canvas id="unified-series-chart" height="140"></canvas>
+                        <p id="chart-series-context" class="dashboard-subtitle" style="margin-top: 0.75rem;"></p>
+                    </div>
+                    <div class="card dashboard-card">
+                        <h3>Tono de conversación</h3>
+                        <canvas id="sentiment-chart" height="140"></canvas>
+                        <p id="chart-sentiment-context" class="dashboard-subtitle" style="margin-top: 0.75rem;"></p>
+                    </div>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="card dashboard-card">
+                        <h3>Resumen de tendencias</h3>
+                        <ul id="forecast-details-list" class="dashboard-list"></ul>
+                    </div>
+                    <div class="card dashboard-card">
+                        <h3>Alertas narrativas electorales</h3>
+                        <ul id="forecast-alerts-list" class="dashboard-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-methodology" class="tab-content" style="display: none;">
+                <div class="card dashboard-card">
+                    <h3>Metodologia</h3>
+                    <p class="dashboard-text">
+                        CASTOR Elecciones integra tweets recientes, clasifica sentimiento con BETO, y agrupa temas bajo ejes de desarrollo: seguridad, educación, salud, justicia, medio ambiente, etc.
+                        El ICCE combina volumen y sentimiento, el Momentum mide la variacion suavizada, y el Forecast proyecta
+                        la conversacion con modelos de series de tiempo.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ========== TAB BASE DE DATOS RAG ========== -->
+            <div id="tab-database" class="tab-content" style="display: none;">
+                <div class="card dashboard-card">
+                    <div class="db-header">
+                        <h3>📊 Base de Datos RAG - E-14 Electorales</h3>
+                        <button class="btn-refresh" onclick="loadDatabaseStats()">🔄 Actualizar</button>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="db-stats-grid" id="db-stats-grid">
+                        <div class="db-stat-card">
+                            <div class="db-stat-value" id="db-total-docs">-</div>
+                            <div class="db-stat-label">Documentos</div>
+                        </div>
+                        <div class="db-stat-card">
+                            <div class="db-stat-value" id="db-total-mesas">-</div>
+                            <div class="db-stat-label">Mesas</div>
+                        </div>
+                        <div class="db-stat-card">
+                            <div class="db-stat-value" id="db-total-deptos">-</div>
+                            <div class="db-stat-label">Departamentos</div>
+                        </div>
+                    </div>
+
+                    <!-- Filtros -->
+                    <div class="db-filters">
+                        <select id="db-filter-corp" onchange="filterDatabase()">
+                            <option value="">Todas las corporaciones</option>
+                            <option value="SENADO">Senado</option>
+                            <option value="CAMARA">Cámara</option>
+                        </select>
+                        <input type="text" id="db-search" placeholder="🔍 Buscar departamento, municipio..." onkeyup="filterDatabase()">
+                    </div>
+
+                    <!-- Tabla de Departamentos -->
+                    <div class="db-table-container">
+                        <table class="db-table" id="db-table">
+                            <thead>
+                                <tr>
+                                    <th>Departamento</th>
+                                    <th>Mesas</th>
+                                    <th>Senado</th>
+                                    <th>Cámara</th>
+                                    <th>Docs</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="db-table-body">
+                                <tr><td colspan="6" class="db-loading">Cargando datos...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Panel de Detalle (oculto inicialmente) -->
+                    <div id="db-detail-panel" class="db-detail-panel" style="display: none;">
+                        <div class="db-detail-header">
+                            <button class="btn-back" onclick="closeDepartmentDetail()">← Volver</button>
+                            <h4 id="db-detail-title">Departamento</h4>
+                        </div>
+                        <div class="db-detail-content" id="db-detail-content">
+                            <!-- Se llena dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>CASTOR IA Electoral</h3>
+                <p>Plataforma de estrategia electoral con inteligencia artificial.</p>
+                <p class="muted">2026 CASTOR Elecciones. Todos los derechos reservados.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Plataforma</h4>
+                <ul>
+                    <li><a href="/dashboard">Dashboard Electoral</a></li>
+                    <li><a href="/webpage">Inicio</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Informacion</h4>
+                <ul>
+                    <li><a href="/webpage#como-funciona">Como funciona</a></li>
+                    <li><a href="/webpage#outputs">Que entrega</a></li>
+                    <li><a href="/webpage#metodologia">Metodologia</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Uso de datos publicos</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Terminos y condiciones</a></li>
+                    <li><a href="/contact">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Solicitar Demo</h2>
+                <button class="modal-close" onclick="closeDemoModal()">&times;</button>
+            </div>
+            <form id="demoForm" class="modal-form">
+                <div class="form-row">
+                    <label>
+                        Nombre *
+                        <input type="text" name="first_name" id="demo-first-name" required placeholder="Juan">
+                    </label>
+                    <label>
+                        Apellido *
+                        <input type="text" name="last_name" id="demo-last-name" required placeholder="Perez">
+                    </label>
+                </div>
+                <label>
+                    Correo electronico *
+                    <input type="email" name="email" id="demo-email" required placeholder="juan.perez@example.com">
+                </label>
+                <label>
+                    Telefono *
+                    <input type="tel" name="phone" id="demo-phone" required placeholder="+57 300 123 4567">
+                </label>
+                <label>
+                    Que te interesa? *
+                    <select name="interest" id="demo-interest" required>
+                        <option value="">Selecciona una opcion</option>
+                        <option value="forecast">Forecast</option>
+                        <option value="campanas">Campanas</option>
+                        <option value="medios">Medios</option>
+                        <option value="dashboard">Dashboard</option>
+                    </select>
+                </label>
+                <label>
+                    Ubicacion (Ciudad) *
+                    <input type="text" name="location" id="demo-location" required placeholder="Bogota, Medellin, Cali...">
+                </label>
+                <div class="form-actions">
+                    <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>
+                    <button type="submit" class="primary-btn">Enviar solicitud</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        window.API_BASE_URL = (function() {
+            if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE_URL) {
+                return process.env.NEXT_PUBLIC_API_BASE_URL;
+            }
+            // Detectar origen automaticamente
+            if (typeof window !== 'undefined' && window.location) {
+                var origin = window.location.origin;
+                // Si es Vercel, usar el backend en ngrok o Railway
+                if (origin.includes('vercel.app')) {
+                    return 'https://castorelecciones.ngrok.app';
+                }
+                return origin;
+            }
+            return 'https://castorelecciones.ngrok.app';
+        })();
+    </script>
+    <script>
+        // ========== FUNCIONES DE ACCION DEL DASHBOARD ==========
+
+        // Tab switching function
+        function switchTab(tabName) {
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            // Add active to selected tab
+            const selectedTab = document.querySelector(`[data-tab="${tabName}"]`);
+            if (selectedTab) selectedTab.classList.add('active');
+
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(c => {
+                c.style.display = 'none';
+                c.classList.remove('active');
+            });
+
+            // Show selected tab content
+            const tabContent = document.getElementById(`tab-${tabName}`);
+            if (tabContent) {
+                tabContent.style.display = 'block';
+                tabContent.classList.add('active');
+            }
+
+            // Load database data when switching to database tab
+            if (tabName === 'database') {
+                loadDatabaseStats();
+            }
+        }
+
+        // ========== DATABASE TAB FUNCTIONS ==========
+        let dbData = { departments: [], allData: [] };
+
+        async function loadDatabaseStats() {
+            try {
+                const response = await fetch(`${window.API_BASE_URL}/api/chat/rag/e14/stats`);
+                const data = await response.json();
+
+                if (data.success) {
+                    // Update stats cards
+                    document.getElementById('db-total-docs').textContent = data.total_e14_documents || 0;
+
+                    const deptos = Object.keys(data.by_departamento || {});
+                    document.getElementById('db-total-deptos').textContent = deptos.length;
+
+                    // Calculate mesas (estimate: docs / avg docs per mesa)
+                    const totalDocs = data.total_e14_documents || 0;
+                    const avgDocsPerMesa = 25; // Approximate
+                    document.getElementById('db-total-mesas').textContent = Math.round(totalDocs / avgDocsPerMesa);
+
+                    // Build department table
+                    const byDepto = data.by_departamento || {};
+                    const byCorp = data.by_corporacion || {};
+
+                    dbData.departments = deptos.map(depto => ({
+                        name: depto,
+                        docs: byDepto[depto] || 0,
+                        senado: 0, // Will be calculated from search
+                        camara: 0
+                    }));
+
+                    // Load detailed data
+                    await loadDetailedData();
+
+                    renderDepartmentTable();
+                }
+            } catch (error) {
+                console.error('Error loading database stats:', error);
+                document.getElementById('db-table-body').innerHTML =
+                    '<tr><td colspan="6" class="db-loading">Error cargando datos</td></tr>';
+            }
+        }
+
+        async function loadDetailedData() {
+            try {
+                const response = await fetch(`${window.API_BASE_URL}/api/chat/rag/e14/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: 'resultados electorales', top_k: 200 })
+                });
+                const data = await response.json();
+
+                if (data.results) {
+                    // Normalize data - extract from metadata
+                    dbData.allData = data.results.map(r => ({
+                        id: r.id,
+                        content: r.content,
+                        score: r.score,
+                        departamento: r.metadata?.departamento || 'Desconocido',
+                        municipio: r.metadata?.municipio || 'Desconocido',
+                        corporacion: r.metadata?.corporacion || '',
+                        mesa_id: r.metadata?.mesa_id || '',
+                        chunk_type: r.metadata?.chunk_type || ''
+                    }));
+
+                    // Group by department and count corporaciones
+                    const deptoStats = {};
+                    dbData.allData.forEach(r => {
+                        const depto = r.departamento;
+                        const corp = r.corporacion;
+
+                        if (!deptoStats[depto]) {
+                            deptoStats[depto] = { senado: new Set(), camara: new Set(), mesas: new Set() };
+                        }
+
+                        if (corp === 'SENADO') deptoStats[depto].senado.add(r.mesa_id);
+                        if (corp === 'CAMARA') deptoStats[depto].camara.add(r.mesa_id);
+                        if (r.mesa_id) deptoStats[depto].mesas.add(r.mesa_id);
+                    });
+
+                    // Update department data
+                    dbData.departments.forEach(d => {
+                        const stats = deptoStats[d.name];
+                        if (stats) {
+                            d.senado = stats.senado.size;
+                            d.camara = stats.camara.size;
+                            d.mesas = stats.mesas.size;
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading detailed data:', error);
+            }
+        }
+
+        function renderDepartmentTable() {
+            const tbody = document.getElementById('db-table-body');
+            const filterCorp = document.getElementById('db-filter-corp').value;
+            const searchTerm = document.getElementById('db-search').value.toLowerCase();
+
+            let filtered = dbData.departments;
+
+            // Apply search filter
+            if (searchTerm) {
+                filtered = filtered.filter(d => d.name.toLowerCase().includes(searchTerm));
+            }
+
+            // Sort by docs descending
+            filtered.sort((a, b) => b.docs - a.docs);
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="db-loading">No se encontraron resultados</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(d => `
+                <tr>
+                    <td><strong>📍 ${d.name}</strong></td>
+                    <td>${d.mesas || '-'}</td>
+                    <td>${d.senado || 0}</td>
+                    <td>${d.camara || 0}</td>
+                    <td>${d.docs}</td>
+                    <td class="db-actions">
+                        <button class="db-btn" onclick="showDepartmentDetail('${d.name}')">👁️ Ver</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterDatabase() {
+            renderDepartmentTable();
+        }
+
+        async function showDepartmentDetail(deptoName) {
+            const panel = document.getElementById('db-detail-panel');
+            const content = document.getElementById('db-detail-content');
+            const title = document.getElementById('db-detail-title');
+
+            title.textContent = `${deptoName} - Detalle de Mesas`;
+            panel.style.display = 'block';
+
+            // Filter data for this department
+            const deptoData = dbData.allData.filter(d => d.departamento === deptoName);
+
+            // Group by mesa
+            const mesasMap = {};
+            deptoData.forEach(d => {
+                const mesaId = d.mesa_id || 'unknown';
+                if (!mesasMap[mesaId]) {
+                    mesasMap[mesaId] = {
+                        id: mesaId,
+                        municipio: d.municipio || 'Desconocido',
+                        corporacion: d.corporacion || '',
+                        items: []
+                    };
+                }
+                mesasMap[mesaId].items.push(d);
+            });
+
+            const mesas = Object.values(mesasMap);
+
+            if (mesas.length === 0) {
+                content.innerHTML = '<p>No hay datos detallados disponibles para este departamento.</p>';
+                return;
+            }
+
+            content.innerHTML = `
+                <div class="db-mesa-grid">
+                    ${mesas.map(mesa => `
+                        <div class="db-mesa-card">
+                            <div class="db-mesa-header">
+                                <span class="db-mesa-id">${mesa.id}</span>
+                                <span class="db-mesa-corp">${mesa.corporacion}</span>
+                            </div>
+                            <div class="db-mesa-location">${mesa.municipio}, ${deptoName}</div>
+                            <div class="db-mesa-stats">
+                                <span class="db-mesa-stat"><span>Docs:</span> ${mesa.items.length}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeDepartmentDetail() {
+            document.getElementById('db-detail-panel').style.display = 'none';
+        }
+
+        function generateContent() {
+            const panel = document.getElementById('rag-chat-panel');
+            const input = document.getElementById('rag-chat-input');
+            panel.classList.add('open');
+            input.value = 'Genera un comunicado de prensa para la estrategia del dia';
+            input.focus();
+        }
+
+        function sendToTeam() {
+            const decision = document.getElementById('decision-main-action').textContent;
+            const subject = encodeURIComponent('Estrategia del dia - CASTOR');
+            const body = encodeURIComponent(`Hola equipo,\n\nLa recomendacion de CASTOR para hoy es:\n\n${decision}\n\nSaludos`);
+            window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
+        }
+
+        function scrollToAlternatives() {
+            switchTab('game');
+            document.getElementById('alternatives-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectAlternative(num) {
+            const altText = document.getElementById(`alt-${num}-text`).textContent;
+            document.getElementById('decision-main-action').textContent = altText;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Actualizar el rival seleccionado
+        document.addEventListener('DOMContentLoaded', function() {
+            const rivalSelect = document.getElementById('game-rival-select');
+            const rivalDisplay = document.getElementById('rival-name-display');
+
+            if (rivalSelect && rivalDisplay) {
+                rivalSelect.addEventListener('change', function() {
+                    rivalDisplay.textContent = this.value;
+                });
+            }
+        });
+
+        // Funcion para actualizar la seccion de decision con datos del API
+        function updateDecisionHero(data) {
+            if (!data) return;
+
+            // Decision principal
+            if (data.main_play) {
+                document.getElementById('decision-main-action').textContent = data.main_play;
+            }
+
+            // Confianza
+            if (data.confidence) {
+                document.getElementById('decision-confidence-text').textContent = `Confianza ${data.confidence}`;
+                const badge = document.getElementById('decision-confidence-badge');
+                if (data.confidence === 'Alta') {
+                    badge.style.background = 'rgba(74, 124, 89, 0.15)';
+                    badge.style.borderColor = 'rgba(74, 124, 89, 0.3)';
+                } else if (data.confidence === 'Media') {
+                    badge.style.background = 'rgba(17, 17, 17, 0.15)';
+                    badge.style.borderColor = 'rgba(17, 17, 17, 0.3)';
+                }
+            }
+
+            // Impacto
+            if (data.payoff) {
+                document.getElementById('decision-impact').textContent = data.payoff;
+            }
+
+            // Warning
+            if (data.trigger) {
+                document.getElementById('decision-warning-text').textContent = data.trigger;
+            }
+        }
+
+        // Funcion para actualizar KPIs
+        function updateContextKPIs(data) {
+            if (!data) return;
+
+            // ICCE
+            if (data.icce !== undefined) {
+                document.getElementById('kpi-icce').textContent = data.icce.toFixed(1);
+                const icceState = document.getElementById('kpi-icce-state');
+                if (data.icce >= 60) {
+                    icceState.textContent = 'Favorable';
+                    icceState.className = 'kpi-state positive';
+                } else if (data.icce >= 40) {
+                    icceState.textContent = 'Neutral';
+                    icceState.className = 'kpi-state neutral';
+                } else {
+                    icceState.textContent = 'Desfavorable';
+                    icceState.className = 'kpi-state negative';
+                }
+            }
+
+            // Momentum
+            if (data.momentum !== undefined) {
+                const mom = data.momentum;
+                const momEl = document.getElementById('kpi-momentum');
+                const momState = document.getElementById('kpi-momentum-state');
+                if (mom > 0) {
+                    momEl.textContent = '↑';
+                    momState.textContent = 'En subida';
+                    momState.className = 'kpi-state positive';
+                } else if (mom < 0) {
+                    momEl.textContent = '↓';
+                    momState.textContent = 'En bajada';
+                    momState.className = 'kpi-state negative';
+                } else {
+                    momEl.textContent = '→';
+                    momState.textContent = 'Estable';
+                    momState.className = 'kpi-state neutral';
+                }
+            }
+
+            // Sentimiento
+            if (data.sna !== undefined) {
+                const sna = data.sna;
+                document.getElementById('kpi-sentiment').textContent = (sna >= 0 ? '+' : '') + sna + '%';
+                const sentState = document.getElementById('kpi-sentiment-state');
+                if (sna > 10) {
+                    sentState.textContent = 'Positivo';
+                    sentState.className = 'kpi-state positive';
+                } else if (sna < -10) {
+                    sentState.textContent = 'Negativo';
+                    sentState.className = 'kpi-state negative';
+                } else {
+                    sentState.textContent = 'Mixto';
+                    sentState.className = 'kpi-state neutral';
+                }
+            }
+
+            // Forecast
+            if (data.forecast_change !== undefined) {
+                const fc = data.forecast_change;
+                document.getElementById('kpi-forecast').textContent = (fc >= 0 ? '↑ ' : '↓ ') + Math.abs(fc).toFixed(1);
+                const fcState = document.getElementById('kpi-forecast-state');
+                if (fc > 0) {
+                    fcState.textContent = 'Proyeccion al alza';
+                    fcState.className = 'kpi-state positive';
+                } else {
+                    fcState.textContent = 'Proyeccion a la baja';
+                    fcState.className = 'kpi-state negative';
+                }
+            }
+        }
+    </script>
+    <script src="/static/js/config.js?v=20260122"></script>
+    <script src="/static/js/main.js?v=20260122"></script>
+    <script src="/static/js/performance.js?v=20260122" defer></script>
+    <script src="/static/js/landing.js?v=20260122" defer></script>
+    <script src="/static/js/unified_dashboard.js?v=20260122"></script>
+    <script src="/static/js/rag_chat.js?v=20260122" defer></script>
+
+    <!-- RAG Chat Button and Container - CASTOR Brand Colors -->
+    <style>
+        .rag-chat-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(17, 17, 17, 0.9);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            overflow: hidden;
+        }
+        .rag-chat-fab:hover {
+            width: auto;
+            padding: 0 16px 0 12px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, var(--black, #111111) 0%, #333333 100%);
+            box-shadow: 0 4px 20px rgba(17, 17, 17, 0.4);
+            gap: 8px;
+        }
+        .rag-chat-fab svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+        .rag-chat-fab:hover svg {
+            transform: scale(1.05);
+        }
+        .rag-chat-fab-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+        .rag-chat-fab:hover .rag-chat-fab-logo {
+            transform: scale(1.08);
+        }
+        .rag-chat-fab-text {
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .rag-chat-fab:hover .rag-chat-fab-text {
+            max-width: 150px;
+            opacity: 1;
+        }
+        .rag-chat-fab .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .rag-chat-panel {
+            position: fixed;
+            bottom: 72px;
+            right: 20px;
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            height: 450px;
+            max-height: calc(100vh - 100px);
+            background: var(--panel, #141414);
+            border: 1px solid rgba(17, 17, 17, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+            overflow: hidden;
+        }
+        .rag-chat-panel.open {
+            display: flex;
+            animation: slideUp 0.25s ease-out;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .rag-chat-header {
+            background: linear-gradient(135deg, var(--black, #111111) 0%, #333333 100%);
+            color: #0A0A0A;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .rag-chat-header-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rag-chat-header-brand img {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+        }
+        .rag-chat-header h3 {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .rag-chat-header-actions {
+            display: flex;
+            gap: 4px;
+        }
+        .rag-chat-header button {
+            background: rgba(0,0,0,0.1);
+            border: none;
+            color: #0A0A0A;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .rag-chat-header button:hover {
+            background: rgba(0,0,0,0.2);
+        }
+        .rag-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: var(--panel-alt, #1C1C1C);
+        }
+        .rag-message {
+            max-width: 88%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .rag-message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--black, #111111) 0%, #333333 100%);
+            color: #0A0A0A;
+            border-bottom-right-radius: 4px;
+        }
+        .rag-message.assistant {
+            align-self: flex-start;
+            background: var(--panel, #141414);
+            color: var(--text, #F5F5F0);
+            border: 1px solid var(--border, #2A2A2A);
+            border-bottom-left-radius: 4px;
+        }
+        .rag-message.system {
+            align-self: center;
+            background: rgba(17, 17, 17, 0.1);
+            color: #E8D48A;
+            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+        .rag-message-sources {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border, #2A2A2A);
+            font-size: 0.75rem;
+            color: var(--muted, #9A8F7C);
+        }
+        .rag-message p {
+            margin: 0 0 8px 0;
+        }
+        .rag-message p:last-child {
+            margin-bottom: 0;
+        }
+        .rag-message strong {
+            font-weight: 600;
+            color: var(--black, #111111);
+        }
+        .rag-message em {
+            font-style: italic;
+        }
+        .rag-message code {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.85em;
+        }
+        .rag-message ul {
+            margin: 8px 0;
+            padding-left: 18px;
+        }
+        .rag-message li {
+            margin: 4px 0;
+            line-height: 1.4;
+        }
+        .rag-chat-input-area {
+            padding: 10px 12px;
+            background: var(--panel, #141414);
+            border-top: 1px solid var(--border, #2A2A2A);
+            display: flex;
+            gap: 8px;
+        }
+        .rag-chat-input-area input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border, #2A2A2A);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            outline: none;
+            background: var(--panel-alt, #1C1C1C);
+            color: var(--text, #F5F5F0);
+            transition: border-color 0.2s;
+            font-family: var(--font-body, 'Source Sans 3', sans-serif);
+        }
+        .rag-chat-input-area input::placeholder {
+            color: var(--muted, #9A8F7C);
+        }
+        .rag-chat-input-area input:focus {
+            border-color: var(--black, #111111);
+        }
+        .rag-chat-input-area button {
+            background: linear-gradient(135deg, var(--black, #111111) 0%, #333333 100%);
+            border: none;
+            color: #0A0A0A;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .rag-chat-input-area button:hover {
+            transform: scale(1.05);
+        }
+        .rag-chat-input-area button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .rag-typing {
+            display: flex;
+            gap: 4px;
+            padding: 8px 12px;
+        }
+        .rag-typing span {
+            width: 8px;
+            height: 8px;
+            background: var(--black, #111111);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        .rag-typing span:nth-child(1) { animation-delay: -0.32s; }
+        .rag-typing span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        @media (max-width: 480px) {
+            .rag-chat-panel {
+                width: calc(100vw - 20px);
+                right: 10px;
+                bottom: 60px;
+                height: calc(100vh - 80px);
+                border-radius: 10px;
+            }
+            .rag-chat-fab {
+                right: 10px;
+                bottom: 10px;
+                width: 40px;
+                height: 40px;
+            }
+            .rag-chat-fab:hover {
+                width: 40px;
+                padding: 0;
+                border-radius: 50%;
+                gap: 0;
+            }
+            .rag-chat-fab:hover .rag-chat-fab-text {
+                max-width: 0;
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <!-- Floating Chat Button -->
+    <button class="rag-chat-fab" id="rag-chat-toggle" aria-label="Chat CASTOR" title="Chat CASTOR">
+        <img src="/static/images/logo.png" alt="CASTOR" class="rag-chat-fab-logo">
+        <span class="rag-chat-fab-text">CASTOR</span>
+        <span class="badge" id="rag-chat-badge"></span>
+    </button>
+
+    <!-- Chat Panel -->
+    <div class="rag-chat-panel" id="rag-chat-panel">
+        <div class="rag-chat-header">
+            <div class="rag-chat-header-brand">
+                <img src="/static/images/logo.png" alt="CASTOR">
+                <h3>CASTOR</h3>
+            </div>
+            <div class="rag-chat-header-actions">
+                <button id="rag-sync-btn" title="Sincronizar con base de datos">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+                    </svg>
+                </button>
+                <button id="rag-close-btn" title="Cerrar">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="rag-chat-messages" id="rag-chat-messages">
+            <div class="rag-message assistant">
+                Hola! Soy tu asistente CASTOR. Preguntame sobre analisis, tendencias o estrategia electoral.
+            </div>
+        </div>
+        <div class="rag-chat-input-area">
+            <input type="text" id="rag-chat-input" placeholder="Escribe tu pregunta..." autocomplete="off">
+            <button id="rag-send-btn" title="Enviar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // RAG Chat Initialization
+        (function() {
+            const toggle = document.getElementById('rag-chat-toggle');
+            const panel = document.getElementById('rag-chat-panel');
+            const closeBtn = document.getElementById('rag-close-btn');
+            const syncBtn = document.getElementById('rag-sync-btn');
+            const input = document.getElementById('rag-chat-input');
+            const sendBtn = document.getElementById('rag-send-btn');
+            const messages = document.getElementById('rag-chat-messages');
+            const badge = document.getElementById('rag-chat-badge');
+
+            // Toggle panel
+            toggle.addEventListener('click', () => {
+                panel.classList.toggle('open');
+                if (panel.classList.contains('open')) {
+                    input.focus();
+                    badge.style.display = 'none';
+                }
+            });
+
+            closeBtn.addEventListener('click', () => {
+                panel.classList.remove('open');
+            });
+
+            // Formatear Markdown a HTML
+            function formatMarkdown(text) {
+                if (!text) return '';
+                let html = text;
+                // Escapar HTML
+                html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                // Negritas: **texto**
+                html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                // Cursivas: *texto*
+                html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+                // Código: `código`
+                html = html.replace(/`(.+?)`/g, '<code>$1</code>');
+                // Listas con guiones
+                html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+                html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+                // Párrafos
+                html = html.replace(/\n\n+/g, '</p><p>');
+                // Saltos de línea
+                html = html.replace(/\n/g, '<br>');
+                html = '<p>' + html + '</p>';
+                // Limpiar
+                html = html.replace(/<p><\/p>/g, '');
+                html = html.replace(/<p>(<ul>)/g, '$1');
+                html = html.replace(/(<\/ul>)<\/p>/g, '$1');
+                return html;
+            }
+
+            // Send message
+            async function sendMessage() {
+                const query = input.value.trim();
+                if (!query) return;
+
+                // Add user message
+                addMessage(query, 'user');
+                input.value = '';
+                sendBtn.disabled = true;
+
+                // Show typing indicator
+                const typingEl = document.createElement('div');
+                typingEl.className = 'rag-message assistant';
+                typingEl.innerHTML = '<div class="rag-typing"><span></span><span></span><span></span></div>';
+                messages.appendChild(typingEl);
+                messages.scrollTop = messages.scrollHeight;
+
+                try {
+                    const response = await fetch(`${window.API_BASE_URL}/api/chat/rag`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: query, top_k: 5 })
+                    });
+
+                    typingEl.remove();
+
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+
+                    const data = await response.json();
+                    let rawContent = data.answer || data.response || 'No pude procesar tu pregunta.';
+                    let messageContent = formatMarkdown(rawContent);
+
+                    // Add sources if available
+                    if (data.sources && data.sources.length > 0) {
+                        messageContent += '<div class="rag-message-sources"><strong>Fuentes:</strong> ';
+                        messageContent += data.sources.map(s => s.title || s.analysis_id).join(', ');
+                        messageContent += '</div>';
+                    }
+
+                    addMessage(messageContent, 'assistant', true);
+                } catch (error) {
+                    typingEl.remove();
+                    addMessage('Lo siento, hubo un error al procesar tu pregunta. Intenta de nuevo.', 'system');
+                    console.error('RAG Chat error:', error);
+                }
+
+                sendBtn.disabled = false;
+            }
+
+            function addMessage(content, type, isHtml = false) {
+                const msgEl = document.createElement('div');
+                msgEl.className = `rag-message ${type}`;
+                if (isHtml) {
+                    msgEl.innerHTML = content;
+                } else {
+                    msgEl.textContent = content;
+                }
+                messages.appendChild(msgEl);
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+
+            // Sync with database - uses sync-latest for quick sync
+            syncBtn.addEventListener('click', async () => {
+                syncBtn.disabled = true;
+                addMessage('Sincronizando con el ultimo analisis...', 'system');
+
+                try {
+                    const response = await fetch(`${window.API_BASE_URL}/api/chat/rag/sync-latest`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        const msg = data.message || `${data.documents_synced || 0} documentos indexados`;
+                        addMessage(`Listo! ${msg}. Total: ${data.total_indexed || 0} docs.`, 'system');
+                        badge.style.display = 'none';
+                    } else {
+                        addMessage(`Error: ${data.error || 'Error desconocido'}`, 'system');
+                    }
+                } catch (error) {
+                    addMessage('Error al conectar con el servidor.', 'system');
+                    console.error('Sync error:', error);
+                }
+
+                syncBtn.disabled = false;
+            });
+
+            // Auto-sync on page load with latest analysis
+            setTimeout(async () => {
+                try {
+                    // First check stats
+                    const statsRes = await fetch(`${window.API_BASE_URL}/api/chat/rag/stats`);
+                    const stats = await statsRes.json();
+
+                    if (stats.success && stats.documents_indexed > 0) {
+                        addMessage(`Base de conocimiento lista (${stats.documents_indexed} docs).`, 'system');
+                        badge.style.display = 'none';
+                    } else {
+                        // Try to sync with latest
+                        addMessage('Cargando datos del ultimo analisis...', 'system');
+                        const syncRes = await fetch(`${window.API_BASE_URL}/api/chat/rag/sync-latest`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        const syncData = await syncRes.json();
+
+                        if (syncData.success && syncData.documents_synced > 0) {
+                            addMessage(`Listo! ${syncData.message || 'Datos cargados'}`, 'system');
+                            badge.style.display = 'none';
+                        } else if (syncData.success) {
+                            addMessage('No hay analisis guardados. Genera un dashboard primero.', 'system');
+                            badge.style.display = 'block';
+                        } else {
+                            addMessage('Click en sincronizar para cargar datos.', 'system');
+                            badge.style.display = 'block';
+                        }
+                    }
+                } catch (e) {
+                    console.log('RAG auto-sync failed:', e);
+                    addMessage('Listo para chatear. Click sincronizar si necesitas actualizar.', 'system');
+                }
+            }, 1500);
+        })();
+    </script>
+
+    <!-- ========== MODAL DETALLES EJE PND ========== -->
+    <div id="pnd-detail-modal-overlay" class="pnd-detail-modal-overlay">
+        <div class="pnd-detail-modal">
+            <div class="pnd-detail-header">
+                <h3 id="pnd-detail-title" class="pnd-detail-title">Eje PND</h3>
+                <button type="button" class="pnd-detail-close" id="pnd-detail-close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="pnd-detail-body">
+                <div class="pnd-detail-metrics">
+                    <div class="pnd-detail-metric">
+                        <div id="pnd-detail-icce" class="pnd-detail-metric-value">--</div>
+                        <div class="pnd-detail-metric-label">ICCE</div>
+                    </div>
+                    <div class="pnd-detail-metric">
+                        <div id="pnd-detail-sov" class="pnd-detail-metric-value">--</div>
+                        <div class="pnd-detail-metric-label">SOV</div>
+                    </div>
+                    <div class="pnd-detail-metric">
+                        <div id="pnd-detail-sna" class="pnd-detail-metric-value">--</div>
+                        <div class="pnd-detail-metric-label">SNA</div>
+                    </div>
+                </div>
+                <div class="pnd-detail-section">
+                    <div class="pnd-detail-section-title">¿Por qué este resultado?</div>
+                    <p id="pnd-detail-explanation" class="pnd-detail-explanation">Cargando...</p>
+                </div>
+                <div class="pnd-detail-section">
+                    <div class="pnd-detail-section-title">Lo que dice la gente</div>
+                    <div id="pnd-detail-tweets" class="pnd-detail-tweets">
+                        <div class="pnd-detail-tweet">Cargando tweets...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODAL HISTORICO DE LLAMADAS API ========== -->
+    <div id="history-modal-overlay" class="history-modal-overlay">
+        <div class="history-modal">
+            <div class="history-modal-header">
+                <h3 class="history-modal-title">Histórico de llamadas API</h3>
+                <button type="button" class="history-modal-close" id="history-modal-close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="history-modal-body">
+                <div id="history-list" class="history-list">
+                    <div class="history-loading">Cargando historial...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Historial de llamadas API
+        (function() {
+            const historyBtnForm = document.getElementById('view-history-btn-form');
+            const historyBtnResults = document.getElementById('view-history-btn');
+            const historyOverlay = document.getElementById('history-modal-overlay');
+            const historyClose = document.getElementById('history-modal-close');
+            const historyList = document.getElementById('history-list');
+
+            function openHistory() {
+                historyOverlay.classList.add('active');
+                loadHistory();
+            }
+
+            if (historyBtnForm) {
+                historyBtnForm.addEventListener('click', openHistory);
+            }
+            if (historyBtnResults) {
+                historyBtnResults.addEventListener('click', openHistory);
+            }
+
+            if (historyClose) {
+                historyClose.addEventListener('click', () => {
+                    historyOverlay.classList.remove('active');
+                });
+            }
+
+            if (historyOverlay) {
+                historyOverlay.addEventListener('click', (e) => {
+                    if (e.target === historyOverlay) {
+                        historyOverlay.classList.remove('active');
+                    }
+                });
+
+                // ESC para cerrar
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && historyOverlay.classList.contains('active')) {
+                        historyOverlay.classList.remove('active');
+                    }
+                });
+            }
+
+            async function loadHistory() {
+                historyList.innerHTML = '<div class="history-loading">Cargando historial...</div>';
+                try {
+                    const res = await fetch('/api/media/history?limit=20');
+                    const data = await res.json();
+
+                    if (!data.success || !data.api_calls || data.api_calls.length === 0) {
+                        historyList.innerHTML = '<div class="history-empty">No hay llamadas registradas</div>';
+                        return;
+                    }
+
+                    // Filtrar solo llamadas exitosas con tweets
+                    const validCalls = data.api_calls.filter(c => c.status === 'completed' && c.tweets_retrieved > 0);
+
+                    if (validCalls.length === 0) {
+                        historyList.innerHTML = '<div class="history-empty">No hay análisis con datos</div>';
+                        return;
+                    }
+
+                    historyList.innerHTML = validCalls.map(call => {
+                        // Agregar Z para indicar UTC si no tiene zona horaria
+                        const dateStr = call.fetched_at.includes('Z') || call.fetched_at.includes('+')
+                            ? call.fetched_at
+                            : call.fetched_at + 'Z';
+                        const date = new Date(dateStr);
+                        const formattedDate = date.toLocaleString('es-CO', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true,
+                            timeZone: 'America/Bogota'
+                        });
+                        const candidateName = call.candidate_name || call.politician || '-';
+                        const location = call.location || '-';
+                        const tweets = call.tweets_retrieved || 0;
+
+                        return `
+                            <div class="history-item" data-id="${call.id}" style="cursor: pointer;">
+                                <div class="history-item-main">
+                                    <span class="history-item-date">${formattedDate}</span>
+                                    <span class="history-item-meta">${candidateName} • ${location}</span>
+                                </div>
+                                <span class="history-item-tweets">${tweets} tweets</span>
+                            </div>
+                        `;
+                    }).join('');
+
+                    // Agregar click handlers
+                    historyList.querySelectorAll('.history-item[data-id]').forEach(item => {
+                        item.addEventListener('click', () => loadAnalysisFromHistory(item.dataset.id));
+                    });
+                } catch (err) {
+                    console.error('Error loading history:', err);
+                    historyList.innerHTML = '<div class="history-empty">Error al cargar historial</div>';
+                }
+            }
+
+            async function loadAnalysisFromHistory(apiCallId) {
+                historyOverlay.classList.remove('active');
+
+                // Mostrar loading
+                const resultsSection = document.getElementById('unified-results');
+                const loadingEl = document.getElementById('unified-loading');
+                if (loadingEl) {
+                    loadingEl.style.display = 'flex';
+                    loadingEl.querySelector('span:last-child').textContent = 'Cargando análisis histórico...';
+                }
+
+                try {
+                    const res = await fetch(`/api/media/analysis/${apiCallId}`);
+                    const data = await res.json();
+
+                    if (!data.success) {
+                        throw new Error(data.error || 'Error cargando análisis');
+                    }
+
+                    // Ocultar loading
+                    if (loadingEl) loadingEl.style.display = 'none';
+
+                    // Mostrar sección de resultados
+                    if (resultsSection) resultsSection.style.display = 'block';
+
+                    // Convertir datos y renderizar dashboard
+                    const dashboardData = convertDbDataToDashboard(data);
+                    renderUnifiedDashboard({
+                        mediaData: dashboardData.mediaData,
+                        forecastData: dashboardData.forecastData,
+                        trendingData: dashboardData.trendingData,
+                        campaignData: dashboardData.campaignData,
+                        input: {
+                            location: data.location || 'Colombia',
+                            topic: '',
+                            candidateName: data.candidate_name || ''
+                        }
+                    });
+
+                    // Scroll a resultados
+                    resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+                } catch (err) {
+                    console.error('Error loading analysis:', err);
+                    if (loadingEl) loadingEl.style.display = 'none';
+                    alert('Error cargando el análisis: ' + err.message);
+                }
+            }
+        })();
+    </script>
+</body>
+</html>

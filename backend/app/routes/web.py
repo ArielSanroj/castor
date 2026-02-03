@@ -99,3 +99,70 @@ def analytics_dashboard():
 def old_dashboard():
     """Serve old unified dashboard (legacy)."""
     return redirect(url_for('web.index'))
+
+
+@web_bp.route('/testigo/registro')
+def witness_register():
+    """Serve witness registration page (PWA)."""
+    try:
+        return render_template('witness_register.html')
+    except Exception as e:
+        return {
+            'error': 'Template not found',
+            'message': 'Witness registration template not available',
+            'details': str(e)
+        }, 404
+
+
+@web_bp.route('/testigo/asignaciones')
+def witness_assignments():
+    """Serve witness assignments page."""
+    try:
+        return render_template('witness_register.html')
+    except Exception as e:
+        return {
+            'error': 'Template not found',
+            'details': str(e)
+        }, 404
+
+
+@web_bp.route('/testigo/offline')
+def witness_offline():
+    """Serve offline page for PWA."""
+    return '''
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sin Conexion - Castor</title>
+        <style>
+            body { font-family: sans-serif; background: #1a1a2e; color: #f1f5f9; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; text-align: center; }
+            .container { padding: 20px; }
+            h1 { font-size: 1.5rem; margin-bottom: 16px; }
+            p { color: #94a3b8; }
+            button { background: #4361ee; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; cursor: pointer; margin-top: 20px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Sin Conexion</h1>
+            <p>No hay conexion a internet. Verifica tu conexion e intenta de nuevo.</p>
+            <button onclick="location.reload()">Reintentar</button>
+        </div>
+    </body>
+    </html>
+    '''
+
+
+@web_bp.route('/campaign-team')
+def campaign_team_dashboard():
+    """Serve Campaign Team Dashboard."""
+    try:
+        return render_template('campaign_team_dashboard.html')
+    except Exception as e:
+        return {
+            'error': 'Template not found',
+            'message': 'Campaign team dashboard template not available',
+            'details': str(e)
+        }, 404

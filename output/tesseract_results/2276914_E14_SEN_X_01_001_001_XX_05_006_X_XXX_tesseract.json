@@ -1,0 +1,100 @@
+{
+  "extraction_id": "8992223e",
+  "filename": "2276914_E14_SEN_X_01_001_001_XX_05_006_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 37484,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "1.E.FE Y ALEGRÍA GRANIZAL",
+  "mesa": "006",
+  "partidos": [
+    {
+      "party_name": "URNA INCINERADOS",
+      "party_code": "",
+      "votes": 11,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "LISTA CON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "CAS? : MOVIMIENTO GENTE NUEVA",
+      "party_code": "",
+      "votes": 1186,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO DE LA UNIÓN POR LA GENT",
+      "party_code": "",
+      "votes": 8,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "LISTACON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 7,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "LISTA SÍN VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "RESGUARDO CAMPO ALEGR",
+      "party_code": "",
+      "votes": 181,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA —",
+      "party_code": "",
+      "votes": 186,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 2143,
+  "votos_blancos": 0,
+  "votos_nulos": 12,
+  "confidence": 1.0,
+  "raw_text": "A '\n710595672010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA\nEisner: [mn] JURADOS DE VOTACIÓN\nSA\nAAA MEJTTTE |\nñ ho e A\nFar cba ELECCIONES CONGRESO 007 |\nNs 13 DE MARZO DE 2022 ¡EE |\nOs: REGISTRADURÍA\nAT - SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: 1.E.FE Y ALEGRÍA GRANIZAL\nZONA: 01 PUESTO: 05 MESA: 006\nX 2-27-69-14 X\nTOTAL TOTAL TOTAL,\nSUFRAGANTES VOTOS VOTOS\n_ FORMATO E-11- EN LA URNA INCINERADOS\n4 4:3 2144-23) AA\nA A A A Ls on Y A\nCIRCUNSCRIPCIÓN NACIONAL\n¡NINE LISTA SIN VOTO PREFERENTE\n| UN: o\n| L 'S | 0013 : PARTIDO COMUNES\n0 VOTOSPORLAAGRUPACIÓN POLÍTICA — mad [-]-T-]\ne\n|\nMo som: 5o5s7 KIT 59,567 civtzrsose MN ;\n\n--- PAGE BREAK ---\n710595672010211 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m1 56% [5] _ JURADOS DE VOTACIÓN\na, a Y\ndi DELEGADOS ee\nEL ESE ELECCIONES CONGRESO PS\nE e E. 13 DE MARZO DE 2022 AER\noe REGISTRADURÍA\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: |.,E.FE Y ALEGRIA GRANIZAL\nZONA: 01 PUESTO: 05 MESA: 006\n| A 2-27-69-14 X\nme pa LISTA CON VOTO PREFERENTE\n| : ¡ 0255 ¡ COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA\nn= - “ia — HP q A AA\n0 l = | 4 | «<fum== VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nA RI —\npm po II RENE >= o. a — _— a o a\n| lil 35 TA 69 [|= l- ¡4\n03 ii A lo36 su E: 70 =iT\nE O E A O O\n5 \"llei Bill 72 —oi—\n. o A e (4\nCa IVA IA E\n2 ATT A IA IG |\n] | A | | E E 4+— AS\nIS A E\nml ¡o RA ¡A Él 200 Ma ln a\ncn VEA E có E AAA\n10 4 1 Bi 77 —ii-\n41 EII Moa hood hal | o lizi_\ntr e o A\n12 ii yl 45 ¡a 79 =i-Ta\nA o E ATEN\n13 a Fed igual fl 80 —|—jo\nA O — e le\n1 li dls —i—iij 81 —\nas IS == |\n0 0 Ap A EJ E E A\n— A — —i—i—i ml Z¡—Á\nv7 | 0 ini iol Belli\nPP =H\na a e\nNA ES Ej\nA AI A AA o\n| AA CTRA OS\nA O E O\na IA A A 57 0 | | ¡ A p\nA A\nERES 58 Tinmii 2 ¡—_—i—| H\n| SS O CO O | OOO DEDOS EDS DE j\na a A lid o = ==\n| A a a IS. CUE =p |\n| 27 pi 60 O EN UA |\nSS o a a O | HA |\n| 28 lo 61 TZ 9% i=ii |\nA TIT AA]\n| 29 a : pl _— ! ' a\n30 ol bi dl adi Ad Dal 7 iii] dh\n| . q cd q A O p 2-1 + — ——. — a o -— 4 7\nA A —Á ii A PS E: 7 |\nas TP le. o a a E ¿\nMN cd Dl ¡ll E A YA | 14, :\n33d der tii | 100 T. |\nAAA AAA e e LA Md ai ca LS: O | ;\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS lali :\nE\n?\nE)\n]\nj\n;\nMl No. Forn: 59567 KIT 59,567 Civ1213369 Ml :\n\n--- PAGE BREAK ---\n] 710595672010311 Ver: 01 Pag: 03 de 11\nACTA er bi DE LOS EA\n[eno] JURADOS DE VOTACIÓN\n-\" 1 Y EERÓO\nar RARA ELECCIONES CONGRESO Pe\nA 13 DE MARZO DE 2022 pS\neE REGISTRADURÍA\n: A rr SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: LE.FE Y ALEGRIA GRANIZAL\nZONA: 01 PUESTO: 05 MESA: 006\nX 2-27-69-14 X\na o LISTA CON VOTO PREFERENTE\n| Ms: | a\n| | y 140 | FUERZA CIUDADANA LA FUERZA DEL CAMBIO\ne E L =p: E A\n0 io | —' «umm VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\na AS A A A A\nca ads os loo lo\no cs ci ad [ES EEES SES\nAS 2 66 | —| a\nca lil 36 si ll 67 AS\nE O E — E e ol\nIN A a\nA TZ\nY ita a AR 1142 do ibi 1 76 (— ¡o\nE E O AS | TA —] —\n41 | A a 7 =-\n12 Tis 11 4 “TZ\na a o e Ho TA a\nq tal li=i_ _l 46) A ml 80 =i=T\nJOG ==> e je]\nCN O O: A US\nni 1 li | a > —=¡\nE a lim = 84 =+5\nA E a l— —+ A O y — q. —\nA A O y O\nEI O o\nATT mii |] A —\n3 iii 58 ¿—i— 1 89 ¡o oi |\n0 rd dl DS Ed od OS E O A O O\n¡UA E ae a E Eo SENT EE |\na\nda a E o E E ¡\na O O e — db |\n| — | !\nLL A E 10 PA IR A :\nE cl dl E\nA A A A E\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS ol y\nMi No. Form: 555867 KIT 59,567 Civi2133709 Ml :\nA\n\n--- PAGE BREAK ---\n710595672010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA\nDm]205 pm _ JURADOS DE VOTACIÓN\na DELEGADOS l\nLR y ts |\n» 1 ELECCIONES CONGRESO a Y\nsa . L . (== dG |\nSue 13 DE MARZO DE 2022 A\nA lu REGISTRADURÍA\nObst SENADO IN\n|\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN |\nLUGAR: I.E.FE Y ALEGRIA GRANIZAL |\nZONA: 01 PUESTO: 05 MESA: 006 |\n|\nX 2-27-69-14 X y\nLISTA CON VOTO PREFERENTE 2\n| ¿SST ¡ 0003 ¿PARTIDO CAMBIO RADICAL\nA ¡— E] «===.  YOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nA A PA AAA A A\no Dd is Ds E ED SO Y DO mo\nA E\nE A A A E [— |—i—\nE lo ARANA ri Ma\nE O A A a\nE, o Pe: A t—É\nO E al CN CN |\nA iO 2\nINE EE =\nlo 9 ii” A O ! 17 ato\nE q o e o po A o EA\no A E AT O\nO A A cel | SEARS E A A A A\nj O PA pa\nE Y o o il tl\nMS AA E\n| - j- e ¡ — — + +. | —— Y —— -_——-\nML IT e\nal II Ad A | —|] —\n9 A A A dl -.\n| ! 18 | | _ |\n15 il 49 | — Mad 83 un\n—_ — _ A o\n16 > ¡| —=—| 50 ¡—|—-—i—!Í| 84 | —|—\nDS O a E A OT\no iS o a O E a\n19 ii == Bi iii 87 [nta\nA A A A >\nBO ¡e ¿DO 54 lb—ii o 8 li j- .\nES O O E ¡E a: o E\nA e O a o A -\nO E A A O\nA E o A\na E A A | A A A\nMl a o od\ne\nE o CN A\n| : E E\nA IA 2 ¡o — ¿— | 7 — ¡—|—\nO A e id | E E E SS\nSS o a\nE A a\nMN o\n- A a IIS JOA EAN AAA\na da el Bi\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [-[-[ 4!\nia o + —- - LISTA SIN VOTO PREFERENTE 272\n( | Asos : , MOVIMIENTO NACIONAL SECTOR ORGANIZADO D |\no | 9328 ¡ 1073 + SALUDOS COLOMBIA A |\n! 0 A VOTOS POR LA AGRUPACIÓN POLÍTICA ummm o la\n| 0 —. STA SNVOTO PREFERENTE 2 TT\n| GER - 0019 ¡| PARTIDO NUEVO LIBERALISMO |\nl- — A A\npo 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA  mmmmmip- [a\nMi No. Form: 59567 KIT 59,567 Civ12139371 MM\n\n--- PA",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

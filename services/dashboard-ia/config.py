@@ -94,6 +94,13 @@ class Config:
     SENTIMENT_CACHE_TTL: int = int(os.getenv('SENTIMENT_CACHE_TTL', '900'))
     OPENAI_CACHE_TTL: int = int(os.getenv('OPENAI_CACHE_TTL', '1800'))
     TRENDING_CACHE_TTL: int = int(os.getenv('TRENDING_CACHE_TTL', '600'))
+    TRENDING_CACHE_STALE_TTL: int = int(os.getenv('TRENDING_CACHE_STALE_TTL', '300'))
+
+    # Cache Settings
+    CACHE_MAX_SIZE: int = int(os.getenv('CACHE_MAX_SIZE', '1000'))
+
+    # Twitter Request Limits
+    TWITTER_MAX_TWEETS_PER_REQUEST: int = int(os.getenv('TWITTER_MAX_TWEETS_PER_REQUEST', '500'))
 
     # Rate Limiting
     RATE_LIMIT_PER_MINUTE: int = int(os.getenv('RATE_LIMIT_PER_MINUTE', '10'))

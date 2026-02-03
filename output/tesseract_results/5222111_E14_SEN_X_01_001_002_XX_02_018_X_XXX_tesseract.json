@@ -1,0 +1,86 @@
+{
+  "extraction_id": "4df5bab3",
+  "filename": "5222111_E14_SEN_X_01_001_002_XX_02_018_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 28351,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "02",
+  "puesto": "SEC. ESC. DIVINA PROVIDENCIA",
+  "mesa": "018",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "LISTA CON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "É NNF 0019 PARTIDO NUEVO LIBERALISMO",
+      "party_code": "",
+      "votes": 19,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO UNITARIO METAPOLITICO",
+      "party_code": "",
+      "votes": 1039,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+      "party_code": "",
+      "votes": 231,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO CENTRO DEMOCRÁTICO",
+      "party_code": "",
+      "votes": 28,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PREFERENT",
+      "party_code": "",
+      "votes": 7,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PACTO 0292 PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 1633,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A OI :\n710596712010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[5545 [a] JURADOS DE VOTACION\nsde A DELEGADOS o\nALEA ELECCIONES CONGRESO\nMEF 13 DE MARZO DE 2022 ES\nAO REGISTRADORÍA 1,\nOA SENADO :\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO: 02 MESA: 018\nX 5-22-21-11 X\n| TOTAL TOTAL TOTAL\n| SUFRAGANTES VOTOS VOTOS\n| FORMATO E-11 EN LA URNA INCINERADOS\n [-16B] [-6B8] — l-I-|-|\n0013 | PARTIDO COMUNES\n| 0 VOTOS POR LA AGRUPACIÓN POLÍTICA — muml> | | — | a |\n€\n1 W\nMM No. Form: 59871 KIT 59,671 Ciw12157B0 Ml\n\n--- PAGE BREAK ---\nE '\n]\n| | /10596712010211 Var. 01 Pag: 02 de 11\n| ACTADEESCRUTNIODELOS — [PEPA\n| 0240 JURADOS DE VOTACIÓN\na DELEGADOS IS\n( mE ro ELECCIONES CONGRESO\nic 13 DE MARZO DE 2022 ta\n1 \"1 REGISTRADURÍA *\nOka: SENADO AAN\n| DEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN |\nLUGAR: SEC. ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO: 02 MESA: 018\n| X 5-=22-21-11 X\nATT LISTA CON VOTO PREFERENTE 2\nCOALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA\no ua VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nq 2 > MU\nAE\napo] E\nMI E pa pl\nAREEEES\ní 8 | | |\nCA IC\nOS [a mp]\nA A\n79\nNOOO a\nE O ACM\nas | [le 1] fe | |\nca DT\nMIE KM a\nDO a\nE | |-|-]a MU A\n- j-—\nSORA\n: 60\nJO A\n4 TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n| E! M No, Form: 59671 KIT 59,671 Civ1215761 Ml\n\n--- PAGE BREAK ---\nA '\n710596712010311 Ver: 01 Pag; 03 de 11\nACTA DE ESCRUTINIO . LOS EA\nMoi! JURADOS DE VOTACION\nls E El DELEGADOS o\nME +1 E Uh ELECCIONES CONGRESO\nmir  13DEMARZO DE 2022 —\n4:07 REGISTRADURÍA\nMO oc SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. DIVINA PROVIDENCIA\n€ ZONA: 02 PUESTO: 02 MESA: 018\nX 5-22-21-11 X\n€ ATT LISTA CON VOTO PREFERENTE -\n| E e FUERZA CIUDADANA LA FUERZA DEL, CAMBIO\nIS o A _ VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\n[a ]-[-Afe | | | [el jp |\n|\nME E AC\n+ E ICI\nES Y\nss |||\nAC E\nnep] [== | | |\n+\nCI o CI\nES MO\n++ A — a ||]\nE\no E E\nSA\nMT ——— Y\nKEI CA le | |\nE O\n| ss fe [| |\nME e pop |.\nE O EC\nE CI\nIC EC ICI\nE CI O CA\n[a] | [| fe]\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS —=|-13\n| Ml No, Fon: 59671 KIT 59,671 Civ1215762 MM\n\n--- PAGE BREAK ---\nA :\n710596712010411 Ver: 01 Pag: 04 de 11\nmd DE ESCRUTINIO ce más EA.\nE URADOS DE VOTACIÓ\nCP DELEGADOS o\nO ori SENADO e\nDEPARTAMENTO: 01 - ANTIOQUIA\n| MUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO: 02 MESA: 018\nX 5-22-21-11 X\nLISTÁ CON VOTO PREFERENTE\nMEA\n€ .. — LA o VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nana SHE SHE\nMU OA rap\nAECI O CI II\n|\nII E\ndo — _ KM\nps | 0 fer\nE AA —\nopa lo pos] [| | [=p lo\na pop ls | ES\nE A\nO\n[ep ICE\nEI solo\nass\n| Sr SH\nCI E\nKAMA E IA\nE E EC\no 051] EC\nA\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS | (4\nLISTA SIN VOTO PREFERENTE\n(5H)s0s SS COLOMBIA. SECTOR ORGANIZADO DE LA\n| o VOTOS POR LA AGRUPACIÓN POLÍTICA > MAS\n— —LIBTA SIN VOTO PREFERENTE\nÉ NNF 0019 | PARTIDO NUEVO LIBERALISMO\n' NN VOTOS POR LA AGRUPACIÓN POLÍTICA — mm DNE\nA ML vo. som: 5067: KIT 59,671 civizisres ME\n\n--- PAGE BREAK ---\nAN :\n710596712010511 Ver: 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS Eta\n[at a] JURADOS DE VOTACION\nE DELEGADOS US\na de WEN ELECCIONES CONGRESO\nTara 13 DE MARZO DE 2022 A\nMO ur SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC, ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO: 02 MESA: 018\nX 5-22-21-11 X\n€ —————— OSTA SIN VOTÓ PREFERENTE\n€ le dl 190 ESTAMOS LISTAS COLOMBIA\n€ o VOTOS POR LA AGRUPACIÓN POLÍTICA > — | p2\nTT ISTASIN VOTO PREFERENTE |\n7 1039 ¡ MOVIMIENTO UNITARIO METAPOLITICO\nMM VOTOS POR LA AGRUPACIÓN POLÍTICA > PAS\nUSA CONVOTO PREFERENTE\n0231 | COALICIÓN MIRA - COLOMBIA JUSTA LIBRES\n0 «few “VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\n|. 2 MITA ml\nzo EN SHE E\n: A — sp |.\nO IC o\nE\nalo\nAA IE ICA\nES\n38 73\nHS all lo\nTT A\nEE\nA\n0D E CO O EC\na A IC\nV 22 o | 50\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [— ]= [|\n] MN No, Form: 59671 KIT 59,671 Civ1215764 mM\n\n--- PAGE BREAK ---\nA :\n710595712010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS 1373\nleas pm] JURADOS DE VOTACIÓN\nE o\nE Aa] Y ELECCIONES CONGRESO\nA 13 DE MARZO DE 2022 ==.\nO e SENADO NEÓN\n€ MUNICIPIO: 001 - MEDELLIN\ny LUGAR: SEC. ESC. DIVINA PROVIDENCIA\n| ZONA: 02 PUESTO: 02 MESA: 018\nX 5-22-21-11 X\n| LÍSTA CON VOTO PREFERENTE\nop po «fa VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nMN ws |] | [el] |\nal] fas] [o [ep yo\n+ QoS os\nIN E O IS\nsio [Al ==] | [= 1 11\nO A\nr e - all A\nA A —\n4 ICI\nMN E A A —\na [2 ee [rip\nA 4 — ap] |\nII A ell\ne] | [| [el] ]| [ue | |\nas | | le] [o |el |]\nE A E\nA ACM A —\nas |] | [e] || [e] [| |\nell LA — II\n2 — TEO AM\nO II\nfro\nOE O CI AS\nq + ss | |] feto po\nfo sj | se q A\nÉ EA o \" E 100 o\nTUTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nA TT UISTASIN VOTO PREFERENTE\nDT reina\n/ HON VOTOS POR LA AGRUPACIÓN POLÍTICA — mul lo\n: LISTA SIN VOTO PREFERENTE\nñ 0302 | MOVIMIENTO DE SALVACIÓN NACIONAL,\n| | 0 VOTOS POR LA AGRUPACIÓN POLÍTICA — mw» POCA\n: MA no som: 5967. KIT 59,571 civiz1s7os MM\n\n--- PAGE BREAK ---\nA '\n710596712010711 Ver: 01 Pag: 07 de 11\n* turapospevoración —— MD\n| en DE VOT",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

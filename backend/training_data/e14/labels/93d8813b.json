@@ -1,0 +1,1053 @@
+{
+  "sample_id": "93d8813b",
+  "sha256": "4b66bbeb69cf28bab9516e3530c0c18c87793fed8f0b30e3948b75fd21281a2e",
+  "source": "training_data/e14_source/document (7).pdf",
+  "pages": 6,
+  "extraction": {
+    "extraction_id": "93712115-ac1a-401b-8c54-cc58eb057b6d",
+    "source_file": "uploaded_bytes",
+    "source_sha256": "4b66bbeb69cf28bab9516e3530c0c18c87793fed8f0b30e3948b75fd21281a2e",
+    "extracted_at": "2026-01-23 17:18:43.594234",
+    "model_version": "claude-sonnet-4-20250514",
+    "processing_time_ms": 53451,
+    "header": {
+      "barcode": "720924162010106",
+      "version": null,
+      "page_info": null,
+      "copy_type": "DELEGADOS",
+      "election_name": "ELECCIONES TERRITORIALES",
+      "election_date": "OCTUBRE 29 DE 2023",
+      "corporacion": "ASAMBLEA",
+      "departamento_code": "29",
+      "departamento_name": "TOLIMA",
+      "municipio_code": "001",
+      "municipio_name": "IBAGUE",
+      "lugar": "UNIVERSIDAD COOPERATIVA NUEVA SEDE",
+      "zona": "01",
+      "puesto": "01",
+      "mesa": "002"
+    },
+    "nivelacion": {
+      "total_sufragantes_e11": 149,
+      "total_votos_urna": 176,
+      "total_votos_incinerados": null,
+      "confidence_sufragantes": 0.9,
+      "confidence_urna": 0.9,
+      "confidence_incinerados": null
+    },
+    "partidos": [
+      {
+        "party_code": "11",
+        "party_name": "PARTIDO CENTRO DEMOCRÁTICO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 4,
+        "votos_candidatos": [
+          {
+            "candidate_number": "51",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "52",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "53",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "54",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "55",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "56",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "57",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "58",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "59",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "60",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "61",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "62",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "63",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "64",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "65",
+            "votes": 7,
+            "confidence": 0.8,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 24,
+        "confidence_total": 0.8,
+        "needs_review": true
+      },
+      {
+        "party_code": "7",
+        "party_name": "PARTIDO POLÍTICO MIRA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "51",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "52",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "53",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "54",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "55",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "56",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "57",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "58",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "59",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "60",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "61",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "62",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "63",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "64",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "65",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 4,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "6345",
+        "party_name": "ACUERDO DE COALICION PARTIDOS DE LA U Y NUEVO LIBERALISMO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "51",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "52",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "53",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "54",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "55",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "56",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "57",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "58",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "59",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "60",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "61",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "62",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "63",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "64",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 2,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "2",
+        "party_name": "PARTIDO CONSERVADOR COLOMBIANO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [
+          {
+            "candidate_number": "51",
+            "votes": 14,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "52",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "53",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "54",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "55",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "56",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "57",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "58",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "59",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "60",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "61",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "62",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "63",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "64",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "65",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 33,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "6884",
+        "party_name": "CAMBIO RADICAL - ALIANZA DEMOCRÁTICA AMPLIA A.D.A.",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "51",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "52",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "53",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "54",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "55",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "56",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "57",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "58",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "59",
+            "votes": 4,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "60",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "61",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "62",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "63",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "64",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "65",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 11,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "7959",
+        "party_name": "PACTO HISTÓRICO COLOMBIA PUEDE",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 3,
+        "votos_candidatos": [
+          {
+            "candidate_number": "51",
+            "votes": 5,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "52",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "53",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "54",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "55",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "56",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "57",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "58",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "59",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "60",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "61",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 13,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "6941",
+        "party_name": "COALICIÓN TOLIMA INDEPENDIENTE",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "51",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "52",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "53",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "54",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "55",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "56",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "57",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "58",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "59",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "60",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "61",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "62",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "63",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "64",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "65",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 3,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "29",
+        "party_name": "NUEVA FUERZA DEMOCRÁTICA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 7,
+        "votos_candidatos": [],
+        "total_votos": 7,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "6",
+        "party_name": "PARTIDO ALIANZA SOCIAL INDEPENDIENTE \"ASI\"",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [
+          {
+            "candidate_number": "51",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "52",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 1,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "1",
+        "party_name": "PARTIDO LIBERAL COLOMBIANO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 2,
+        "votos_candidatos": [
+          {
+            "candidate_number": "51",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "52",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "53",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "54",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "55",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "56",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "57",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "58",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "60",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "61",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "62",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "63",
+            "votes": 0,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "65",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 12,
+        "confidence_total": 0.9,
+        "needs_review": false
+      }
+    ],
+    "votos_especiales": {
+      "votos_blanco": 17,
+      "votos_nulos": 6,
+      "votos_no_marcados": 24,
+      "confidence_blanco": 0.9,
+      "confidence_nulos": 0.9,
+      "confidence_no_marcados": 0.9
+    },
+    "constancias": {
+      "hubo_recuento": null,
+      "recuento_solicitado_por": null,
+      "recuento_en_representacion_de": null,
+      "otras_constancias": "Partido centro democrático candidato 59 = 2 votos. Partido MIRA total de votos 3 y candidato 51 1 4 votos Conservador",
+      "num_jurados_firmantes": 6,
+      "jurados_info": []
+    },
+    "overall_confidence": 0.88,
+    "fields_needing_review": 1,
+    "total_pages": 6,
+    "pages_processed": 6
+  },
+  "validation": {
+    "extraction_id": "93712115-ac1a-401b-8c54-cc58eb057b6d",
+    "mesa_id": "29-001-01-01-002",
+    "validated_at": "2026-01-23 17:18:43.594792",
+    "validations": [
+      {
+        "rule_id": "NIV_001",
+        "rule_name": "NIVELACION_SUFRAGANTES_VS_URNA",
+        "passed": false,
+        "severity": "HIGH",
+        "message": "Sufragantes E-11 (149) < Votos urna (176)",
+        "expected_value": 149,
+        "actual_value": 176,
+        "delta": 27,
+        "details": null
+      },
+      {
+        "rule_id": "SUM_001",
+        "rule_name": "SUMA_VOTOS_IGUAL_URNA",
+        "passed": false,
+        "severity": "HIGH",
+        "message": "Suma computada (157) ≠ Urna (176). Delta: -19",
+        "expected_value": 176,
+        "actual_value": 157,
+        "delta": -19,
+        "details": {
+          "total_partidos": 110,
+          "votos_blanco": 17,
+          "votos_nulos": 6,
+          "votos_no_marcados": 24
+        }
+      },
+      {
+        "rule_id": "PARTY_11",
+        "rule_name": "SUMA_PARTIDO_11",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO CENTRO DEMOCRÁTICO: Agrupación + Candidatos (24) = Total (24)",
+        "expected_value": 24,
+        "actual_value": 24,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_7",
+        "rule_name": "SUMA_PARTIDO_7",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO POLÍTICO MIRA: Agrupación + Candidatos (4) = Total (4)",
+        "expected_value": 4,
+        "actual_value": 4,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_6345",
+        "rule_name": "SUMA_PARTIDO_6345",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ACUERDO DE COALICION PARTIDOS DE LA U Y NUEVO LIBERALISMO: Agrupación + Candidatos (2) = Total (2)",
+        "expected_value": 2,
+        "actual_value": 2,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_2",
+        "rule_name": "SUMA_PARTIDO_2",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO CONSERVADOR COLOMBIANO: Agrupación + Candidatos (33) = Total (33)",
+        "expected_value": 33,
+        "actual_value": 33,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_6884",
+        "rule_name": "SUMA_PARTIDO_6884",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CAMBIO RADICAL - ALIANZA DEMOCRÁTICA AMPLIA A.D.A.: Agrupación + Candidatos (11) = Total (11)",
+        "expected_value": 11,
+        "actual_value": 11,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_7959",
+        "rule_name": "SUMA_PARTIDO_7959",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PACTO HISTÓRICO COLOMBIA PUEDE: Agrupación + Candidatos (13) = Total (13)",
+        "expected_value": 13,
+        "actual_value": 13,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_6941",
+        "rule_name": "SUMA_PARTIDO_6941",
+        "passed": true,
+        "severity": "INFO",
+        "message": "COALICIÓN TOLIMA INDEPENDIENTE: Agrupación + Candidatos (3) = Total (3)",
+        "expected_value": 3,
+        "actual_value": 3,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_29",
+        "rule_name": "SUMA_PARTIDO_29",
+        "passed": true,
+        "severity": "INFO",
+        "message": "NUEVA FUERZA DEMOCRÁTICA: Agrupación + Candidatos (7) = Total (7)",
+        "expected_value": 7,
+        "actual_value": 7,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_6",
+        "rule_name": "SUMA_PARTIDO_6",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO ALIANZA SOCIAL INDEPENDIENTE \"ASI\": Agrupación + Candidatos (1) = Total (1)",
+        "expected_value": 1,
+        "actual_value": 1,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_1",
+        "rule_name": "SUMA_PARTIDO_1",
+        "passed": false,
+        "severity": "MEDIUM",
+        "message": "PARTIDO LIBERAL COLOMBIANO: Agrupación + Candidatos (13) ≠ Total (12)",
+        "expected_value": 13,
+        "actual_value": 12,
+        "delta": -1,
+        "details": null
+      },
+      {
+        "rule_id": "EXCEED_001",
+        "rule_name": "VOTOS_NO_EXCEDEN_SUFRAGANTES",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Ningún partido excede sufragantes",
+        "expected_value": null,
+        "actual_value": null,
+        "delta": null,
+        "details": null
+      }
+    ],
+    "all_passed": false,
+    "critical_failures": 0,
+    "high_failures": 2,
+    "medium_failures": 1,
+    "low_failures": 0,
+    "alerts_generated": [
+      "HIGH: NIVELACION_SUFRAGANTES_VS_URNA - Sufragantes E-11 (149) < Votos urna (176)",
+      "HIGH: SUMA_VOTOS_IGUAL_URNA - Suma computada (157) ≠ Urna (176). Delta: -19",
+      "MEDIUM: SUMA_PARTIDO_1 - PARTIDO LIBERAL COLOMBIANO: Agrupación + Candidatos (13) ≠ Total (12)"
+    ]
+  },
+  "metadata": {},
+  "ocr_success": true,
+  "ocr_error": null,
+  "processing_time_ms": 64290,
+  "created_at": "2026-01-23T17:18:43.596354",
+  "is_validated": false,
+  "is_corrected": false,
+  "corrections": []
+}

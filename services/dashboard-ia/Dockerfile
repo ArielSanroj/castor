@@ -26,9 +26,9 @@ USER appuser
 # Expose port
 EXPOSE 5003
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+# Health check (longer start period for ML model loading)
+HEALTHCHECK --interval=30s --timeout=15s --start-period=120s --retries=5 \
     CMD curl -f http://localhost:5003/api/health || exit 1
 
-# Run with gunicorn (more workers for ML workloads)
-CMD ["gunicorn", "--bind", "0.0.0.0:5003", "--workers", "2", "--threads", "4", "--timeout", "180", "main:app"]
+# Run with gunicorn (1 worker to save memory for ML model, preload to load model once)
+CMD ["gunicorn", "--bind", "0.0.0.0:5003", "--workers", "1", "--threads", "4", "--timeout", "300", "--preload", "main:app"]

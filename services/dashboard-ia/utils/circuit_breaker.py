@@ -153,7 +153,7 @@ class CircuitBreakerOpenError(Exception):
     pass
 
 
-# Alias for compatibility with http_client
+# Alias for backwards compatibility
 CircuitBreakerOpen = CircuitBreakerOpenError
 
 

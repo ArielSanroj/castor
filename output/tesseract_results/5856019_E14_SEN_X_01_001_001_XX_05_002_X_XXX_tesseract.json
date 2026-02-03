@@ -1,0 +1,65 @@
+{
+  "extraction_id": "e9a42984",
+  "filename": "5856019_E14_SEN_X_01_001_001_XX_05_002_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 27187,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUÍA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "LE.FE Y ALEGRÍA GRANIZAL",
+  "mesa": "002",
+  "partidos": [
+    {
+      "party_name": "ÁS 0013 PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "VOTOSPORLA AGRUPACIÓN POLÍTICA",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "YIMETO AIONAL SECTOR ORGANIZADO DELA",
+      "party_code": "",
+      "votes": 7,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "Ñ . MO 0019 , PARTIDO NUEVO LIBERALISMO",
+      "party_code": "",
+      "votes": 19,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO UNITARIO METAPOLÍTICO",
+      "party_code": "",
+      "votes": 1039,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "pe - 0177 PARTIDO INDÍGENA COLOMBIANO P.1.C",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 1255,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A _\n710595632010111 Ver: 01 Pag: 01 de 11 |\nACTA DE ESCRUTINIO DE LOS EA\n[m1] ca: (] JURADOS DE VOTACION\ncr e ' DELEGADOS\n. e |\nSL ANORSE=  ELECCiONES CONGRESO qe?\nEA 13 DE MARZO DE 2022 e\nSl REGISTRADURÍA\nOro SENADO\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: LE.FE Y ALEGRÍA GRANIZAL\nZONA: 01 PUESTO: 05 MESA: 002\nX 5-85-60-19 X\nTOTAL TOTAL TOTAL\nSUPRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\n211317 A113:7+ LILTES\nCIRCUNSCRIPCIÓN NACIONAL\no l > o LISTA SIN VOTO PREFERENTE o cal\n¡ ES: T 1\n| ÁS _ 0013 | PARTIDO COMUNES |\n| 0 - VOTOSPORLA AGRUPACIÓN POLÍTICA wm ESPERES\n|\n|\n|\n|\n|\n|\n|\n|\nMl Na. Form: 59563 KIT 59,563 Civ1213276 MN\n\n--- PAGE BREAK ---\nm mn\nLL\n710595632010211 Ver 01 Pag: 02 de 11\nZAR eS TR O E\nod - 13 DE MARZO DE 2022\nOp dar SENADO IS\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: 1.E.FE Y ALEGRIA GRANIZAL\nZONA: 01 PUESTO: 05 MESA: 002\nX 5-85-60-19 X\nCo A sorsaororiranencina |\nCa FAA ene\n6 Xx A ell 39 x o EN 73 | els\nRA o id\nla A gl pS 7\nty <A ¡8 sE y E A Nr\nollo ele] e xx\nIR A A\nEl EI: ¡$ cen [be\npaso a\nE DA ARINA\n(2 ERA A e\n29 EX 62 Ja All 8 ¡XIX Xy\nE e o A\n3 DS Sl e ¡A e, | da\n3 XAO ¡ZA YX 10 ¡lA A\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS e lA 18\nMo rom: s050 KIT 59,563 ciuiz1a277 MM\n\n--- PAGE BREAK ---\nA -\n710595632010311 Ver: 01 Pag: 03 de 11\n\nE SENADO ooo\n\nMUNICIPIO: 001 - MEDELLIN\n\nLUGAR: |.E.FE Y ALEGRIA GRANIZAL\n\nZONA: 01 PUESTO: 09 MESA: 002\n\n] o DINA VOTOS SOLO POR LA AGRUPACIÓN POLITICA |\nBOL YX 4 PA XA 0 730 ¡\n\no AA A TAX\n\nAN XK e IA A o A\n\nas AY SA m  [X <\n\no AS E Se S ES\n\nrl AX EA ARO\n\nA DESTE ARA\n\n¡AS ES 1 OS A SES\n\nE SÍ 2 X\n\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n\nA KIT 59,563 Civ1213278 Ml\n\n--- PAGE BREAK ---\nWII\n710595632010411 Ver: 01 Pag: 04 de 14 |\nACTA DE ESCRUTINIO DE LOS\n[m]pptddo [a] JURADOS DE VOTACIÓN  E-14 |\nEIMMERAN=] ELECCIONES CONGRESO\n: E 13 DE MARZO DE 2022.\nAA: SENADO Pe co\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: 1.E.FE Y ALEGRIA GRANIZAL\nZONA: 01 PUESTO: 05 MESA: 002\nX 5-85-60-19 AX\nL o o E LISTA CON VOTO PREFERENTE o |\n| | AM , 0003 | PARTIDO CAMBIO RADICAL\no ) No 37 | AN iS\n| 5 IIA 39 | xXx AUR EGTES\nÑ 7 XxX 41 ES ES\na ARAX e ARA IO\n40 OS XxX Xx 44 NES 78 xl e\nEE E\nAR\" ASS AX\n| SS X 58 So >< DIN y\n27 UR 60 AX os 1 y.\n3 O UR IEA\nIDO <> A IS |\n32 LES x 66 Sur! 100 3 RR\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS Ela |Z\n1 os on * YIMETO AIONAL SECTOR ORGANIZADO DELA 7\ny 0 _ VOTOSPORLA AGRUPACIÓN POLÍTICA | >\n| Ñ . Mo | 0019 , PARTIDO NUEVO LIBERALISMO e\n— 0 | VOTOSPORLA AGRUPACIÓN POLÍTICA — md\n|\nMi No. Fam: 59563 KIT 59,563 Civ121.3279 Mi\n\n--- PAGE BREAK ---\nMl o |\nÚINI\n710595632010511 Ver: 01 Pag: 05 de 11 |\nACTA DE ESCRUTINIO DE LOS\n[m] ¿4324 [] JURADOS DE VOTACIÓN Eta |\na DELEGADOS o\nA ELECCIONES CONGRESO |\nA. 13 DE MARZO DE 2022 2 (\nOl. SENADO e\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: 1.E.FE Y ALEGRIA GRANIZAL\nZONA: 01 PUESTO: 05 MESA: 002\nX 5-85-60-19 X\no a LISTA SIN VOTO PREFERENTE o !\n| | E. 1130 ESTAMOS LISTAS COLOMBIA\nÑ o | VOTOS POR LA AGRUPACIÓN POLÍTICA —> j Ilok[ 41\nne e o LISTA SIN VOTO PREFERENTE. o\n| | Fon 1039 ; MOVIMIENTO UNITARIO METAPOLÍTICO |\nE, ¡ VOTOS POR LA AGRUPACIÓN POLÍTICA pa ek [ale\n| | esa 0231 | COALICIÓN MIRA - COLOMBIA JUSTA LIBRES |\n. o ! qa] | A 9! ¿E VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\nIR AE RR NS OA.\nE: Y Y ¡ 24 ES 53 ¡A\nAG FIRA, +] xl. xxx\nA A\no ¡LAXIm ¡e É Pe IX\na Ass E o]\na 70 Min. 2 e E | >Sos\n10 PA ls E | | es |N\nGEA ny e\nAS . ERE! E\nml ja\na xs e AX] od\nMS e dao\nnr o os al\na GA 49 AF ¡OZ 100 | | yd\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS ESE\n| KIT 59,563 ciwizi3260 MM\n\n--- PAGE BREAK ---\n- _\n710595632010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS\nORO dd li Ea\nOltra SENADO o\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: LE.FE Y ALEGRIA GRANIZAL\nZONA: 01 PUESTO: 05 MESA: 002\nX B-85-60-19 AX\n0 A £ | | ¡Me oros SOLO a |\nNS TIA le ES XA\na UA 42 OS 75 piel ¡\nCIS Nr O TA\n| i | | | | |. 78 0 |\na | ea] . SR TA <\n14 2 Jl 48 bsos. 0 10\n| 16 [sisi 50 A\n3 [XD XK 63 A: ¡ 96 707 | |\nE o n 66 * o 99\no TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nE KIT 59,563 ciwizraza1r MM\n\n--- PAGE BREAK ---\nA :\n710595632010711 Ver: 01 Pag: 07 de 11 |\nala SENADO REGISTRADURÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: L.E.FE Y ALEGRIA GRANIZAL\nZONA: 04 PUESTO: 05 MESA: 002\nX 5-85-60-19 X\no | LA 00 PARTIDO CENTRO DEMOCRÁTICO. o A\nEN AS 0 A\na O E 7. xk pa 58 \">| o\nia eS:\n7 1 33, los OA ]\nCE IES OA\nmn LS pS] a FF $ pl 69 Dn\nE\nLACAN Ak raeap]\nE Ed\nESF: Ys pvp » Rae\nOA o AA 0d\nE baza 52 E\nO DA\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n| KIT 59,563 ciwstzrazez MM\n\n--- PAGE BREAK ---\nA\ner; 01 Pag: 08 de\nACTA DE ESCRUTINIO DE LOS\nA Ea\nE occ, E,\nAb SENADO A\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: |.E.FE Y ALEGRIA GRANIZAL\nZONA: 01 PUESTO: 058 MESA: 002\nX 5-85-60-19 X\no  k 33 Xx 70 [DP\n| | 5 k EN 46 A 84 o 10\n| 17 MAY 49 AX Sell 86 >]\nE ua E E sos, ES eS\nES Y 5 Xx 88\n2 $4. MAA |\n| “Re 7 Xp ws Pl le\n25 AAA |\nTOTAL = VOTOS AGRUPACION + VOTOS CANDIDATOS x[i114\nA KIT 59,563 cwrz1328s MM\n\n--- PAGE BREAK ---\nMl Ml\nA\n710595632010911 Var: 01 Pa",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

@@ -1,0 +1,170 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"code": "05", "name": "Antioquia", "capital": "Medellín"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-77.1, 8.6], [-75.5, 8.6], [-74.5, 7.5], [-74.5, 5.5], [-75.5, 5.5], [-76.5, 6.0], [-77.1, 7.0], [-77.1, 8.6]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "08", "name": "Atlántico", "capital": "Barranquilla"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-75.3, 11.2], [-74.7, 11.2], [-74.7, 10.5], [-75.3, 10.5], [-75.3, 11.2]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "11", "name": "Bogotá D.C.", "capital": "Bogotá"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-74.3, 4.85], [-73.9, 4.85], [-73.9, 4.45], [-74.3, 4.45], [-74.3, 4.85]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "13", "name": "Bolívar", "capital": "Cartagena"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-75.5, 10.5], [-73.8, 10.5], [-73.8, 7.5], [-74.5, 7.5], [-75.5, 8.5], [-75.5, 10.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "15", "name": "Boyacá", "capital": "Tunja"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-74.5, 7.2], [-72.0, 7.2], [-72.0, 5.0], [-73.5, 5.0], [-74.5, 5.5], [-74.5, 7.2]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "17", "name": "Caldas", "capital": "Manizales"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-76.0, 5.8], [-75.0, 5.8], [-75.0, 4.9], [-76.0, 4.9], [-76.0, 5.8]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "18", "name": "Caquetá", "capital": "Florencia"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-76.5, 2.5], [-73.5, 2.5], [-73.5, 0.0], [-76.5, 0.0], [-76.5, 2.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "19", "name": "Cauca", "capital": "Popayán"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-77.8, 3.5], [-75.8, 3.5], [-75.8, 1.5], [-77.8, 1.5], [-77.8, 3.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "20", "name": "Cesar", "capital": "Valledupar"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-74.5, 10.8], [-72.8, 10.8], [-72.8, 7.5], [-74.5, 7.5], [-74.5, 10.8]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "23", "name": "Córdoba", "capital": "Montería"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-76.8, 9.5], [-75.0, 9.5], [-75.0, 7.5], [-76.8, 7.5], [-76.8, 9.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "25", "name": "Cundinamarca", "capital": "Bogotá"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-75.2, 5.8], [-73.5, 5.8], [-73.5, 3.8], [-75.2, 3.8], [-75.2, 5.8]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "27", "name": "Chocó", "capital": "Quibdó"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-78.0, 8.5], [-76.5, 8.5], [-76.5, 4.0], [-78.0, 4.0], [-78.0, 8.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "41", "name": "Huila", "capital": "Neiva"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-76.5, 3.5], [-74.8, 3.5], [-74.8, 1.5], [-76.5, 1.5], [-76.5, 3.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "44", "name": "La Guajira", "capital": "Riohacha"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-73.5, 12.5], [-71.0, 12.5], [-71.0, 10.5], [-73.5, 10.5], [-73.5, 12.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "47", "name": "Magdalena", "capital": "Santa Marta"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-75.0, 11.2], [-73.5, 11.2], [-73.5, 9.0], [-75.0, 9.0], [-75.0, 11.2]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "50", "name": "Meta", "capital": "Villavicencio"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-74.8, 4.5], [-71.5, 4.5], [-71.5, 2.0], [-74.8, 2.0], [-74.8, 4.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "52", "name": "Nariño", "capital": "Pasto"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-79.0, 2.5], [-76.8, 2.5], [-76.8, 0.5], [-79.0, 0.5], [-79.0, 2.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "54", "name": "Norte de Santander", "capital": "Cúcuta"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-73.8, 9.2], [-72.0, 9.2], [-72.0, 7.0], [-73.8, 7.0], [-73.8, 9.2]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "63", "name": "Quindío", "capital": "Armenia"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-76.0, 4.8], [-75.4, 4.8], [-75.4, 4.2], [-76.0, 4.2], [-76.0, 4.8]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "66", "name": "Risaralda", "capital": "Pereira"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-76.3, 5.5], [-75.5, 5.5], [-75.5, 4.7], [-76.3, 4.7], [-76.3, 5.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "68", "name": "Santander", "capital": "Bucaramanga"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-74.5, 8.2], [-72.5, 8.2], [-72.5, 5.8], [-74.5, 5.8], [-74.5, 8.2]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "70", "name": "Sucre", "capital": "Sincelejo"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-75.8, 10.0], [-74.5, 10.0], [-74.5, 8.5], [-75.8, 8.5], [-75.8, 10.0]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "73", "name": "Tolima", "capital": "Ibagué"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-76.2, 5.2], [-74.5, 5.2], [-74.5, 3.2], [-76.2, 3.2], [-76.2, 5.2]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "76", "name": "Valle del Cauca", "capital": "Cali"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-77.5, 5.0], [-75.8, 5.0], [-75.8, 3.5], [-77.5, 3.5], [-77.5, 5.0]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "81", "name": "Arauca", "capital": "Arauca"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-72.5, 7.5], [-69.5, 7.5], [-69.5, 6.0], [-72.5, 6.0], [-72.5, 7.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "85", "name": "Casanare", "capital": "Yopal"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-73.5, 6.5], [-69.8, 6.5], [-69.8, 4.5], [-73.5, 4.5], [-73.5, 6.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "86", "name": "Putumayo", "capital": "Mocoa"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-77.5, 1.5], [-75.0, 1.5], [-75.0, 0.0], [-77.5, 0.0], [-77.5, 1.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "88", "name": "San Andrés y Providencia", "capital": "San Andrés"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-81.8, 12.7], [-81.6, 12.7], [-81.6, 12.4], [-81.8, 12.4], [-81.8, 12.7]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "91", "name": "Amazonas", "capital": "Leticia"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-74.5, 0.5], [-69.5, 0.5], [-69.5, -4.2], [-74.5, -4.2], [-74.5, 0.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "94", "name": "Guainía", "capital": "Inírida"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-71.0, 4.0], [-67.5, 4.0], [-67.5, 1.5], [-71.0, 1.5], [-71.0, 4.0]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "95", "name": "Guaviare", "capital": "San José del Guaviare"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-74.0, 3.0], [-70.5, 3.0], [-70.5, 1.0], [-74.0, 1.0], [-74.0, 3.0]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "97", "name": "Vaupés", "capital": "Mitú"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-71.5, 1.5], [-69.0, 1.5], [-69.0, -0.5], [-71.5, -0.5], [-71.5, 1.5]]]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"code": "99", "name": "Vichada", "capital": "Puerto Carreño"},
+      "geometry": {"type": "Polygon", "coordinates": [[[-71.5, 6.5], [-67.5, 6.5], [-67.5, 4.0], [-71.5, 4.0], [-71.5, 6.5]]]}
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "extraction_id": "6e1b36c5",
+  "filename": "5837618_E14_SEN_X_01_001_001_XX_03_019_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 25921,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "¡E.MARÍA DE LOS ANGELES CANO MARQUEZ",
+  "mesa": "019",
+  "partidos": [
+    {
+      "party_name": "LISTACON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "Ñ OS T",
+      "party_code": "",
+      "votes": 39,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "0292 PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "ó 0177 PARTIDO INDÍGENA COLOMBIANO P.l.C",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 767,
+  "votos_blancos": 14,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "- '\n710595342010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS 1573\n[m] BE [=] JURADOS DE VOTACIÓN\nal Fl DELEGADOS mm\nE E ELESCIONES CONGRESO\ne rd E 13 DE MARZO DE 2022\nOC E REGISTRADURÍA\nOs SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: ¡E.MARÍA DE LOS ANGELES CANO MARQUEZ\nZONA: 01 PUESTO: 03 MESA: 019\nX 5-83-76-18 AX\nTOTAL JOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 ] EN LA URNA o INCINERADOS\nIES jo (4. rirata\n7 >> LISTA SIN VOTO PREFERENTE Ml ——\n? 5] 0013 PARTIDO COMUNES\n+ .- NN\n0 | VOTOS POR LA AGRUPACIÓN POLÍTICA e | PAGES\n| A KIT 59.534 Civ1212609 |\n\n--- PAGE BREAK ---\nA '\n710595342010211 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[n] e] JURADOS DE VOTACIÓN\nhe! ELECCIONES CONGRESO\nA 13 DE MARZO DE 2022\na - REGISTRADURÍA\nOe: SENADO A\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: IE.MARIA DE LOS ANGELES CANO MARQUEZ\nZONA: 01 PUESTO: 03 MESA: 019\nX 5-83-76-18 A\na LISTACON VOTO PREFERENTE 2\n0255 | COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA\n0 A Le== VOTOS SOLO PORLA AGRUPACIÓN POLÍTICA |\nNUCA ra ) 34 | | 68 FP\na | 37 . mol jo\n5 38 72 o\n8 o | 39. Ñ OS T3 y\nro e A 40 A 74\nPS a lo olor\na lp -- a | 4 76\n42 o 45 o 19 —-\n14 3 X | a7 o o a o\n15 48 3\n47 50 —- 84\n18 o BA 85 . o —\n19 52 36\n53 y sí o a\n54 Y e | ]\n55 o 89\n¿0 DE NS o 90 .\n| 24 57 91\n25. o - 58 o; o — 92 | :\n27 y 60 . | 94 : o\n29 A Us ld | 96 | |\n32 ] Mes | los [3% XL\n33 | | 57 | — lao [Alí 4\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMo som: osos KIT 59,534 ciwszrz610 MN\n\n--- PAGE BREAK ---\nA\n710595342010311 | Ver: 01 Pag: 03 de 11\nq\ndia !\n= ELECCIONES CONGRESO\n13 DE MARZO DE 2022 [o\n[x]. SENADO Do\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: ¡E.MARIA DE LOS ANGELES CANO MARQUEZ\nZONA: 01 PUESTO: 03 MESA: 019\nX 5-83-76-18 X\no LISTACON VOTO PREFERENTE\nFUERZA CIUDADANA LA FUERZA DEL CAMBIO\nY x|2 32 .- 63 o\n33 b4 NN\nel las O CN\nlla] fe] yo\nNON 37 69\n6 38 71 |\ncae 7 —\n11 d4 78\n14 OS 46 o MS 80 o\nA E ECO\n16 —— 8 op |\n54 87\nLA\n58 91\nEn Asia\n30 61 100\n“1 1Je1]J]]( >\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMo som: 5053 KIT 59,534 civizr2611 MM\n\n--- PAGE BREAK ---\nA :\n77105959342010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA\nar: E : [1] JURADOS DE VOTACION\n: de EEE ELECCIONES CONGRESO EE,\na 13 DE MARZO DE 2022.\nOrca nia SENADO SAR\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: lE.MARIÍA DE LOS ANGELES CANO MARQUEZ\nZONA: 01 PUESTO: 03 MESA: 019\nX 5-83-76-18 X\nKE o AÁ ___ERSTA CON VOTO PREFERENTE\nml ¿<A | 0003 | Partio CAMBIO RADICAL\n3 | 37 71 o\nst loas . o 72\n5 o Moa ol 73 -— |\ne | | | ki a. Ara\nA O E o\n8 ( 42 76\n9 | : 3 PS o 77 .\nTN O O o\n+ o =— op =\n12 Xx Y 45 1 o\n18 | |. ar lo ES o\n14 48 A 82 +\n15 49 83\n15 | 50 8\nAr NN 85\n8 IX IXTA dG so — 86\n20 | JS 54 88 o\n21 55 89 NN\n22 | - 56 90 +\n| E -— a =\n24 58 93\nA =— — -\n28 | 61 95 NN Ml\n29 | Ml a > 97\n31. 64 99\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nA _LISTA SIN VOTO PREFERENTE\ni ENS0S [ 1073 IE O A SECTOR ORGANIZADO DE LA\n_ _ _  _LEISTASINVOTO PREFERENTE 2-22\ntl 0019 | PARTIDO NUEVO LIBERALISMO\no | vOTOSPORLA AGRUPACIÓN POLÍTICA md\nMo rom: 5953 KIT 59,534 civizizo12 MM\n\n--- PAGE BREAK ---\n- :\n710595342010511 Ver: 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS\nPA JURADOS DE VOTACION\n[m] rey ee [m]\nAger y ELECCIONES CONGRESO SS\nlb Po 13 DE MARZO DE 2022 =\ne il RESISTRADERÍA\nOjos: SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: IE.MARIA DE LOS ANGELES CANO MARQUEZ\nZONA: 01 PUESTO: 03 MESA: 019\nX 5-83-76-18 X\nE 1130 [estamos LISTAS COLOMBIA\n| EN 1039 | MOVIMIENTO UNITARIO METÁAPOLITICO\nEra 0231 coALción MIRA «- COLOMBIA JUSTA LIBRES\n0 | ] pu VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\nA po —=. AA 257 — a...\n2 | 24 53\n. ed. - A — ras 1] . _ _.\n3 | 25 55 o\na | 26 57\n5 27 | 59\n6 29 51\nE 30 63\n9 33 67\n40 35 69 NN\n11. o 36 TO o\n0] A\ne a 0\nNN ON\n20 A7 30 NN\n22 50\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS CIC2150N\nmM No. Form: 59534 KIT 59,534 Civ1212613 mM\n\n--- PAGE BREAK ---\n- '\n710595342010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS EA\nab e Ta] JURADOS DE VOTACIÓN\ne ELÉCCIONES CONGRESO\nLE os 13 DE MARZO DE 2022\nA: REGISTRADURÍA\nparrES SENADO PRD\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: IE.MARIA DE LOS ANGELES CANO MARQUEZ\nZONA: 01 PUESTO: 03 MESA: 019\nX 5-83-76-18 X\n- ADZA! pe LIBERAL COLOMBIANO -\n3 37 70 o\n4 o Ml 38 71 o NN\nMETA 2\n6 40 13\n7 Y An o 74 |\n10 44 | 77 NN\nTa lxlxlalsl io | ls\n12 | ] 46 | . 79\n13 Ñ 87 : 80\n14 48 E o 81 Pe o\n15 o y 49 o o 2 o\n16 | SS XI IXI4 |. E\nMETER 04 —\n18 52 85\n19 : | o 53 86. :\nÑ | 54 87\nloss 88\n: -- 56 . $9 NN\n- 57 90 ] o\no — 58 NN 91 NN\n59 92\n27 — al - 60 UN | 93 Ml\n28 IS 51 o 94\n29 62 N N 95 MM\n30 Ñ - 63 y o | 396\n3 o M : 64. UN . er o\n32. | 65 o | 98 .\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n| | LI 90 | moVIMENTO GENTE NUEVA\nA STA SIN VOTO PREFERENTE\nGD | 0902 MOVIMIENTO DE SALVACIÓN NACIONAL\nA KIT 59,534 civizi2614 MM\n\n--- PAGE BREAK ---\nA '\n/10599342010711 Ver: 01 Pag: 07 de 11\nACTA DE ESCRUTINIO DE LOS\n[m5 . [nm] JURADOS DE VOTACIÓN\npipi 2.\nÉ qe :] ELECCIONES CONGRESO\n12 A 13 DE MARZO DE 2022 A\n[Lerehe SENA REGISTRADURÍA\n: DO\nMUNICIPIO: 001 -",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

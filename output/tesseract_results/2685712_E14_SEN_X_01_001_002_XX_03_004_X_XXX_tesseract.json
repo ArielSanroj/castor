@@ -1,0 +1,149 @@
+{
+  "extraction_id": "ae8a72eb",
+  "filename": "2685712_E14_SEN_X_01_001_002_XX_03_004_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 31222,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "02",
+  "puesto": "SEC.ESC.AGRIPINA MONTES DEL VALLE",
+  "mesa": "004",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 4140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "0003 PARTIDO CAMBIO",
+      "party_code": "",
+      "votes": 3,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ANTIOQUÍA",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO UNITARIO METAPOLITICO",
+      "party_code": "",
+      "votes": 1039,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN MIRA",
+      "party_code": "",
+      "votes": 231,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO LIBERAL COLOMBIANO",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO GENTE NU",
+      "party_code": "",
+      "votes": 1836,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "' 0302 MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "VOTOSPORLA AGRUPACIÓN POLÍTICA",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "VOTACIÓN",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO CENTRO DEMOCRÁTICO",
+      "party_code": "",
+      "votes": 11,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "TIUSTA CON VÓTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO CONSERVADOR COLOMBIANO O",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "0292 PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO INDIGENA COLOMBIANO P",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MANDATO AMBIENTA",
+      "party_code": "",
+      "votes": 166,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA",
+      "party_code": "",
+      "votes": 186,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 8402,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "Í >\nA e\n| 710596932010111 Ver: 01 Pag: 01 de 11\n! ACTA DE ESCHUTINIO DE LOS Eta\n[5] [a] JURADOS DE VOTACIÓN\n| Ps ELECCIONES CONGRESO |\nME PEA 13 DE MARZO DE 2022 pS\n| => 0 O REGISTRADURÍA\n| [m): \" Le . n SENADO\n| DEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE\n| ZONA: 02 PUESTO: 03 MESA: 004\n| X 2-68-57-12 X\n| TOTAL TOTAL TOTAL\n| SUFRAGANTES VOTOS VOTOS\no FORMATO EM _ ENLAURNA INCINERADOS\nLISTA SIN VOTO PREFERENTE\n| | | 53 0013 _ PARTIDO COMUNES |\n| Ñ 0 VOTOS PORLA AGRUPACIÓN POLÍTICA >\n| Mi No. Form: 59693 KIT 59,693 Civ1216266 O\n\n--- PAGE BREAK ---\nA\n| 710596932010211 Ver: 01 Pag: 02 de 41 |\nV ACTA DE ESCRUTINIO DE LOS Eta\ny [] . E [a] JURADOS DE VOTACION i\n| nh SE ELECCIONES CONGRESO\n\n| Pad, er. 13 DE MARZO DE 2022 E\n\n0 0 7: =wt SENADO |\n| DEPARTAMENTO: 01 - ANTIOQUIA\n\n| MUNICIPIO: 001 - MEDELLIN\n\n| LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE\n\n| ZONA: 02 PUESTO: 03 MESA: 004\n\n| X 2-68-57-12 X\n\n| OA A — LISTA CON VOTO PREFERE ERENTE. 7\n\n0 | ) 0255 ' COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA |\nCAR rec\nCC Ad a AAA A AAA\nCA ARA SAA AAA\nCS AAA AAA ARA\nCARA ARES\nCS AAA AR\nMESITA E SID.\nA AS AAA UA\nCALA OA AX A AA\nMEACES TEDEE E SERESES\nMESE ESTE SE TE SCA\nIC E El ES ENMSEAS A | |\nCA AA O AAA AAA\nCREE E IICMESE TESIS. A\nETE ARCE AMET SESES\nICMETE TAME ESP IIEAESES A\nIC ESTANCA: ES ACTES\nA RAE AA\n| 3 TES va JN? € An TIRAR Kk A\nCA AAA E CEA Z\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS iLl6\n\n--- PAGE BREAK ---\nA '\n\n| 710596932010311 Ver 01 Pag: 03 de 11\n1 ACTA DE ESCRUTINIO DE LOS Eta\n\n| ak -=* [2] JURADOS DE VOTACION\n\n| Eee E. DELEGADOS A\n\n| a E: ELECCIONES CONGRESO\nSIA 13 DE MARZO DE 2022 Ss\n\n| 30D REGISTRADURÍA\n[a] Csirfcn> SENADO |\n| DEPARTAMENTO: 01 - ANTIOQUIA\n\n| MUNICIPIO: 001 - MEDELLIN\n\n| LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE V\n| ZONA: 02 PUESTO: 03 MESA: 004\n\n| X 2-68-57-12 A |\nCO 77 USTA CON VOTO PREFERENTE 2 2\n\n| : 4140 : FUERZA CIUDADANA LA FUERZA DEL CAMBIO |\nA A <E=_voros SOLO PORLA AGRUPACIÓN POLÍTICA É\nE A E a A |\npo 7 ARO: LA A\na O A\nMM e A\nAA O\nNET AA\nA HA A\nCA O AA + A\nO << ea E\nE E ASE a AS\n2 0 Para 61: ! | 100 al E\na A DAS ICE\n\n| EU o A : a A cd\n\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS NEFJES\n¡\n\n|\n\n¡ A KIT 59,693 cwiz16268 MN\n\n--- PAGE BREAK ---\ny 710596932010411 Ver: 01 Pag: D4 de 11.\nA\n| + . la\n| ACTA DE ESCRUTINIO DE LOS Eta (\n| O [m] JURADOS DE VOTACION\nE : MOEETTTE A\n0 ELECCIONES CONGRESO\n| 13 DE MARZO DE 2022 5\n| : REGISTRADURÍA\nla] SENADO\n¡\n|\n¡ DEPARTAMENTO: 01 - ANTIOQUIA\n|\n| MUNICIPIO: 001 - MEDELLIN\ny LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE\n|\n| ZONA: 02 PUESTO: 03 MESA: 004\nX 2-68-57-12 X\nLAT UTA CON VOTO PREFERENTE 2 A]\nOS SS 0003 | PARTIDO CAMBIO RADICAL\n1 | 0 A E 2. «umm VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\nA NA A O\nA SO MICA CI\nA E A\ni E - i r. z | 1 1] t - ; :\nA | O A O\nA CI\n¡ 2 BB. | | E 1 ) o 76 | | e |\nE ( | E ! ] CC | |\nA A A A\npo A ] ! o 48 | | go BZ; | | i\nE A\nO A\no MB | E | j 2 86: | |\n| A E ! | pc 53. | | o 87: | | ¡\nA E\nA E | y o ( 89 | | | |\nE A O A\nO A o\nE\nE E ) ! po BB: 7 ! ]\n| O A A A\n|\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n| TT LISTA SIN VOTO PREFERENTE IA\n| ¡ NA MOVIMIENTO NACIONAL SECTOR ORGANIZADO DELA |\nA (305 . 1073 - saLuD sos COLOMBIA !\n| | 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA lb»\ny o 7 USTA SIN VOTO PREFERENTE 7]\no - GEN = 0019 PARTIDO NUEVO LIBERALISMO |\n| A A AA A AA A A AA |\n| ] 0 VOTOS POR LA AGRUPACIÓN POLÍTICA — ms ]\n| € IA AAA |\n|\n|\nMM No. Form: 59693 KIT 59,693 Civ1216269 Ml\n\n--- PAGE BREAK ---\n| Í\n| 710596932010511 Ver: 01 Pag: 05 de 11\n| , - 1\n| ACTA DE ESCRUTINIO DE LOS Eta |\nEEE JURADOS DE VOTACIÓN\nE a DELEGADOS e\nMl o ELECCIONES CONGRESO\nE 4 AY 13 DE MARZO DE 2022 3\n| Jr ol RECI\nO fe, SENADO\n| DEPARTAMENTO: 01 - ANTIOQUÍA\n| MUNICIPIO: 001 - MEDELLIN\n| LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE\n| ZONA: 02 PUESTO: 03 MESA: 004\n|\n| X 2-68-57-12 X |\n200 2 7 —USTA SIN VOTO PREFERENTE OS EE\n| ( e ad 4130 | ESTAMOS USTAS COLOMBIA |\n2D: VOTOS PORLA AGRUPACIÓN POLÍTICA a AAA\n| ! | A ¡1039 - MOVIMIENTO UNITARIO METAPOLITICO o\nV 0; VOTOS POR LA AGRUPACIÓN POLÍTICA wm ARA\n| | Es ; 0231 : COALICIÓN MIRA - COLOMBIA JUSTA LIBRES i\nAS XX 4 == VOTOSSOLO PORLA AGRUPACIÓN POLÍTICA\nO E\nO DE A | E O A\nA E A A CN\nE\nA E: l- E\nAT ES A O\nE; E j A IN E | | | |\nO A\n| A A A A A —— AX A\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS FPIE1IFI\nl\n¡\n1\n|\n¡\n|\n|\n|\n|\n|\n|\n¡\n|\n|\n¡\n|\n.\n|\n1\n¡\n| |\n| MY so rom: 50093 KIT 59,693 corzrozro MM\n|\n|\n\n--- PAGE BREAK ---\n1]\n1\n| 710596932010611 Ver: 01 Pag: 06 de 11;\n) . l\n| ACTA DE ESCRUTINIO DE LOS Eta\npap] JURADOS DE VOTACIÓN\n! a, 1 la\nAAA ELECCIONES CONGRESO po\nEA da 13 DE MARZO DE 2022 >\nMO pjs SENADO\n|\n| DEPARTAMENTO: 01 - ANTIOQUIA\n| MUNICIPIO: 001 - MEDELLIN\n| LUGAR: SEC.ESC.AGRIPINA MONTES DEL VALLE\n| ZONA: 02 PUESTO: 03 MESA: 004\n¡\n| X 2-68-57-12 AX\nTO TT TT TESTA CON VOTO PREFERENTE\no : JA . 0001 : PARTIDO LIBERAL COLOMBIANO ]\nA AA OSO AUACIMEA\nA ! E ! O\nBS BA O EIC o |\nA a A\no E E 3\nA 0 A A O A A\nE O O A\nE O E A A\n| MM | | Le [O A IE | | ! ¡A o |\nO A DL A\nCS, E AE | |",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

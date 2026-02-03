@@ -1,0 +1,93 @@
+{
+  "extraction_id": "6ca57893",
+  "filename": "8256513_E14_SEN_X_01_001_003_XX_01_015_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 30766,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "034",
+  "puesto": "|.E, ASIA IGNACIANA",
+  "mesa": "015",
+  "partidos": [
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "CS: 0003 PARTIDO CAMBIO",
+      "party_code": "",
+      "votes": 3,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO NUEVO LIBERALISMO",
+      "party_code": "",
+      "votes": 19,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO GENTE NUEVA",
+      "party_code": "",
+      "votes": 4186,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "0302 MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "FT, I 0008 ! PARTIDO DE LA UNIÓN LADO EA J",
+      "party_code": "",
+      "votes": 8,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "En 0177 PARTIDO INDÍGENA COLOMBIANO P.l.C A",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "FRRIAOSA",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 6382,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "- '\n710597622010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m] PR [1] JURADOS DE VOTACION\nSeca DELEGADOS A\nrl ELECCIONES CONGRESO\n=p pS 13 DE MARZO DE 2022 e:\nal REGISTRADURÍA\nOb SENADO Po\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: |.E, ASIA IGNACIANA\nZONA: 0343 PUESTO: 01 MESA: 015\nX 8-25-65-13 Á\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\nCIRCUNSCRIPCIÓN NACIONAL\n| LISTA SIN VOTO PREFERENTE o\nO O\ny | 3 | 0013 | PARTIDO COMUNES\n|\n|\n|\n|\n|\n|\n|\n|\n|\nME mo rom: 59762 KIT 59,762 Civ1217853 Ml\n\n--- PAGE BREAK ---\nA :\n710597622010211 Ver 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS Eta\n[| 9520 pa] JURADOS DE VOTACIÓN\nh ñ\nEns 8 DELEGADOS\nde\nEh eri E ELECCIONES CONGRESO\n- A ER 13 DE MARZO DE 2022 ¡E\nEJ! REGISTRADURÍA\n[m]> . SENADO ne\nDEPARTAMENTO: 017 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: |.E. ASIA IGNACIANA\nZONA: 03 PUESTO: 01 MESA: 015\nX 8-25-65-13 X\no STA, CON VOTO PREFERENTE\n| | | 0255 | COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA\n| 0 | A ¡AD | 6 ' «<a VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\npr a fe “y Cp Y |-—- a |\njo 2 | | | Al 35 ¡ | 69\nE E E E | E A 70 ap\nACA PEA EG SU | AU EA E E [AO 1\nLOA | | lo 37 | ! | A | 0\n! : l: | | |\n— — E A q TRA A A rs >= SpA - A E\npo Bi : uN: 38: | | 72 | ! |\no e a CN\nIN ( NN ELE | O:\nA\npod 0\nE | 48 o: lio old! l\nCN E al 82 |\n( | ¡ LIN pl 83 |\n7 nl O ¡84 |\nCN Bd 85 ¡\n| ATT 86 |\n| 24 E A |\npp +) 4 a | ios Mi IS ES | :\n| | 25 | o l 58 FR 92 | | ¡\nWEE 2 A O\nA a\nPp yoo | AN 7 e : R——. A A\n29 | ¡ io 62 | | 96\nNN: O o;\n31 AAA]\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMl No. Fomm: 59762 KIT 59,762 Civ1217854 Mm\n\n--- PAGE BREAK ---\nA :\n710597622010311 Ver. 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS E-14 |\nome O JURADOS DEVOTACION\na |\nal DELEGADOS\ne \" a us ; da rn\nE JR ELECCIONES CONGRESO\nid 13 DE MARZO DE 2022 e\n9 Po: REGISTRADURÍA\nOP mitre: SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: LE. ASIA IGNACIANA\nZONA: 03 PUESTO: 01 MESA: 015\nX 8-25-65-13 X\npoo LISTACON VOTO PREFERENTE\n¡ Ss : j\n| | ¡1140 ¡ FUERZA CIUDADANA LA FUERZA DEL CAMBIO\n— — . e e A e A\nE E ES | «Suma VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nA a + a \"am === | ARA RA\n| to; $ ¡A 2 ' BZ ¡63 | ]\n| a - —rrer- 7 ro mo. — -—->+ A — A .- E . .\nO E\nKDB po lu + AA\npo -. A ON = md A HT\nCS: | | 1 38: | | ¡io 74 | |\nIA O O E | 72 | Fo\nCNS 25 15 CI A\n0 E 43 O DICO O\na hos TT TT EN:\nA Y | | o 45: | | o 79 | | |\nda O | 80 |\n| po 15 | | AT] | H 81\nMAA II O A e\n| 8 | 51 | 84 E\n19 | O IE 85 |\n20 1. 7) BB] 86 |\nmm\nE B7 o\nj 1 22 | | | DO: : ¡ 88 |\n== do... po A A | !\n23 O O :\naa do E 58 O ! o)\n¡30 pd a Bari 1 GH 100 Po\n3 O: E\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS LAI\nMl No. Form: 59762 KIT 59,762 Civ1217853 _\n\n--- PAGE BREAK ---\nNA :\n7110597622010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS Et\n[m1] 1P [m] JURADOS DE VOTACIÓN\nELECCIONES CONGRESO eo?\n> : 13 DE MARZO DE 2022 [e\nRECISTRADURÍA\nOti SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: |.E. ASIA IGNACIANA\nZONA: 03 PUESTO: 01 MESA: 015\nX 8-25-65-13 AX\n| CS: 0003 | PARTIDO CAMBIO RADICAL |\nA A A A\nO TE al | «mmm VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\nO A\n2 Ñ | | h 36! ] Pp TO] |\nso | — O\n4 O O | Ml\nE. a A LA o AH 2Z2 ho —\n6 0 ! 40: | a 740: | ¡ |\n8 | | | 1 42 | i | 76 | |\n| 9 3] ¡77 o]\nPA A A A\nE + Ae o | a 7\nA, A | PA\n41 | INS o: E o\n| o [aa ON E\n12 | | [46 po | 480 | |\n—. - E o. E O o. a > | —— > do — 2.\n| 13 | podio lla lo: o oa A:\nO\nA ¡Ami dps O: 83\nA A A A a L——Á\n16 | | NE | | | B4 |\nho. ao —-—-+ A A Y A A A\nA | me O O : |\n8] MN 52 1 11 86 |\nea do ads ass\nA O\n1 22 4 | | 7 56 o 90 | |\n(23 y | O |\n| pr — pmp id E ms Lo —— Pp A mp pr\nION OA OOO: DN ON O o\n| | 25 LO O\n27 + A ¡ i E A\n28 Lp] 7 A CN o\nE O o ]he7 |\n' pl | | 93 | |\n32: 1 66: | | ; 100 | !\nE ES A A E A\nE\nA O O A PASA OS\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS EN\no LISTASINVOTO PREFERENTE IO\n| | (sos | 4073 | ONIIENTO NACIONAL SECTOR ORGANIZADO DE LA\n| 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA mama» RAPE\nAAA STA SIN VOTO PREFERENTE\n| CER ¡ 0019 ; PARTIDO NUEVO LIBERALISMO\nh. A A\nlO 0. j VOTOSFPORLA AGRUPACIÓN POLÍTICA  \"»-\nMi No. Form: 59762 KIT 59,762 Civ1217856 Ml\n\n--- PAGE BREAK ---\nón :\n710597622010511 Ver: 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS Eta\nO Es, [m1] JURADOS DE VOTACION\n; Lp DELEGADOS\n, En. ELECCIONES CONGRESO E!\nll 13 DE MARZO DE 2022 ES\n¿ot REGISTRADURÍA\nOl SENADO\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: |.E. ASIA IGNACIANA\nZONA: 03 PUESTO: 01 MESA: 015\nX 8-25-65-13 X\no - o __ LISTA SIN VOTO PREFERENTE o\n| | lol | 1130 ¡ ESTAMOS LISTAS COLOMBIA\no. A A A\nO TT LISTA SIN VOTO PREFERENTE\n| | da 1039 | MOVIMIENTO UNITARIO METAPOLITICO\nO oran a ranención ron\n¡0 o VOTOS POR LA AGRUPACIÓN POLÍTICA ar AAA\no a LISTA CON VOTO PREFERENTE OOOO]\n| : oy | 0231 | COALICIÓN MIRA - COLOMBIA JUSTA LIBRES\n2 LAA BA E 53 pl\nIE E A\nDECIA EOL EIA E E a\nTo; | | ll 30 | 63 |\n: oque PU TEC E hs lo\n8 — O Y IES | | , 65\nA a —— _\n9 | : [ 33 ( 67 ?\noo das ol 9 | Fo\nA Y — q 4 po — p- E\n11 7 E E O\n120 ",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

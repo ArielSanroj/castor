@@ -1,0 +1,100 @@
+{
+  "extraction_id": "636f41c1",
+  "filename": "3062315_E14_SEN_X_01_001_003_XX_02_015_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 27967,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "03",
+  "puesto": "SEC.ESC. MANUEL URIBE ANGEL",
+  "mesa": "015",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 53,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIÓ",
+      "party_code": "",
+      "votes": 100,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO CAMBIO",
+      "party_code": "",
+      "votes": 3,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "1039 MOVIMIENTO UNITARIO METAPOLITICO",
+      "party_code": "",
+      "votes": 1039,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+      "party_code": "",
+      "votes": 231,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO LIBERAL COLOMBIANO",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO GENTE NUEVA",
+      "party_code": "",
+      "votes": 1186,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DELA U\"",
+      "party_code": "",
+      "votes": 8,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "ES PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 59,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "VOTOS NO MARCADOS",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA",
+      "party_code": "",
+      "votes": 486,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 3167,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A _\n710598032010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS\n[n] IA AO! JURADOS DE VOTACIÓN\no ap DELEGADOS |\nII RRL ELECCIONES CONGRESO\nA: des\npará 13 DE MARZO DE 2022 e\nAR REGISTRADURÍA\nObra. SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC.ESC. MANUEL URIBE ANGEL\nZONA: 03 PUESTO: 02 MESA: 015\nX 3-06-23-15 X\nTOTAL TOTAL TOTAL\ny SUPRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\nA 8) ALO!\n| + + 2 CIRCUNSCRIPCIÓN NACIONAL 02\n53 PARTIDO COMUNES\nLs A =>\nMO mo rom: 59003 KIT 59,803 civiziazos MM\n\n--- PAGE BREAK ---\nA :\n710598032010211 Ver. 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m] , 20 JURADOS DE VOTACIÓN\nSE A DELEGADOS Ñ\nHR prrEl ELECCIONES CONGRESO\nEE FAZ 13 DEMARZODE 2022 A\nOlsrrt: dev SENADO Pa\n| DEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC.ESC, MANUEL URIBE ANGEL\nZONA: 03 PUESTO: 02 MESA: 015\nX 3-06-23-15 X\nA LISTACON VOTO P REFERENTE...\no ” E: A << VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\n2 4\n4 O\nVIE ON\n7 Y 4 li 40 ol 74. |\n2” A a [| rs |\n> A\n10 as IIA\n12 lo 45 UN 73\nH-=——\n13 | MI — A\nO E A E CI\n15 XA. | |] [el | y\n16 ME paa po\n17 VANE ps\n18 ME ES\nEC O E A CI\nEN e MICA\nEN O\n=- ss MIC\nA E EC\nO — a | lp |\n58 — += ee topo\nHA AA\nTe CN\n28 pe [oo To feas | y |\nV 29 62 o 96 A—\n| 30 63 97\n3 68 98\nARO\nO CA EA\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n: M No. Form: 59803 KIT 59,803 Civi218797 _\n\n--- PAGE BREAK ---\n—- :\n710598032010311 Ver: 01 Fag: 03 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[5] ss 20 JURADOS DE VOTACIÓN\nMier 53 DELEGADOS %\nddr. ELECCIONES CONGRESO\noriol 13 DE MARZO DE 2022 ==\nOte SENADO a\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC.ESC. MANUEL URIBE ANGEL\nZONA: 03 PUESTO: 02 MESA: 015\nX 3-06-23-15 X\nATT A ISTA CON VOTO PREFERENTE\n100 FUERZA CIUDADANA LA FUERZA DEL CAMBIÓ\n0 E VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nE E\n2 | 33 | 64 o o\n3 | 35 66 NN\n10 O O ECU E EC E\n| EN NN\n8 73\n9 76\n0 [op ME\nE E\nMO o\nCos\nMIA ell]\nO E O\n7 —— A —\n19 és | topo\nA CI CI\nE E EA\nA — ss [| | | fe pololo\nMA A as [o\nO O IC O O EC\nA TEM EC\nao A E\nO EC\n30 jo! MA\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS Mix] 3\n: Mo. rom: 50500 KIT 59,803 Civ1218798 Mi\n\n--- PAGE BREAK ---\n- '\n710598032010411 Ver: 01 Pag: 04 de 11\nra ESCRUTINIO DE LOS EA\nE DOS DE VOTACION\nDE cd DELEGADOS mn\nAja, ELECCIONES CONGRESO\n] a 15 13 DE MARZO DE 2022 ER\n[m] ke 0 - REGISTRADURÍA\nA + SENADO\n|\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC.ESC. MANUEL URIBE ANGEL\nZONA: 03 PUESTO: 02 MESA: 015\nX 3-06-23-15 AX\nTT LISTA CON VOTO PREFERENTE\n0003 | PARTIDO CAMBIO RADICAL\nA >\nSÁ E VA “— VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\npo as opos] yo\nME A\n37 | 71\n0 IC A\n0 O CS E O CIA E\n7 2 me Ml\n9 43 IN: 77\npe 17 NN\nMIO 00 CI E CA\nA NO\nUC O UCA A O EC E\n. E CI\n0 ODO CS A CA\n0 O A CA O EC\nal — ss [| | | [| up | |\n2 -— ss | [| | [0 | | | '\n23 O CS\nTE E\n| 1 | [ses] ] [oe]\nNN 60 KAR o\n28 Ñ | . 51 96 NN\n22 | fe [o y. a\nA A ——\nO [sa | | es | as\n| 32 E o [RA\n34 Js] ij\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS ME]\n| LISTA SIN VOTO PREFERENTE\n| 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA  \"ummb» AXAlxl4\n| ZA TA SIN VOTO PREFERENTE\nEEN | 0019 | PARTIDO NUEVO LIBERALISMO\n: o. VOTOS POR LA AGRUPACIÓN POLÍTICA a NE\n| Ml No, Form: 598903 KIT 59,803 Clv1218799 MM\n\n--- PAGE BREAK ---\n- '\n710598032010511 Ver: 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS EA\nOp e [m] JURADOS DE VOTACION\nAECA E DELEGADOS o\nRE EM ELECCIONES CONGRESO\npaa a 13 DE MARZO DE 2022 Aten\nEpa a SENADO iS\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC.ESC. MANUEL URIBE ANGEL\nZONA: 03 PUESTO: 02 MESA: 015\nX 3-06-23-15 A\nLISTA SIN VOTO PREFERENTE\nll 1130 ] ESTAMOS USTAS COLOMBIA\n0 | VOTOS POR LA AGRUPACIÓN POLÍTICA \"umm MAA\nTI TSTASIN VOTÓ PREFERENTE -—— anno\nMl A 1039 | MOVIMIENTO UNITARIO METAPOLITICO\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA \"ml\n2 [ISA CON VOTO PREFERENTE\no o 0231 | COALICIÓN MIRA - COLOMBIA JUSTA LIBRES\nNON E VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\n[| a — sa |] |\nE E E |\nETA E ss |\nmM IAS\n6 29 UN y\nA IC\n|\n10 a 1 — e [po]\n41 36 70\no\nA O E A\nCO O E O E\ni O E CO\nEC E EN\ní\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS ALA\ni Mo sor: so00 KIT 59,803 civrzrmeoo MM\n\n--- PAGE BREAK ---\nA _\n710598032010611 Ver: 01 Pag; 06 de 11\ne DE ESCRUTINIO DE LOS EA\nde URADOS DE VOTACION\nE DELEGADOS »\nSe o il ELECCIONES CONGRESO\nA 13 DE MARZO DE 2022\nE A a REGISTRADURIA\nOhrarera, SENADO Pm\nDEPARTAMENTO: 01 - ANTIOQUIA\n| MUNICIPIO: 001 - MEDELLIN\n| LUGAR: SEC.ESC. MANUEL URIBE ANGEL\nZONA: 03 PUESTO: 02 MESA: 015 ,\nX 3-06-23-15 X\nLISTA CON VOTO PREFERENTE\n| 0001 | PARTIDO LIBERAL COLOMBIANO\no > > dl | == VOTOS SOLOPOR LA AGRUPACIÓN POLÍTICA\na TT] fas] ] | [e | | |\nMK KM\nA EN TETE HE\n: AMS | | | Ml\no fe] lo l= il\n0 O O EC O E\nO Am | |\nn pY 13 AA A —\n12 AA KAMA\n13 MINUTA —— MOS\nO O E EC\nA KAN O\n83\n85\naa TA\ne\nmE O O —.-\nMICA OA\naso po E a lo | |\n26 [ses +] [| [ej ps\na TAC\n28 || 6 as polo\nEEE\n30 KA Ap\nIC CA\n66 | 99\nA 57 00 DS 1\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS FINES\nATT ITA SIN VOTO PREFERENTE\n1186 | MOVIMIENTO G",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

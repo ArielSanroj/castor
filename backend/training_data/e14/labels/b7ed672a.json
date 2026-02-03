@@ -1,0 +1,16 @@
+{
+  "sample_id": "b7ed672a",
+  "sha256": "4d48299e99fa782b5053d8c8cbf3ac8355d070e4164634521a5e2585ebd3b719",
+  "source": "training_data/e14_source/document (5).pdf",
+  "pages": 2,
+  "extraction": null,
+  "validation": null,
+  "metadata": {},
+  "ocr_success": false,
+  "ocr_error": "1 validation error for PartyVotes\nparty_code\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.5/v/string_type",
+  "processing_time_ms": 31684,
+  "created_at": "2026-01-23T17:20:08.202540",
+  "is_validated": false,
+  "is_corrected": false,
+  "corrections": []
+}

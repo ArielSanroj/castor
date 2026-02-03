@@ -11,45 +11,28 @@ from pydantic import BaseModel, Field
 
 class RAGSource(BaseModel):
     """Source document reference from RAG retrieval."""
-    id: str = ""
-    document_id: str = ""  # Alias
+    document_id: str = ""
     content: str = ""
-    preview: str = ""  # Short preview of content
     score: float = 0.0
-    type: str = ""  # chunk type
-    source_type: str = ""  # Alias for type
-    topic: Optional[str] = None
-    location: Optional[str] = None
-    date: Optional[str] = None
     metadata: Dict[str, Any] = Field(default_factory=dict)
+    source_type: str = ""  # tweet, analysis, report, etc.
 
 
 class RAGChatRequest(BaseModel):
     """Request for RAG-enhanced chat."""
     message: str = Field(..., min_length=1, max_length=2000)
     session_id: Optional[str] = None
-    conversation_id: Optional[str] = None
-    conversation_history: Optional[List[Dict[str, str]]] = None
     context: Optional[Dict[str, Any]] = None
     include_sources: bool = True
     max_sources: int = Field(default=5, ge=1, le=20)
-    top_k: int = Field(default=5, ge=1, le=20)
-    min_score: float = Field(default=0.3, ge=0.0, le=1.0)
-    filter_location: Optional[str] = None
-    filter_topic: Optional[str] = None
     filters: Optional[Dict[str, Any]] = None
 
 
 class RAGChatResponse(BaseModel):
     """Response from RAG-enhanced chat."""
-    success: bool = True
-    answer: str = ""
-    response: str = ""  # Alias for answer (frontend compatibility)
+    response: str = ""
     session_id: str = ""
-    conversation_id: str = ""
     sources: List[RAGSource] = Field(default_factory=list)
-    documents_searched: int = 0
-    documents_retrieved: int = 0
     confidence: float = 0.0
     model_used: str = ""
     tokens_used: int = 0

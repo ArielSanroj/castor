@@ -1,0 +1,131 @@
+============================================================
+  INSTRUCCIONES PARA DESCARGAR ACTAS E14
+  Registraduria Nacional de Colombia
+============================================================
+
+ARCHIVOS CREADOS:
+-----------------
+1. descargar_actas.py  - Script principal de descarga
+2. extraer_tokens.js   - Script para extraer tokens del navegador
+
+============================================================
+PASO 1: INSTALAR DEPENDENCIAS
+============================================================
+
+Abre la terminal y ejecuta:
+
+    pip install requests beautifulsoup4
+
+Si no tienes pip:
+
+    python3 -m ensurepip --upgrade
+
+============================================================
+PASO 2: EXTRAER LOS TOKENS
+============================================================
+
+Los tokens son códigos encriptados que identifican cada acta.
+Para obtenerlos:
+
+1. Abre tu navegador (Chrome recomendado)
+
+2. Ve a: https://e14_pres1v_2022.registraduria.gov.co/
+
+3. Selecciona:
+   - Departamento
+   - Municipio
+   - Zona
+   - Puesto de votación
+
+4. Haz clic en "Consultar"
+
+5. Resuelve el CAPTCHA si aparece
+
+6. Cuando veas las mesas de votación, presiona F12
+
+7. Ve a la pestaña "Console" (Consola)
+
+8. Copia todo el contenido del archivo "extraer_tokens.js"
+   y pégalo en la consola
+
+9. Presiona Enter
+
+10. El script mostrará los tokens encontrados y generará
+    código Python que puedes copiar directamente
+
+============================================================
+PASO 3: EJECUTAR EL DESCARGADOR
+============================================================
+
+OPCIÓN A - Modo Interactivo:
+
+    python3 descargar_actas.py
+
+    Sigue las instrucciones en pantalla.
+
+OPCIÓN B - Modo Directo (editar el script):
+
+    1. Abre descargar_actas.py en un editor de texto
+
+    2. Al final del archivo, modifica la sección:
+
+       tokens = [
+           ('TOKEN_MESA_1', 'mesa_001.pdf'),
+           ('TOKEN_MESA_2', 'mesa_002.pdf'),
+           # Agrega más tokens aquí
+       ]
+
+       descargador.procesar_lote(tokens)
+
+    3. Guarda y ejecuta:
+
+       python3 descargar_actas.py
+
+============================================================
+PASO 4: VERIFICAR DESCARGAS
+============================================================
+
+Las actas se guardan en la carpeta: actas_descargadas/
+
+Se crea un registro en: registro_descargas.json
+
+============================================================
+SOLUCIÓN DE PROBLEMAS
+============================================================
+
+ERROR: "No module named requests"
+SOLUCIÓN: pip install requests
+
+ERROR: "Connection refused" o "Timeout"
+SOLUCIÓN: Verifica tu conexión a internet y que el sitio
+          esté funcionando
+
+ERROR: "Respuesta no es PDF"
+SOLUCIÓN: El token puede haber expirado. Extrae nuevos
+          tokens desde el navegador
+
+ERROR: "Status 403"
+SOLUCIÓN: El servidor está bloqueando solicitudes. Espera
+          unos minutos e intenta de nuevo
+
+============================================================
+NOTAS IMPORTANTES
+============================================================
+
+- Los tokens pueden expirar después de cierto tiempo
+- No descargues demasiado rápido para no sobrecargar el servidor
+- El script incluye un delay de 1.5 segundos entre descargas
+- Las actas son documentos públicos de transparencia electoral
+
+============================================================
+ALTERNATIVA: DESCARGA MANUAL
+============================================================
+
+Si los scripts no funcionan:
+
+1. Navega a la página
+2. Selecciona departamento/municipio/zona/puesto
+3. Haz clic en cada mesa
+4. Usa Ctrl+S o clic derecho -> "Guardar como" para cada PDF
+
+============================================================

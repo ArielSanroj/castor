@@ -1,0 +1,128 @@
+{
+  "extraction_id": "7dc4f5c0",
+  "filename": "3808711_E14_SEN_X_01_001_001_XX_06_002_X_XXX (1).pdf",
+  "success": true,
+  "processing_time_ms": 35116,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUÍA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "IE LA AVANZADA",
+  "mesa": "002",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "ANTIOQUÍA",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "0019 PARTIDO NUEVO LIBERALISMO",
+      "party_code": "",
+      "votes": 19,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "ESTAMOS LISTAS COLOMBIA",
+      "party_code": "",
+      "votes": 7,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO UNITARIO METAPOLITICO",
+      "party_code": "",
+      "votes": 4039,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "io Cast 1 11186 MOVIMIENTO GENTE NUEVA",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO CONSERVADOR COLOMBIANO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO DE LA UNIÓN POR LA GENT",
+      "party_code": "",
+      "votes": 8,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "Y. TY 0292 PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "HÍSTA GON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 21,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MANDATO AMBIENTA",
+      "party_code": "",
+      "votes": 166,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ISTASIN VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA",
+      "party_code": "",
+      "votes": 186,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 6152,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A .\n710595712010111 Ver: 01 Pag: 01 de 11:\nACTA DE ESCRUTINIO DE LOS EA\n[m] : [a] JURADOS DE VOTACION |\n: : DELEGADOS\nE Y ELECCIONES CONGRESO\njad 13 DE MARZO DE 2022 2\nREGISTRADURIA\n[m] SENADO mee\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: IE LA AVANZADA\nZONA: 01 PUESTO: 06 MESA: 002\nX 3-80-87-11 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\nCIRCUNSCRIPCIÓN NACIONAL |\n| LISTA SIN VOTO PREFERENTE ñ\n| 8] 0013 | PARTIDO COMUNES\npo Do VOTOS POR LA AGRUPACIÓN POLÍTICA  mmmmi)- it\n| Mo som: 5957 KIT 59,571 civizizaso MM\n\n--- PAGE BREAK ---\na o\n710999712010211 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m] 54opa a] _ JURADOS DE VOTACIÓN\nA »n. va\nLore DELEGADOS !\nAS =4 ELECCIONES CONGRESO E30%\nINFIEL Ts 13DEMARZODE 2022 E\n[e] ia SENADO nn\nDEPARTAMENTO: 017 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: ¡E LA AVANZADA\nZONA: 01 PUESTO: 06 MESA: 002\nX 3-80-87-11 X\no - LISTA CON VOTO PREFERENTE o\n| 0255 | COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA\nMl o | ala ¡— | e VOTOSSOLO POR LA AGRUPACIÓN POLÍTICA |\nME RE MEE\n| o as A lok Pl oo e bo—Ák > [> q\n2 Pé GT 5 a ¡7 Jj 69 | oil\nE E | NN O SS\nE E A 7 JU JU 1]\nO EA ft E TO\n| | 6 ES 39 ¡RON ¡IS —; — 7\n| E AAA o A A IS\n9 O 42 | —=i=j\" 76 —\n. O A A . o a a —— So. 2. .— . qn —-\n12 == a re Pe\n0d DO E E ol\n14 TT — o E Di\nINPrON ¡EOS FEO ¡A PA B2 |\"\n46 ¿7 ¡A loq io—i—I 83 Hijo!\nDOLO Ma Ed 50 =-1 84 |-i-=|-\nii 584 RÁ 85 |—- ¡-\nA A A: E |\n19 [e ia lp 52 2 —i- | 86 Md la\nA —Á | Íb—— + -\no Ll 53 TT e ad\n21 1] —i| 54 — —:3| 88 EA -\n22 li en e > ea lapa\nE A\nPE. E AS Ts o\n26 E EE: O A\n—— A OS | O UN e Ñ ==\nTS E E CN po\n| NE 61 TT O :\nloza [ii jiPHo62 ii\" | 96 e\n30. A | E : a — lo jo —\na a 98 | pj -\nE a | Aim\np—- — + — + _— A o) TARO\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS litio\nA KIT 59,571 Civ1213461 M\n\n--- PAGE BREAK ---\nA ON :\n| 710595712010311 Ver: 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS EA\n- [Je2 [E] _ JURADOS DE VOTACIÓN\nMies DELEGADOS ]\nY a ELECCIONES CONGRESO\nE pia «a E 13 DE MARZO DE 2022 LE:\nZA REGISTRADURÍA\nO ct SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\n| LUGAR: lE LA AVANZADA\nZONA: 01 PUESTO: 06 MESA: 002\n] X 3-80-87-11 X\nO AT  IISTACON VOTO PREFERENTE\n| 1140 | FUERZA CIUDADANA LA FUERZA DEL CAMBIO\nÑ o — N DN] > = VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\n| a ii 32 A 63 ia |. | —-\nA E NE di lid DA aio\nNN A A a NN\n— A 0d 2 LM 2 PH ph\na lil aiticiola a\nA +—- pop - Ah ---——- EA OA ANN nn — —= HTA\n10 —: loe 4300: A\nIN tl El nd TOO AS: O rl Ena E\np-—— + —l - — o a — F a => A ED A\nO A A a E A\nll eÁk HE— A A o —bo - Bn E o — |\n48 | | ¡AU A a AS —Á\n20 | a: Md\n. : - A q H— + ——— $ > e\n| 22 [— ¡| ys | 8 |\n124 A A 90 piel\nPoo 25 io* |: ad E TT\nNA O =. o\n—- A ds —. + -— —— as so — IA : --. . - -\n| 30 Zi ole eo 100 y\n! TOTAL =VOTOS AGRUPACIÓN + VOTOS CANDIDATOS =|—|2\nMl No, Form: 59571 KIT 59,571 Civ12134b2 Ml\n\n--- PAGE BREAK ---\n|\n710593712010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS 73\n[Jus [m] JURADOS DE VOTACIÓN\ne Pro DELEGADO\n] A uu ]\ne a qoa ELECCIONES CONGRESO q\nNS AA 13 DE MARZO DE 2022 E,\ny a El REGISTRADURÍA\nMO 7 SENADO AN\n| DEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: [E LA AVANZADA\nZONA: 01 PUESTO: U6 MESA: 002\n| X 3-80-87-11 X\nLISTA CON VOTO PREFERENTE 22222 22\n|\n/ i Sl | 0003 | PARTIDO CAMBIO RADICAL\n| A 0 Ai |“ VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\n| HE IS [E]\n2 al 35 | A |\np—- —- H — OS E HA O E STA\nEN ll E a al | E LAT |\n] h- a loo + - —- — Lo — -— O po > pi 4 c+ a\no ve] E dl E E =>\nA O O E\n— pe jo | | E is EOS : /\n| a 40 eps Ai—-\nE E Zl in a Si 75 io”\n\n8 CC la ina ii 42 1 Ed 76 =i“7\n| 9 o O NL tr\nq A A A\n\n¡ IN E E\n\nA O SU O\n\nos ¡io los ie llo\n\n8 lie ic 49 la si 83 l- tio\n\nE E E a IN dl\n| NN E A al dl O\n| 18 — ia lo 2 TR 8 |_ |, l-\n21 IR Os 1 os li\n| o O NA\n\n| | 22 a 588 il: \"Ti 90 dl\n\n| 23 Sicii os E NS\n— pp AA ARA EA\n26 Mn ll ¡a dl o\nTM ia O\n\n; A A IN A la\na LS | O A\n3 q É AA A o A O AO\nY | 23 ¡—— TI e ATA | 97 li\nql O A 7 A 99 A\na a ne\n2 > H\n\n\"Y ¡GB 7 E\n\n: oo JN OO E | A A A\n\n.\n\ns TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\na p ] LISTA SIN VOTO PREFERENTE |\n] s h => - 1\n\nAl | | ni MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA\n¿MN  (SS0S | 1073 e COLOMBIA |\n: | 0 P VOTOS POR LA AGRUPACIÓN POLÍTICA — ab» ESES\nÑ PA A\n\n1 l | GE 0019 | PARTIDO NUEVO LIBERALISMO\n\nY Ñ 0 VOTOS POR LA AGRUPACIÓN POLÍTICA => [-I-—Tx]\n31\n\nMN Mi No. Form: 59571 KIT 59,571 Civ1213463 MW\nAl o\n\n--- PAGE BREAK ---\nMm Ml\n|\n710595712010511 Ver: 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[1] eE se un] JURADOS DE VOTACION\no. \" \"di\nMeca DELEGADOS |\n| A e . q bs\ngrada ELECCIONES CONGRESO es\na 13 DE MARZO DE 2022 ce\n2 Mr E E REGISTRADURÍA\nO Eu do SENADO +“\n|\n| DEPARTAMENTO: 01 - ANTIOQUIA\n] MUNICIPIO: 001 - MEDELLIN\n| LUGAR: ¡E LA AVANZADA\n| ZONA: 01 PUESTO: 06 MESA: 002\n:\nX 3-80-87-11 AX\n——— + — —- LISTA SIN VOTO PREFERENTE 2 122111\n| | ses | 1130 | ESTAMOS LISTAS COLOMBIA 7\nA A AA\n: 0 p VOTOS POR LA AGRUPACIÓN POLÍTICA \"mm —|— LA\npesa TT TUISTA SIN VOTO PREFERENTE\nA | ds l 4039 : MOVIMIENTO UNITARIO ",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

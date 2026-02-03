@@ -1,0 +1,107 @@
+{
+  "extraction_id": "4c3c159d",
+  "filename": "2410819_E14_SEN_X_01_001_002_XX_04_004_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 29998,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "02",
+  "puesto": "l.E.FEDERICO CARRASQUILLA",
+  "mesa": "004",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.75,
+      "needs_review": true
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "0003 ¿PARTIDO CAMBIO",
+      "party_code": "",
+      "votes": 3,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO UNITARIO METAPOLITICO",
+      "party_code": "",
+      "votes": 1039,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "0231 COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+      "party_code": "",
+      "votes": 231,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO CONSERVADOR COLOMBIANO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO DE LA UNIÓN POR LA GENT",
+      "party_code": "",
+      "votes": 8,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA",
+      "party_code": "",
+      "votes": 184,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO INDIGENA COLOMBIANO P",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIA",
+      "party_code": "",
+      "votes": 156,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA",
+      "party_code": "",
+      "votes": 5,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 3237,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "a :\n710597192010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m] a [m] JURADOS DE VOTACION\nm Erro DELEGADOS o\nsa BRA ELECCIONES CONGRESO po:\nLEE 13 DE MARZO DE 2022\nop nEGISTrADUrÍa\nOj aia rd SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: l.E.FEDERICO CARRASQUILLA\nZONA: 02 PUESTO: 04 MESA: 004\n, X 2-41-08-19 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\nCIRCUNSCRIPCIÓN NACIONAL\na aa a LISTA SIN VOTO PREFERENTE 22]\n\" | rd: :\n? NS ; 0013 ; PARTIDO COMUNES 0\na  VOTOSPORLA AGRUPACIÓN POLÍTICA —> || |-—[—\n|\n|\n|\n|\n|\n.\ny\n|\n— A KIT 59,719 Civ1216864 ml\n\n--- PAGE BREAK ---\n|\nl\n710597192010211 Ver: 01 Pag: 02de 11:\nh\nACTA DE ESCRUTINIO DE LOS EA |\n] ]\ni me |\nus MIDEETTTE\na > Laza\nee Pak ES + ELECCIONES CONGRESO qe |\nALP 13DE MARZO DE 2022 |\nohnzas REGISTRADURÍA\no SENADO |\n:\nj\nDEPARTAMENTO: 01 - ANTIOQUÍA |\nMUNICIPIO: 001 - MEDELLIN |\nLUGAR: |.E.FEDERICO CARRASQUILLA 0\nZONA: 02 PUESTO: 04 MESA: 004 ¡\n|\nX 2-41-08-19 X |\n| =- '\ny | : 0255 ' COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA |\no R—Ák A A y\nUN LA mio EN E o voTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nPa E | 4 do\nE E |\nE E a A\nO OS: | | IE Y | pi 7 | | | ¡\nA o\nO OS: ! 4 40. | | | 741 | ] o\nA\nNN O CIN AOS O\nE TS | 0 o 43 i A y | | |\nE E. CI\nAR E AD | A le\nO A.\nTa ETT E DEAN EC E\nIS E | l: 83 nn\npa pa — hr - So —ii o a E O O A |\nE E E A, IE E\n8 BA; BB dp\nIN\nON O ¡0 A O. j |\nIS | Pr 88 |\nCi A 5 as | po y\n23 : A E | 4 90 | | po!\nTI | |\nj- A $ q —- -=5zMIMIMIÁ Y —+- A\nTN | | 58: | MN: 92 | ¡ | o\n26: ! 59 +: | o 93 | | 0 o\nNL: DE !> A y | F 95 y | |\n29 O 96 A\n30 EN ET o\n: : 1 : ] E! ; : \"\nA o\n32: ! Hl 65: V 99 pl\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [— | | FP]\n¡\n|\n|\nMo soon: 597: KIT 59,719 Civ1216885 Ml\n\n--- PAGE BREAK ---\n'\n710597192010311 Ver: 01 Pag: 03 de 11\n1\nACTA DE ESCRUTINIO DE LOS EA |\n[m] E [5] JURADOS DE VOTACIÓN |\nPr,\" n A l\nll .\nh ET DELEGADOS | |\nun pal sl . q y '\nrr e ELECCIÓNES CONGRESO PO 0\nay py 13 DE MARZO DE 2022 |\n[=] \"11 O REGISTRADURÍA ]\n|\n|\nDEPARTAMENTO: 01 - ANTIOQUIA |\n|\nMUNICIPIO: 001 - MEDELLIN |\nLUGAR: |.£.FEDERICO CARRASQUILLA |\nZONA: 02 PUESTO: 04 MESA: 004\n|\n|\nX 2-41-08-19 X !\nTT LISTA CON VOTO PREFERENTE. CTC)\n. ] H r A a !\n| | : 1140 | FUERZA CIUDADANA LA FUERZA DEL CAMBIO ¡\npo 04 | ¡ «mn VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA 1\nA A —Á A 32 ' | o 63: 0 ! >\nE E\nq | A | BB ! i |\nA Cr\n7 4 80 | o 72 | | Ea\ng | ! o 41 | ? 1 73: | | | |\n9 j po 182 IN o E\n10 gl 43 O E\n| | ] | 10 pol\n31 ! io 44. | po TB; | ( | ]\nARA IS |\n14 CS E E -80 | | po Loy\n15 ! Ho 47: | E | ! E\nÑ > ma be Ss 1 o q - to ES el A 2. cd A 1\nAT SO A BB pd | |\n18 oo E A\nE BZ BB\n¡o 20 | ! li 53 ' | hi BG | | ! | 1\nE O E\n22 O A BB Po\n23 A\n24 | 57: | ¡ CR: | |\n25 E:\nTN i j o 59 | y: | ] ]\npor io a O: 1\nA A A AS:\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS 14, !\n]\nÍ\n|\nl\n|\ní\nt\nMi No. Form: 59719 KIT 59,719 Civ1216866 Ml\n\n--- PAGE BREAK ---\n710597192010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS Eta\n[mm] pr [um] JURADOS DE VOTACION\nA :\naaa A DELEGADOS |\neos\nE OS ELECCIONES CONGRESO poa\nE 13 DE MARZO DE 2022 A\n[m1] Ao REGISTRADURÍA\na SENADO\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: |.E.-FEDERICO CARRASQUILLA\nZONA: 02 PUESTO: 04 MESA: 004\nX 2-41-08-19 X\na a a. LISTACON VOTO PREFERENTE 22 22222\nE CST | 0003 ¿PARTIDO CAMBIO RADICAL |\n: |\n! 0 ! | | «== VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA 7]\nA BB BO\nE A\nA | ? o 38: | | po TZ; |\npo 5. | ? o 39 ] po 73: |\nBd 40 A |\n| + A —— A — md — A — a — MN a id o — —\nog doo iodo 43 E |\n! q po ,\nMA OS TL i CS ? |\nLN: ! ! AB | o 80: | |\nO E |\nMA AB o Aj 82 o\n0 A O A E E a AAA 2\nO NT !\nO BA\nE A 8 j\npu — =— —— pon -—: — A. o —— E —1 - A _— + A po ==. ]\nO A O:\nA | 87 | V |\nTS O\nIN E A\nA Ai |\n—— — A A a\nE\n25 | 0 ¡ jo 39: 0 po 41 ! ! |\nE E HA\nE E O\no A | ——— b— AA —Á a —Á pe 2 ————] A os\n2 o 97 OS\nEE A O\nBa 3 o 1 OH 66: IN.\nho y —— -- — A o om -— o\n34 | | Do BB. ! |\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [—[-—|-|]\n| : sos : . MOVIMIENTO NACIONAL SECTOR ORGANIZADO DE LA |\n¡ : 38% ; 1073 | SALUD SOS COLOMBIA |\n| D | VOTOS POR LA AGRUPACIÓN POLÍTICA — uamip- [E ]—|\n| TT 7 LISTA SIN VOTO PREFERENTE.\n| | GER | 0019 PARTIDO NUEVO LIBERALISMO |\n| 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA mmm [—| — dl\nMl No. Fom: 59719 KIT 59,719 Civ1216867 Ml\n\n--- PAGE BREAK ---\nm mn\n\n710597192010511 Ver: 01 Pag: 05 de 11 |\n\nACTA DE ESCRUTINIO DE LOS Eta |\n\n|\n\na Er 30 JURADOS DE VOTACION |\n\nMirad DELEGADOS ¡\n\nPER NE ELECCIONES CONGRESO eS Y 1\n\n. Apta 13 DE MARZO DE 2022 A |\n\n[m1] LA a! REGISTRADURÍA ¡\n\n¡\n\nDEPARTAMENTO: 01 - ANTIOQUIA |\n\nMUNICIPIO: 001 - MEDELLIN\n\n. |\n\nLUGAR: |.E.FEDERICO CARRASQUILLA |\n\nZONA: 02 PUESTO: 04 MESA: 004 ]\n\n|\n\n]\n\nX 2-41-08-19 X |\n\n|\n\nA USTASIN VOTO PREFERENTE LS]\n\n| mes | 1130. ¡ ESTAMOS LISTAS COLOMBIA | |\n\ni 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA \"uml (414 (\n\na EISTASIN VOTO PREFERENTE ¡ (\n\n' , :\n\n| | on : 1039 : MOVIMIENTO UNITARIO METAPOLITICO | ¡\n\n! 0 ! VOTOS POR LA AGRUPACIÓN POLÍTICA \"mm [— [—= |- | |\n\n0 i mia ¡ 0231 | COALICIÓN MIRA - COLOMBIA JUSTA LIBRES",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

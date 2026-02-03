@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4361ee">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Registro de testigos electorales - Castor Control Electoral">
+
+    <title>Registro Testigo - Castor Control Electoral</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/static/manifest.json">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/static/images/icon-192x192.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/css/witness.css">
+</head>
+<body>
+    <!-- Mensajes -->
+    <div id="message-container"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="page-header">
+            <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" stroke="#4361ee" stroke-width="4" fill="none"/>
+                <path d="M30 50 L45 65 L70 35" stroke="#4361ee" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+            <h1>Castor Control Electoral</h1>
+            <p class="subtitle">Registro de Testigos</p>
+        </header>
+
+        <!-- Seccion 1: Registro -->
+        <section id="registration-section">
+            <div class="card">
+                <h2 class="card-title">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                        <circle cx="8.5" cy="7" r="4"/>
+                        <line x1="20" y1="8" x2="20" y2="14"/>
+                        <line x1="23" y1="11" x2="17" y2="11"/>
+                    </svg>
+                    Datos del Testigo
+                </h2>
+
+                <form id="register-form">
+                    <!-- Codigo QR (oculto, se llena automaticamente) -->
+                    <input type="hidden" id="qr-code" name="qr_code" required>
+
+                    <div class="form-group">
+                        <label class="form-label" for="full-name">Nombre Completo *</label>
+                        <input
+                            type="text"
+                            id="full-name"
+                            name="full_name"
+                            class="form-input"
+                            placeholder="Ej: Juan Carlos Rodriguez"
+                            required
+                            autocomplete="name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Telefono Celular *</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            class="form-input"
+                            placeholder="Ej: 3001234567"
+                            required
+                            autocomplete="tel"
+                            pattern="[0-9]{10,15}"
+                        >
+                        <p class="form-hint">Numero de 10 digitos sin espacios</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="cedula">Cedula de Ciudadania</label>
+                        <input
+                            type="text"
+                            id="cedula"
+                            name="cedula"
+                            class="form-input"
+                            placeholder="Ej: 1234567890"
+                            autocomplete="off"
+                            pattern="[0-9]{6,15}"
+                        >
+                        <p class="form-hint">Opcional - Solo numeros</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Correo Electronico</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-input"
+                            placeholder="Ej: juan@correo.com"
+                            autocomplete="email"
+                        >
+                        <p class="form-hint">Opcional</p>
+                    </div>
+
+                    <div class="section-divider">Zona de Cobertura</div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="coverage-dept">Departamento *</label>
+                        <select
+                            id="coverage-dept"
+                            name="coverage_dept_code"
+                            class="form-input"
+                            required
+                        >
+                            <option value="">-- Seleccione departamento --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="coverage-muni">Municipio *</label>
+                        <select
+                            id="coverage-muni"
+                            name="coverage_muni_code"
+                            class="form-input"
+                            required
+                        >
+                            <option value="">-- Seleccione municipio --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="coverage-station">Puesto de Votacion</label>
+                        <select
+                            id="coverage-station"
+                            name="coverage_station_name"
+                            class="form-input"
+                        >
+                            <option value="">-- Todos los puestos --</option>
+                        </select>
+                        <p class="form-hint">Opcional - Puesto especifico que cubriras</p>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Registrarme como Testigo
+                    </button>
+                </form>
+            </div>
+
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+                Al registrarte aceptas recibir notificaciones de asignaciones electorales.
+            </p>
+        </section>
+
+        <!-- Seccion 2: Activar Push -->
+        <section id="push-section" style="display: none;">
+            <div class="card">
+                <div class="push-info">
+                    <svg class="push-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 01-3.46 0"/>
+                    </svg>
+
+                    <h2>Activa las Notificaciones</h2>
+                    <p>Recibe alertas cuando seas asignado a una mesa de votacion.</p>
+
+                    <div class="push-features">
+                        <div class="push-feature">
+                            <svg class="push-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span class="push-feature-text">Recibe asignaciones en tiempo real</span>
+                        </div>
+                        <div class="push-feature">
+                            <svg class="push-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span class="push-feature-text">Alertas de mesas criticas</span>
+                        </div>
+                        <div class="push-feature">
+                            <svg class="push-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span class="push-feature-text">Coordina con el equipo de campana</span>
+                        </div>
+                    </div>
+
+                    <button id="enable-push-btn" class="btn btn-success">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                            <path d="M13.73 21a2 2 0 01-3.46 0"/>
+                        </svg>
+                        Activar Notificaciones
+                    </button>
+                </div>
+            </div>
+
+            <button onclick="skipPush()" class="btn btn-secondary" style="margin-top: 8px;">
+                Omitir por ahora
+            </button>
+        </section>
+
+        <!-- Seccion 3: Dashboard del Testigo -->
+        <section id="dashboard-section" style="display: none;">
+            <!-- Header con info del testigo -->
+            <div class="dashboard-header">
+                <div class="dashboard-avatar" id="witness-avatar">T</div>
+                <div class="dashboard-info">
+                    <div class="dashboard-name" id="witness-name">Testigo</div>
+                    <div class="dashboard-location">
+                        <span id="current-location">Obteniendo ubicacion...</span>
+                    </div>
+                </div>
+                <span class="status-badge status-active" id="witness-status">Activo</span>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-pending">0</div>
+                    <div class="stat-label">Pendientes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-completed">0</div>
+                    <div class="stat-label">Completadas</div>
+                </div>
+            </div>
+
+            <!-- Asignaciones -->
+            <div class="card">
+                <h2 class="card-title">
+                    <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+                        <rect x="9" y="3" width="6" height="4" rx="1"/>
+                        <path d="M9 14l2 2 4-4"/>
+                    </svg>
+                    Mis Asignaciones
+                </h2>
+
+                <div id="assignments-list">
+                    <div class="empty-state">
+                        <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <p>No tienes asignaciones pendientes</p>
+                        <p style="font-size: 0.8rem; margin-top: 8px;">Te notificaremos cuando haya una nueva</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="card">
+                <h2 class="card-title">Acciones</h2>
+                <button onclick="loadAssignments()" class="btn btn-secondary" style="margin-bottom: 8px;">
+                    Actualizar Asignaciones
+                </button>
+                <button onclick="reportLocation()" class="btn btn-secondary">
+                    Reportar mi Ubicacion
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Install Prompt -->
+    <div id="install-prompt" class="install-prompt">
+        <div class="install-prompt-content">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4361ee" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <div class="install-prompt-text">
+                <div class="install-prompt-title">Instalar App</div>
+                <div class="install-prompt-subtitle">Accede mas rapido desde tu pantalla de inicio</div>
+            </div>
+            <button onclick="installApp()" class="btn btn-primary btn-sm">Instalar</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/witness.js"></script>
+    <script>
+        // Manejar install prompt
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('install-prompt').classList.add('visible');
+        });
+
+        function installApp() {
+            if (!deferredPrompt) return;
+
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('App installed');
+                }
+                deferredPrompt = null;
+                document.getElementById('install-prompt').classList.remove('visible');
+            });
+        }
+
+        function skipPush() {
+            document.getElementById('push-section').style.display = 'none';
+            document.getElementById('dashboard-section').style.display = 'block';
+            loadAssignments();
+        }
+
+        function reportLocation() {
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        showMessage('success', 'Ubicacion reportada');
+                    },
+                    (err) => {
+                        showMessage('error', 'No se pudo obtener ubicacion');
+                    }
+                );
+            }
+        }
+
+        // Verificar si ya esta registrado
+        document.addEventListener('DOMContentLoaded', () => {
+            const witnessId = localStorage.getItem('witnessId');
+            if (witnessId) {
+                // Ya registrado, mostrar dashboard
+                document.getElementById('registration-section').style.display = 'none';
+                document.getElementById('push-section').style.display = 'none';
+                document.getElementById('dashboard-section').style.display = 'block';
+                loadAssignments();
+            }
+        });
+    </script>
+</body>
+</html>

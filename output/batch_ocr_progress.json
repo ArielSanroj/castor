@@ -1,0 +1,29 @@
+{
+  "processed": [],
+  "failed": [
+    {
+      "filename": "2043318_E14_SEN_X_01_001_003_XX_02_026_X_XXX.pdf",
+      "error": "Error de API: 400 - {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_i"
+    },
+    {
+      "filename": "2045418_E14_SEN_X_01_001_001_XX_01_027_X_XXX (1).pdf",
+      "error": "Error de API: 400 - {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_i"
+    },
+    {
+      "filename": "2045418_E14_SEN_X_01_001_001_XX_01_027_X_XXX.pdf",
+      "error": "Error de API: 400 - {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_i"
+    },
+    {
+      "filename": "2053116_E14_SEN_X_01_001_001_XX_02_022_X_XXX (1).pdf",
+      "error": "Error de API: 400 - {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_i"
+    },
+    {
+      "filename": "2053116_E14_SEN_X_01_001_001_XX_02_022_X_XXX.pdf",
+      "error": "Error de API: 400 - {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_i"
+    }
+  ],
+  "skipped": [],
+  "last_index": 5,
+  "started_at": "2026-02-01T18:35:41.597242",
+  "completed_at": "2026-02-01T18:40:27.267813"
+}

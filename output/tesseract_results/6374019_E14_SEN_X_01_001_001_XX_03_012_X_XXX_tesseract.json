@@ -1,0 +1,149 @@
+{
+  "extraction_id": "96644ad7",
+  "filename": "6374019_E14_SEN_X_01_001_001_XX_03_012_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 26723,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "IE.MARIA DE LOS ANGELES CANO MARQUEZ j",
+  "mesa": "012",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES O",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO NACIONAL SECTOR ORGANIZADO DELA",
+      "party_code": "",
+      "votes": 1073,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO NUEVO LIBERALISMO",
+      "party_code": "",
+      "votes": 19,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "JURADOSDE VOTACIÓN",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "COALICIÓN MIRA - COLOMBIA JUSTA LIBRES O",
+      "party_code": "",
+      "votes": 231,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO LIBERAL COLOMBIANO",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO CONSERVADOR COLOMBIANO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.75,
+      "needs_review": true
+    },
+    {
+      "party_name": "VOTOS NO MARCADOS",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ASOCIACIÓN DE CABILDOS INDÍGENAS POR COLOMBIA",
+      "party_code": "",
+      "votes": 184,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "DEMOCRACIA DESDE ABAJO LA PA",
+      "party_code": "",
+      "votes": 151,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO INDÍGENA COLOMBIANO P",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\"",
+      "party_code": "",
+      "votes": 156,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MANDATO AMBIENTA",
+      "party_code": "",
+      "votes": 166,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES",
+      "party_code": "",
+      "votes": 167,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 4038,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A _\ni 710595272010111 Ver. 01 Pag: 01 de 11 |\nACTA DE ESCRUTINIO DE LOS |\n| [=] O JURADOS DE VOTACIÓN l |\nMpio DELEGADOS o\nV eE las! ELECCIONES CONGRESO e !\naa BES po 13 DE MARZO DE 2022 uo |\n3 Oro 3;: SENADO !\n| DEPARTAMENTO: 01 - ANTIOQUIA |\n| MUNICIPIO: 001 - MEDELLIN |\n| LUGAR: IE.MARIA DE LOS ANGELES CANO MARQUEZ j\n| ZONA: 01 PUESTO: 03 MESA: 012 y\n| X 6-37-40-19 X 0\nTOTAL TOTAL TOTAL |\nSUFRAGANTES VOTOS VOTOS 0\nFORMATO E-11 EN LA URNA o INCINERADOS | |\n| CIRCUNSCRIPCIÓN NACIONAL |\n| po. LISTA SIN VOTO PREFERENTE OS |\no 5 0013 PARTIDO COMUNES o\n| | 0 o o VOTOS POR LA AGRUPACIÓN POLÍTICA > | lO. (\nCM ro romo? KIT 59,527 cwtz12448 MN\n\n--- PAGE BREAK ---\nA o\n\n| 710595272010211 Ver. 01 Pag: 02 de 11 |\n\n| ACTA DE ESCRUTINIO DE LOS Eta |\n\n[42 pa] JURADOS DE VOTACIÓN\n\n| CRA ELECCIONES CONGRESO\n\nE E == 13 DE MARZO DE 2022 ED\n\nMA E a REGISTRADURÍA (\n\nO Fo sa SENADO Po\n\n| MUNICIPIO: 001 - MEDELLIN\n\nLUGAR: ¡E.MARIA DE LOS ANGELES CANO MARQUEZ\n\n] ZONA: 01 PUESTO: 03 MESA: 012 |\n\n| X 6-37-40-19 X\n\n| | o. LISTACON VOTO PREFERENTE o\n\n| | 0255 - COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA |\n\n( 0 O O 2 ¿=== vorOS SOLO POR LA AGRUPACIÓN POLÍTICA |\n\nA |\n\no, o a o a 7 0% o\n\nO ( 0 a o a o e\n\n0 E O\n\na | o , | o o\n\na | a : A\n\na ap IN\n\nOS : . O o\n\n44 00 A A an EN\n\n45 | | 48 a | o\n\na | V e ! IS |\n\nEN A E.\n\n| A .os . Z\n\no. too! 4 AN e | | | |\na EN Pd > e\n\nE o o\n\nAA ' | | |\n\n| a | ET | a :\n\nÓN | : > 2% :\na a | | EN\n\na AS e el |\n\n| 33 | NR 00 A\n\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS |\n\nMM ro rom sosz7 KIT 59,527 citz12449 MI\n\n--- PAGE BREAK ---\nA\n710595272010311 Ver: 01 Pag: 03 de 11.\n| ACTA DE ESCRUTINIO DE LOS EA |\n| al hi: pl O JURADOS DE VOTACIÓN\n\nMOES ==: SENADO a\n| » . l\n|| MUNICIPIO: 001 - MEDELLIN |\n| LUGAR: ¡E.MARIA DE LOS ANGELES CANO MARQUEZ |\n| ZONA: 01 PUESTO: 03 MESA: 012 |\nX 6-37-40-19 X\n| | 1140 - FUERZA CIUDADANA LA FUERZA DEL CAMBIO\n\n| | | 0 | . o — VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA o\nAS 4 o . o\nDI a | o\nA | OS ÓN\n6 | o - 38. o Ez | | |\n\no A\naa . 83 | A | | | |\nA | OS | 44 | . 18 | o | |\ne E, :\na AS A j o e\nOS OS | a 0 o\nO : o\nA 0 2 o A | o\n5 0 ] a NS Por o |\ne _ e > Ñ A .\na OR : AS\na a o a ON\nOS AS a o\nA | o o 09 |\nCa AT pe\nA . OS NN - o\nON : AN\nATT o\n\n| 30 o . e . o E | : 100 | | o\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS |\n| Ml Na. Form: 59527 KIT 59,527 Civ1212450 Ml\n\n--- PAGE BREAK ---\nA OAAAAAAAAAN DADA _\n7103959272010411 Ver. 01 Pag: 04 de 11 |\n| ACTA DE ESCRUTINIO DE LOS Eta\n[mp e =1 [2] JURADOS DE VOTACIÓN |\n- ES A ELECCIONES CONGRESO\n7 lr 13 DE MARZO DE 2022 -—- |\n| ¿BB Or REGISTRADURÍA |\nMO [cb SENADO NN\n| MUNICIPIO: 001 - MEDELLIN |\n0 LUGAR: JE.MARIA DE LOS ANGELES CANO MARQUEZ\n\nZONA: 04 PUESTO: 03 MESA: 012 |\nX 6-37-40-19 X\n\no LISTA CON VOTO PREFERENTE o\n( AM | 0003 PARTIDO CAMBIO RADICAL o\n| 0 | | o > VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA ñ |\nOS | | a so | | ¡\nDS 0 | l o A o\nMl ll | ES mo | 2% o. |\nUN | | o so | | a o |\nE 0 o\nE o a\no . a 0 o A o\nso ? | .. | | : Lo o\n| o o CS a ) |\nO a A | | .\n| o : a a | 60 o | j |\nE | o o 0 + o\nE ¡ ( 2% o | o Ml | | : |\n| A o ÓN a Lt Ñ | uN\n] aa a o 0 a a . | |\n0 e a LT | a | | (\n\n| mo a po a : |\n| OS Lo a ye | > a | o %\na : OS | : . | á : >\nA o 0 ñ OS Lo os\no OS | . o Si A\nO 2 ON Ñ | Ñ 0 : e o i\ne o e o OS o | a e | |\no : o E o\n| mo Ñ o e + e Ñ o 0 0 |\nA o A\n\n| TOTAL = VOTOS AGRUPACIÓN + YOTOS CANDIDATOS\no LISTA SIN VOTO PREFERENTE o |\n\n| BSOS 1073. MOVIMIENTO NACIONAL SECTOR ORGANIZADO DELA  '\n\n| | 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA _—>\no | OS LISTA SIN VOTO PREFERENTE o UN\n\n| Ca 0019 - PARTIDO NUEVO LIBERALISMO\n\n| | 0 o VOTOS POR LA AGRUPACIÓN POLÍTICA mum»\n\n! Mm rom::0527 KIT 59,527 cirz12451 ME\n\n--- PAGE BREAK ---\nA e\n| 710595272010511 Ver: 01 Pag: 05 de 11 |\nACTA DE ESCRUTINIO DE LOS EA |\n[Ep] JURADOSDE VOTACIÓN 0\nMiras ELECCIONES CONGRESO |\n1 13 DE MARZO DE 2022 2 |\n| -. ci REGISTRADURÍA |\nMN Orla SENADO |\n| MUNICIPIO: 001 - MEDELLIN |\n| LUGAR: IE.MARÍA DE LOS ANGELES CANO MARQUEZ ]\n| ZONA: 01 PUESTO: 03 MESA: 012 |\nX 6-37-40-19 X |\n| hal 1130 | ESTAMOS LISTAS COLOMBIA | |\n| 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA | _—> Tolo ls | |\no, | oo. LISTA SIN VOTO PREFERENTE o\n| YN 1039 | MOVIMIENTO UNITARIO METAPOLITICO | :\n| O VOTOSPOR LA AGRUPACIÓN POLÍTICA rl [a eTo] |\n| |  LISTACON VOTO PREFERENTE | o\n| 0231 COALICIÓN MIRA - COLOMBIA JUSTA LIBRES o\n| 0 | O | Oo AÁ | > VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA | |\n0% | o a o .> | ?\n, oo 4 o 0 o o , | |\n, | a a | | | oa | , | | |\n| a 0 | . | - . o ce 0 CS\n| , Ñ mo . | ., | ] a : e | o\n\n| o 0 E a e | o | : Lo |\n| IBA A |\n\n( O Ñ o 5 hos a a a\n| a 0 | so OS . OS | : |\n1% 0% o a | | | ñ 2 Ñ o |\nOA . | | a o | : . e : > E\n| o a no : 0 o -\n\nso o 0 7 | o | o 00 e | po\na de o a 100 o 2%\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS |\nA KIT 59,527 civrz1za52 MM\n\n--- PAGE BREAK ---\nA _\n| 710595272010611 Ver: 01 Pag: 06 de 11\n| ACTA DE ESCRUTINIO DE LOS EA\n[a] A [m] JURADOS DE VOTACIÓN\nA - ELECCIONES CONGRESO quer |\nEr 13 DE MARZO DE 2022 |\n| REGISTRADURIA\n0 O pri: a SENADO a\n| MUNICIPIO: 9001 - MEDELLIN |\n| LUGAR:",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

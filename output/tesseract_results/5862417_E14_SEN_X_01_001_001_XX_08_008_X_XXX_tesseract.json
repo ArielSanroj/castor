@@ -1,0 +1,86 @@
+{
+  "extraction_id": "1c6464e3",
+  "filename": "5862417_E14_SEN_X_01_001_001_XX_08_008_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 31355,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "IE ANTONIO DERKA",
+  "mesa": "008",
+  "partidos": [
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "0003 PARTIDO CAMBIO",
+      "party_code": "",
+      "votes": 3,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "OMGANIZADO PELA",
+      "party_code": "",
+      "votes": 4073,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MOVINIENTO UNITARIO METAPOLITICO",
+      "party_code": "",
+      "votes": 1039,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "AN, I 0302 MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 7,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "o 0177 PARTIDO INDÍGENA COLOMBIANO P.I.C",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "LISTA CON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 22,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ÁS ' MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA",
+      "party_code": "",
+      "votes": 186,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 6064,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "A\n710595822010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[=] ] pum] JURADOS DE VOTACIÓN\nBEN\nROS ELECCIONES CONGRESO\ne 13 DE MARZO DE 2022\n[m]1ihre a SENADO a\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: IE ANTONIO DERKA\nZONA: 01 PUESTO: 08 MESA: 008\nX 5-86-24-17 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\ny FORMATO E-11 EN LA URNA INCINERADOS\n> LISTA SIN VOTO PREFERENTE o\nA — —LISTA SIN VOTO PREFERENTE\nO: €) 3 0013 | PARTIDO COMUNES\n| | O: VOTOS POR LA AGRUPACIÓN POLÍTICA  mummi>\n|\n|\nMl Ho. Form: 59582 KIT 59,582 Civ1213713 Ml\n\n--- PAGE BREAK ---\nA '\n710595822010211 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS\nIm] oo\", 24: Fu] JURADOS DE VOTACIÓN EA\ne pa DELEGADOS o\ndE. 4 ELECCIONES CONGRESO\nnad ra 13 DE MARZO DE 2022 a\nrr REGISTRADORÍA\nOra ae SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\n| LUGAR: IE ANTONIO DERKA\nZONA: 01 PUESTO: 08 MESA: 008\nX 5-86-24-17 X\n| | 0255 | COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA\na als o\n| O E AS 2 VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\n! ARA AA AMMCIETES\nIEEE IEAMESAZE:\nA RAR A AAA AAN\n2 ARAN ss Air AIRIS\n14 LASA AY os |X\n5 ¿XK LEN TA e2 1%\n5 A e Ce Ye A\n7ixioa1is isiy|6 il >rijx |\n19 \"EE 32 IX AX] ss | ix io\n2 RIAS xx 117 Ax|v\n2 AAA AAA AA\nEJEA SEE\no A A AA ALA\n30 ENTE Ss A ARALAR As\nIMEI 4 A 98 ES\n2 IN ICRE Apo [Ria\n3] AA A HE SS >\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS Alala\nMÍ so rom: so5e2 KIT 59,582 citzrara MM\n\n--- PAGE BREAK ---\nA :\n710595822010311 Ver: 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS 1573\nCm] Ae [a] JURADOS DE VOTACION\n] a\nq ra: DELEGADOS o\nE É ELECCIONES CONGRESO\nA 13 DE MARZO DE 2022 A\nMota: SENADO AOS\n| |\n| DEPARTAMENTO: 01 - ANTIOQUIA\n| MUNICIPIO: 001 - MEDELLIN\nLUGAR: ¡E ANTONIO DERKA\n| ZONA; 01 PUESTO: 08 MESA: 008\nX 5-86-24-17 X\ny LL 7 CIISTA CON VOTO PREFERENTE\n€ | | 1140 | FUERZA CIUDADANA LA FUERZA DEL CAMBIO\nO EX RM 4] <= vorossoLOPORLA AGRUPACIÓN POLÍTICA\no] AOS LN —-\nca Alsa AAA 4 14| Y i4\na e A E pp —Á\nIE dl ¡O A A A.\nIC e E AO E lA Ed\n| O E RO ES TT\nE 2 E A dl 8 DA\n! ) 1 ]\nAAA Aa a\n3 ACA O Al ml jr +\nic A Ya\nls sr Po a lar\no RA El a EA tl ¡y\na AA O E ML Ala\npp o AA\n15 le | > | METETE JS E\nTu SETE E MESPIESIEME bak\nCANETIIMESTENCAEE\n1 j HA CA ARA A AA\nCETES MEMCTETÓS IONCACaES\nAE KISS ACA A 5 AAA\nMESSI EE\nÑ e AAA 5 A Elo A PES\nIMEI MIME SO RAE\no 28 ES A: Al 58 1 pe 2 9% IA\nAAA rs RRA\nAa O AAA\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMl No. Fom: 59582 KIT 59,582 Civ1213715 Ml\n\n--- PAGE BREAK ---\n- '\n710595822010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m]; SE : [m1] JURADOS DE VOTACION\neres : DELEGADOS o\neZ ELECCIONES CONGRESO\naL Nek 13 DEMARZO DE 2022 a\ndea O REQISTRADURIA\nOj SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: IE ANTONIO DERKA\nZONA: 01 PUESTO: 08 MESA: 008\nX 5-86-24-17 X\nO TT UTA CON VOTO PREFERENTE\n| | | E] | 0003 | PARTIDO CAMBIO RADICAL\n12 A NAAA Y ae ESPRES\nLAURA EEE\nA A o AA HAU\nNENE IETERMESTESIMESESES\nMEME TCIAMT EE\nO El a darlos E l_\nCLA AAA ASAA] Ez\nTE yx as ¡alivia tl 7 |\nAAA ya Ñ A *_ sE L\n¡ LAO 48! 82 e\nAAA AAA\n16 ESETES! 50 ¡+ 01 34 GR\nO E E Par\npa Ars AMEN MEMES\n4 FA iXigh os :\ne o IM E\naa A AS EEE\"\nA A AAA A As A\nETE AE EE: lc ME\nA AAA A A A ANA\n212x104 4410 | 8%\n(A LAA AA\nENACINEN ETE Ye E >\nIEMCIETES ERES EIICnEsES\nE poa 60 TE E\nOS O ación | iS rec Te RS A:\nIEA A E A o\n32 Y xix il 65 4 Y Y jj 100 > 3\nA AAA AA\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nOT VISTASIN VOTO PREFERENTE\n| ¡ Dsos | 4073 : A OT OMGANIZADO PELA\nMl 0 V VOTOS POR LA AGRUPACIÓN POLÍTICA —\n! - een. | 0019 [PARTIDO NUEVO LIBERALISMO\n0 | VOTOSPORLA AGRUPACIÓN POLÍTICA do\nMM No. Form: 59582 KIT 59,582 Civi213716 Ml\n\n--- PAGE BREAK ---\n- '\n710595822010511 Ver: 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m]5 E. a JURADOS DE VOTACIÓN\nE LE DELEGADOS a\nPr FI ELECCIONES CONGRESO\nRR 13 DE MARZO DE 2022 a\no REGISTRADIRÍA\nOrd SENADO\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: lE ANTONIO DERKA\nZONA: 01 PUESTO: 08 MESA: 008\nX 5-86-24-17 X\nALT TT MUST SIN VOTO PREFERENTE 7]\n¡ | le dl | 1130 ESTAMOS LISTAS COLOMBIA\n| ] O cta E A\n| 0 | VOTOS POR LA AGRUPACIÓN POLÍTICA \"mm\no] | ds 1039 : MOVINIENTO UNITARIO METAPOLITICO ]\n¡IAEA _  LISTACONVOTO PREFERENTE 2202 0 20 2 2\n| | ira | 0231 ¡ COALICIÓN MIRA - COLOMBIA JUSTA LIBRES\nCa a a a A\nIN, dd MA >\nMA TE E ca 8 Es\n10 E AR] bo jos\nTEE AR\n| 14 EX Al il 39 ¡ASK E] ss (Fido\nOY A AR AA\nAR AF\nCE a\nMICA dd O\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS Xlyga [4\nMl Na. Form: 59582 KIT 59,582 Civ1213717 Mi\n\n--- PAGE BREAK ---\nA !\n710595822010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS Eta\nar e [n] JURADOS DE VOTACIÓN\nMr po . DELEGADOS o\nal MA ELECCIONES CONGRESO\n0d da 13 DE MARZO DE 2022 e\nMoa REGISTRADURÍA\nO SENADO\nDEPARTAMENTO: 04 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: IE ANTONIO DERKA\nZONA: 01 PUESTO: 08 MESA: 008\nX 5-86-24-17 X\no | PA ' 0001 | PARTIDO LIBERAL COLOMBIANO\nAO A AA\nCA AAA + MES\nCATAN ARONA\n(xa 3 44d rn AA\nCS ARA ER O AA\n7 ARA AR | 74 | MA\nA EDS 1 A\na AAA ERE a AUNAR\nCA ARA RN AAA\nARA",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

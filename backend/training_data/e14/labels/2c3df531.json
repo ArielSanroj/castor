@@ -1,0 +1,887 @@
+{
+  "sample_id": "2c3df531",
+  "sha256": "e58d5ef1e38864acb19dad24364bf8232d5de66edf510eb80479a5217662ca3c",
+  "source": "training_data/e14_source/document (3).pdf",
+  "pages": 6,
+  "extraction": {
+    "extraction_id": "e13869b1-3ebc-4296-a047-372369eecc2a",
+    "source_file": "uploaded_bytes",
+    "source_sha256": "e58d5ef1e38864acb19dad24364bf8232d5de66edf510eb80479a5217662ca3c",
+    "extracted_at": "2026-01-23 17:21:26.110215",
+    "model_version": "claude-sonnet-4-20250514",
+    "processing_time_ms": 43676,
+    "header": {
+      "barcode": "740317272010106",
+      "version": null,
+      "page_info": null,
+      "copy_type": "DELEGADOS",
+      "election_name": "ELECCIONES TERRITORIALES",
+      "election_date": "OCTUBRE 29 DE 2023",
+      "corporacion": "CONCEJO",
+      "departamento_code": "19",
+      "departamento_name": "HUILA",
+      "municipio_code": "010",
+      "municipio_name": "AIPE",
+      "lugar": "LA CEJA",
+      "zona": "99",
+      "puesto": "07",
+      "mesa": "001"
+    },
+    "nivelacion": {
+      "total_sufragantes_e11": 236,
+      "total_votos_urna": 236,
+      "total_votos_incinerados": 0,
+      "confidence_sufragantes": 0.95,
+      "confidence_urna": 0.95,
+      "confidence_incinerados": null
+    },
+    "partidos": [
+      {
+        "party_code": "0026",
+        "party_name": "PARTIDO POLÍTICO LA FUERZA DE LA PAZ",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 2,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 9,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 53,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 66,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0011",
+        "party_name": "PARTIDO CENTRO DEMOCRÁTICO",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0003",
+        "party_name": "PARTIDO CAMBIO RADICAL",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 4,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 6,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 18,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0001",
+        "party_name": "PARTIDO LIBERAL COLOMBIANO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 3,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0002",
+        "party_name": "PARTIDO CONSERVADOR COLOMBIANO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 43,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 44,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0021",
+        "party_name": "PARTIDO VERDE OXÍGENO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 7,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0019",
+        "party_name": "PARTIDO NUEVO LIBERALISMO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "6426",
+        "party_name": "HAGAMOSLO YA POR AIPE",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 5,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 8,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0008",
+        "party_name": "PARTIDO DE LA UNIÓN POR LA GENTE - PARTIDO DE LA U",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 2,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 32,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 9,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 23,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 68,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0004",
+        "party_name": "PARTIDO ALIANZA VERDE",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 2,
+        "confidence_total": 0.9,
+        "needs_review": false
+      }
+    ],
+    "votos_especiales": {
+      "votos_blanco": 2,
+      "votos_nulos": 2,
+      "votos_no_marcados": 16,
+      "confidence_blanco": 0.95,
+      "confidence_nulos": 0.95,
+      "confidence_no_marcados": 0.9
+    },
+    "constancias": {
+      "hubo_recuento": null,
+      "recuento_solicitado_por": null,
+      "recuento_en_representacion_de": null,
+      "otras_constancias": null,
+      "num_jurados_firmantes": 6,
+      "jurados_info": []
+    },
+    "overall_confidence": 0.92,
+    "fields_needing_review": 0,
+    "total_pages": 6,
+    "pages_processed": 6
+  },
+  "validation": {
+    "extraction_id": "e13869b1-3ebc-4296-a047-372369eecc2a",
+    "mesa_id": "19-010-99-07-001",
+    "validated_at": "2026-01-23 17:21:26.110593",
+    "validations": [
+      {
+        "rule_id": "NIV_001",
+        "rule_name": "NIVELACION_SUFRAGANTES_VS_URNA",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Sufragantes E-11 (236) ≥ Votos urna (236)",
+        "expected_value": 236,
+        "actual_value": 236,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "SUM_001",
+        "rule_name": "SUMA_VOTOS_IGUAL_URNA",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Suma computada (236) = Urna (236). Delta: 0",
+        "expected_value": 236,
+        "actual_value": 236,
+        "delta": 0,
+        "details": {
+          "total_partidos": 216,
+          "votos_blanco": 2,
+          "votos_nulos": 2,
+          "votos_no_marcados": 16
+        }
+      },
+      {
+        "rule_id": "PARTY_0026",
+        "rule_name": "SUMA_PARTIDO_0026",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO POLÍTICO LA FUERZA DE LA PAZ: Agrupación + Candidatos (66) = Total (66)",
+        "expected_value": 66,
+        "actual_value": 66,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0011",
+        "rule_name": "SUMA_PARTIDO_0011",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO CENTRO DEMOCRÁTICO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0003",
+        "rule_name": "SUMA_PARTIDO_0003",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO CAMBIO RADICAL: Agrupación + Candidatos (18) = Total (18)",
+        "expected_value": 18,
+        "actual_value": 18,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0001",
+        "rule_name": "SUMA_PARTIDO_0001",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO LIBERAL COLOMBIANO: Agrupación + Candidatos (3) = Total (3)",
+        "expected_value": 3,
+        "actual_value": 3,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0002",
+        "rule_name": "SUMA_PARTIDO_0002",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO CONSERVADOR COLOMBIANO: Agrupación + Candidatos (44) = Total (44)",
+        "expected_value": 44,
+        "actual_value": 44,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0021",
+        "rule_name": "SUMA_PARTIDO_0021",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO VERDE OXÍGENO: Agrupación + Candidatos (7) = Total (7)",
+        "expected_value": 7,
+        "actual_value": 7,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0019",
+        "rule_name": "SUMA_PARTIDO_0019",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO NUEVO LIBERALISMO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_6426",
+        "rule_name": "SUMA_PARTIDO_6426",
+        "passed": true,
+        "severity": "INFO",
+        "message": "HAGAMOSLO YA POR AIPE: Agrupación + Candidatos (8) = Total (8)",
+        "expected_value": 8,
+        "actual_value": 8,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0008",
+        "rule_name": "SUMA_PARTIDO_0008",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO DE LA UNIÓN POR LA GENTE - PARTIDO DE LA U: Agrupación + Candidatos (68) = Total (68)",
+        "expected_value": 68,
+        "actual_value": 68,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0004",
+        "rule_name": "SUMA_PARTIDO_0004",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO ALIANZA VERDE: Agrupación + Candidatos (2) = Total (2)",
+        "expected_value": 2,
+        "actual_value": 2,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "EXCEED_001",
+        "rule_name": "VOTOS_NO_EXCEDEN_SUFRAGANTES",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Ningún partido excede sufragantes",
+        "expected_value": null,
+        "actual_value": null,
+        "delta": null,
+        "details": null
+      }
+    ],
+    "all_passed": true,
+    "critical_failures": 0,
+    "high_failures": 0,
+    "medium_failures": 0,
+    "low_failures": 0,
+    "alerts_generated": []
+  },
+  "metadata": {},
+  "ocr_success": true,
+  "ocr_error": null,
+  "processing_time_ms": 50672,
+  "created_at": "2026-01-23T17:21:26.111409",
+  "is_validated": false,
+  "is_corrected": false,
+  "corrections": []
+}

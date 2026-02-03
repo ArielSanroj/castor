@@ -1,0 +1,2309 @@
+{
+  "sample_id": "62f6e797",
+  "sha256": "49fcace8d588ce7b3174bba7f8fc482f2e3c85ca9edd1cd8092fabb2b11e685f",
+  "source": "/Users/arielsanroj/Downloads/1.pdf",
+  "pages": 9,
+  "extraction": {
+    "extraction_id": "1161feaa-9e8b-4bb0-ae9c-039150e03ec8",
+    "source_file": "uploaded_bytes",
+    "source_sha256": "49fcace8d588ce7b3174bba7f8fc482f2e3c85ca9edd1cd8092fabb2b11e685f",
+    "extracted_at": "2026-01-23 15:48:18.577370",
+    "model_version": "claude-sonnet-4-20250514",
+    "processing_time_ms": 117267,
+    "header": {
+      "barcode": "720594291010109",
+      "version": null,
+      "page_info": null,
+      "copy_type": "CLAVEROS",
+      "election_name": "ELECCIONES CONGRESO 13 DE MARZO DE 2022",
+      "election_date": "13 DE MARZO DE 2022",
+      "corporacion": "CAMARA",
+      "departamento_code": "01",
+      "departamento_name": "ANTIOQUIA",
+      "municipio_code": "001",
+      "municipio_name": "MEDELLIN",
+      "lugar": "SEC. ESC. LA ESPERANZA NO 2",
+      "zona": "01",
+      "puesto": "01",
+      "mesa": "001"
+    },
+    "nivelacion": {
+      "total_sufragantes_e11": 90,
+      "total_votos_urna": 90,
+      "total_votos_incinerados": 0,
+      "confidence_sufragantes": 0.95,
+      "confidence_urna": 0.95,
+      "confidence_incinerados": null
+    },
+    "partidos": [
+      {
+        "party_code": "0302",
+        "party_name": "MOVIMIENTO DE SALVACIÓN NACIONAL",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 2,
+        "votos_candidatos": [],
+        "total_votos": 2,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0008",
+        "party_name": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LA U\"",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "114",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "115",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "116",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "117",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 3,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0201",
+        "party_name": "COALICIÓN PARTIDOS CAMBIO RADICAL - COLOMBIA JUSTA LIBRES - MIRA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 3,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "114",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "115",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "116",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "117",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 7,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0004",
+        "party_name": "PARTIDO ALIANZA VERDE",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "114",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "115",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "116",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "117",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 3,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0290",
+        "party_name": "PACTO HISTÓRICO",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 11,
+        "votos_candidatos": [],
+        "total_votos": 11,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0001",
+        "party_name": "PARTIDO LIBERAL COLOMBIANO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "114",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "115",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "116",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "117",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 1,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0002",
+        "party_name": "PARTIDO CONSERVADOR COLOMBIANO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 4,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 4,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 14,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0013",
+        "party_name": "PARTIDO COMUNES",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 1,
+        "votos_candidatos": [],
+        "total_votos": 1,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0011",
+        "party_name": "PARTIDO CENTRO DEMOCRÁTICO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 8,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 21,
+            "confidence": 0.8,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 2,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "114",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "115",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "116",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "117",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 37,
+        "confidence_total": 0.8,
+        "needs_review": true
+      },
+      {
+        "party_code": "0203",
+        "party_name": "COALICIÓN CENTRO ESPERANZA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "TERRITORIAL",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [
+          {
+            "candidate_number": "101",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "102",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "103",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "104",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "105",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "106",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "107",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "108",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "109",
+            "votes": 1,
+            "confidence": 0.9,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "110",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "111",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "112",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "113",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "114",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "115",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "116",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          },
+          {
+            "candidate_number": "117",
+            "votes": 0,
+            "confidence": 1.0,
+            "needs_review": false
+          }
+        ],
+        "total_votos": 1,
+        "confidence_total": 0.9,
+        "needs_review": false
+      },
+      {
+        "party_code": "0167",
+        "party_name": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANICOL",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_INDIGENA",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0188",
+        "party_name": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA \"AICO\"",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_INDIGENA",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0183",
+        "party_name": "CABILDO INDÍGENA AYWAJWASHI",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_INDIGENA",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0182",
+        "party_name": "RESGUARDO INDÍGENA ZENÚ DEL ALTO SAN JORGE",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_INDIGENA",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0186",
+        "party_name": "RESGUARDO INDÍGENA ALTA Y MEDIA GUAJIRA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_INDIGENA",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0158",
+        "party_name": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\"",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_INDIGENA",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0177",
+        "party_name": "PARTIDO INDÍGENA COLOMBIANO P.I.C",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_INDIGENA",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0157",
+        "party_name": "CONSEJO COMUNITARIO MAYOR DE CASIMIRO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0102",
+        "party_name": "SOMOS IDENTIDAD",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0022",
+        "party_name": "CONSEJO COMUNITARIO UNIÓN PATÍA VIEJO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0027",
+        "party_name": "CONSEJO COMUNITARIO BOCAS DEL ATRATO Y LEONCITO",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0058",
+        "party_name": "CONSEJO COMUNITARIO MANUEL ZAPATA OLIVELLA DE SAN ANTERO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0029",
+        "party_name": "AFROMUTATA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0070",
+        "party_name": "FUNDACIÓN PARA EL DESARROLLO SOCIAL DE COMUNIDADES NEGRAS",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0060",
+        "party_name": "CONSEJO COMUNITARIO PUERTO GIRÓN",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0020",
+        "party_name": "ALIANZA NACIONAL AFROCOLOMBIANA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0041",
+        "party_name": "CONSEJO COMUNITARIO LA VOZ DE LOS NEGROS",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0069",
+        "party_name": "FERNANDO RÍOS HIDALGO",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0059",
+        "party_name": "CONSEJO COMUNIT. PIERDAS BACHICHI CORREG. SANTA CECILIA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0045",
+        "party_name": "CONSEJO COMUNITARIO RECUERDO DE NUESTROS ANCESTROS RÍO MEJICANO",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0114",
+        "party_name": "CONSEJO COMUNITARIO DE VUELTA MANZA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0092",
+        "party_name": "CONSEJO COMUNITARIO DE COMUNIDADES NEGRAS SOCOLANDO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0038",
+        "party_name": "CONSEJO COMUNITARIO VEREDAS UNIDAS UN BIEN COMÚN",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0103",
+        "party_name": "CONSEJO COMUNITARIO DE LOS CORREGIMIENTOS DE SAN ANTONIO Y EL CARMEN MUNICIPIO DE EL CERRITO",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0040",
+        "party_name": "CONSEJO COMUNITARIO INTEGRAL DE LLORÓ",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0085",
+        "party_name": "FUNDACIÓN SOCIAL MAGENDÉ MI",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0099",
+        "party_name": "CONSEJO COMUNITARIO AFROZABALETAS",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0100",
+        "party_name": "CORPORACIÓN DE EDUCADORES DEL LITORAL PACÍFICO CORELIPA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0025",
+        "party_name": "CONSEJO COMUNITARIO DE COMUNIDADES NEGRAS DE CAMPO HERMOSO",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0079",
+        "party_name": "CONSEJO COMUNITARIO BOCAS DE TAPARAL",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0078",
+        "party_name": "MOVIMIENTO ALIANZA DEMOCRÁTICA AMPLIA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0021",
+        "party_name": "PALENQUE DE LA VERDAD DE LAS TRECIENTAS Y DEL MUNICIPIO DE GALAPA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0104",
+        "party_name": "CONSEJO COMUNITARIO DEL GUABAL",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0046",
+        "party_name": "CONSEJO COMUNITARIO DE COMUNIDADES NEGRAS DE GUAYABAL",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0077",
+        "party_name": "CONSEJO COMUNITARIO DE LA COMUNIDAD NEGRA DE VILLA GLORIA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0023",
+        "party_name": "CONSEJO COMUNITARIO MAYOR DE CERTEGUI",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0091",
+        "party_name": "CONMOGUZ",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0087",
+        "party_name": "CONSEJO COMUNITARIO ARCILLA, CARBÓN Y TUNA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0116",
+        "party_name": "CORPORACIÓN KOFI ANNAN",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0097",
+        "party_name": "CONSEJO COMUNITARIO DE LA COMUNIDAD NEGRA LIMONES",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0068",
+        "party_name": "CONSEJO COMUNITARIO DEL RÍO GUAJUÍ",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0037",
+        "party_name": "CONSEJO COMUNITARIO DE LA COSTA PACÍFICA \"CONCOSTA\"",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0042",
+        "party_name": "CONSEJO COMUNITARIO ALTO PARAÍSO",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0039",
+        "party_name": "CONSEJO MAYOR CONDOTO IRÓ",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0093",
+        "party_name": "COMUNIDAD DE NEGROS DE AGUAS BLANCAS",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0084",
+        "party_name": "ODEPRIVICON",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0089",
+        "party_name": "COACNEJA",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0081",
+        "party_name": "CONSEJO COMUNITARIO DE FLAMENCO - MUNICIPIO DE MARÍA LA BAJA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0101",
+        "party_name": "ASOC. AFROCOL. DESPLAZADOS MCPIO. GUACARI VALLE DEL CAUCA \"ADAC\"",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0043",
+        "party_name": "ORGANIZACIÓN ÉTNICA DE COMUNIDADES AFROS LOS PALENKES",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0067",
+        "party_name": "C.C.L.A TOMA",
+        "party_logo_detected": false,
+        "list_type": "CON_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0112",
+        "party_name": "CONSEJO COMUNITARIO RESCATE LAS VARAS",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0028",
+        "party_name": "ASOCIACIÓN AFRODESCENDIENTES DE ARBOLETES \"AFRODESAR\"",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0057",
+        "party_name": "PARTIDO COLOMBIA RENACIENTE",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      },
+      {
+        "party_code": "0044",
+        "party_name": "CONSEJO COMUNITARIO RÍO CURBARADÓ",
+        "party_logo_detected": false,
+        "list_type": "SIN_VOTO_PREFERENTE",
+        "circunscripcion": "ESPECIAL_AFRO",
+        "votos_agrupacion": 0,
+        "votos_candidatos": [],
+        "total_votos": 0,
+        "confidence_total": 1.0,
+        "needs_review": false
+      }
+    ],
+    "votos_especiales": {
+      "votos_blanco": 3,
+      "votos_nulos": 3,
+      "votos_no_marcados": 18,
+      "confidence_blanco": 0.9,
+      "confidence_nulos": 0.9,
+      "confidence_no_marcados": 0.9
+    },
+    "constancias": {
+      "hubo_recuento": false,
+      "recuento_solicitado_por": null,
+      "recuento_en_representacion_de": null,
+      "otras_constancias": null,
+      "num_jurados_firmantes": 6,
+      "jurados_info": []
+    },
+    "overall_confidence": 0.88,
+    "fields_needing_review": 1,
+    "total_pages": 9,
+    "pages_processed": 9
+  },
+  "validation": {
+    "extraction_id": "1161feaa-9e8b-4bb0-ae9c-039150e03ec8",
+    "mesa_id": "01-001-01-01-001",
+    "validated_at": "2026-01-23 15:48:18.577806",
+    "validations": [
+      {
+        "rule_id": "NIV_001",
+        "rule_name": "NIVELACION_SUFRAGANTES_VS_URNA",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Sufragantes E-11 (90) ≥ Votos urna (90)",
+        "expected_value": 90,
+        "actual_value": 90,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "SUM_001",
+        "rule_name": "SUMA_VOTOS_IGUAL_URNA",
+        "passed": false,
+        "severity": "HIGH",
+        "message": "Suma computada (104) ≠ Urna (90). Delta: 14",
+        "expected_value": 90,
+        "actual_value": 104,
+        "delta": 14,
+        "details": {
+          "total_partidos": 80,
+          "votos_blanco": 3,
+          "votos_nulos": 3,
+          "votos_no_marcados": 18
+        }
+      },
+      {
+        "rule_id": "PARTY_0302",
+        "rule_name": "SUMA_PARTIDO_0302",
+        "passed": true,
+        "severity": "INFO",
+        "message": "MOVIMIENTO DE SALVACIÓN NACIONAL: Agrupación + Candidatos (2) = Total (2)",
+        "expected_value": 2,
+        "actual_value": 2,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0008",
+        "rule_name": "SUMA_PARTIDO_0008",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LA U\": Agrupación + Candidatos (3) = Total (3)",
+        "expected_value": 3,
+        "actual_value": 3,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0201",
+        "rule_name": "SUMA_PARTIDO_0201",
+        "passed": true,
+        "severity": "INFO",
+        "message": "COALICIÓN PARTIDOS CAMBIO RADICAL - COLOMBIA JUSTA LIBRES - MIRA: Agrupación + Candidatos (7) = Total (7)",
+        "expected_value": 7,
+        "actual_value": 7,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0004",
+        "rule_name": "SUMA_PARTIDO_0004",
+        "passed": false,
+        "severity": "MEDIUM",
+        "message": "PARTIDO ALIANZA VERDE: Agrupación + Candidatos (2) ≠ Total (3)",
+        "expected_value": 2,
+        "actual_value": 3,
+        "delta": 1,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0290",
+        "rule_name": "SUMA_PARTIDO_0290",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PACTO HISTÓRICO: Agrupación + Candidatos (11) = Total (11)",
+        "expected_value": 11,
+        "actual_value": 11,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0001",
+        "rule_name": "SUMA_PARTIDO_0001",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO LIBERAL COLOMBIANO: Agrupación + Candidatos (1) = Total (1)",
+        "expected_value": 1,
+        "actual_value": 1,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0002",
+        "rule_name": "SUMA_PARTIDO_0002",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO CONSERVADOR COLOMBIANO: Agrupación + Candidatos (14) = Total (14)",
+        "expected_value": 14,
+        "actual_value": 14,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0013",
+        "rule_name": "SUMA_PARTIDO_0013",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO COMUNES: Agrupación + Candidatos (1) = Total (1)",
+        "expected_value": 1,
+        "actual_value": 1,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0011",
+        "rule_name": "SUMA_PARTIDO_0011",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO CENTRO DEMOCRÁTICO: Agrupación + Candidatos (37) = Total (37)",
+        "expected_value": 37,
+        "actual_value": 37,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0203",
+        "rule_name": "SUMA_PARTIDO_0203",
+        "passed": true,
+        "severity": "INFO",
+        "message": "COALICIÓN CENTRO ESPERANZA: Agrupación + Candidatos (1) = Total (1)",
+        "expected_value": 1,
+        "actual_value": 1,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0167",
+        "rule_name": "SUMA_PARTIDO_0167",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ASOCIACIÓN NACIONAL DE CABILDOS Y AUTORIDADES INDÍGENAS EN COLOMBIA ANICOL: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0188",
+        "rule_name": "SUMA_PARTIDO_0188",
+        "passed": true,
+        "severity": "INFO",
+        "message": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA \"AICO\": Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0183",
+        "rule_name": "SUMA_PARTIDO_0183",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CABILDO INDÍGENA AYWAJWASHI: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0182",
+        "rule_name": "SUMA_PARTIDO_0182",
+        "passed": true,
+        "severity": "INFO",
+        "message": "RESGUARDO INDÍGENA ZENÚ DEL ALTO SAN JORGE: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0186",
+        "rule_name": "SUMA_PARTIDO_0186",
+        "passed": true,
+        "severity": "INFO",
+        "message": "RESGUARDO INDÍGENA ALTA Y MEDIA GUAJIRA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0158",
+        "rule_name": "SUMA_PARTIDO_0158",
+        "passed": true,
+        "severity": "INFO",
+        "message": "MOVIMIENTO ALTERNATIVO INDÍGENA SOCIAL \"MAIS\": Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0177",
+        "rule_name": "SUMA_PARTIDO_0177",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO INDÍGENA COLOMBIANO P.I.C: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0157",
+        "rule_name": "SUMA_PARTIDO_0157",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO MAYOR DE CASIMIRO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0102",
+        "rule_name": "SUMA_PARTIDO_0102",
+        "passed": true,
+        "severity": "INFO",
+        "message": "SOMOS IDENTIDAD: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0022",
+        "rule_name": "SUMA_PARTIDO_0022",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO UNIÓN PATÍA VIEJO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0027",
+        "rule_name": "SUMA_PARTIDO_0027",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO BOCAS DEL ATRATO Y LEONCITO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0058",
+        "rule_name": "SUMA_PARTIDO_0058",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO MANUEL ZAPATA OLIVELLA DE SAN ANTERO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0029",
+        "rule_name": "SUMA_PARTIDO_0029",
+        "passed": true,
+        "severity": "INFO",
+        "message": "AFROMUTATA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0070",
+        "rule_name": "SUMA_PARTIDO_0070",
+        "passed": true,
+        "severity": "INFO",
+        "message": "FUNDACIÓN PARA EL DESARROLLO SOCIAL DE COMUNIDADES NEGRAS: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0060",
+        "rule_name": "SUMA_PARTIDO_0060",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO PUERTO GIRÓN: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0020",
+        "rule_name": "SUMA_PARTIDO_0020",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ALIANZA NACIONAL AFROCOLOMBIANA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0041",
+        "rule_name": "SUMA_PARTIDO_0041",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO LA VOZ DE LOS NEGROS: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0069",
+        "rule_name": "SUMA_PARTIDO_0069",
+        "passed": true,
+        "severity": "INFO",
+        "message": "FERNANDO RÍOS HIDALGO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0059",
+        "rule_name": "SUMA_PARTIDO_0059",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNIT. PIERDAS BACHICHI CORREG. SANTA CECILIA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0045",
+        "rule_name": "SUMA_PARTIDO_0045",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO RECUERDO DE NUESTROS ANCESTROS RÍO MEJICANO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0114",
+        "rule_name": "SUMA_PARTIDO_0114",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DE VUELTA MANZA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0092",
+        "rule_name": "SUMA_PARTIDO_0092",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DE COMUNIDADES NEGRAS SOCOLANDO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0038",
+        "rule_name": "SUMA_PARTIDO_0038",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO VEREDAS UNIDAS UN BIEN COMÚN: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0103",
+        "rule_name": "SUMA_PARTIDO_0103",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DE LOS CORREGIMIENTOS DE SAN ANTONIO Y EL CARMEN MUNICIPIO DE EL CERRITO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0040",
+        "rule_name": "SUMA_PARTIDO_0040",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO INTEGRAL DE LLORÓ: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0085",
+        "rule_name": "SUMA_PARTIDO_0085",
+        "passed": true,
+        "severity": "INFO",
+        "message": "FUNDACIÓN SOCIAL MAGENDÉ MI: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0099",
+        "rule_name": "SUMA_PARTIDO_0099",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO AFROZABALETAS: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0100",
+        "rule_name": "SUMA_PARTIDO_0100",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CORPORACIÓN DE EDUCADORES DEL LITORAL PACÍFICO CORELIPA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0025",
+        "rule_name": "SUMA_PARTIDO_0025",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DE COMUNIDADES NEGRAS DE CAMPO HERMOSO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0079",
+        "rule_name": "SUMA_PARTIDO_0079",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO BOCAS DE TAPARAL: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0078",
+        "rule_name": "SUMA_PARTIDO_0078",
+        "passed": true,
+        "severity": "INFO",
+        "message": "MOVIMIENTO ALIANZA DEMOCRÁTICA AMPLIA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0021",
+        "rule_name": "SUMA_PARTIDO_0021",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PALENQUE DE LA VERDAD DE LAS TRECIENTAS Y DEL MUNICIPIO DE GALAPA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0104",
+        "rule_name": "SUMA_PARTIDO_0104",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DEL GUABAL: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0046",
+        "rule_name": "SUMA_PARTIDO_0046",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DE COMUNIDADES NEGRAS DE GUAYABAL: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0077",
+        "rule_name": "SUMA_PARTIDO_0077",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DE LA COMUNIDAD NEGRA DE VILLA GLORIA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0023",
+        "rule_name": "SUMA_PARTIDO_0023",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO MAYOR DE CERTEGUI: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0091",
+        "rule_name": "SUMA_PARTIDO_0091",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONMOGUZ: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0087",
+        "rule_name": "SUMA_PARTIDO_0087",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO ARCILLA, CARBÓN Y TUNA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0116",
+        "rule_name": "SUMA_PARTIDO_0116",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CORPORACIÓN KOFI ANNAN: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0097",
+        "rule_name": "SUMA_PARTIDO_0097",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DE LA COMUNIDAD NEGRA LIMONES: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0068",
+        "rule_name": "SUMA_PARTIDO_0068",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DEL RÍO GUAJUÍ: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0037",
+        "rule_name": "SUMA_PARTIDO_0037",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DE LA COSTA PACÍFICA \"CONCOSTA\": Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0042",
+        "rule_name": "SUMA_PARTIDO_0042",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO ALTO PARAÍSO: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0039",
+        "rule_name": "SUMA_PARTIDO_0039",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO MAYOR CONDOTO IRÓ: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0093",
+        "rule_name": "SUMA_PARTIDO_0093",
+        "passed": true,
+        "severity": "INFO",
+        "message": "COMUNIDAD DE NEGROS DE AGUAS BLANCAS: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0084",
+        "rule_name": "SUMA_PARTIDO_0084",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ODEPRIVICON: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0089",
+        "rule_name": "SUMA_PARTIDO_0089",
+        "passed": true,
+        "severity": "INFO",
+        "message": "COACNEJA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0081",
+        "rule_name": "SUMA_PARTIDO_0081",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO DE FLAMENCO - MUNICIPIO DE MARÍA LA BAJA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0101",
+        "rule_name": "SUMA_PARTIDO_0101",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ASOC. AFROCOL. DESPLAZADOS MCPIO. GUACARI VALLE DEL CAUCA \"ADAC\": Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0043",
+        "rule_name": "SUMA_PARTIDO_0043",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ORGANIZACIÓN ÉTNICA DE COMUNIDADES AFROS LOS PALENKES: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0067",
+        "rule_name": "SUMA_PARTIDO_0067",
+        "passed": true,
+        "severity": "INFO",
+        "message": "C.C.L.A TOMA: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0112",
+        "rule_name": "SUMA_PARTIDO_0112",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO RESCATE LAS VARAS: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0028",
+        "rule_name": "SUMA_PARTIDO_0028",
+        "passed": true,
+        "severity": "INFO",
+        "message": "ASOCIACIÓN AFRODESCENDIENTES DE ARBOLETES \"AFRODESAR\": Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0057",
+        "rule_name": "SUMA_PARTIDO_0057",
+        "passed": true,
+        "severity": "INFO",
+        "message": "PARTIDO COLOMBIA RENACIENTE: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "PARTY_0044",
+        "rule_name": "SUMA_PARTIDO_0044",
+        "passed": true,
+        "severity": "INFO",
+        "message": "CONSEJO COMUNITARIO RÍO CURBARADÓ: Agrupación + Candidatos (0) = Total (0)",
+        "expected_value": 0,
+        "actual_value": 0,
+        "delta": 0,
+        "details": null
+      },
+      {
+        "rule_id": "EXCEED_001",
+        "rule_name": "VOTOS_NO_EXCEDEN_SUFRAGANTES",
+        "passed": true,
+        "severity": "INFO",
+        "message": "Ningún partido excede sufragantes",
+        "expected_value": null,
+        "actual_value": null,
+        "delta": null,
+        "details": null
+      }
+    ],
+    "all_passed": false,
+    "critical_failures": 0,
+    "high_failures": 1,
+    "medium_failures": 1,
+    "low_failures": 0,
+    "alerts_generated": [
+      "HIGH: SUMA_VOTOS_IGUAL_URNA - Suma computada (104) ≠ Urna (90). Delta: 14",
+      "MEDIUM: SUMA_PARTIDO_0004 - PARTIDO ALIANZA VERDE: Agrupación + Candidatos (2) ≠ Total (3)"
+    ]
+  },
+  "metadata": {},
+  "ocr_success": true,
+  "ocr_error": null,
+  "processing_time_ms": 120012,
+  "created_at": "2026-01-23T15:48:18.579654",
+  "is_validated": false,
+  "is_corrected": false,
+  "corrections": []
+}

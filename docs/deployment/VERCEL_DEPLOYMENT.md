@@ -22,7 +22,7 @@ This guide explains how to deploy the frontend to Vercel while using ngrok for t
 
 2. Authenticate ngrok:
    ```bash
-   ngrok config add-authtoken ***REMOVED***
+   ngrok config add-authtoken 2mtkS18m9XOwl8cFgBxpWHyXgio_4wLygqUmXu7Fqz43DhN2w
    ```
 
 3. Start ngrok tunnel:

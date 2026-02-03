@@ -1,0 +1,79 @@
+{
+  "extraction_id": "f3c93989",
+  "filename": "8988113_E14_SEN_X_01_001_001_XX_02_040_X_XXX (1).pdf",
+  "success": true,
+  "processing_time_ms": 26165,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "INST.EDUC. LA CANDELARIA",
+  "mesa": "040",
+  "partidos": [
+    {
+      "party_name": "SÍ 0013 PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "SL, 0 PARTIDO CAMBIO",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ll. 0019 PARTIDO NUEVO LBERALINO",
+      "party_code": "",
+      "votes": 19,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "po és 1188 MOVIMIENTO GENTE NUEVA",
+      "party_code": "",
+      "votes": 1188,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "0302 MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "UNION POR LA GENTE “PARTIDO DE LA U\"",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "BE: 0292 PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 292,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 2955,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "- :\n710595042010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS\nSt AA JURADOS DE VOTACION\nolas LA ELECCIONES CONGRESO q,\nESA 13 DE MARZO DE 2022 [e\nqu! 0, REGISTRADURÍA\nOk bi SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA; 040\nX 8-98-81-13 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\nNe 15| ANIS IS. a a\nA — LISTA SIN VOTO PREFERENTE |\nSÍ 0013 PARTIDO COMUNES\nN 0 . VOTOS POR LA AGRUPACIÓN POLÍTICA > —|— A\n|\n|\n|\n|\n|\n|\nM Elo. Form: 59504 KIT 59,504 Civ1211919 0]\n\n--- PAGE BREAK ---\nA :\n710595042010211 Ver 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS CEA\n[m]- PE [=] JURADOS DE VOTACION\ne ciao\nLA =L: REGISTRADURÍA\nOl SENADO “emma\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 040\nX 8-98-81-13 X\no LISTACON VOTO PREFERENTE\nBl 0255 | SOALICIÓNALANZA VERDE Y CENTRO ESPERANZA\nal [Ll a 68 A\nca ol -- 36 — loz o\na ll] 37 + loz o\nso 38 —- loza MN\n6 . 39 — A 73 --\nlr eo za\na —i— > 41 EN - .\n9 42 76\n| 13 o NS - IE go\na Als — 8\n| 15 | 48 — 82\n| 18 51 85\nEE\nLA fs] Ss\n23 56 o 90\nIpaoshEsE\n25 58 — 92 MN\n25 - ss | — E i—Á+ —\n27 NS o q 94 o\ns PTA TRI AT\n32 65 o 99\n3 NN 67 —— 100. o\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS —=>lL\nMo rom: 5950: KIT 59,504 Civ1211920\n\n--- PAGE BREAK ---\n- :\n10595042010311 Ver: 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS (EA\no*=20 JURADOS DE VOTACIÓN\n: z de ELECCIONES CONGRESO\nq Re 13 DE MARZO DE 2022\nlo REGISTRADURÍA\nOia SENADO SAI\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 040\nXA 8-98-81-13 AX\no a. A LISTACON VOTO PREFERENTE\n1140 | FUERZA CIUDADANA LA FUERZA DEL CAMBIO\no DN o TS VOTOS SOLO PORLA AGRUPACIÓN POLÍTICA\nas —=l|Hl sa eN es | |\n2 lo 33 Moa lo y\n4 36 — 67\n5 | : 37 -- | 69\n6 38 no\nf o o 40 o 72\n| 8 | : 41 73\n30 | - 43 mr |\nup adnE\n| 15 47 81 o!\n| 17 o 50 o o 83 --\n| 18 51 2 84\n| 20 53 MS 86 o\n| 7 — 54 NN 87 o\n¡ 22 o 55 BB — Ñ o\n| 24 — 57 NN 390 . .\n! Nr o 58 91 | |\n: E — 5 ++ E\na ol]: o E -\nIN O E A oo\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS L— E J6 |\nMM No. Form: 59504 KIT 59,504 Civ1211921 Ml\n\n--- PAGE BREAK ---\nA '\n|\n710595042010411 Ver. 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA\nO de [m] JURADOS DE VOTACION\nPr ma []\nlay DELEGADOS ]\nea: HL ELECCIONES CONGRESO Ll\ngar 13 DE MARZO DE 2022 =\nOp adas: SENADO A\n| DEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\n| LUGAR: INST.EDUC, LA CANDELARIA\n| ZONA: 01 PUESTO: 02 MESA: 040\nX 8-98-81-13 A\n| O LISTACON VOTO PREFERENTE\n| SL, | 0 PARTIDO CAMBIO RADICAL\n| a l_ÍI_ o : 69\nE E\n| 5 39 o 73\n| 6 40 IN 74\n| A PT AM 41 75\n0 8 42 76\n¡ 9 43 77\n| 10 44 o 78\nO A Il as o 79\n13 47 81\n14 48 — 82 NN\n' 15 49 o 83 NN\n[as ls [| | j [es\n| 17 51 85 2\n| 18 52 NS 86\n19 53 o 87 IN\na 10 00 O CO EE\nME 3 AO O CI O\nMA A O CO O EC E\n23 57 NN 91\n20 0 O E A CO\n23 — —\nCO NC E\n: 38 00100 00 EC 0\n5 TT A\nq 64 NS 99\n32 | 66 o 400\n3 68\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA mmm»\nll=. | 0019 | PARTIDO NUEVO LBERALINO\no ] VOTOS POR LA AGRUPACIÓN POLÍTICA mul :\nMo om: 50503 KIT 59,504 civtzr1o22 MM\n\n--- PAGE BREAK ---\nA :\n710595042010511 Ver 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[E]; [m] , ¿URADOSDE VOTACIÓN\n: 3 ELECCIONES CONGRESO\n3 =. 13 DE MARZO DE 2022\nE REGISTRADURÍA\nOp : SENADO\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 040\nX 8-98-81-13 X\n| y 1130 ESTAMOS LISTAS COLOMBIA\n| : o VOTOS POR LA AGRUPACIÓN POLÍTICA _—> ] —i- ly\nEN 1039 HowTo UNITARIO METAPOLITICO\n| | — -_  LISTACON VOTO PREFERENTE A\n| Ei 0231 | COALICIÓN MIRA +» COLOMBIA JUSTA LIBRES\n¡ 2 — A 24 o\ni A A] 26 NS o 57\nos | -- [e] ca -—\n: 7 30 63\ng 33 MN 67 IN\n40. Ml 35 09 Pp]\n13 38 NN 73\n15 Tf\napa\nME O IE Ñ\nA MI do\n20 o 87 NN 90 NN\n1 21 <= — 100 IS\n] 2 50 NM o\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [— LL [3 |\nMI no rom: soso KIT 59,504 Civ1211923 mM\n\n--- PAGE BREAK ---\n- '\n7 0595042010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[es] JURADOS DE VOTACIÓN\nLH\nLe n= DELEGADOS _\nOLA: ELECCIONES CONGRESO\nE a Te. 13 DE MARZO DE 2022 “ss\nOro SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARÍA\nZONA: 01 PUESTO: 02 MESA: 040\nX 8-98-81-13 X\nPl HISTACON VOTO PREFERENTE\n| ALZA: 0001 [pannoo LIBERAL COLOMBIANO\no = —| 2] € votos soLOPORLA AGRUPACIÓN POLÍTICA\n2 | 36 | 69 T\n3 37 0\n4 38 7 71 |\npol * | Ar TN\n6 0 | 73 | |\nA A A A 74 |\n8 | 42 7 75\n9 | | 43 76\n10 — 84 77\n12 46 79 |\n7 Al ar lo | 80 o\n15; 0 | 49 82 al do\n16 50 83 | | |\n| 19 PL 53 ¡86 |\ny = o - _— - e A E ñ — + — o\nES E ml * 1 IES V\ne 5 0 o |\n0 24 O O IN y O\n0 25 58 91 o\ni 26 59 o 92. |\na 0 sl\ni 29 o | 62 | L 95 ol\nola 7 O Ñ 97 y\n33 A E 66 7 ] IM ot | ¡ |\nA O a A\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS (115\npo | és 1188 | MOVIMIENTO GENTE NUEVA\nE | | EN | 0302 | MOVIMIENTO DE SALVACIÓN NACIONAL\n| MI no. som: 59503 KIT 59,504 civizi19z4 MM\n\n--- PAGE BREAK ---\nA :\n710999042010711 Ver. 01 Pag: 07 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[Pam]",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

@@ -1,0 +1,155 @@
+{
+  "version": "1.0",
+  "created_at": "2026-01-23T15:46:18.566989",
+  "samples": [
+    {
+      "sample_id": "62f6e797",
+      "sha256": "49fcace8d588ce7b3174bba7f8fc482f2e3c85ca9edd1cd8092fabb2b11e685f",
+      "source": "/Users/arielsanroj/Downloads/1.pdf",
+      "pages": 9,
+      "images": [
+        "training_data/e14/images/62f6e797_page_01.png",
+        "training_data/e14/images/62f6e797_page_02.png",
+        "training_data/e14/images/62f6e797_page_03.png",
+        "training_data/e14/images/62f6e797_page_04.png",
+        "training_data/e14/images/62f6e797_page_05.png",
+        "training_data/e14/images/62f6e797_page_06.png",
+        "training_data/e14/images/62f6e797_page_07.png",
+        "training_data/e14/images/62f6e797_page_08.png",
+        "training_data/e14/images/62f6e797_page_09.png"
+      ],
+      "label": "training_data/e14/labels/62f6e797.json",
+      "ocr_success": true,
+      "is_validated": false,
+      "created_at": "2026-01-23T15:48:18.584723"
+    },
+    {
+      "sample_id": "d5290457",
+      "sha256": "c359a187b2e0430646304f8d3c29b2546c76047bce47c483c58b7d90bacb9607",
+      "source": "training_data/e14_source/document.pdf",
+      "pages": 2,
+      "images": [
+        "training_data/e14/images/d5290457_page_01.png",
+        "training_data/e14/images/d5290457_page_02.png"
+      ],
+      "label": "training_data/e14/labels/d5290457.json",
+      "ocr_success": true,
+      "is_validated": false,
+      "created_at": "2026-01-23T17:16:55.826356"
+    },
+    {
+      "sample_id": "6890f385",
+      "sha256": "b5f2e0b55e8bb966b7876812662e0efbabf76a2a856835adb0ddd7ba9a32ad2f",
+      "source": "training_data/e14_source/document (1).pdf",
+      "pages": 2,
+      "images": [
+        "training_data/e14/images/6890f385_page_01.png",
+        "training_data/e14/images/6890f385_page_02.png"
+      ],
+      "label": "training_data/e14/labels/6890f385.json",
+      "ocr_success": true,
+      "is_validated": false,
+      "created_at": "2026-01-23T17:17:21.280023"
+    },
+    {
+      "sample_id": "70c56f07",
+      "sha256": "5d77231127e2d77f4e71381ff23cfaff3bfc9dce2b81ec5eab021e41cb246bae",
+      "source": "training_data/e14_source/document (6).pdf",
+      "pages": 1,
+      "images": [
+        "training_data/e14/images/70c56f07_page_01.png"
+      ],
+      "label": "training_data/e14/labels/70c56f07.json",
+      "ocr_success": true,
+      "is_validated": false,
+      "created_at": "2026-01-23T17:17:39.305588"
+    },
+    {
+      "sample_id": "93d8813b",
+      "sha256": "4b66bbeb69cf28bab9516e3530c0c18c87793fed8f0b30e3948b75fd21281a2e",
+      "source": "training_data/e14_source/document (7).pdf",
+      "pages": 6,
+      "images": [
+        "training_data/e14/images/93d8813b_page_01.png",
+        "training_data/e14/images/93d8813b_page_02.png",
+        "training_data/e14/images/93d8813b_page_03.png",
+        "training_data/e14/images/93d8813b_page_04.png",
+        "training_data/e14/images/93d8813b_page_05.png",
+        "training_data/e14/images/93d8813b_page_06.png"
+      ],
+      "label": "training_data/e14/labels/93d8813b.json",
+      "ocr_success": true,
+      "is_validated": false,
+      "created_at": "2026-01-23T17:18:43.599173"
+    },
+    {
+      "sample_id": "9a1de66a",
+      "sha256": "701683785b61f301c384846425ed6350e0483b6fcc5da3753a12ac8807490ba1",
+      "source": "training_data/e14_source/document (4).pdf",
+      "pages": 5,
+      "images": [
+        "training_data/e14/images/9a1de66a_page_01.png",
+        "training_data/e14/images/9a1de66a_page_02.png",
+        "training_data/e14/images/9a1de66a_page_03.png",
+        "training_data/e14/images/9a1de66a_page_04.png",
+        "training_data/e14/images/9a1de66a_page_05.png"
+      ],
+      "label": "training_data/e14/labels/9a1de66a.json",
+      "ocr_success": true,
+      "is_validated": false,
+      "created_at": "2026-01-23T17:19:36.517039"
+    },
+    {
+      "sample_id": "b7ed672a",
+      "sha256": "4d48299e99fa782b5053d8c8cbf3ac8355d070e4164634521a5e2585ebd3b719",
+      "source": "training_data/e14_source/document (5).pdf",
+      "pages": 2,
+      "images": [
+        "training_data/e14/images/b7ed672a_page_01.png",
+        "training_data/e14/images/b7ed672a_page_02.png"
+      ],
+      "label": "training_data/e14/labels/b7ed672a.json",
+      "ocr_success": false,
+      "is_validated": false,
+      "created_at": "2026-01-23T17:20:08.203229"
+    },
+    {
+      "sample_id": "bb2a3f97",
+      "sha256": "2f4213f51c1688fc06bb28f60cf76d7b82bef2407d23ba467bcbd4a964e65c49",
+      "source": "training_data/e14_source/document (2).pdf",
+      "pages": 2,
+      "images": [
+        "training_data/e14/images/bb2a3f97_page_01.png",
+        "training_data/e14/images/bb2a3f97_page_02.png"
+      ],
+      "label": "training_data/e14/labels/bb2a3f97.json",
+      "ocr_success": false,
+      "is_validated": false,
+      "created_at": "2026-01-23T17:20:35.433436"
+    },
+    {
+      "sample_id": "2c3df531",
+      "sha256": "e58d5ef1e38864acb19dad24364bf8232d5de66edf510eb80479a5217662ca3c",
+      "source": "training_data/e14_source/document (3).pdf",
+      "pages": 6,
+      "images": [
+        "training_data/e14/images/2c3df531_page_01.png",
+        "training_data/e14/images/2c3df531_page_02.png",
+        "training_data/e14/images/2c3df531_page_03.png",
+        "training_data/e14/images/2c3df531_page_04.png",
+        "training_data/e14/images/2c3df531_page_05.png",
+        "training_data/e14/images/2c3df531_page_06.png"
+      ],
+      "label": "training_data/e14/labels/2c3df531.json",
+      "ocr_success": true,
+      "is_validated": false,
+      "created_at": "2026-01-23T17:21:26.113505"
+    }
+  ],
+  "stats": {
+    "total": 9,
+    "validated": 0,
+    "corrected": 0
+  },
+  "updated_at": "2026-01-23T17:21:26.113523"
+}

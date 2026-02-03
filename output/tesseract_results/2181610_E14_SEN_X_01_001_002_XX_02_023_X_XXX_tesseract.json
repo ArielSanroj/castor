@@ -1,0 +1,79 @@
+{
+  "extraction_id": "8f9cc2a4",
+  "filename": "2181610_E14_SEN_X_01_001_002_XX_02_023_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 27633,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "02",
+  "puesto": "SEC. ESC. DIVINA PROVIDENCIA",
+  "mesa": "023",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO LIBERAL COLOMBIANO",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO GENTE NUEVA",
+      "party_code": "",
+      "votes": 1108,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "0302 MOVIMIENTO DE SALVACIÓN",
+      "party_code": "",
+      "votes": 302,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "PARTIDO CONSERVADOR COLOMBIANO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LA 1\"",
+      "party_code": "",
+      "votes": 1,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "MOVIMIENTO AUTORIDADES INDÍGENAS DE COLOMBIA",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    }
+  ],
+  "total_votos": 2569,
+  "votos_blancos": 0,
+  "votos_nulos": 0,
+  "confidence": 1.0,
+  "raw_text": "- an :\n710596762010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS Eta\n[m1] : nm] JURADOS DE VOTACION\nor] DELEGADOS Zo\nqe q +BEA ELECCIONES CONGRESO PE\nMEE 13 DE MARZO DE 2022 5\nPEF O REGISTRADURÍA\nOla dr: SENADO Peon\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO: 02 MESA; 023\nX 2-18-16-10 AX\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\n| K\nFE 020 + CIRCUNSCRIPCIÓN NACIONAL === 0\n3 4\n| 0013 | PARTIDO COMUNES\nO A\n0, VOTOS POR LA AGRUPACIÓN POLÍTICA mum — EA\n,\n|\n|\nÍ\n|\n?\n|\n|\n:\n|\n! Ml No. Form: 59678 KIT 59,676 Civ1215975 MM\n\n--- PAGE BREAK ---\n- '\n7105967620102711 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\na JURADOS DE VOTACION\nE Sa a TERENTTE e\na El REGISTRADURÍA\nOp da SENADO eme\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO: 02 MESA: 023\nX 2-18-16-10 X\na ISTACON VOTO PREFERENTE\n| D255 | SOALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA\n0 Ni e VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nma\nSETS O E ENS E\nMC E 7\nHA E CID\n+ ad\n== HA MICA\n1] soi\nA 18 ||\nAN SR E\nEHH\nMC A\nE EA EC\nas |] fea] | |.\n] o <> es 1 [| |\n| je HA solo]\n| O CS\n| O IC\nUI O CE\n| se |- ¡[1 os] | |\nA 5 | a pop |\n| DO E A CI E\n| IO\n! o A ss po]\n| so | a |||\n| !\nIC as |\npo [elo as pl\nAO o E\ni 64 98 NN\nles HET\nTE EA CA\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS li 16\nMl No. Form: 59676 KIT 59,676 Civ1215876 Ml\n\n--- PAGE BREAK ---\nA :\n710595762010311 Ver; 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS  - EA\n[lia 8] JURADOS DE VOTACIÓN\nA DELEGADOS o\nE dE ELECCIONES CONGRESO ,\nye pra 13 DE MARZO DE 2022 Ad\nObra e SENADO o\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO; 02 MESA; 023\nX 2-18-16-10 X\nl LISTA CON VOTO PREFERENTE\n| 1140 | FUERZA CIUDADANA LA FUERZA DEL CAMBIO\n- 0 i > ema! VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nE JN CA\nTT E\ns7_| elo\nCA\no ao HA\nA CAMEO AA\na KN AS\n.\n| 46 | 30\n0 A CO E\no so e poll.\nMO CO DS EC CI EC\nCS E E\n55 a pl\nMENO COI E CI E\n! TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [—[— [1 |\n|\n]\nM No. Form: 59678 KIT 59,676 Civ1215877 mM\n\n--- PAGE BREAK ---\nA '\n710596762010411 Ver. 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE més Eta\nJURADOS DE VOTACIO\nla e DELEGADOS >\nME EUABD: ELECCIONES CONGRESO\n: o 13 DE MARZO DE 2022 LaS\nOpt SENADO dóS\nDEPARTAMENTO: 01 - ANTIOQUÍA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO: 02 MESA: 023\nX 2-18-16-10 AX\nE LISTA CON VOTO PREFERENTE\nAM ES PARTIDO CAMBIO RADICAL\nNO o o ol _ VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\ntl] ss || | [el] |\n2 36 | o 70 NN\nAR\nlas fo | ojo\nos + 9 1 || |\nDC O O O O E\nO CO O\nEM o\nEE\nRR\n[| ano ap\nCE\nE O JN\nap st sl]\nE E\n[a ||| Joss po a\nMIER II IC\n27 | Y ) 60 | |\n2 O CA\nAA ICAA IC\nCU A\no 68 | |\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [|] |\nLISTA SIN VOTO PREFERENTE\nSALUD SOS COLOMBIA. SECTOR ORGANIZADO DE LA\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA  \"um> O\no GEA | 0019 | PARTIDO NUEVO LIBERALISMO\nMS VOTOS POR LA AGRUPACIÓN POLÍTICA mum» 12\nMl No. Form: 59676 KIT 59,676 Civ1215878 Ml\n\n--- PAGE BREAK ---\nA o\n710596762010511 Ver: 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS Eta\n[5152 4985] _ JURADOS DE VOTACIÓN\nE ds DELEGADOS o\nEra E. CEA,\nOla SENADO E\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC, ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO: 02 MESA: 023\nX 2-18-16-10 X\nTT LISTA SIN VOTO PREFERENTE\nll 1130 | ESTAMOS LISTAS COLOMBIA\nA LISTA SIN VOTO PREFERENTE\nSs | 1039 | MOVIMIENTO UNITARIO METAPOLITICO\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA \"mm | | | |\n] LISTA CON VOTO PREFERENTE\n. JO COALICIÓN MIRA - COLOMBIA JUSTA LIBRES\n0 NN «fama VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nMEA\nIC MIENID\nDS TIC E O ICI\nCAE ICUS\nCI es pololo\ny] ea llo\n36 | |]\n20000000 CI\nse —\nO E O E A\n1 MI IE A\n18 43 | | | 81\nO A e [oli\nMECA CIO A ICC E\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS | |] |\n|\n| MM No. Eorm: 59676 KIT 59,676 Civ1215979 Ml\n\n--- PAGE BREAK ---\nA '\n710596762010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS Eta\n[n] n :[m] JURADOS DE VOTACION\na DELEGADOS o\nDAA NA ELECCIONES CONGRESO\n=, + 13 DE MARZO DE 2022 ==\n250 REGISTRAD\nObs SENADO ODA\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: SEC. ESC. DIVINA PROVIDENCIA\nZONA: 02 PUESTO: 02 MESA: 023\nX 2-18-16-10 X\nTT\" LISTA CON VOTO PREFERENTE\ny YA | 0001 : PARTIDO LIBERAL COLOMBIANO\na Tf ES _ VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nti as lo e po] |\nME O CO E IC E\nY ] ¿O\nHA A+\na || [estopa] |\nJU a Y\nOA lp] |\n0 9 76\n== je] — —\nMOCOS O CO E EC\n| |\n| EN MD\nPrrderorer\nEI E\n| EEN 59 || o\nls po o\n| IC ECN\n| MA E\nOA ICA IC\n26 | 59\n» z A\nIES CN A\nE UN CI\nCOEN IO\nes oo] [erp jo |\nME CO CI\nIS ICAA\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS [| |]\n| O EISTASIN VOTO PREFERENTE 3)\nEm 1108. MOVIMIENTO GENTE NUEVA\n| 0 VOTOS POR LA AGRUPACIÓN POLÍTICA a\nTA Tem [uomenos secc\nL LON 0302] MOVIMIENTO DE SALVACIÓN NACIONAL\n[o o VOTOS POR LA AGRUPACIÓN POLÍTICA tum | | | |\nKIT 59,676 Civ1215880 Ml\n\n--- PAGE BREAK ",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

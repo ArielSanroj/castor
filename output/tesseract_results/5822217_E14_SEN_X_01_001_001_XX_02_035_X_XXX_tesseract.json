@@ -1,0 +1,100 @@
+{
+  "extraction_id": "adea00ad",
+  "filename": "5822217_E14_SEN_X_01_001_001_XX_02_035_X_XXX.pdf",
+  "success": true,
+  "processing_time_ms": 29755,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "INST.EDUC. LA CANDELARIA",
+  "mesa": "035",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "FUERZA CIUDADANA LA FUERZA DEL CAMBIO",
+      "party_code": "",
+      "votes": 1140,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO CAMBIO",
+      "party_code": "",
+      "votes": 3,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "OU CO AS O EC",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "1039 MOVIMIENTO UNITARIO METAPOLITICO",
+      "party_code": "",
+      "votes": 1039,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "A/A 0004 $ PARTIDO LIBERAL COLOMBIANO",
+      "party_code": "",
+      "votes": 4,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO CENTRO DEMOCRÁTICO",
+      "party_code": "",
+      "votes": 11,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO CONSERVADOR COLOMBIANO",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO DE LA UNIÓN POR LA GENTE \"PARTIDO DE LA U\"",
+      "party_code": "",
+      "votes": 5,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "VOTOS NULOS",
+      "party_code": "",
+      "votes": 7,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 2479,
+  "votos_blancos": 4,
+  "votos_nulos": 7,
+  "confidence": 1.0,
+  "raw_text": "A .\n710594992010111 Ver: 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS | E-44 |\n[m1] “E [5] JURADOS DE VOTACION\nta DELEGADOS o\nMorpA ESE ELECCIONES CONGRESO Ep\nla > 13 DE MARZO DE 2022\n¡En as, REGISTRADURÍA\nOps SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 035\nX 5-82-22-17 XA\nTOTAL TOTAL TOTAL.\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\n1 _ A ESEJEZ\n| LISTA SIN VOTO PREFERENTE\n| 5] ¡ 0013 | PARTIDO COMUNES\n0: VOTOS POR LA AGRUPACIÓN POLÍTICA mum\nf\n| KIT 59,499 cisza1aos MM\n\n--- PAGE BREAK ---\nA :\n710594992010211 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\nPa JURADOS DE VOTACIÓN\nAAN DELEGADOS -\nEA rs ELECCIONES CONGRESO\nra E : 13 DE MARZO DE 2022 A\nOi ber SENADO A\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 035\nX 5-82-22-17 X .\n1 O NBTA CON VOTO PREFERENTE\n0255 | COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA\nÚ Xx A yy VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nLES a fe [| |:\n2 lo HEN ICA\nO E O E\nA E O E\nso fa po lor po [oyo\nO e MEP]\nIO O\nMHNETJESPARCIEIES EA\nHO E\no op] paolo A+\nA al [a] |\nO CI\nIA E CA\nao palo japo]\nKANESRIESNO O\nAO A\nmi [|] |. pp z[e. | |\nos lo [o] pss ||] [ep | |.\nos pe [oo] fe ||:\noa lo io 2 — as polo po\n| 6\nDIO EOI EC O E E\nIN O CI\n| ID E\ne o popa poo po\n| E — e oi po poes | pop\nAR\nAL A CNN\nMESA ACA\nEOI AC EA\nss [o jp Leto lod 1\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\nMO no som: 59:00 KIT 59,499 Civ1211805 .\n\n--- PAGE BREAK ---\nA :\n710594992010311 Ver: 01 Pag: 03 de 11\nACTA DE ESCRUTINIO DE LOS EA |\n[JT [m1] JURADOS DE VOTACION\ntl DELEGADOS %\nRa aL, ELECCIONES CONGRESO\nIS 13 DE MARZO DE 2022\na E, REGISTRADA\n[m] ber EA SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC, LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 035\nX 5-82-22-17 Á\nA LISTA GON VOTO PREFERENTE\n1140 | FUERZA CIUDADANA LA FUERZA DEL CAMBIO\n] <— VOTOS SOLO POR LA. AGRUPACIÓN POLÍTICA\nA E\nes;\n- as [o A+ —\nas polo per pop po\nall fe] o]\nslo ass [o pa po jo\nA A O\nOO II EA\nMAA E CI\na lo fs] y | fr] |\"\na po KAMEO ICAA\nep as oo alo] po\n41 | 1 ss] Jj]: CS\n5 KAR CA\nA A ACI\no o — es o\n8 |] — += slo ||\nopa [oo] [se] | [ep | |.\nTA AC AC\noa] | [ss |, fa | | |!\nA O EC\n3 OS ss o Y\n124 — AA\nIC EC E MD\nES HS CUM\n9 + O EC\nMIC e pop jo\n0 TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS\n|\n|\n| |\nMM so tor: soso KIT 59,499 Civ1211806 E\n\n--- PAGE BREAK ---\n0 _\nAN\n710594992010411 Ver: 01 Pag: 04 de 11\nACTA DE ESCRUTINIO DE LOS EA |\npa y JURADOS DE VOTACION\nCr DELEGADOS X\ndira JE? ELECCIONES CONGRESO\no \"13 DEMARZO DE 2022\n+50 El REGISTRADURÍA\nObi da SENADO RIADA\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA; 035\nX 5-82-22-17 X\nLISTA CON VOTO PREFERENTE\n¿1 | 0003 | partiDO CAMBIO RADICAL\nÚ o A VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nO E A\nO E A O\nlo A —— ma | po\nE 38 ro\nA A\nA O\nA O ID\nAA alo RSS\nDOC E O CIO IO 0 [E\na A+\nom\n[e [AX Gl es | | | [e | | |\nDS MAA E\nA A\nE AI IA\nas [o SS es yop\nMEA ICM CA\nEI E\nMA CIO OU CO AS O EC 0\nap MO ONO\npao do ss | | | ej | |\n| o ss [oo] [e po po\nMEN CAMI II\nTE O DE A CA AN\n: TE ss [o] Yo fe [ol |\n=— a | les poo\nA CI\nE EI CAM\na [1 + Jess | | | [oe] | |\nAO EC ACI\nE EC CA\nO AC\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS XI 13\nTT STA SIN VOTO PREFERENTE\no (BS0s SALUD SOS COLOMBIA. SECTOR ORGANIZADO DE LA\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA \"mum MA\n- LISTA SIN VOTO PREFERENTE —\nMES PARTIDO NUEVO LIBERALISMÓ\nversos > AA\nMo som: 50:00 KIT 59,499 Civ1211807 Ml\n\n--- PAGE BREAK ---\na :\n| :\n710594992010511 Ver: 01 Pag: 05 de 11\nACTA DE OTC \" EA\n+ JURADOS DE 0\nPE —— DELEGADOS Lo\n.* . REGISTRADURÍA\nOe SENADO o\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 035\nX 5-82-22-17 X\n2 LISTASIN VOTO PREFERENTE\ne ESTAMOS LISTAS COLOMBIA\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA mmm» Xx] 1]\n] o LISTA SIN VOTO PREFERENTE\nll A 1039 | MOVIMIENTO UNITARIO METAPOLITICO\n] vorosroriarcmccnrama > [TT\n— LISTA CON VOTO PREFERENTE\nLe japo Doa\na te ao [s=|\nA E lZ CIEN ss ly\nao pas] fs | ||\nSI CA CIO\nA] IO IC\no fe | | [e | |\napo fa o po des po [o\nall ls | | per]\nCue as AM das psss\n1 o as lo | HH AA\na ya |] [a] |\nso | fas | |] [| ||.\nO IA\nCO O EC O O E\n000 CIO EU A\npas | O\nos o leas polo\n[an | KA O\na KO ire | jp | |\n| TOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS A LA|L\n|\n|\n|\n|\nMl No. Form: 5499 KIT 59,499 Civ1211808 Ml\n\n--- PAGE BREAK ---\na '\n|\n71 0594992010611 Ver: 01 Pag: 06 de 11\nACTA DE ESCRUTINIO DE LOS EA\nDm] gsgnos Jm] JURADOS DE VOTACIÓN\nA Echa DELEGADOS mm\nfro: SENADO SAI\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: INST.EDUC. LA CANDELARIA\nZONA: 01 PUESTO: 02 MESA: 035\nX 5-82-22-17 X\nA [STA CON VOTO PREFERENTE\n| A/A 0004 $ PARTIDO LIBERAL COLOMBIANO\n0 AX Z == VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\nalo pas pollo fe | | |.\nA + as | |] [ep | |.\na lolo paro, [o [aw ||\nCalo fs [y [ap [| |\nls Exa] o (== | |\nep O\nICO ES\ne: as\nDC E A\n[a AX 1] ||",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}

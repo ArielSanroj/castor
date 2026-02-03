@@ -1,0 +1,100 @@
+{
+  "extraction_id": "588c6c32",
+  "filename": "8228017_E14_SEN_X_01_001_001_XX_03_006_X_XXX (1).pdf",
+  "success": true,
+  "processing_time_ms": 30256,
+  "corporacion": "SENADO",
+  "departamento": "ANTIOQUIA",
+  "municipio": "MEDELLIN",
+  "zona": "01",
+  "puesto": "IE.MARÍA DE LOS ANGELES CANO MARQUEZ",
+  "mesa": "006",
+  "partidos": [
+    {
+      "party_name": "PARTIDO COMUNES",
+      "party_code": "",
+      "votes": 13,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA",
+      "party_code": "",
+      "votes": 255,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PARTIDO CAMBIO",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "LISTA CON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "o 1186 MOVIMIENTO GENTE NUEVA Y",
+      "party_code": "",
+      "votes": 1186,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "MISTACON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "ISTACON VOTO PREFERENT",
+      "party_code": "",
+      "votes": 2,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "0008 ' PARTIDO DE LA UNIÓN ONCE OSO",
+      "party_code": "",
+      "votes": 8,
+      "confidence": 0.75,
+      "needs_review": false
+    },
+    {
+      "party_name": "PACTO HISTÓRICO",
+      "party_code": "",
+      "votes": 0,
+      "confidence": 0.75,
+      "needs_review": true
+    },
+    {
+      "party_name": "Use 0177 PARTIDO INDÍGENA COLOMBIANO P.J.C",
+      "party_code": "",
+      "votes": 177,
+      "confidence": 0.5,
+      "needs_review": true
+    },
+    {
+      "party_name": "IISTASINVOTOPREFERÉNT",
+      "party_code": "",
+      "votes": 7,
+      "confidence": 0.5,
+      "needs_review": true
+    }
+  ],
+  "total_votos": 1652,
+  "votos_blancos": 0,
+  "votos_nulos": 11,
+  "confidence": 1.0,
+  "raw_text": "A :\n710595212010111 Ver 01 Pag: 01 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m]? “11 [m] JURADOS DE VOTACION\nAd A DELEGADOS -\nlo 1 ELECCIONES CONGRESO\nER 43 DE MARZO DE 2022 ES\nALE REGISTRADURÍA\nObra SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: IE.MARÍA DE LOS ANGELES CANO MARQUEZ\nZONA; 01 PUESTO: 03 MESA: 006\nX 8-22-80-17 X\nTOTAL TOTAL TOTAL\nSUFRAGANTES VOTOS VOTOS\nFORMATO E-11 EN LA URNA INCINERADOS\n2 CIRCUNSCRIPCIÓN: NACIONAL\nA \"7 TISTASINVOTO PREFERENTE ]\n5] 0013 | PARTIDO COMUNES\n0 VOTOS POR LA AGRUPACIÓN POLÍTICA > a —Á\n\n--- PAGE BREAK ---\nA :\n710595212010211 Ver: 01 Pag: 02 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[to a] JURADOS DE VOTACION\nA\nErico] DELEGADOS .\ncia ELECCIONES CONGRESO\n(EOERRE — 13DEMARZO DE 2022 a\n[mu] a IA RS TRADURÍA\naa SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: lE.MARIA DE LOS ANGELES CANO MARQUEZ\nZONA: 01 PUESTO: 03 MESA: 006\nX 8-22-80-17 X\no -. . LISTA CON VOTO PREFERENTE 222,\n| 0 - 0255 | COALICIÓN ALIANZA VERDE Y CENTRO ESPERANZA |\n| ] o A A: *— VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA\n- yu 7 >; 7 AT ETA AN Ta Ap\na E A Y\nO oo O da\n3 mp 2] al 70 =\nA 4 . : — | -— — — —_ = di == —- o — —\n5 = -] El =! + | 72 A\ndl E A AAA\n| TO Ol — =| 40 A 74 11\nE LA\nAA —Ák 42 — A\nE A E\na E A A TS 7 E\nein! 45 | — — tl 79 e Z_\n- : boo pp — — — >= bo y — kb =ib ai —.\no === 46 A — A\n100 _—i ll 7 ¡es — . Y J JJ\n580 y | 48 ll | A TT\nPO rió Bl ÁS = -\nTo: —! | — — _—\nol 2 s | lo 2| RAI TY\nA 4 TT A | -\nA 2111] — 0 TT\nO js 77 O lo |\n- — — —! pa “ + o. e AA A > — — a — :\nCIC A\n2 = a E E |\nom o —Á e oo po de od eo a\nAllo”. — mo 0 e e |\nA AS =bkbocq4o e] EIA PE E\nA ES E -  '\n126 | — | — il 59 tlilses —i li h\no Pa LAA 1 ia |\n28 | —i- | 61 A 95 A\n| 29 Ms AI Mina 2 lio ss ll :\n% a 5 ia . —- )\n| 32 uN a 7 65 + 9 i— nl |\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS PEIG\nMN Na. Form: 59521 KIT 59,521 Civi212311 M :\n\n--- PAGE BREAK ---\nMl |\nA e\n|\n710595212010311 Ver. 01 Pag: 03 de 11 |\n|\nACTA DE ESCRUTINIO DE LOS EA |\n[Em] pare [a] JURADOS DE VOTACIÓN\nA\nEL (El , DELEGADOS ]\n. : TAS\nA merimira — ELECCIONES CONGRESO\nFR E : 13 DE MARZO DE 2022 Ae\nAl nErraREÍA\nObra SENADO\n|\nDEPARTAMENTO: 01 - ANTIOQUIA |\nMUNICIPIO: 001 - MEDELLIN |\nLUGAR: IE.MARIA DE LOS ANGELES CANO MARQUEZ\nZONA: 01 PUESTO: 03 MESA: 006\nA 8-22-80-17 X\n- o q HISTACON VOTO PREFERENTE |\n| \"40 | FUERZA CIUDADANA LA FUERZA DEL CAMBIO |\n- o O o\nDi | | | «f=w\" VOTOS SOLO POR LA AGRUPACIÓN POLÍTICA |\nCB E 35 a 66 ¡Ut a Po\nOT Fa ATi ja lr\nlá ll 3 i—i— ii 6 A\n| . , . A —l — L— . i 2] | — ¡7 -- Zo — —o .—.\n7 A 40 AH | 72 | Y 1\n| - _ | EN . | L— po O = \"Y. —. -—=\ngg l 41 | A\nlg al: 42 o CN\na y ss Er ./\n1 Y 4 —Áñ Pa 1 — lt\n12 A + 79 == —\n15 =-lz 47 | 3 E PIS E\no l —. Tr aj _ _ E\nO Añnn 48 | —| 82 A\nA ¡e — Ll E = _\n¡ o A o ! Zin A PO E\nO pala —l 5 = A 84 | MN\n| 19 llo a 52 — == O A\nSO DU Des rar o cs siga AM O SS A\n20 E | A E y\nNE E y -| O A\nTN o E 85 ll AY\n' — + 0 O A o A =p\n23 — =P 56 A E 89 dl\nE al lo A A 90 | 37\n| mo - a | o . ha ..- o =1 - — Sa po\n25 5 | | O 58 dl a o E 91 7 TA\nEN E | 59  — |. . 7 7\nb. - - == - a . - o dai A _— a\nÑ 29 ma | lo] 60 “— TO ¡UT 99 | TI\n30 EE | 61 lin 100 AA\n—. - .— ¡2 . —. a : - ; ==. — —— -_ — —— =-\n31 a 62 — | —\nSS. do . == tio. e\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS tE]\n|\n;\nE\nMl No. Farm: 59521 KIT 59,521 Civ1212312 Ml E\n\n--- PAGE BREAK ---\nA _\n710595212010411 Ver: 01 Pag: 04 de 11 |\n|\nACTA DE ESCRUTINIO DE LOS EA |\n[5] yefectapm] JURADOS DE VOTACIÓN |\nda DELEGADOS\na . F ' pda o\nPAP ELECCIONES CONGRESO o:\nMa: 13 DE MARZO DE 2022 pa\nal rl SENADO\nDEPARTAMENTO: 01 - ANTIOQUIA\nMUNICIPIO: 001 - MEDELLIN\nLUGAR: ¡E.MARIA DE LOS ANGELES CANO MARQUEZ\nZONA: 01 PUESTO: 03 MESA: 006\nX 8-22-80-17 X\n| — LISTA CON VOTO PREFERENTE\n| Sl ES | PARTIDO CAMBIO RADICAL 0\no... | E Ñ | pu - VOTOS SOLO POR Larcnurncónrcune |\n2 3 36 a a! 70 Sl ON |—\nDIO Begur plas ¡IN Mc ¡Es Fs CA tati Ea\nO ¡E 40 === 74 pl =|=\n1 A o + >| £ 77 ==\n| 8 e —l__ 42 2 _l—\ngl Al 43 (77 ATT Y\n” + . pa O =_ =-. 1] - .- -- po O —. - —ñ —\n| 11 A ml Bo — y TS La =-|\na 4 — | 47 | | 31 — ==\nA Lo Mi 48 —Á — | 82 e _— —\n, - 0 A o 4. ] HH — A JA\n47 —— - ns a “| — -\nNS A AA FE | A PS\n¡CO A A | os 86 —|\nZo . o a AIRIS ORI |\n0 - .-.. A A H—Á . a =l_. E _— p.. ——\na | J— = 55 — =7] 89 o\n2 ly | E Fa ==\n23 a 7 —| 57 di furl 91 0) —\n! O Ha 59 ES | 94 7 ==\n| 27 E DN JU 50 —k—l— A mn\nTa == a A E\nA 2-1 al a - A\na\n30 e és — za ls Hi\nA 1 TA] 1\n| 32 [A —| 6 — — P 100 II |\na a a |\nTOTAL = VOTOS AGRUPACIÓN + VOTOS CANDIDATOS —|-[13 |\no LISTASIN VOTO PREFERENTE O\n! ' SE Dora | MOVIMIENTO NACIONAL SECTOR ORGANIZADO DELA .  h\n, . Ñ Ml po IN SALUD S3S0S COLOMBIA Ñ (\no 0 ] voTos POR LA AGRUPACIÓN POLÍTICA _—»> » EH |\nFL ISTASIN VOTO PREFERENTE. o 4 |\n| | EA | 0019 , PARTIDO NUEVO LIBERALISMO E\ny 0. VOTOS POR LA AGRUPACIÓN POLÍTICA A A [A\n:\nM No. Form: $9521 KIT 59,527 Civ1212313 NE |\n\n--- PAGE BREAK ---\nA :\n710595212010511 Ver: 01 Pag: 05 de 11\nACTA DE ESCRUTINIO DE LOS EA\n[m] , al [m] JURADOS DE VOTACIÓN\n. Pan\nA . , y : ERA\nEr EY ELECCIONES CONGRESO ad\nde dE 13 DE MARZO",
+  "warnings": [
+    "Total calculated from party votes"
+  ],
+  "error": null
+}
