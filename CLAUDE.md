@@ -13,7 +13,7 @@ Plataforma integral de inteligencia artificial para analisis electoral en tiempo
 | Twitter | Tweepy (API v2) |
 | OCR | Tesseract + Claude Vision |
 | Frontend | React + Next.js 14 (pendiente) |
-| Auth | JWT + Supabase Auth |
+| Auth | JWT (SQLAlchemy) |
 | Containers | Docker + Docker Compose |
 | Gateway | Nginx |
 | Messaging | Twilio (WhatsApp) |

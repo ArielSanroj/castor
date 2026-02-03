@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <title>CASTOR | Dashboard Equipo de Campaña</title>
-    <meta name="description" content="Dashboard integrado para el equipo de campaña. Control electoral, zonas de riesgo y coordinación de testigos.">
+    <title>CASTOR | Dashboard Control Electoral</title>
+    <meta name="description" content="Dashboard de Control Electoral. Monitoreo E-14, gestión de incidencias y litigio electoral.">
     <meta name="robots" content="noindex, nofollow">
 
     <link rel="icon" type="image/png" sizes="32x32" href="/static/images/logo.png">
@@ -23,15 +23,36 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-    <meta name="theme-color" content="#0A0E1A">
+    <meta name="theme-color" content="#FFFFFF">
 
     <style>
-        /* ========== CAMPAIGN TEAM DASHBOARD V2 ========== */
+        /* ========== MANUAL DE MARCA CASTOR ========== */
+        :root {
+            --black: #111111;
+            --white: #FFFFFF;
+            --gray-warm: #BFB8AE;
+            --sand: #E6E1D8;
+            --bg: #FFFFFF;
+            --bg-secondary: #F9F8F6;
+            --panel: #FFFFFF;
+            --panel-hover: #F5F4F2;
+            --border: #E6E1D8;
+            --text: #111111;
+            --text-secondary: #444444;
+            --muted: #BFB8AE;
+            --accent: #111111;
+            --accent-hover: #333333;
+            --accent-light: rgba(17, 17, 17, 0.08);
+            --success: #2D5A3D;
+            --warning: #8B7355;
+            --danger: #8B3A3A;
+            --info: #4A5568;
+        }
+
+        /* ========== CONTROL ELECTORAL DASHBOARD ========== */
         .campaign-team-dashboard {
             min-height: 100vh;
-            background: radial-gradient(ellipse at 20% 10%, rgba(201, 162, 39, 0.06), transparent 50%),
-                        radial-gradient(ellipse at 80% 90%, rgba(74, 124, 89, 0.04), transparent 50%),
-                        var(--bg, #0A0A0A);
+            background: var(--bg);
         }
 
         /* Tab Navigation */
@@ -82,6 +103,89 @@
 
         .tab-btn .badge.warning { background: var(--warning, #D4A017); }
         .tab-btn .badge.success { background: var(--success, #4A7C59); }
+
+        /* Status badges for litigio */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .status-badge.pending { background: rgba(212, 160, 23, 0.15); color: #D4A017; }
+        .status-badge.in-progress { background: rgba(91, 123, 179, 0.15); color: #5B7BB3; }
+        .status-badge.submitted { background: rgba(74, 124, 89, 0.15); color: #4A7C59; }
+        .status-badge.resolved { background: rgba(74, 124, 89, 0.25); color: #2D5A3D; }
+
+        /* Small buttons for table actions */
+        .btn-sm {
+            padding: 0.35rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-sm:hover {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Chat styles */
+        .chat-message.user {
+            align-self: flex-end;
+        }
+        .chat-message.user > div:last-child {
+            background: var(--accent);
+            color: white;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 12px;
+        }
+        .chat-message.assistant > div:last-child {
+            border-top-left-radius: 4px;
+        }
+        .suggestion-btn:hover {
+            background: var(--accent-light) !important;
+            border-color: var(--accent) !important;
+            color: var(--accent) !important;
+        }
+
+        /* Stats grid for litigio */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .stat-content .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .stat-content .stat-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
 
         .tab-content {
             display: none;
@@ -3036,7 +3140,7 @@
             <div class="nav-center">
                 <a href="/">Inicio</a>
                 <a href="/dashboard">Dashboard IA</a>
-                <a href="/api/campaign-team/dashboard" class="nav-highlight">War Room</a>
+                <a href="/api/team/dashboard" class="nav-highlight">Control Electoral</a>
             </div>
             <div class="nav-right">
                 <div class="realtime-indicator">
@@ -3053,8 +3157,8 @@
 
             <!-- Page Header -->
             <div style="margin-bottom: 1.5rem;">
-                <h1 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Dashboard Equipo de Campaña</h1>
-                <p style="color: var(--muted); font-size: 0.85rem;">Control electoral en tiempo real - Monitoreo de riesgos y coordinación de testigos</p>
+                <h1 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Dashboard Control Electoral</h1>
+                <p style="color: var(--muted); font-size: 0.85rem;">Monitoreo E-14 en tiempo real - Gestión de incidencias y litigio electoral</p>
             </div>
 
             <!-- Tab Navigation -->
@@ -3080,6 +3184,33 @@
                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                     </svg>
                     Llamar Testigo
+                </button>
+                <button class="tab-btn" data-tab="base-datos" role="tab" aria-selected="false">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                    </svg>
+                    Base de Datos E-14
+                    <span class="badge" id="db-badge" style="background: var(--accent);">RAG</span>
+                </button>
+                <button class="tab-btn" data-tab="chat-rag" role="tab" aria-selected="false">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Chat RAG
+                    <span class="badge" style="background: var(--success);">IA</span>
+                </button>
+                <button class="tab-btn" data-tab="litigio" role="tab" aria-selected="false">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    Litigio Electoral
+                    <span class="badge" id="litigio-badge" style="background: var(--danger); display: none;">0</span>
                 </button>
             </div>
 
@@ -3899,6 +4030,376 @@
 
             </section>
 
+            <!-- ==================== BASE DE DATOS E-14 TAB ==================== -->
+            <section id="base-datos" class="tab-content" role="tabpanel">
+                <div class="section-header">
+                    <h2 class="section-title">Base de Datos RAG - E-14 Electorales</h2>
+                    <button class="btn-action" onclick="loadE14Database()" style="gap: 0.5rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                        </svg>
+                        Actualizar
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #C9A227, #D4AF37);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="e14-total-docs">--</div>
+                            <div class="stat-label">Documentos Indexados</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4A7C59, #5D9A6B);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="e14-total-mesas">--</div>
+                            <div class="stat-label">Mesas E-14</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #5B7BB3, #7A9AD0);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="e14-total-deptos">--</div>
+                            <div class="stat-label">Departamentos</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #8B5A5A, #A86E6E);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="e14-total-corps">--</div>
+                            <div class="stat-label">Corporaciones</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-bar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <label>Corporación</label>
+                        <select id="e14-filter-corp" onchange="filterE14Table()">
+                            <option value="">Todas</option>
+                            <option value="SENADO">Senado</option>
+                            <option value="CAMARA">Cámara</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="flex: 1;">
+                        <label>Buscar</label>
+                        <input type="text" id="e14-search" placeholder="Buscar departamento, municipio, partido..." onkeyup="filterE14Table()">
+                    </div>
+                </div>
+
+                <!-- Department Table -->
+                <div class="votes-table-container">
+                    <table class="votes-table" id="e14-dept-table">
+                        <thead>
+                            <tr>
+                                <th>Departamento</th>
+                                <th>Mesas</th>
+                                <th>Senado</th>
+                                <th>Cámara</th>
+                                <th>Documentos</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="e14-dept-tbody">
+                            <tr><td colspan="6" style="text-align: center; color: var(--muted); padding: 2rem;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom: 0.5rem; opacity: 0.5;">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                                </svg>
+                                <br>Cargando datos de E-14...
+                            </td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Detail Panel (hidden initially) -->
+                <div id="e14-detail-panel" style="display: none; margin-top: 1.5rem; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <button onclick="closeE14Detail()" style="background: transparent; border: 1px solid var(--border); color: var(--text); padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer;">← Volver</button>
+                            <h3 id="e14-detail-title" style="margin: 0; font-size: 1.1rem;">Detalle</h3>
+                        </div>
+                    </div>
+                    <div id="e14-detail-content">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== CHAT RAG TAB ==================== -->
+            <section id="chat-rag" class="tab-content" role="tabpanel">
+                <div class="section-header">
+                    <h2 class="section-title">Chat RAG - Consulta Electoral</h2>
+                    <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">Consulta la base de datos E-14 usando lenguaje natural</p>
+                </div>
+
+                <!-- Chat Container -->
+                <div class="chat-container" style="display: flex; flex-direction: column; height: calc(100vh - 300px); min-height: 400px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+
+                    <!-- Chat Messages -->
+                    <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Welcome Message -->
+                        <div class="chat-message assistant" style="display: flex; gap: 1rem; max-width: 80%;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--success)); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                            </div>
+                            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 12px; border-top-left-radius: 4px;">
+                                <p style="margin: 0; color: var(--text);">Hola, soy el asistente electoral de CASTOR. Puedo ayudarte a consultar los datos de las actas E-14. Ejemplos de preguntas:</p>
+                                <ul style="margin: 0.75rem 0 0; padding-left: 1.25rem; color: var(--text-secondary);">
+                                    <li>¿Cuántos votos obtuvo el Senado en Antioquia?</li>
+                                    <li>¿Cuáles mesas tienen diferencias aritméticas?</li>
+                                    <li>Muestra las mesas con baja confianza OCR en Bogotá</li>
+                                    <li>¿Cuál es el total de votos nulos por departamento?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggested Questions -->
+                    <div id="suggested-questions" style="padding: 0.75rem 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="suggestion-btn" onclick="askSuggestion('¿Cuántas mesas hay procesadas?')" style="padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">¿Cuántas mesas procesadas?</button>
+                        <button class="suggestion-btn" onclick="askSuggestion('¿Qué departamentos tienen más irregularidades?')" style="padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">Departamentos con irregularidades</button>
+                        <button class="suggestion-btn" onclick="askSuggestion('Resumen de votos por corporación')" style="padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">Votos por corporación</button>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div style="padding: 1rem 1.5rem; border-top: 1px solid var(--border); background: var(--bg-secondary);">
+                        <div style="display: flex; gap: 0.75rem; align-items: flex-end;">
+                            <textarea id="chat-input" placeholder="Escribe tu consulta sobre los datos E-14..." rows="1" style="flex: 1; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); color: var(--text); font-size: 0.95rem; resize: none; font-family: inherit; max-height: 120px;" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendChatMessage();}"></textarea>
+                            <button onclick="sendChatMessage()" style="padding: 0.75rem 1.25rem; background: var(--accent); color: white; border: none; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                </svg>
+                                Enviar
+                            </button>
+                        </div>
+                        <p style="margin: 0.5rem 0 0; font-size: 0.75rem; color: var(--muted);">Presiona Enter para enviar, Shift+Enter para nueva línea</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== LITIGIO ELECTORAL TAB ==================== -->
+            <section id="litigio" class="tab-content" role="tabpanel">
+                <div class="section-header">
+                    <h2 class="section-title">Litigio Electoral</h2>
+                    <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">Seguimiento de casos escalados al equipo jurídico</p>
+                </div>
+
+                <!-- Litigio KPIs -->
+                <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #8B3A3A, #A85454);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="litigio-total">0</div>
+                            <div class="stat-label">Casos Activos</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #D4A017, #E8B92A);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="litigio-pending">0</div>
+                            <div class="stat-label">Pendientes</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #5B7BB3, #7A9AD0);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="litigio-docs">0</div>
+                            <div class="stat-label">Documentos</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4A7C59, #5D9A6B);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="litigio-resolved">0</div>
+                            <div class="stat-label">Resueltos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Bar -->
+                <div class="filters-bar" style="margin-bottom: 1rem;">
+                    <div class="filter-group">
+                        <label>Estado</label>
+                        <select id="litigio-filter-status" onchange="filterLitigioCases()">
+                            <option value="">Todos</option>
+                            <option value="pending">Pendiente</option>
+                            <option value="in_progress">En Proceso</option>
+                            <option value="submitted">Radicado</option>
+                            <option value="resolved">Resuelto</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Tipo</label>
+                        <select id="litigio-filter-type" onchange="filterLitigioCases()">
+                            <option value="">Todos</option>
+                            <option value="arithmetic">Diferencia Aritmética</option>
+                            <option value="discrepancy">Discrepancia RNEC</option>
+                            <option value="recount">Solicitud Recuento</option>
+                            <option value="nullity">Nulidad Mesa</option>
+                        </select>
+                    </div>
+                    <div class="filter-group" style="flex: 1;">
+                        <label>Buscar</label>
+                        <input type="text" id="litigio-search" placeholder="Mesa, departamento, abogado..." onkeyup="filterLitigioCases()">
+                    </div>
+                    <button class="btn-action primary" onclick="openNewCaseModal()" style="margin-top: auto; gap: 0.5rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Nuevo Caso
+                    </button>
+                    <button class="btn-action" onclick="exportLitigioCases()" style="margin-top: auto; gap: 0.5rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Exportar
+                    </button>
+                </div>
+
+                <!-- Cases Table -->
+                <div class="votes-table-container">
+                    <table class="votes-table" id="litigio-table">
+                        <thead>
+                            <tr>
+                                <th>Caso #</th>
+                                <th>Mesa</th>
+                                <th>Tipo</th>
+                                <th>Departamento</th>
+                                <th>Estado</th>
+                                <th>Fecha Límite</th>
+                                <th>Abogado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="litigio-tbody">
+                            <!-- Demo cases -->
+                            <tr>
+                                <td><strong>LIT-001</strong></td>
+                                <td>05-001-001-01-003</td>
+                                <td><span class="badge" style="background: var(--danger);">Diferencia Aritmética</span></td>
+                                <td>Antioquia</td>
+                                <td><span class="status-badge pending">Pendiente</span></td>
+                                <td style="color: var(--danger); font-weight: 600;">2026-02-05</td>
+                                <td>Sin asignar</td>
+                                <td>
+                                    <button class="btn-sm" onclick="viewLitigioCase('LIT-001')" title="Ver detalle">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                    <button class="btn-sm" onclick="assignLawyer('LIT-001')" title="Asignar abogado">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>LIT-002</strong></td>
+                                <td>11-001-015-02-007</td>
+                                <td><span class="badge" style="background: var(--warning);">Discrepancia RNEC</span></td>
+                                <td>Bogotá D.C.</td>
+                                <td><span class="status-badge in-progress">En Proceso</span></td>
+                                <td>2026-02-07</td>
+                                <td>Dr. García</td>
+                                <td>
+                                    <button class="btn-sm" onclick="viewLitigioCase('LIT-002')" title="Ver detalle">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                    <button class="btn-sm" onclick="uploadEvidence('LIT-002')" title="Subir evidencia">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>LIT-003</strong></td>
+                                <td>76-001-008-01-012</td>
+                                <td><span class="badge" style="background: var(--info);">Solicitud Recuento</span></td>
+                                <td>Valle del Cauca</td>
+                                <td><span class="status-badge submitted">Radicado</span></td>
+                                <td>2026-02-10</td>
+                                <td>Dra. López</td>
+                                <td>
+                                    <button class="btn-sm" onclick="viewLitigioCase('LIT-003')" title="Ver detalle">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    </button>
+                                    <button class="btn-sm" onclick="downloadExpediente('LIT-003')" title="Descargar expediente">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Timeline / Plazos -->
+                <div style="margin-top: 1.5rem; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Plazos Críticos
+                    </h3>
+                    <div class="timeline-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div class="timeline-item" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(139, 58, 58, 0.1); border-left: 3px solid var(--danger); border-radius: 0 8px 8px 0;">
+                            <div style="font-weight: 700; color: var(--danger); min-width: 80px;">2 días</div>
+                            <div style="flex: 1;">
+                                <strong>LIT-001</strong> - Vence plazo para radicar reclamación aritmética
+                            </div>
+                            <span class="badge" style="background: var(--danger);">URGENTE</span>
+                        </div>
+                        <div class="timeline-item" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(212, 160, 23, 0.1); border-left: 3px solid var(--warning); border-radius: 0 8px 8px 0;">
+                            <div style="font-weight: 700; color: var(--warning); min-width: 80px;">4 días</div>
+                            <div style="flex: 1;">
+                                <strong>LIT-002</strong> - Audiencia de conciliación programada
+                            </div>
+                            <span class="badge" style="background: var(--warning);">PRÓXIMO</span>
+                        </div>
+                        <div class="timeline-item" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(74, 124, 89, 0.1); border-left: 3px solid var(--success); border-radius: 0 8px 8px 0;">
+                            <div style="font-weight: 700; color: var(--success); min-width: 80px;">7 días</div>
+                            <div style="flex: 1;">
+                                <strong>LIT-003</strong> - Respuesta esperada del CNE
+                            </div>
+                            <span class="badge" style="background: var(--success);">EN CURSO</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
     </main>
 
@@ -4206,5 +4707,272 @@
     </div>
 
     <script src="/static/js/campaign_team_dashboard.js?v=7"></script>
+
+    <!-- Chat RAG & Litigio Electoral Functions -->
+    <script>
+    // ==================== CHAT RAG FUNCTIONS ====================
+
+    let chatHistory = [];
+
+    function sendChatMessage() {
+        const input = document.getElementById('chat-input');
+        const message = input.value.trim();
+        if (!message) return;
+
+        // Add user message to UI
+        addChatMessage('user', message);
+        input.value = '';
+        input.style.height = 'auto';
+
+        // Hide suggestions after first message
+        document.getElementById('suggested-questions').style.display = 'none';
+
+        // Show typing indicator
+        const typingId = addTypingIndicator();
+
+        // Send to API
+        fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: message,
+                context: { source: 'campaign_team_dashboard', mode: 'e14_rag' }
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            removeTypingIndicator(typingId);
+            if (data.success && data.response) {
+                addChatMessage('assistant', data.response);
+            } else {
+                addChatMessage('assistant', 'Lo siento, hubo un error al procesar tu consulta. Por favor intenta de nuevo.');
+            }
+        })
+        .catch(err => {
+            removeTypingIndicator(typingId);
+            addChatMessage('assistant', 'Error de conexión. Verifica que el servidor esté activo.');
+            console.error('Chat error:', err);
+        });
+    }
+
+    function addChatMessage(role, content) {
+        const container = document.getElementById('chat-messages');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-message ${role}`;
+        msgDiv.style.cssText = 'display: flex; gap: 1rem; max-width: 80%;' + (role === 'user' ? ' align-self: flex-end; flex-direction: row-reverse;' : '');
+
+        const icon = role === 'user' ?
+            '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' :
+            '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>';
+
+        const iconBg = role === 'user' ? 'var(--accent)' : 'linear-gradient(135deg, var(--accent), var(--success))';
+        const bubbleBg = role === 'user' ? 'var(--accent)' : 'var(--bg-secondary)';
+        const textColor = role === 'user' ? 'white' : 'var(--text)';
+
+        msgDiv.innerHTML = `
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: ${iconBg}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white">${icon}</svg>
+            </div>
+            <div style="background: ${bubbleBg}; padding: 1rem; border-radius: 12px; color: ${textColor};">
+                <p style="margin: 0; white-space: pre-wrap;">${formatMessage(content)}</p>
+            </div>
+        `;
+
+        container.appendChild(msgDiv);
+        container.scrollTop = container.scrollHeight;
+        chatHistory.push({ role, content });
+    }
+
+    function formatMessage(text) {
+        // Simple markdown-like formatting
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/`(.*?)`/g, '<code style="background: rgba(0,0,0,0.1); padding: 0.1rem 0.3rem; border-radius: 3px;">$1</code>');
+    }
+
+    function addTypingIndicator() {
+        const container = document.getElementById('chat-messages');
+        const typingDiv = document.createElement('div');
+        typingDiv.id = 'typing-indicator';
+        typingDiv.className = 'chat-message assistant';
+        typingDiv.style.cssText = 'display: flex; gap: 1rem; max-width: 80%;';
+        typingDiv.innerHTML = `
+            <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--success)); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            </div>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 12px;">
+                <div style="display: flex; gap: 4px;">
+                    <span style="width: 8px; height: 8px; background: var(--muted); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: -0.32s;"></span>
+                    <span style="width: 8px; height: 8px; background: var(--muted); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: -0.16s;"></span>
+                    <span style="width: 8px; height: 8px; background: var(--muted); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both;"></span>
+                </div>
+            </div>
+        `;
+        container.appendChild(typingDiv);
+        container.scrollTop = container.scrollHeight;
+        return 'typing-indicator';
+    }
+
+    function removeTypingIndicator(id) {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    }
+
+    function askSuggestion(question) {
+        document.getElementById('chat-input').value = question;
+        sendChatMessage();
+    }
+
+    // Auto-resize textarea
+    document.addEventListener('DOMContentLoaded', function() {
+        const textarea = document.getElementById('chat-input');
+        if (textarea) {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
+        }
+    });
+
+    // ==================== LITIGIO ELECTORAL FUNCTIONS ====================
+
+    let litigioCases = [
+        { id: 'LIT-001', mesa: '05-001-001-01-003', type: 'arithmetic', dept: 'Antioquia', status: 'pending', deadline: '2026-02-05', lawyer: null, docs: 2 },
+        { id: 'LIT-002', mesa: '11-001-015-02-007', type: 'discrepancy', dept: 'Bogotá D.C.', status: 'in_progress', deadline: '2026-02-07', lawyer: 'Dr. García', docs: 5 },
+        { id: 'LIT-003', mesa: '76-001-008-01-012', type: 'recount', dept: 'Valle del Cauca', status: 'submitted', deadline: '2026-02-10', lawyer: 'Dra. López', docs: 8 }
+    ];
+
+    function updateLitigioStats() {
+        const total = litigioCases.length;
+        const pending = litigioCases.filter(c => c.status === 'pending').length;
+        const resolved = litigioCases.filter(c => c.status === 'resolved').length;
+        const docs = litigioCases.reduce((sum, c) => sum + (c.docs || 0), 0);
+
+        document.getElementById('litigio-total').textContent = total;
+        document.getElementById('litigio-pending').textContent = pending;
+        document.getElementById('litigio-resolved').textContent = resolved;
+        document.getElementById('litigio-docs').textContent = docs;
+
+        // Update badge
+        const badge = document.getElementById('litigio-badge');
+        if (pending > 0) {
+            badge.textContent = pending;
+            badge.style.display = 'inline-block';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+
+    function filterLitigioCases() {
+        const status = document.getElementById('litigio-filter-status').value;
+        const type = document.getElementById('litigio-filter-type').value;
+        const search = document.getElementById('litigio-search').value.toLowerCase();
+
+        const rows = document.querySelectorAll('#litigio-tbody tr');
+        rows.forEach(row => {
+            const rowStatus = row.querySelector('.status-badge')?.className || '';
+            const rowType = row.cells[2]?.textContent?.toLowerCase() || '';
+            const rowText = row.textContent.toLowerCase();
+
+            let show = true;
+            if (status && !rowStatus.includes(status.replace('_', '-'))) show = false;
+            if (type && !rowType.includes(getTypeLabel(type).toLowerCase())) show = false;
+            if (search && !rowText.includes(search)) show = false;
+
+            row.style.display = show ? '' : 'none';
+        });
+    }
+
+    function getTypeLabel(type) {
+        const labels = {
+            'arithmetic': 'Diferencia Aritmética',
+            'discrepancy': 'Discrepancia RNEC',
+            'recount': 'Solicitud Recuento',
+            'nullity': 'Nulidad Mesa'
+        };
+        return labels[type] || type;
+    }
+
+    function viewLitigioCase(caseId) {
+        const caso = litigioCases.find(c => c.id === caseId);
+        if (!caso) return;
+
+        alert(`Caso: ${caso.id}\nMesa: ${caso.mesa}\nDepartamento: ${caso.dept}\nEstado: ${caso.status}\nAbogado: ${caso.lawyer || 'Sin asignar'}\nDocumentos: ${caso.docs}\nFecha límite: ${caso.deadline}`);
+    }
+
+    function assignLawyer(caseId) {
+        const lawyer = prompt('Nombre del abogado asignado:');
+        if (lawyer) {
+            const caso = litigioCases.find(c => c.id === caseId);
+            if (caso) {
+                caso.lawyer = lawyer;
+                caso.status = 'in_progress';
+                alert(`Abogado ${lawyer} asignado al caso ${caseId}`);
+                location.reload();
+            }
+        }
+    }
+
+    function uploadEvidence(caseId) {
+        alert(`Función de subir evidencia para ${caseId}.\n\nEsta funcionalidad permitirá:\n- Subir fotos del E-14\n- Adjuntar capturas de pantalla\n- Cargar documentos PDF`);
+    }
+
+    function downloadExpediente(caseId) {
+        alert(`Descargando expediente de ${caseId}...\n\nEl expediente incluirá:\n- Acta E-14 original\n- Comparativo OCR vs RNEC\n- Evidencias adjuntas\n- Historial del caso`);
+    }
+
+    function openNewCaseModal() {
+        const mesa = prompt('ID de la mesa para el nuevo caso (ej: 05-001-001-01-003):');
+        if (!mesa) return;
+
+        const type = prompt('Tipo de caso:\n1. Diferencia Aritmética\n2. Discrepancia RNEC\n3. Solicitud Recuento\n4. Nulidad Mesa\n\nIngrese número:');
+        const types = ['arithmetic', 'discrepancy', 'recount', 'nullity'];
+        const typeIndex = parseInt(type) - 1;
+
+        if (typeIndex >= 0 && typeIndex < types.length) {
+            const newCase = {
+                id: 'LIT-' + String(litigioCases.length + 1).padStart(3, '0'),
+                mesa: mesa,
+                type: types[typeIndex],
+                dept: 'Por determinar',
+                status: 'pending',
+                deadline: new Date(Date.now() + 7*24*60*60*1000).toISOString().split('T')[0],
+                lawyer: null,
+                docs: 0
+            };
+            litigioCases.push(newCase);
+            alert(`Caso ${newCase.id} creado exitosamente`);
+            updateLitigioStats();
+        }
+    }
+
+    function exportLitigioCases() {
+        const csv = 'Caso,Mesa,Tipo,Departamento,Estado,Fecha Límite,Abogado\n' +
+            litigioCases.map(c => `${c.id},${c.mesa},${getTypeLabel(c.type)},${c.dept},${c.status},${c.deadline},${c.lawyer || 'Sin asignar'}`).join('\n');
+
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'litigio_electoral_' + new Date().toISOString().split('T')[0] + '.csv';
+        a.click();
+    }
+
+    // Initialize litigio stats on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateLitigioStats();
+    });
+
+    // Add bounce animation for typing indicator
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
+    </script>
 </body>
 </html>
