@@ -191,7 +191,7 @@ def create_app(config_name: str = 'default') -> Flask:
         app.extensions["openai_service"] = None
 
     # Register blueprints
-    from app.routes import analysis_bp, chat_bp, health_bp, auth_bp, campaign_bp, web_bp, leads_bp, media_bp, forecast_bp, advisor_bp, electoral_bp, campaign_team_bp, review_bp, ingestion_bp, incidents_bp, geography_bp
+    from app.routes import analysis_bp, chat_bp, health_bp, auth_bp, campaign_bp, web_bp, leads_bp, media_bp, forecast_bp, advisor_bp, electoral_bp, campaign_team_bp, review_bp, ingestion_bp, incidents_bp, geography_bp, witness_bp, scraper_bp, e14_data_bp
     app.register_blueprint(web_bp)  # No prefix for web routes
     app.register_blueprint(analysis_bp, url_prefix='/api')
     app.register_blueprint(media_bp, url_prefix='/api/media')
@@ -208,6 +208,9 @@ def create_app(config_name: str = 'default') -> Flask:
     app.register_blueprint(ingestion_bp, url_prefix='/api/electoral/ingestion')
     app.register_blueprint(incidents_bp, url_prefix='/api/incidents')
     app.register_blueprint(geography_bp, url_prefix='/api/geography')
+    app.register_blueprint(witness_bp, url_prefix='/api/witness')
+    app.register_blueprint(scraper_bp)  # Already has /api/scraper prefix
+    app.register_blueprint(e14_data_bp)  # E-14 scraper data API
 
     # Register error handlers
     @app.errorhandler(404)

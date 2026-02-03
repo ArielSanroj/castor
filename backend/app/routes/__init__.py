@@ -17,6 +17,9 @@ from .review import review_bp
 from .ingestion import ingestion_bp
 from .incidents import incidents_bp
 from .geography import geography_bp
+from .witness import witness_bp
+from .scraper import scraper_bp
+from .e14_data import e14_data_bp
 
 __all__ = [
     'analysis_bp',
@@ -35,4 +38,7 @@ __all__ = [
     'ingestion_bp',
     'incidents_bp',
     'geography_bp',
+    'witness_bp',
+    'scraper_bp',
+    'e14_data_bp',
 ]

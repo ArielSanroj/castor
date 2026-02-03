@@ -93,7 +93,7 @@ class Config:
     BETO_MODEL_PATH: str = os.getenv('BETO_MODEL_PATH', 'dccuchile/bert-base-spanish-wwm-uncased')
     
     # Rate Limiting
-    RATE_LIMIT_PER_MINUTE: int = int(os.getenv('RATE_LIMIT_PER_MINUTE', '10'))
+    RATE_LIMIT_PER_MINUTE: int = int(os.getenv('RATE_LIMIT_PER_MINUTE', '120'))  # 2 per second - dashboard makes parallel calls
     RATE_LIMIT_STORAGE_URI: str = os.getenv('RATE_LIMIT_STORAGE_URI', 'memory://')
     
     # Caching
@@ -118,7 +118,35 @@ class Config:
     # Logging
     LOG_LEVEL: str = os.getenv('LOG_LEVEL', 'INFO')
     LOG_FILE: Optional[str] = os.getenv('LOG_FILE')
-    
+
+    # ============================================================
+    # E-14 Scraper Configuration
+    # ============================================================
+
+    # Scraper Workers
+    SCRAPER_NUM_WORKERS: int = int(os.getenv('SCRAPER_NUM_WORKERS', '10'))
+    SCRAPER_REQUESTS_PER_MINUTE: int = int(os.getenv('SCRAPER_REQUESTS_PER_MINUTE', '30'))
+    SCRAPER_MAX_RETRIES: int = int(os.getenv('SCRAPER_MAX_RETRIES', '3'))
+    SCRAPER_REQUEST_TIMEOUT: int = int(os.getenv('SCRAPER_REQUEST_TIMEOUT', '30'))
+
+    # Scraper Target URL
+    SCRAPER_BASE_URL: str = os.getenv(
+        'SCRAPER_BASE_URL',
+        'https://e14_congreso_2022.registraduria.gov.co'
+    )
+
+    # 2Captcha Configuration
+    CAPTCHA_2_API_KEY: Optional[str] = os.getenv('CAPTCHA_2_API_KEY')
+    CAPTCHA_SOLVER_ENABLED: bool = os.getenv('CAPTCHA_SOLVER_ENABLED', 'true').lower() == 'true'
+
+    # Proxy Configuration
+    USE_PROXY_ROTATION: bool = os.getenv('USE_PROXY_ROTATION', 'false').lower() == 'true'
+    PROXY_LIST_FILE: Optional[str] = os.getenv('PROXY_LIST_FILE')
+
+    # Scraper Output
+    SCRAPER_OUTPUT_DIR: str = os.getenv('SCRAPER_OUTPUT_DIR', './output/e14_scraper')
+    SCRAPER_SAVE_IMAGES: bool = os.getenv('SCRAPER_SAVE_IMAGES', 'true').lower() == 'true'
+
     # PND Topics (Plan Nacional de Desarrollo 2022-2026)
     PND_TOPICS: list = [
         'Seguridad',
