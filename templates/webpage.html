@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO Meta Tags -->
-    <title>CASTOR IA Electoral | Dashboard de Estrategia para Campanas Colombia 2026</title>
-    <meta name="description" content="Dashboard de estrategia electoral con IA. Conoce tu ventaja electoral, comparala con tus rivales y recibe estrategias y planes de accion diarios.">
-    <meta name="keywords" content="dashboard electoral Colombia, estrategia campana politica, IA electoral 2026, ICCE, momentum, forecast narrativo, planes de accion">
+    <title>CASTOR | Plataforma de Inteligencia Electoral con IA - Colombia 2026</title>
+    <meta name="description" content="Plataforma de inteligencia electoral con IA. Estrategia de campana, War Room para dia electoral y evidencia para litigio. OCR de actas E-14, analisis BETO y teoria de juegos.">
+    <meta name="keywords" content="plataforma electoral Colombia, OCR E-14, war room electoral, litigio electoral, IA electoral 2026, ICCE, momentum, BETO NLP">
     <meta name="author" content="CASTOR Elecciones">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://castor-elecciones.com/">
@@ -16,13 +16,13 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://castor-elecciones.com/">
-    <meta property="og:title" content="CASTOR | Dashboard de Estrategia Electoral Colombia 2026">
-    <meta property="og:description" content="Conoce tu ventaja electoral, comparala con tus rivales y recibe estrategias diarias.">
+    <meta property="og:title" content="CASTOR | Plataforma de Inteligencia Electoral con IA">
+    <meta property="og:description" content="Estrategia electoral, War Room y litigio. De conversacion publica y actas E-14 a decisiones y evidencia.">
     <meta property="og:locale" content="es_CO">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CASTOR | Dashboard de Estrategia Electoral Colombia 2026">
+    <meta name="twitter:title" content="CASTOR | Plataforma de Inteligencia Electoral con IA">
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="/static/images/logo.png">
@@ -35,24 +35,44 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
     <script type="text/javascript" async src="https://play.vidyard.com/embed/v4.js"></script>
 
-    <meta name="theme-color" content="#0A0A0A">
+    <meta name="theme-color" content="#FFFFFF">
 
     <style>
+        /* =============================================
+           CASTOR Brand Manual - Variables CSS
+           Manual: docs/BRAND_MANUAL.md
+           ============================================= */
         :root {
-            --bg: #0A0A0A;
-            --panel: #111111;
-            --panel-alt: #1A1A1A;
-            --border: #2A2A2A;
-            --text: #F5F5F0;
-            --muted: #9A8F7C;
-            --accent: #C9A227;
-            --accent-light: #E8D48A;
-            --accent-dark: #8B7355;
-            --success: #4A7C59;
-            --error: #8B3A3A;
+            /* Colores estructurales */
+            --bg: #FFFFFF;
+            --bg-alt: #F7F4EE;
+            --sand: #E6E1D8;
+            --panel: #FFFFFF;
+            --panel-alt: #F7F4EE;
+            --border: #E6E1D8;
+
+            /* Texto */
+            --text: #111111;
+            --text-secondary: #444444;
+            --text-tertiary: #777777;
+            --muted: #777777;
+
+            /* Accion (unico color primario) */
+            --accent: #6F6A63;
+            --accent-hover: #5E5A54;
+            --accent-active: #4E4A45;
+            --accent-light: rgba(111, 106, 99, 0.1);
+
+            /* Estados */
+            --success: #C2A96D;
+            --warning: #8B7355;
+            --danger: #8F4A4A;
+            --error: #8F4A4A;
+            --info: #7A7F85;
+
+            /* Tipografia */
             --font-display: 'Playfair Display', Georgia, serif;
             --font-body: 'Source Sans 3', system-ui, sans-serif;
         }
@@ -67,17 +87,18 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER */
+        /* =============================================
+           HEADER
+           ============================================= */
         .main-header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(12px);
+            background: var(--bg);
             border-bottom: 1px solid var(--border);
         }
         .main-nav {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 1rem 2rem;
             display: flex;
@@ -91,1011 +112,1486 @@
             text-decoration: none;
             color: var(--text);
         }
-        .brand img { width: 48px; height: 48px; border-radius: 8px; }
+        .brand img { width: 40px; height: 40px; border-radius: 8px; }
         .brand strong {
             font-family: var(--font-display);
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 600;
-            letter-spacing: 0.05em;
-            color: var(--accent);
+            letter-spacing: 0.02em;
+            color: var(--text);
         }
         .brand small {
             display: block;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--muted);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
         }
-        .nav-center { display: flex; gap: 2rem; }
+        .nav-center { display: flex; gap: 1.75rem; }
         .nav-center a {
-            color: var(--muted);
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             transition: color 0.2s;
         }
-        .nav-center a:hover { color: var(--accent); }
+        .nav-center a:hover { color: var(--text); }
         .nav-right { display: flex; gap: 0.75rem; align-items: center; }
 
-        /* BUTTONS */
+        /* =============================================
+           BUTTONS (sin gradientes)
+           ============================================= */
         .primary-btn {
-            background: linear-gradient(135deg, #C9A227, #D4AF37);
-            color: #0A0A0A;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
+            background: var(--accent);
+            color: #FFFFFF;
+            padding: 0.7rem 1.25rem;
+            border-radius: 4px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             border: none;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.25s ease;
+            letter-spacing: 0.04em;
+            transition: background 0.2s;
             font-family: var(--font-body);
+            text-decoration: none;
+            display: inline-block;
         }
-        .primary-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(201, 162, 39, 0.35);
-        }
-        .primary-btn.large { padding: 1rem 2rem; font-size: 0.95rem; }
+        .primary-btn:hover { background: var(--accent-hover); }
+        .primary-btn:active { background: var(--accent-active); }
+        .primary-btn.large { padding: 0.85rem 1.5rem; font-size: 0.85rem; }
+
         .ghost-btn {
             background: transparent;
             border: 1px solid var(--border);
-            color: var(--muted);
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
+            color: var(--text-secondary);
+            padding: 0.7rem 1.25rem;
+            border-radius: 4px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.25s ease;
+            letter-spacing: 0.04em;
+            transition: all 0.2s;
             font-family: var(--font-body);
+            text-decoration: none;
         }
         .ghost-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* HERO */
-        .hero-electoral {
-            padding: 5rem 2rem 4rem;
-            background: radial-gradient(circle at 30% 20%, rgba(201, 162, 39, 0.08), transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(74, 124, 89, 0.06), transparent 50%),
-                        linear-gradient(180deg, var(--bg), var(--panel));
+        /* =============================================
+           HERO
+           ============================================= */
+        .hero {
+            padding: 4rem 2rem 3rem;
+            background: var(--bg);
             border-bottom: 1px solid var(--border);
-            position: relative;
         }
-        .hero-electoral::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light), var(--accent), var(--accent-dark));
-        }
-        .hero__content { max-width: 1100px; margin: 0 auto; text-align: center; }
-        .hero-logo {
-            display: block;
-            width: 120px; height: 120px;
-            margin: 0 auto 1.5rem;
-            filter: drop-shadow(0 8px 24px rgba(201, 162, 39, 0.25));
-            border-radius: 16px;
-        }
+        .hero__content { max-width: 800px; margin: 0 auto; text-align: center; }
         .hero-badge {
             display: inline-block;
-            background: rgba(201, 162, 39, 0.15);
-            border: 1px solid rgba(201, 162, 39, 0.3);
+            background: var(--accent-light);
             color: var(--accent);
-            padding: 0.5rem 1.25rem;
+            padding: 0.4rem 0.9rem;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
         }
-        .hero-electoral h1 {
+        .hero h1 {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
             font-weight: 600;
             line-height: 1.2;
-            margin-bottom: 1.25rem;
-        }
-        .hero-electoral .lead {
-            font-size: 1.1rem;
-            color: var(--muted);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            line-height: 1.7;
-        }
-        .campaign-types { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin: 1.5rem 0 2rem; }
-        .campaign-type-chip {
-            background: rgba(201, 162, 39, 0.1);
-            border: 1px solid rgba(201, 162, 39, 0.25);
-            color: var(--accent-light);
-            padding: 0.4rem 1rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
-
-        /* HERO SPLIT */
-        .hero-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: center;
-            max-width: 1100px;
-            margin: 3rem auto 0;
-        }
-        @media (max-width: 900px) { .hero-split { grid-template-columns: 1fr; gap: 1.5rem; } }
-        .hero-chart-container {
-            background: var(--panel-alt);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            position: relative;
-        }
-        .hero-chart-label {
-            position: absolute; top: 1rem; left: 1.5rem;
-            font-size: 0.7rem; color: var(--muted);
-            text-transform: uppercase; letter-spacing: 0.08em;
-        }
-        .hero-chart-badge {
-            position: absolute; top: 1rem; right: 1.5rem;
-            background: var(--success); color: #fff;
-            padding: 0.2rem 0.6rem; border-radius: 4px;
-            font-size: 0.65rem; font-weight: 600;
-        }
-        .hero-info-card {
-            background: var(--panel-alt);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: left;
-        }
-        .hero-info-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.1rem; font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .hero-info-item {
-            display: flex; justify-content: space-between;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.85rem;
-        }
-        .hero-info-item:last-child { border-bottom: none; }
-        .hero-info-label { color: var(--muted); }
-        .hero-info-value { font-weight: 600; }
-        .hero-info-value.positive { color: var(--success); }
-        .hero-info-value.negative { color: var(--error); }
-        .action-box {
-            background: rgba(74, 124, 89, 0.1);
-            border: 1px solid rgba(74, 124, 89, 0.25);
-            border-left: 3px solid var(--success);
-            border-radius: 0 8px 8px 0;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .action-box-label { font-size: 0.7rem; color: var(--success); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
-        .action-box-text { font-weight: 600; font-size: 0.95rem; }
-
-        /* SECTIONS */
-        .section-header { text-align: center; max-width: 800px; margin: 0 auto 3rem; }
-        .section-header h2 {
-            font-family: var(--font-display);
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 600; margin-bottom: 0.75rem;
-        }
-        .section-header .subtitle { color: var(--muted); font-size: 1rem; }
-
-        .video-section { padding: 4rem 2rem; background: var(--panel); border-bottom: 1px solid var(--border); }
-
-        .value-section { padding: 5rem 2rem; background: var(--bg); }
-        .value-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .value-card {
-            background: var(--panel-alt);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.75rem;
-            transition: all 0.25s ease;
-        }
-        .value-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(201, 162, 39, 0.3);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-        }
-        .value-icon {
-            width: 48px; height: 48px;
-            background: rgba(201, 162, 39, 0.15);
-            border: 1px solid rgba(201, 162, 39, 0.25);
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.25rem; font-weight: 700;
-            color: var(--accent); margin-bottom: 1rem;
-            font-family: var(--font-display);
-        }
-        .value-card h3 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .value-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
-
-        .rivals-section { background: var(--panel); padding: 5rem 2rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .rivals-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; max-width: 900px; margin: 2rem auto 0; }
-        .rival-chip {
-            background: var(--panel-alt);
-            border: 1px solid var(--border);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            transition: all 0.2s ease;
-        }
-        .rival-chip:hover { border-color: var(--accent); color: var(--accent); }
-
-        .demo-preview {
-            background: var(--panel-alt);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 900px;
-            margin: 3rem auto 0;
-        }
-        .demo-preview-header {
-            display: flex; align-items: center; gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .demo-preview-header h4 { margin: 0; font-family: var(--font-display); font-size: 1rem; }
-        .demo-preview-badge { background: var(--accent); color: #0A0A0A; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.65rem; font-weight: 600; }
-        .demo-move {
-            background: rgba(74, 124, 89, 0.1);
-            border: 1px solid rgba(74, 124, 89, 0.25);
-            border-left: 3px solid var(--success);
-            border-radius: 0 8px 8px 0;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-        .demo-move-label { font-size: 0.7rem; color: var(--success); text-transform: uppercase; margin-bottom: 0.5rem; }
-        .demo-move-text { font-size: 1rem; font-weight: 600; }
-        .demo-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        @media (max-width: 600px) { .demo-metrics { grid-template-columns: 1fr; } }
-        .demo-metric { text-align: center; padding: 1rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; }
-        .demo-metric-value { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--accent); }
-        .demo-metric-value.success { color: var(--success); }
-        .demo-metric-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; text-transform: uppercase; }
-
-        .how-section { padding: 5rem 2rem; background: var(--bg); }
-        .how-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1100px;
-            margin: 3rem auto 0;
-        }
-        .how-step { text-align: center; padding: 1.5rem; border-radius: 12px; transition: all 0.25s; }
-        .how-step:hover { background: var(--panel-alt); }
-        .how-step-number {
-            width: 52px; height: 52px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-display);
-            font-size: 1.25rem; font-weight: 700;
-            color: #0A0A0A;
-            margin: 0 auto 1rem;
-        }
-        .how-step h3 { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 0.5rem; }
-        .how-step p { color: var(--muted); font-size: 0.85rem; }
-        .how-step.highlight { background: rgba(201, 162, 39, 0.08); border: 1px solid rgba(201, 162, 39, 0.2); }
-
-        .outputs-section { background: var(--panel); padding: 5rem 2rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .outputs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            max-width: 1100px;
-            margin: 3rem auto 0;
-        }
-        .output-card { background: var(--panel-alt); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: border-color 0.25s; }
-        .output-card:hover { border-color: rgba(201, 162, 39, 0.3); }
-        .output-card h3 { font-family: var(--font-display); font-size: 1rem; margin-bottom: 0.5rem; }
-        .output-card p { color: var(--muted); font-size: 0.85rem; }
-        .output-card.highlight { background: rgba(201, 162, 39, 0.08); border: 1px solid rgba(201, 162, 39, 0.25); }
-        .output-card.highlight h3 { color: var(--accent); }
-
-        .metodologia-section { padding: 5rem 2rem; background: var(--bg); }
-
-        /* Model Container */
-        .model-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: var(--panel-alt);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-bottom: 3rem;
-        }
-        .model-header { text-align: center; margin-bottom: 2rem; }
-        .model-badge {
-            display: inline-block;
-            background: rgba(201, 162, 39, 0.15);
-            border: 1px solid rgba(201, 162, 39, 0.3);
-            color: var(--accent);
-            padding: 0.4rem 1rem;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-        }
-        .model-header h3 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
             margin-bottom: 0.75rem;
-        }
-        .model-header p { color: var(--muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto; }
-
-        /* Model Grid */
-        .model-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 2rem;
-        }
-        .model-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.25rem;
-            text-align: center;
-            transition: all 0.25s ease;
-        }
-        .model-card:hover {
-            border-color: rgba(201, 162, 39, 0.3);
-            transform: translateY(-2px);
-        }
-        .model-card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
-        .model-card h4 {
-            font-family: var(--font-display);
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent-light);
-        }
-        .model-card p { color: var(--muted); font-size: 0.8rem; line-height: 1.5; }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, rgba(201, 162, 39, 0.1), rgba(201, 162, 39, 0.03));
-            border: 1px solid rgba(201, 162, 39, 0.25);
-            border-left: 4px solid var(--accent);
-            border-radius: 0 10px 10px 0;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        .formula-label {
-            font-size: 0.7rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.75rem;
-        }
-        .formula-content code {
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 0.9rem;
             color: var(--text);
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.75rem 1.25rem;
-            border-radius: 6px;
-            display: inline-block;
         }
-        .formula-explanation {
-            display: flex;
-            justify-content: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
+        .hero .lead {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.6;
         }
-        .formula-tag {
-            font-size: 0.7rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-        .formula-tag.positive { background: rgba(74, 124, 89, 0.2); color: var(--success); }
-        .formula-tag.negative { background: rgba(139, 58, 58, 0.2); color: var(--error); }
 
-        /* Metrics Grid */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .metric-item {
+        /* Hero Bullets */
+        .hero-bullets {
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0.6rem;
+            max-width: 550px;
+            margin: 1.5rem auto;
+            text-align: left;
+        }
+        .hero-bullet {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
             padding: 0.75rem 1rem;
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--panel-alt);
             border: 1px solid var(--border);
-            border-radius: 8px;
-        }
-        .metric-name {
-            font-family: var(--font-display);
+            border-radius: 6px;
             font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--accent);
         }
-        .metric-desc { font-size: 0.75rem; color: var(--muted); }
+        .hero-bullet-number {
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            flex-shrink: 0;
+        }
+        .hero-bullet strong { color: var(--text); }
+        .hero-bullet span { color: var(--text-secondary); }
 
-        /* Example Box */
-        .example-box {
+        .campaign-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        .campaign-chip {
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            color: var(--text-tertiary);
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        /* =============================================
+           SECTIONS
+           ============================================= */
+        .section { padding: 4rem 2rem; }
+        .section-alt { background: var(--bg-alt); }
+        .section-header {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+        }
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .section-header .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* =============================================
+           SOCIAL PROOF
+           ============================================= */
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        .proof-item {
             background: var(--panel);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
+            border-radius: 6px;
+            padding: 1.25rem 1rem;
+            text-align: center;
         }
-        .example-header {
+        .proof-value {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+        .proof-label {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+        }
+        .proof-context {
+            font-size: 0.7rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* =============================================
+           VIDEO
+           ============================================= */
+        .video-context {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .video-context-item {
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            padding: 0.5rem 0.9rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* =============================================
+           PLATFORM GRID
+           ============================================= */
+        .platform-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            max-width: 850px;
+            margin: 0 auto 2rem;
+        }
+        .platform-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem;
+            transition: border-color 0.2s;
+        }
+        .platform-card:hover { border-color: var(--accent); }
+        .platform-card-header {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 1rem 1.25rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-bottom: 1px solid var(--border);
+            margin-bottom: 0.6rem;
         }
-        .example-badge {
-            background: var(--accent);
-            color: #0A0A0A;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        .example-title { font-size: 0.9rem; font-weight: 600; }
-        .example-table { padding: 1rem 1.25rem; }
-        .example-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            gap: 0.5rem;
-            padding: 0.6rem 0;
-            font-size: 0.8rem;
-            border-bottom: 1px solid var(--border);
+        .platform-card-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-light);
+            border-radius: 6px;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
         }
-        .example-row:last-child { border-bottom: none; }
-        .example-row.header {
+        .platform-card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
             font-weight: 600;
-            color: var(--muted);
+            color: var(--text);
+        }
+        .platform-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+        }
+        .platform-card-link {
+            color: var(--accent);
+            font-size: 0.8rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .platform-card-link:hover { text-decoration: underline; }
+
+        /* Card states con borde izquierdo (sutil) */
+        .platform-card.warning { border-left: 3px solid var(--warning); }
+        .platform-card.danger { border-left: 3px solid var(--danger); }
+        .platform-card.success { border-left: 3px solid var(--success); }
+
+        /* =============================================
+           FLOW STEPS
+           ============================================= */
+        .flow-label {
+            font-family: var(--font-display);
             font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .example-row.winner { background: rgba(74, 124, 89, 0.1); border-radius: 6px; padding: 0.6rem 0.5rem; }
-        .payoff { font-weight: 700; }
-        .payoff.positive { color: var(--success); }
-        .payoff.negative { color: var(--error); }
-        .payoff.neutral { color: var(--muted); }
-        .example-conclusion {
-            padding: 1rem 1.25rem;
-            font-size: 0.85rem;
-            color: var(--muted);
-            border-top: 1px solid var(--border);
-            background: rgba(74, 124, 89, 0.05);
-        }
-        .example-conclusion strong { color: var(--success); }
-
-        /* Trust Section */
-        .trust-section { margin-top: 2rem; }
-        .trust-title {
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
             text-align: center;
-            font-family: var(--font-display);
-            font-size: 1rem;
-            color: var(--muted);
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-        .trust-grid { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; max-width: 900px; margin: 0 auto; }
-        .trust-item { text-align: center; max-width: 160px; }
-        .trust-item-number {
-            width: 36px; height: 36px;
-            background: rgba(201, 162, 39, 0.15);
-            border: 1px solid rgba(201, 162, 39, 0.25);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-display);
-            font-size: 0.9rem; font-weight: 600;
+            padding: 0.35rem 0.9rem;
+            border-radius: 4px;
+            display: inline-block;
+            background: var(--accent-light);
             color: var(--accent);
-            margin: 0 auto 0.6rem;
         }
-        .trust-item p { color: var(--muted); font-size: 0.8rem; line-height: 1.4; }
-        .trust-item strong { color: var(--text); }
-
-        @media (max-width: 600px) {
-            .model-container { padding: 1.5rem; }
-            .formula-content code { font-size: 0.7rem; padding: 0.5rem 0.75rem; }
-            .example-row { grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; font-size: 0.7rem; }
-        }
-
-        .cta-electoral {
-            padding: 5rem 2rem;
+        .flow-container {
+            max-width: 900px;
+            margin: 0 auto 2rem;
             text-align: center;
-            background: radial-gradient(circle at 50% 50%, rgba(201, 162, 39, 0.08), transparent 60%);
+        }
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+        @media (max-width: 800px) { .flow-steps { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 500px) { .flow-steps { grid-template-columns: 1fr; } }
+        .flow-step {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+        .flow-step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin: 0 auto 0.6rem;
+            background: var(--accent);
+            color: #FFFFFF;
+        }
+        .flow-step h4 {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: var(--text);
+        }
+        .flow-step p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        /* =============================================
+           OUTPUTS
+           ============================================= */
+        .outputs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .output-item {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+        .output-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-light);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .output-item h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            margin-bottom: 0.2rem;
+            color: var(--text);
+        }
+        .output-item p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        /* =============================================
+           METHODOLOGY
+           ============================================= */
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        .method-item {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .method-item h4 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+        .method-item p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Expandable */
+        .expandable { max-width: 800px; margin: 0 auto; }
+        .expandable-toggle {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.9rem 1.25rem;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--text);
+            transition: border-color 0.2s;
+        }
+        .expandable-toggle:hover { border-color: var(--accent); }
+        .expandable-toggle svg { transition: transform 0.3s; fill: var(--muted); }
+        .expandable-toggle.open svg { transform: rotate(180deg); }
+        .expandable-content {
+            display: none;
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            padding: 1.25rem;
+        }
+        .expandable-content.open { display: block; }
+
+        /* Formula */
+        .formula-box {
+            background: var(--accent-light);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .formula-box code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: var(--text);
+            background: var(--panel);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: inline-block;
+            border: 1px solid var(--border);
+        }
+
+        /* Metrics inline */
+        .metrics-inline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        .metric-tag {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        .metric-tag strong { color: var(--text); }
+
+        /* Trust */
+        .trust-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 2rem auto 0;
+        }
+        .trust-item { text-align: center; max-width: 130px; }
+        .trust-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--accent);
+            margin: 0 auto 0.4rem;
+            font-weight: 600;
+        }
+        .trust-item p {
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            line-height: 1.4;
+        }
+        .trust-item strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 0.1rem;
+            font-size: 0.75rem;
+        }
+
+        /* =============================================
+           CTA
+           ============================================= */
+        .cta-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: var(--bg-alt);
             border-top: 1px solid var(--border);
         }
-        .cta-electoral h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3.5vw, 2.25rem); margin-bottom: 0.75rem; }
-        .cta-electoral p { color: var(--muted); font-size: 1.05rem; margin-bottom: 2rem; }
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .cta-section p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
 
-        /* FOOTER */
-        footer { background: var(--panel); border-top: 1px solid var(--border); padding: 3rem 2rem; }
+        /* =============================================
+           FOOTER
+           ============================================= */
+        footer {
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 2rem;
+        }
         .footer-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 2rem;
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
         }
         @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
-        .footer-column h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--accent); margin-bottom: 1rem; }
-        .footer-column h4 { font-size: 0.85rem; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .footer-column p { color: var(--muted); font-size: 0.85rem; }
+        .footer-column h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 0.6rem;
+        }
+        .footer-column h4 {
+            font-size: 0.7rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-secondary);
+        }
+        .footer-column p { color: var(--text-secondary); font-size: 0.8rem; }
         .footer-column ul { list-style: none; }
-        .footer-column li { margin-bottom: 0.4rem; }
-        .footer-column a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+        .footer-column li { margin-bottom: 0.3rem; }
+        .footer-column a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.2s;
+        }
         .footer-column a:hover { color: var(--accent); }
 
-        /* MODAL */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
-        .modal.open { display: flex; }
-        .modal-content { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 1px solid var(--border); }
-        .modal-header h2 { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent); }
-        .modal-close { background: transparent; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; }
-        .modal-form { padding: 1.5rem; }
-        .modal-form label { display: block; margin-bottom: 1rem; font-size: 0.9rem; }
-        .modal-form input, .modal-form select {
-            width: 100%; margin-top: 0.4rem; padding: 0.75rem;
-            background: var(--panel-alt); border: 1px solid var(--border);
-            border-radius: 6px; color: var(--text); font-size: 0.9rem;
+        /* =============================================
+           MODAL
+           ============================================= */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(17, 17, 17, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
-        .modal-form input:focus, .modal-form select:focus { outline: none; border-color: var(--accent); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .form-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .modal.open { display: flex; }
+        .modal-content {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            max-width: 450px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .modal-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .modal-form { padding: 1.25rem; }
+        .modal-form label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .modal-form input, .modal-form select {
+            width: 100%;
+            margin-top: 0.3rem;
+            padding: 0.6rem;
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-size: 0.85rem;
+        }
+        .modal-form input:focus, .modal-form select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
 
-        /* MOBILE */
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted var(--accent);
+        }
+        .tooltip::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: var(--bg);
+            padding: 0.35rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+        .tooltip:hover::after { opacity: 1; }
+
+        /* =============================================
+           MOBILE
+           ============================================= */
         @media (max-width: 768px) {
             .nav-center { display: none; }
-            .hero-electoral { padding: 3rem 1.5rem; }
-            .hero-electoral h1 { font-size: 1.75rem; }
-            .hero-logo { width: 80px; height: 80px; }
+            .hero { padding: 2.5rem 1.5rem; }
+            .hero h1 { font-size: 1.5rem; }
+            .hero-bullets { gap: 0.5rem; }
             .cta-buttons { flex-direction: column; }
             .primary-btn.large, .ghost-btn { width: 100%; text-align: center; }
         }
 
-        /* RAG CHAT */
+        /* =============================================
+           RAG CHAT
+           ============================================= */
         .rag-chat-fab {
-            position: fixed; bottom: 24px; right: 24px;
-            height: 50px; border-radius: 25px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border: none; cursor: pointer;
-            box-shadow: 0 4px 20px rgba(201, 162, 39, 0.35);
-            display: flex; align-items: center; justify-content: center;
-            gap: 8px; padding: 0 16px;
-            transition: all 0.3s ease;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            height: 44px;
+            border-radius: 22px;
+            background: var(--accent);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 14px;
+            transition: background 0.2s;
             z-index: 1000;
         }
-        .rag-chat-fab:hover { transform: scale(1.05); box-shadow: 0 6px 30px rgba(201, 162, 39, 0.5); }
-        .rag-chat-fab svg { width: 24px; height: 24px; fill: #0A0A0A; }
-        .rag-chat-fab-text { color: #0A0A0A; font-size: 0.85rem; font-weight: 600; }
+        .rag-chat-fab:hover { background: var(--accent-hover); }
+        .rag-chat-fab svg { width: 18px; height: 18px; fill: #FFFFFF; }
+        .rag-chat-fab-text { color: #FFFFFF; font-size: 0.8rem; font-weight: 600; }
+
         .rag-chat-panel {
-            position: fixed; bottom: 100px; right: 24px;
-            width: 400px; max-width: calc(100vw - 48px);
-            height: 500px; max-height: calc(100vh - 140px);
-            background: var(--panel); border: 1px solid var(--border);
-            border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            display: none; flex-direction: column;
-            z-index: 999; overflow: hidden;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            height: 450px;
+            max-height: calc(100vh - 120px);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+            overflow: hidden;
         }
         .rag-chat-panel.open { display: flex; }
+
         .rag-chat-header {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: #0A0A0A; padding: 16px 20px;
-            display: flex; align-items: center; justify-content: space-between;
+            background: var(--accent);
+            color: #FFFFFF;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .rag-chat-header-brand { display: flex; align-items: center; gap: 10px; }
-        .rag-chat-header-brand img { width: 32px; height: 32px; border-radius: 6px; }
-        .rag-chat-header h3 { margin: 0; font-family: var(--font-display); font-size: 1rem; font-weight: 700; }
+        .rag-chat-header-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rag-chat-header-brand img {
+            width: 26px;
+            height: 26px;
+            border-radius: 4px;
+        }
+        .rag-chat-header h3 {
+            margin: 0;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
         .rag-chat-header button {
-            background: rgba(0,0,0,0.15); border: none; color: #0A0A0A;
-            width: 32px; height: 32px; border-radius: 6px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #FFFFFF;
+            width: 26px;
+            height: 26px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .rag-chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--panel-alt); }
-        .rag-message { max-width: 85%; padding: 12px 16px; border-radius: 10px; font-size: 0.9rem; line-height: 1.5; }
+
+        .rag-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: var(--panel-alt);
+        }
+        .rag-message {
+            max-width: 85%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
         .rag-message.user {
             align-self: flex-end;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: #0A0A0A;
+            background: var(--accent);
+            color: #FFFFFF;
             border-bottom-right-radius: 4px;
         }
-        .rag-message.assistant { align-self: flex-start; background: var(--panel); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
-        .rag-message.system { align-self: center; background: rgba(201, 162, 39, 0.1); color: var(--accent); font-size: 0.8rem; padding: 8px 12px; }
-        .rag-chat-input-area { padding: 12px 16px; background: var(--panel); border-top: 1px solid var(--border); display: flex; gap: 8px; }
+        .rag-message.assistant {
+            align-self: flex-start;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-bottom-left-radius: 4px;
+        }
+        .rag-message.system {
+            align-self: center;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.75rem;
+            padding: 6px 10px;
+        }
+
+        .rag-chat-input-area {
+            padding: 10px 14px;
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
         .rag-chat-input-area input {
-            flex: 1; padding: 10px 14px; border: 1px solid var(--border);
-            border-radius: 20px; font-size: 0.9rem; outline: none;
-            background: var(--panel-alt); color: var(--text);
+            flex: 1;
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            font-size: 0.85rem;
+            outline: none;
+            background: var(--panel-alt);
+            color: var(--text);
         }
         .rag-chat-input-area input:focus { border-color: var(--accent); }
         .rag-chat-input-area button {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border: none; color: #0A0A0A;
-            width: 40px; height: 40px; border-radius: 50%;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            background: var(--accent);
+            border: none;
+            color: #FFFFFF;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .rag-typing { display: flex; gap: 4px; padding: 8px 12px; }
-        .rag-typing span { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; }
+        .rag-chat-input-area button:hover { background: var(--accent-hover); }
+
+        .rag-typing { display: flex; gap: 4px; padding: 6px 10px; }
+        .rag-typing span {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out both;
+        }
         .rag-typing span:nth-child(1) { animation-delay: -0.32s; }
         .rag-typing span:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
+    <!-- HEADER -->
     <header class="main-header">
         <nav class="main-nav">
             <a class="brand" href="/">
-                <img src="/static/images/logo.png" alt="CASTOR Logo" width="48" height="48">
+                <img src="/static/images/logo.png" alt="CASTOR Logo">
                 <div><strong>CASTOR</strong><small>IA Electoral</small></div>
             </a>
             <div class="nav-center">
-                <a href="#valor">Propuesta</a>
+                <a href="#plataforma">Plataforma</a>
                 <a href="#como-funciona">Como funciona</a>
                 <a href="#outputs">Que entrega</a>
                 <a href="#metodologia">Metodologia</a>
+                <a href="#propuesta">Propuesta</a>
             </div>
             <div class="nav-right">
-                <a href="/dashboard" class="primary-btn" style="text-decoration: none;">Probar ahora</a>
-                <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo</button>
+                <a href="/dashboard" class="ghost-btn">Probar ahora</a>
+                <button class="primary-btn" onclick="openDemoModal()">Solicitar demo</button>
             </div>
         </nav>
     </header>
 
     <main>
-        <!-- Hero -->
-        <section class="hero-electoral">
+        <!-- HERO -->
+        <section class="hero">
             <div class="hero__content">
-                <img src="/static/images/logo.png" alt="CASTOR Logo" class="hero-logo">
-                <div class="hero-badge">Software Electoral Inteligente</div>
+                <div class="hero-badge">Plataforma de Inteligencia Electoral</div>
                 <h1>Tu ventaja electoral, clara y accionable</h1>
-                <p class="lead">CASTOR analiza la conversacion publica, compara tu posicion frente a tus rivales y te entrega la estrategia del dia con planes de accion concretos.</p>
-                <div class="campaign-types">
-                    <span class="campaign-type-chip">Alcaldias</span>
-                    <span class="campaign-type-chip">Gobernaciones</span>
-                    <span class="campaign-type-chip">Concejos</span>
-                    <span class="campaign-type-chip">Asambleas</span>
-                    <span class="campaign-type-chip">Congreso</span>
-                    <span class="campaign-type-chip">Presidencia</span>
+                <p class="lead">CASTOR convierte conversacion publica y actas E-14 en estrategia de campana, operacion de dia de elecciones y evidencia para litigio electoral.</p>
+
+                <div class="hero-bullets">
+                    <div class="hero-bullet">
+                        <div class="hero-bullet-number">1</div>
+                        <div><strong>Estrategia electoral:</strong> <span><span class="tooltip" data-tip="Indice 0-100 de capacidad electoral por tema">ICCE</span>, momentum, rivales y planes de accion.</span></div>
+                    </div>
+                    <div class="hero-bullet">
+                        <div class="hero-bullet-number">2</div>
+                        <div><strong>War Room:</strong> <span>incidencias por comision y mesa con severidad P0/P1/P2.</span></div>
+                    </div>
+                    <div class="hero-bullet">
+                        <div class="hero-bullet-number">3</div>
+                        <div><strong>OCR E-14:</strong> <span>extraccion + validacion aritmetica + trazabilidad probatoria.</span></div>
+                    </div>
                 </div>
+
                 <div class="cta-buttons">
-                    <a href="/dashboard" class="primary-btn large" style="text-decoration: none;">Estrategia electoral</a>
-                    <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo</button>
+                    <button class="primary-btn large" onclick="openDemoModal()">Solicitar demo</button>
+                    <a href="/dashboard" class="ghost-btn">Probar ahora</a>
                 </div>
-                <div class="hero-split">
-                    <div class="hero-chart-container">
-                        <span class="hero-chart-label">Tu campana vs Rival</span>
-                        <span class="hero-chart-badge">Ejemplo</span>
-                        <canvas id="hero-radar-chart" height="280"></canvas>
-                    </div>
-                    <div class="hero-info-card">
-                        <h3>La estrategia de hoy</h3>
-                        <div class="action-box">
-                            <div class="action-box-label">Estrategia recomendada</div>
-                            <div class="action-box-text">Posicionar en Seguridad: comunicado + video + 3 posts</div>
-                        </div>
-                        <div class="hero-info-item"><span class="hero-info-label">ICCE</span><span class="hero-info-value">62.4</span></div>
-                        <div class="hero-info-item"><span class="hero-info-label">Momentum</span><span class="hero-info-value positive">+0.012</span></div>
-                        <div class="hero-info-item"><span class="hero-info-label">Ventaja en tema</span><span class="hero-info-value positive">+8 pts</span></div>
-                        <div class="hero-info-item"><span class="hero-info-label">Distancia vs rival</span><span class="hero-info-value negative">-12 pts</span></div>
-                        <a href="/dashboard" class="primary-btn" style="display: block; text-align: center; margin-top: 1rem; text-decoration: none;">Probar ahora</a>
-                    </div>
+
+                <div class="campaign-chips">
+                    <span class="campaign-chip">Alcaldias</span>
+                    <span class="campaign-chip">Gobernaciones</span>
+                    <span class="campaign-chip">Concejos</span>
+                    <span class="campaign-chip">Asambleas</span>
+                    <span class="campaign-chip">Congreso</span>
+                    <span class="campaign-chip">Presidencia</span>
                 </div>
             </div>
         </section>
 
-        <!-- Video -->
-        <section class="video-section">
+        <!-- SOCIAL PROOF -->
+        <section class="section section-alt">
+            <div class="section-header">
+                <h2>Resultados operativos</h2>
+                <p class="subtitle">Datos reales de procesamiento y validacion.</p>
+            </div>
+            <div class="proof-grid">
+                <div class="proof-item">
+                    <div class="proof-value" id="e14-counter">225,702</div>
+                    <div class="proof-label">Actas E-14 procesadas</div>
+                    <div class="proof-context">Senado + Camara 2022</div>
+                </div>
+                <div class="proof-item">
+                    <div class="proof-value">24/7</div>
+                    <div class="proof-label">Monitoreo en vivo</div>
+                    <div class="proof-context">Conversacion publica X</div>
+                </div>
+                <div class="proof-item">
+                    <div class="proof-value">OCR + HITL</div>
+                    <div class="proof-label">Validacion aritmetica</div>
+                    <div class="proof-context">Review humano incluido</div>
+                </div>
+                <div class="proof-item">
+                    <div class="proof-value">100%</div>
+                    <div class="proof-label">Trazabilidad</div>
+                    <div class="proof-context">Por mesa y comision</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIDEO -->
+        <section class="section">
             <div class="section-header">
                 <h2>Mira CASTOR en accion</h2>
-                <p class="subtitle">Conoce como transformamos la conversacion publica en estrategias y planes de accion.</p>
             </div>
-            <div style="max-width: 900px; margin: 2rem auto 0;">
-                <img style="width: 100%; display: block; border-radius: 12px; border: 1px solid var(--border);"
+            <div class="video-context">
+                <div class="video-context-item">De un E-14 a incidencia y accion legal en 30 segundos</div>
+                <div class="video-context-item">Del ruido en redes a estrategia diaria vs Rival</div>
+            </div>
+            <div style="max-width: 750px; margin: 0 auto;">
+                <img style="width: 100%; display: block; border-radius: 6px; border: 1px solid var(--border);"
                     class="vidyard-player-embed"
                     src="https://play.vidyard.com/jfh9BrAu1ViZtQcfqL9H2M.jpg"
                     data-uuid="jfh9BrAu1ViZtQcfqL9H2M" data-v="4" data-type="inline" />
             </div>
         </section>
 
-        <!-- Valor -->
-        <section id="valor" class="value-section">
+        <!-- PLATAFORMA -->
+        <section id="plataforma" class="section section-alt">
             <div class="section-header">
-                <h2>Tu ventaja electoral, estrategias diarias y planes de accion</h2>
-                <p class="subtitle">CASTOR centraliza el analisis, compara tu campana con rivales reales y te entrega estrategias accionables.</p>
+                <h2>Plataforma Electoral Completa</h2>
+                <p class="subtitle">Organizada por momento de la campana.</p>
             </div>
-            <div class="value-grid">
-                <div class="value-card"><div class="value-icon">vs</div><h3>Tu ventaja electoral</h3><p>Conoce como estas frente a los candidatos que realmente compiten contigo.</p></div>
-                <div class="value-card"><div class="value-icon">!</div><h3>La estrategia del dia</h3><p>Recibe estrategias y planes de accion diarios para ganar la contienda.</p></div>
-                <div class="value-card"><div class="value-icon">~</div><h3>Alertas de momentum</h3><p>Te avisa cuando actuar, antes de perder momentum en la conversacion.</p></div>
-                <div class="value-card"><div class="value-icon">^</div><h3>Forecast narrativo</h3><p>Proyecta hacia donde va tu campana en los proximos 7-14 dias.</p></div>
-            </div>
-        </section>
 
-        <!-- Rivales -->
-        <section class="rivals-section">
-            <div class="section-header">
-                <h2>Conoce tu ventaja electoral frente a tus rivales</h2>
-                <p class="subtitle">Comparala con figuras nacionales y agrega rivales locales.</p>
-            </div>
-            <div class="rivals-grid">
-                <span class="rival-chip">Vicky Davila</span>
-                <span class="rival-chip">Paloma Valencia</span>
-                <span class="rival-chip">Mauricio Cardenas</span>
-                <span class="rival-chip">David Luna</span>
-                <span class="rival-chip">Juan Manuel Galan</span>
-                <span class="rival-chip">+ Tu rival local</span>
-            </div>
-            <div class="demo-preview">
-                <div class="demo-preview-header"><h4>Tu campana vs Rival</h4><span class="demo-preview-badge">Demo</span></div>
-                <div class="demo-move"><div class="demo-move-label">La estrategia de hoy</div><div class="demo-move-text">Posicionar en Seguridad: comunicado + video + 3 posts</div></div>
-                <div class="demo-metrics">
-                    <div class="demo-metric"><div class="demo-metric-value">62.4</div><div class="demo-metric-label">ICCE</div></div>
-                    <div class="demo-metric"><div class="demo-metric-value success">+0.012</div><div class="demo-metric-label">Momentum</div></div>
-                    <div class="demo-metric"><div class="demo-metric-value">Alta</div><div class="demo-metric-label">Confianza</div></div>
+            <!-- PRE-ELECTORAL -->
+            <div class="platform-label">Pre-Electoral: Estrategia</div>
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-card-header">
+                        <div class="platform-card-icon">vs</div>
+                        <h3>Dashboard de Estrategia</h3>
+                    </div>
+                    <p>Tu ventaja electoral vs rivales. Graficos radar, ICCE, SOV, SNA, Momentum por tema.</p>
+                    <a href="/dashboard" class="platform-card-link">Ir al dashboard →</a>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-card-header">
+                        <div class="platform-card-icon">^</div>
+                        <h3>Forecast Electoral</h3>
+                    </div>
+                    <p>Proyecciones a 7-14 dias. Escenarios what-if y correlacion E-14 vs redes.</p>
+                    <a href="/forecast" class="platform-card-link">Ver forecast →</a>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-card-header">
+                        <div class="platform-card-icon">IA</div>
+                        <h3>Chat RAG Inteligente</h3>
+                    </div>
+                    <p>Consulta analisis historicos con IA. Respuestas con fuentes citadas, 24/7.</p>
+                    <span class="platform-card-link" style="color: var(--muted);">Boton flotante abajo →</span>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 2rem;"><a href="/dashboard" class="primary-btn" style="text-decoration: none;">Generar mi dashboard</a></div>
-        </section>
 
-        <!-- Como funciona -->
-        <section id="como-funciona" class="how-section">
-            <div class="section-header"><h2>Como funciona CASTOR</h2><p class="subtitle">De la conversacion publica a estrategias accionables.</p></div>
-            <div class="how-steps">
-                <div class="how-step"><div class="how-step-number">1</div><h3>Recolecta</h3><p>Monitorea en tiempo real la conversacion publica.</p></div>
-                <div class="how-step"><div class="how-step-number">2</div><h3>Analiza</h3><p>Mide sentimiento y calcula tu ICCE y Momentum.</p></div>
-                <div class="how-step"><div class="how-step-number">3</div><h3>Compara</h3><p>Conoce tu ventaja electoral frente a tus rivales.</p></div>
-                <div class="how-step"><div class="how-step-number">4</div><h3>Recomienda</h3><p>Recibe la estrategia del dia con planes de accion.</p></div>
-                <div class="how-step highlight"><div class="how-step-number">5</div><h3>Preguntale a CASTOR</h3><p>Tu estratega electoral 24/7.</p></div>
+            <!-- DIA ELECTORAL -->
+            <div class="platform-label">Dia Electoral: Operacion</div>
+            <div class="platform-grid">
+                <div class="platform-card danger">
+                    <div class="platform-card-header">
+                        <div class="platform-card-icon">!</div>
+                        <h3>War Room Electoral</h3>
+                    </div>
+                    <p>Incidencias por comision y mesa + severidad Critica/Media + tipologia litigable.</p>
+                    <a href="/campaign-team/dashboard" class="platform-card-link">Ir al War Room →</a>
+                </div>
+                <div class="platform-card warning">
+                    <div class="platform-card-header">
+                        <div class="platform-card-icon">E14</div>
+                        <h3>OCR de Actas E-14</h3>
+                    </div>
+                    <p>Claude Vision + Tesseract. Validacion aritmetica, anomalias, review HITL.</p>
+                    <a href="/campaign-team/dashboard" class="platform-card-link">Ver actas →</a>
+                </div>
+                <div class="platform-card success">
+                    <div class="platform-card-header">
+                        <div class="platform-card-icon">QR</div>
+                        <h3>Red de Testigos</h3>
+                    </div>
+                    <p>Registro via QR, push notifications, geolocalizacion. PWA offline.</p>
+                    <a href="/testigo/registro" class="platform-card-link">Registrar testigo →</a>
+                </div>
+            </div>
+
+            <!-- POST-ELECTORAL -->
+            <div class="platform-label">Post-Electoral: Defensa</div>
+            <div class="platform-grid" style="max-width: 550px;">
+                <div class="platform-card">
+                    <div class="platform-card-header">
+                        <div class="platform-card-icon">&#9878;</div>
+                        <h3>Litigio Electoral</h3>
+                    </div>
+                    <p>Documentacion para impugnaciones. Testigo vs RNEC, evidencia fotografica, audit log.</p>
+                    <a href="/campaign-team/dashboard" class="platform-card-link">Ver casos →</a>
+                </div>
             </div>
         </section>
 
-        <!-- Outputs -->
-        <section id="outputs" class="outputs-section">
-            <div class="section-header"><h2>Que entrega CASTOR</h2><p class="subtitle">Todo lo que necesitas para ejecutar tu estrategia electoral.</p></div>
+        <!-- COMO FUNCIONA -->
+        <section id="como-funciona" class="section">
+            <div class="section-header">
+                <h2>Como funciona CASTOR</h2>
+                <p class="subtitle">4 pasos por fase, de datos a decision.</p>
+            </div>
+
+            <!-- PRE-ELECTORAL -->
+            <div class="flow-container">
+                <div class="flow-label">Pre-Electoral: Estrategia</div>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="flow-step-number">1</div>
+                        <h4>Recolecta</h4>
+                        <p>Conversacion publica en X sobre 10 ejes PND</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">2</div>
+                        <h4>Analiza</h4>
+                        <p>ICCE, SOV, SNA, Momentum con modelo BETO</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">3</div>
+                        <h4>Compara</h4>
+                        <p>Tu posicion vs rivales reales</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">4</div>
+                        <h4>Recomienda</h4>
+                        <p>Estrategia diaria + Chat RAG 24/7</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIA ELECTORAL -->
+            <div class="flow-container">
+                <div class="flow-label">Dia Electoral: War Room</div>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="flow-step-number">1</div>
+                        <h4>Procesa E-14</h4>
+                        <p>OCR + validacion aritmetica</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">2</div>
+                        <h4>Clasifica</h4>
+                        <p>Severidad + riesgo juridico</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">3</div>
+                        <h4>Coordina</h4>
+                        <p>Testigos y acciones en campo</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">4</div>
+                        <h4>Prepara litigio</h4>
+                        <p>Evidencia + auditoria</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUE ENTREGA -->
+        <section id="outputs" class="section section-alt">
+            <div class="section-header">
+                <h2>Que entrega CASTOR</h2>
+                <p class="subtitle">Artefactos concretos para cada fase.</p>
+            </div>
             <div class="outputs-grid">
-                <div class="output-card"><h3>Dashboard de estrategia</h3><p>Conoce tu ventaja electoral y comparala con tus rivales.</p></div>
-                <div class="output-card"><h3>Metricas electorales</h3><p>ICCE, SOV, SNA, Momentum por cada eje del PND.</p></div>
-                <div class="output-card"><h3>Forecast narrativo</h3><p>Proyeccion de tu campana a 7-14 dias.</p></div>
-                <div class="output-card"><h3>Planes de accion</h3><p>Estrategias diarias con materiales ejecutables.</p></div>
-                <div class="output-card highlight"><h3>Preguntale a CASTOR</h3><p>Tu estratega electoral con IA, 24/7.</p></div>
+                <div class="output-item">
+                    <div class="output-icon">1</div>
+                    <div>
+                        <h4>Dashboard de Estrategia</h4>
+                        <p>Decisiones diarias vs rivales</p>
+                    </div>
+                </div>
+                <div class="output-item">
+                    <div class="output-icon">2</div>
+                    <div>
+                        <h4>War Room con incidencias</h4>
+                        <p>Por comision y mesa, severidad P0/P1/P2</p>
+                    </div>
+                </div>
+                <div class="output-item">
+                    <div class="output-icon">3</div>
+                    <div>
+                        <h4>Actas E-14 procesadas</h4>
+                        <p>OCR + trazabilidad por mesa</p>
+                    </div>
+                </div>
+                <div class="output-item">
+                    <div class="output-icon">4</div>
+                    <div>
+                        <h4>Red de testigos</h4>
+                        <p>Registro + asignacion + QR</p>
+                    </div>
+                </div>
+                <div class="output-item">
+                    <div class="output-icon">5</div>
+                    <div>
+                        <h4>Paquetes de litigio</h4>
+                        <p>Evidencia por mesa para impugnacion</p>
+                    </div>
+                </div>
+                <div class="output-item">
+                    <div class="output-icon">6</div>
+                    <div>
+                        <h4>Forecast 7-14 dias</h4>
+                        <p>Escenarios y proyecciones</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Metodologia -->
-        <section id="metodologia" class="metodologia-section">
+        <!-- METODOLOGIA -->
+        <section id="metodologia" class="section">
             <div class="section-header">
-                <h2>Sustento metodologico</h2>
-                <p class="subtitle">Teoria de Juegos Bayesiana + Modelos estadisticos auditables</p>
+                <h2>Metodologia auditada para decisiones electorales</h2>
+                <p class="subtitle">Transparencia en cada recomendacion.</p>
             </div>
 
-            <!-- Game Theory Model -->
-            <div class="model-container">
-                <div class="model-header">
-                    <div class="model-badge">Modelo Estrategico</div>
-                    <h3>Teoria de Juegos Electoral</h3>
-                    <p>CASTOR modela la campana como un juego dinamico entre jugadores racionales que compiten por maximizar su ventaja narrativa.</p>
+            <div class="method-grid">
+                <div class="method-item">
+                    <h4>Datos publicos</h4>
+                    <p>Solo conversacion publica de X (sin perfilamiento)</p>
                 </div>
-
-                <div class="model-grid">
-                    <div class="model-card">
-                        <div class="model-card-icon">⚔️</div>
-                        <h4>Jugadores</h4>
-                        <p>Tu campana vs Rivales (R1, R2...Rn). Cada uno busca maximizar su ventaja minimizando costos.</p>
-                    </div>
-                    <div class="model-card">
-                        <div class="model-card-icon">🎯</div>
-                        <h4>Objetivo</h4>
-                        <p>Maximizar el IVN (Indice de Ventaja Narrativa) mientras reduces costos y riesgos reputacionales.</p>
-                    </div>
-                    <div class="model-card">
-                        <div class="model-card-icon">📊</div>
-                        <h4>Estado del Juego</h4>
-                        <p>Vector de metricas: ICCE, Momentum, SOV, SNA. Se actualiza diariamente con datos reales.</p>
-                    </div>
-                    <div class="model-card">
-                        <div class="model-card-icon">🧮</div>
-                        <h4>Equilibrio Nash</h4>
-                        <p>Calculamos la "mejor respuesta" a movimientos rivales inferidos via señales publicas.</p>
-                    </div>
+                <div class="method-item">
+                    <h4>Modelos auditables</h4>
+                    <p>BETO (NLP espanol) + estadistica clasica</p>
                 </div>
-
-                <!-- Payoff Formula -->
-                <div class="formula-box">
-                    <div class="formula-label">Funcion de Payoff</div>
-                    <div class="formula-content">
-                        <code>Payoff = (ΔICCE × 2) + (ΔSNA × 1.5) + (ΔSOV × 1) + (Momentum × 0.5) - Costo - Riesgo</code>
-                    </div>
-                    <div class="formula-explanation">
-                        <span class="formula-tag positive">ΔICCE +10 = +20 pts</span>
-                        <span class="formula-tag positive">ΔSNA +8 = +12 pts</span>
-                        <span class="formula-tag negative">Riesgo alto = -5 pts</span>
-                    </div>
+                <div class="method-item">
+                    <h4>Recomendaciones</h4>
+                    <p>Evaluadas por riesgo, costo e impacto</p>
                 </div>
-
-                <!-- Metrics Explanation -->
-                <div class="metrics-grid">
-                    <div class="metric-item">
-                        <span class="metric-name">ICCE</span>
-                        <span class="metric-desc">Indice Compuesto de Capacidad Electoral (0-100)</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-name">SOV</span>
-                        <span class="metric-desc">Share of Voice - Dominio en la conversacion (%)</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-name">SNA</span>
-                        <span class="metric-desc">Sentimiento Neto Agregado (-100 a +100)</span>
-                    </div>
-                    <div class="metric-item">
-                        <span class="metric-name">IVN</span>
-                        <span class="metric-desc">Indice de Ventaja Narrativa vs rivales</span>
-                    </div>
-                </div>
-
-                <!-- Example -->
-                <div class="example-box">
-                    <div class="example-header">
-                        <span class="example-badge">Ejemplo</span>
-                        <span class="example-title">Evaluacion de estrategias en Seguridad</span>
-                    </div>
-                    <div class="example-table">
-                        <div class="example-row header">
-                            <span>Accion</span>
-                            <span>ΔICCE</span>
-                            <span>ΔSNA</span>
-                            <span>Riesgo</span>
-                            <span>Payoff</span>
-                        </div>
-                        <div class="example-row winner">
-                            <span>Posicionar propuesta</span>
-                            <span>+10</span>
-                            <span>+8</span>
-                            <span>Bajo</span>
-                            <span class="payoff positive">+29 ✓</span>
-                        </div>
-                        <div class="example-row">
-                            <span>Atacar rival</span>
-                            <span>+5</span>
-                            <span>-3</span>
-                            <span>Alto</span>
-                            <span class="payoff negative">-2</span>
-                        </div>
-                        <div class="example-row">
-                            <span>Pivotar a Economia</span>
-                            <span>+3</span>
-                            <span>+5</span>
-                            <span>Bajo</span>
-                            <span class="payoff neutral">+12</span>
-                        </div>
-                    </div>
-                    <p class="example-conclusion">CASTOR recomienda <strong>"Posicionar propuesta"</strong> con payoff +29 y riesgo bajo.</p>
+                <div class="method-item">
+                    <h4>Trazabilidad</h4>
+                    <p>Cada incidencia tiene fuente y evidencia</p>
                 </div>
             </div>
 
-            <!-- Trust Points -->
-            <div class="trust-section">
-                <h4 class="trust-title">Principios de transparencia</h4>
-                <div class="trust-grid">
-                    <div class="trust-item"><div class="trust-item-number">1</div><p><strong>Datos publicos</strong><br>Solo conversacion publica de X</p></div>
-                    <div class="trust-item"><div class="trust-item-number">2</div><p><strong>Sin perfilamiento</strong><br>No identificamos individuos</p></div>
-                    <div class="trust-item"><div class="trust-item-number">3</div><p><strong>Modelo BETO</strong><br>NLP en español auditable</p></div>
-                    <div class="trust-item"><div class="trust-item-number">4</div><p><strong>Ley 1581</strong><br>Cumplimiento de datos</p></div>
+            <!-- EXPANDABLE: Teoria de Juegos -->
+            <div class="expandable">
+                <button class="expandable-toggle" onclick="toggleExpand(this)">
+                    <span>Ver detalle: Teoria de Juegos Bayesiana</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                </button>
+                <div class="expandable-content">
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.85rem;">CASTOR modela la campana como un juego dinamico entre jugadores racionales que compiten por maximizar su ventaja narrativa.</p>
+
+                    <div class="formula-box">
+                        <code>Payoff = (ICCE x 2) + (SNA x 1.5) + (SOV x 1) + (Momentum x 0.5) - Costo - Riesgo</code>
+                    </div>
+
+                    <div class="metrics-inline">
+                        <span class="metric-tag"><strong>ICCE:</strong> Capacidad Electoral 0-100</span>
+                        <span class="metric-tag"><strong>SOV:</strong> Share of Voice %</span>
+                        <span class="metric-tag"><strong>SNA:</strong> Sentimiento Neto -100 a +100</span>
+                        <span class="metric-tag"><strong>IVN:</strong> Ventaja Narrativa vs rivales</span>
+                    </div>
+
+                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 1rem;">Cada estrategia se evalua calculando el payoff esperado. CASTOR recomienda la accion con mayor payoff y menor riesgo reputacional.</p>
+                </div>
+            </div>
+
+            <!-- TRUST -->
+            <div class="trust-grid" id="propuesta">
+                <div class="trust-item">
+                    <div class="trust-icon">1</div>
+                    <p><strong>Datos publicos</strong>Solo X, sin datos privados</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">2</div>
+                    <p><strong>Sin perfilamiento</strong>No identificamos individuos</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">3</div>
+                    <p><strong>Modelo auditable</strong>BETO open-source</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">4</div>
+                    <p><strong>Ley 1581</strong>Cumplimiento de datos</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">5</div>
+                    <p><strong>Trazabilidad</strong>Fuente y evidencia por incidencia</p>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Final -->
-        <section class="cta-electoral">
+        <!-- CTA -->
+        <section class="cta-section">
             <h2>Tu ventaja electoral cambia todos los dias.</h2>
             <p>Decidir tarde cuesta momentum. Conoce tu estrategia ahora.</p>
             <div class="cta-buttons">
-                <a href="/dashboard" class="primary-btn large" style="text-decoration: none;">Estrategia electoral</a>
-                <button class="ghost-btn" onclick="openDemoModal()">Solicitar demo</button>
+                <button class="primary-btn large" onclick="openDemoModal()">Solicitar demo</button>
+                <a href="/dashboard" class="ghost-btn">Probar ahora</a>
             </div>
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer>
         <div class="footer-grid">
-            <div class="footer-column"><h3>CASTOR</h3><p>Plataforma de estrategia electoral con IA.</p><p style="margin-top: 1rem; font-size: 0.8rem;">2026 CASTOR Elecciones.</p></div>
-            <div class="footer-column"><h4>Plataforma</h4><ul><li><a href="/dashboard">Dashboard</a></li><li><a href="#" onclick="openDemoModal()">Demo</a></li></ul></div>
-            <div class="footer-column"><h4>Info</h4><ul><li><a href="#como-funciona">Como funciona</a></li><li><a href="#outputs">Que entrega</a></li></ul></div>
-            <div class="footer-column"><h4>Legal</h4><ul><li><a href="#">Privacidad</a></li><li><a href="#">Terminos</a></li></ul></div>
+            <div class="footer-column">
+                <h3>CASTOR</h3>
+                <p>Plataforma de inteligencia electoral con IA. Estrategia, War Room y litigio.</p>
+                <p style="margin-top: 0.75rem; font-size: 0.7rem; color: var(--muted);">2026 CASTOR Elecciones. Colombia.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Producto</h4>
+                <ul>
+                    <li><a href="/dashboard">Dashboard Estrategia</a></li>
+                    <li><a href="/campaign-team/dashboard">War Room</a></li>
+                    <li><a href="/forecast">Forecast</a></li>
+                    <li><a href="/testigo/registro">Testigos</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Confianza</h4>
+                <ul>
+                    <li><a href="#metodologia">Metodologia</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Terminos</a></li>
+                    <li><a href="#">Ley 1581</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Accion</h4>
+                <ul>
+                    <li><a href="#" onclick="openDemoModal(); return false;">Solicitar demo</a></li>
+                    <li><a href="/dashboard">Probar ahora</a></li>
+                </ul>
+            </div>
         </div>
     </footer>
 
-    <!-- Modal -->
+    <!-- MODAL -->
     <div id="demoModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2>Solicitar Demo</h2><button class="modal-close" onclick="closeDemoModal()">&times;</button></div>
-            <form class="modal-form">
-                <div class="form-row"><label>Nombre *<input type="text" required></label><label>Apellido *<input type="text" required></label></div>
-                <label>Correo *<input type="email" required></label>
-                <label>Telefono *<input type="tel" required></label>
-                <label>Rol *<select required><option value="">Selecciona</option><option>Estratega</option><option>Comunicaciones</option><option>Candidato</option></select></label>
-                <label>Ciudad *<input type="text" required></label>
-                <div class="form-actions"><button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button><button type="submit" class="primary-btn">Enviar</button></div>
+            <div class="modal-header">
+                <h2>Solicitar Demo</h2>
+                <button class="modal-close" onclick="closeDemoModal()">&times;</button>
+            </div>
+            <form class="modal-form" id="demoForm">
+                <div class="form-row">
+                    <label>Nombre *<input type="text" name="nombre" required></label>
+                    <label>Apellido *<input type="text" name="apellido" required></label>
+                </div>
+                <label>Correo *<input type="email" name="email" required></label>
+                <label>Telefono *<input type="tel" name="telefono" required></label>
+                <label>Rol *
+                    <select name="rol" required>
+                        <option value="">Selecciona</option>
+                        <option>Candidato</option>
+                        <option>Estratega / Gerente de campana</option>
+                        <option>Comunicaciones</option>
+                        <option>Juridico / Litigio</option>
+                        <option>Otro</option>
+                    </select>
+                </label>
+                <label>Ciudad *<input type="text" name="ciudad" required></label>
+                <div class="form-actions">
+                    <button type="button" class="ghost-btn" onclick="closeDemoModal()">Cancelar</button>
+                    <button type="submit" class="primary-btn">Enviar</button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- SCRIPTS -->
     <script>
         window.API_BASE_URL = window.location.origin;
+
         function openDemoModal() { document.getElementById('demoModal').classList.add('open'); }
         function closeDemoModal() { document.getElementById('demoModal').classList.remove('open'); }
+        function toggleExpand(el) {
+            el.classList.toggle('open');
+            el.nextElementSibling.classList.toggle('open');
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const radarCtx = document.getElementById('hero-radar-chart');
-            if (!radarCtx) return;
-            function initChart() {
-                if (typeof Chart === 'undefined') { setTimeout(initChart, 100); return; }
-                new Chart(radarCtx, {
-                    type: 'radar',
-                    data: {
-                        labels: ['Seguridad', 'Economia', 'Salud', 'Paz', 'SOV', 'SNA'],
-                        datasets: [
-                            { label: 'Tu campana', data: [68, 52, 58, 55, 62, 58], backgroundColor: 'rgba(74, 124, 89, 0.2)', borderColor: '#4A7C59', borderWidth: 2, pointBackgroundColor: '#4A7C59', pointRadius: 4 },
-                            { label: 'Rival', data: [76, 52, 38, 50, 70, 32], backgroundColor: 'rgba(201, 162, 39, 0.15)', borderColor: '#C9A227', borderWidth: 2, pointBackgroundColor: '#C9A227', pointRadius: 4 }
-                        ]
-                    },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        scales: { r: { angleLines: { color: 'rgba(255,255,255,0.08)' }, grid: { color: 'rgba(255,255,255,0.08)' }, pointLabels: { color: '#F5F5F0', font: { size: 11, weight: '500' } }, ticks: { color: '#9A8F7C', backdropColor: 'transparent', stepSize: 20 }, suggestedMin: 0, suggestedMax: 100 } },
-                        plugins: { legend: { position: 'bottom', labels: { color: '#F5F5F0', padding: 20, font: { size: 12 } } } }
+            // Load E-14 stats from API
+            async function loadE14Stats() {
+                try {
+                    const response = await fetch(`${window.API_BASE_URL}/api/e14-data/stats`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        const counter = document.getElementById('e14-counter');
+                        if (counter && data.total_forms) {
+                            const target = data.total_forms;
+                            const duration = 1500;
+                            const startTime = performance.now();
+                            function updateCounter(currentTime) {
+                                const elapsed = currentTime - startTime;
+                                const progress = Math.min(elapsed / duration, 1);
+                                const easeOut = 1 - Math.pow(1 - progress, 3);
+                                const current = Math.floor(target * easeOut);
+                                counter.textContent = current.toLocaleString('es-CO');
+                                if (progress < 1) requestAnimationFrame(updateCounter);
+                            }
+                            requestAnimationFrame(updateCounter);
+                        }
                     }
-                });
+                } catch (e) { console.log('E-14 stats not available'); }
             }
-            initChart();
+            loadE14Stats();
+
+            // Demo form submission
+            document.getElementById('demoForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData.entries());
+                try {
+                    await fetch(`${window.API_BASE_URL}/api/leads/demo-request`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                } catch (err) {}
+                closeDemoModal();
+                alert('Gracias! Te contactaremos pronto.');
+                e.target.reset();
+            });
         });
     </script>
 
-    <!-- RAG Chat -->
-    <button class="rag-chat-fab" id="rag-chat-toggle"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/><circle cx="8" cy="10" r="1.5"/><circle cx="12" cy="10" r="1.5"/><circle cx="16" cy="10" r="1.5"/></svg><span class="rag-chat-fab-text">Preguntale a CASTOR</span></button>
+    <!-- RAG CHAT -->
+    <button class="rag-chat-fab" id="rag-chat-toggle">
+        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/><circle cx="8" cy="10" r="1.5"/><circle cx="12" cy="10" r="1.5"/><circle cx="16" cy="10" r="1.5"/></svg>
+        <span class="rag-chat-fab-text">Preguntale a CASTOR</span>
+    </button>
     <div class="rag-chat-panel" id="rag-chat-panel">
-        <div class="rag-chat-header"><div class="rag-chat-header-brand"><img src="/static/images/logo.png" alt="CASTOR"><h3>CASTOR</h3></div><button id="rag-close-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button></div>
-        <div class="rag-chat-messages" id="rag-chat-messages"><div class="rag-message assistant">Hola! Soy CASTOR, tu estratega electoral 24/7. Preguntame sobre estrategias, planes de accion o tu ventaja electoral.</div></div>
-        <div class="rag-chat-input-area"><input type="text" id="rag-chat-input" placeholder="Escribe tu pregunta..."><button id="rag-send-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button></div>
+        <div class="rag-chat-header">
+            <div class="rag-chat-header-brand">
+                <img src="/static/images/logo.png" alt="CASTOR">
+                <h3>CASTOR</h3>
+            </div>
+            <button id="rag-close-btn">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+        </div>
+        <div class="rag-chat-messages" id="rag-chat-messages">
+            <div class="rag-message assistant">Hola! Soy CASTOR, tu estratega electoral 24/7. Preguntame sobre estrategia, War Room, E-14 o litigio.</div>
+        </div>
+        <div class="rag-chat-input-area">
+            <input type="text" id="rag-chat-input" placeholder="Escribe tu pregunta...">
+            <button id="rag-send-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+        </div>
     </div>
     <script>
         (function() {
-            const toggle = document.getElementById('rag-chat-toggle'), panel = document.getElementById('rag-chat-panel'), closeBtn = document.getElementById('rag-close-btn'), input = document.getElementById('rag-chat-input'), sendBtn = document.getElementById('rag-send-btn'), messages = document.getElementById('rag-chat-messages');
-            toggle.addEventListener('click', () => { panel.classList.toggle('open'); if (panel.classList.contains('open')) input.focus(); });
+            const toggle = document.getElementById('rag-chat-toggle');
+            const panel = document.getElementById('rag-chat-panel');
+            const closeBtn = document.getElementById('rag-close-btn');
+            const input = document.getElementById('rag-chat-input');
+            const sendBtn = document.getElementById('rag-send-btn');
+            const messages = document.getElementById('rag-chat-messages');
+
+            toggle.addEventListener('click', () => {
+                panel.classList.toggle('open');
+                if (panel.classList.contains('open')) input.focus();
+            });
             closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
             async function sendMessage() {
-                const query = input.value.trim(); if (!query) return;
-                addMessage(query, 'user'); input.value = ''; sendBtn.disabled = true;
-                const typingEl = document.createElement('div'); typingEl.className = 'rag-message assistant'; typingEl.innerHTML = '<div class="rag-typing"><span></span><span></span><span></span></div>'; messages.appendChild(typingEl); messages.scrollTop = messages.scrollHeight;
-                try { const response = await fetch(`${window.API_BASE_URL}/api/chat/rag`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: query, top_k: 5 }) }); typingEl.remove(); if (!response.ok) throw new Error('Error'); const data = await response.json(); addMessage(data.answer || data.response || 'No pude procesar tu pregunta.', 'assistant', true); } catch (error) { typingEl.remove(); addMessage('Hubo un error. Intenta de nuevo.', 'system'); }
+                const query = input.value.trim();
+                if (!query) return;
+                addMessage(query, 'user');
+                input.value = '';
+                sendBtn.disabled = true;
+
+                const typingEl = document.createElement('div');
+                typingEl.className = 'rag-message assistant';
+                typingEl.innerHTML = '<div class="rag-typing"><span></span><span></span><span></span></div>';
+                messages.appendChild(typingEl);
+                messages.scrollTop = messages.scrollHeight;
+
+                try {
+                    const response = await fetch(`${window.API_BASE_URL}/api/chat/rag`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: query, top_k: 5 })
+                    });
+                    typingEl.remove();
+                    if (!response.ok) throw new Error('Error');
+                    const data = await response.json();
+                    addMessage(data.answer || data.response || 'No pude procesar tu pregunta.', 'assistant', true);
+                } catch (error) {
+                    typingEl.remove();
+                    addMessage('Hubo un error. Intenta de nuevo.', 'system');
+                }
                 sendBtn.disabled = false;
             }
-            function addMessage(content, type, isHtml = false) { const msgEl = document.createElement('div'); msgEl.className = `rag-message ${type}`; if (isHtml) msgEl.innerHTML = content; else msgEl.textContent = content; messages.appendChild(msgEl); messages.scrollTop = messages.scrollHeight; }
-            sendBtn.addEventListener('click', sendMessage); input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+
+            function addMessage(content, type, isHtml = false) {
+                const msgEl = document.createElement('div');
+                msgEl.className = `rag-message ${type}`;
+                if (isHtml) msgEl.innerHTML = content;
+                else msgEl.textContent = content;
+                messages.appendChild(msgEl);
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
         })();
     </script>
 </body>
