@@ -27,26 +27,46 @@
 
     <style>
         /* ========== MANUAL DE MARCA CASTOR ========== */
+        /*
+         * Principio rector: El software no es un póster. Es una herramienta.
+         * Los colores deben: No cansar, No distraer, Guiar sin gritar
+         * 80% neutros, 15% estructura, 5% acción y estados
+         */
         :root {
+            /* Colores estructurales (70-80% de la UI) */
             --black: #111111;
             --white: #FFFFFF;
-            --gray-warm: #BFB8AE;
-            --sand: #E6E1D8;
-            --bg: #FFFFFF;
+            --bg: #FFFFFF;                    /* Fondo principal */
+            --bg-alt: #F7F4EE;                /* Arena muy clara */
             --bg-secondary: #F9F8F6;
+            --sand: #E6E1D8;                  /* Superficies secundarias */
             --panel: #FFFFFF;
+            --panel-alt: #F7F4EE;
             --panel-hover: #F5F4F2;
             --border: #E6E1D8;
-            --text: #111111;
-            --text-secondary: #444444;
-            --muted: #BFB8AE;
-            --accent: #111111;
-            --accent-hover: #333333;
-            --accent-light: rgba(17, 17, 17, 0.08);
-            --success: #2D5A3D;
-            --warning: #8B7355;
-            --danger: #8B3A3A;
-            --info: #4A5568;
+
+            /* Texto */
+            --text: #111111;                  /* Texto principal */
+            --text-secondary: #444444;        /* Texto secundario */
+            --text-tertiary: #777777;         /* Labels */
+            --muted: #777777;
+
+            /* Color de acción (muy importante - solo uno) */
+            --accent: #6F6A63;                /* Gris cálido profundo */
+            --accent-hover: #5E5A54;          /* Hover */
+            --accent-active: #4E4A45;         /* Active */
+            --accent-light: rgba(111, 106, 99, 0.1);
+
+            /* Estados del sistema (claros pero sobrios) */
+            --success: #C2A96D;               /* Arena oscura/verdencia */
+            --warning: #8B7355;               /* Advertencia sobria */
+            --danger: #8F4A4A;                /* Rojo profundo desaturado */
+            --error: #8F4A4A;
+            --info: #7A7F85;                  /* Gris frío */
+
+            /* Legacy - para compatibilidad */
+            --gray-warm: #BFB8AE;
+            --border-gold: rgba(111, 106, 99, 0.3);
         }
 
         /* ========== CONTROL ELECTORAL DASHBOARD ========== */
@@ -82,14 +102,14 @@
         }
 
         .tab-btn:hover {
-            border-color: var(--border-gold, rgba(201, 162, 39, 0.3));
-            background: rgba(201, 162, 39, 0.05);
+            border-color: var(--accent);
+            background: var(--accent-light);
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
-            border-color: var(--accent, #C9A227);
-            color: var(--accent, #C9A227);
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .tab-btn .badge {
@@ -101,7 +121,7 @@
             font-weight: 700;
         }
 
-        .tab-btn .badge.warning { background: var(--warning, #D4A017); }
+        .tab-btn .badge.warning { background: var(--warning); }
         .tab-btn .badge.success { background: var(--success, #4A7C59); }
 
         /* Status badges for litigio */
@@ -114,7 +134,7 @@
             text-transform: uppercase;
             letter-spacing: 0.03em;
         }
-        .status-badge.pending { background: rgba(212, 160, 23, 0.15); color: #D4A017; }
+        .status-badge.pending { background: rgba(139, 115, 85, 0.15); color: #8B7355; }
         .status-badge.in-progress { background: rgba(91, 123, 179, 0.15); color: #5B7BB3; }
         .status-badge.submitted { background: rgba(74, 124, 89, 0.15); color: #4A7C59; }
         .status-badge.resolved { background: rgba(74, 124, 89, 0.25); color: #2D5A3D; }
@@ -207,7 +227,7 @@
             flex-wrap: wrap;
             gap: 1rem;
             padding: 1rem 1.25rem;
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             margin-bottom: 1.5rem;
@@ -231,14 +251,14 @@
             padding: 0.5rem 0.75rem;
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 6px;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             color: var(--text, #F5F5F0);
             font-size: 0.85rem;
             min-width: 150px;
         }
 
         .filter-group select:focus {
-            border-color: var(--accent, #C9A227);
+            border-color: var(--accent);
             outline: none;
         }
 
@@ -251,15 +271,15 @@
         }
 
         .kpi-mini {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 8px;
             padding: 1rem;
-            border-left: 3px solid var(--accent, #C9A227);
+            border-left: 3px solid var(--accent);
         }
 
         .kpi-mini.risk-high { border-left-color: var(--error, #8B3A3A); }
-        .kpi-mini.risk-medium { border-left-color: var(--warning, #D4A017); }
+        .kpi-mini.risk-medium { border-left-color: var(--warning); }
         .kpi-mini.risk-low { border-left-color: var(--success, #4A7C59); }
 
         .kpi-mini-label {
@@ -303,7 +323,7 @@
         }
 
         .risk-indicator.high { background: var(--error, #8B3A3A); box-shadow: 0 0 8px rgba(139, 58, 58, 0.5); }
-        .risk-indicator.medium { background: var(--warning, #D4A017); }
+        .risk-indicator.medium { background: var(--warning); }
         .risk-indicator.low { background: var(--success, #4A7C59); }
 
         .risk-grid {
@@ -313,7 +333,7 @@
         }
 
         .risk-card {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             padding: 1.25rem;
@@ -327,12 +347,12 @@
 
         .risk-card.high-risk {
             border-left: 4px solid var(--error, #8B3A3A);
-            background: linear-gradient(135deg, rgba(139, 58, 58, 0.1), transparent);
+            background: rgba(143, 74, 74, 0.1);
         }
 
         .risk-card.medium-risk {
-            border-left: 4px solid var(--warning, #D4A017);
-            background: linear-gradient(135deg, rgba(212, 160, 23, 0.1), transparent);
+            border-left: 4px solid var(--warning);
+            background: rgba(139, 115, 85, 0.1);
         }
 
         .risk-card.low-risk {
@@ -367,8 +387,8 @@
         }
 
         .risk-badge.medium {
-            background: rgba(212, 160, 23, 0.2);
-            color: var(--warning, #D4A017);
+            background: rgba(139, 115, 85, 0.2);
+            color: var(--warning);
         }
 
         .risk-badge.low {
@@ -382,8 +402,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.75rem 1rem;
-            background: linear-gradient(90deg, rgba(201, 162, 39, 0.1), transparent);
-            border: 1px solid rgba(201, 162, 39, 0.3);
+            background: rgba(111, 106, 99, 0.1);
+            border: 1px solid rgba(111, 106, 99, 0.3);
             border-radius: 8px;
             margin-bottom: 1.5rem;
         }
@@ -394,8 +414,8 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             padding: 0.3rem 0.6rem;
-            background: var(--accent, #C9A227);
-            color: var(--bg, #0A0A0A);
+            background: var(--accent);
+            color: var(--bg, #FFFFFF);
             border-radius: 4px;
         }
 
@@ -420,25 +440,25 @@
             align-items: center;
             gap: 1rem;
             padding: 1.25rem;
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             transition: all 0.25s ease;
         }
 
         .risk-kpi.critical {
-            border-left: 4px solid #DC3545;
-            background: linear-gradient(135deg, rgba(220, 53, 69, 0.15), transparent);
+            border-left: 4px solid #8F4A4A;
+            background: rgba(143, 74, 74, 0.15);
         }
 
         .risk-kpi.high {
-            border-left: 4px solid #E65100;
-            background: linear-gradient(135deg, rgba(230, 81, 0, 0.1), transparent);
+            border-left: 4px solid #8B7355;
+            background: rgba(139, 115, 85, 0.1);
         }
 
         .risk-kpi.moderate {
-            border-left: 4px solid #D4A017;
-            background: linear-gradient(135deg, rgba(212, 160, 23, 0.1), transparent);
+            border-left: 4px solid var(--warning);
+            background: rgba(139, 115, 85, 0.1);
         }
 
         .risk-kpi.normal {
@@ -458,9 +478,9 @@
             height: 28px;
         }
 
-        .risk-kpi.critical .risk-kpi-icon svg { stroke: #DC3545; }
-        .risk-kpi.high .risk-kpi-icon svg { stroke: #E65100; }
-        .risk-kpi.moderate .risk-kpi-icon svg { stroke: #D4A017; }
+        .risk-kpi.critical .risk-kpi-icon svg { stroke: #8F4A4A; }
+        .risk-kpi.high .risk-kpi-icon svg { stroke: #8B7355; }
+        .risk-kpi.moderate .risk-kpi-icon svg { stroke: var(--warning); }
         .risk-kpi.normal .risk-kpi-icon svg { stroke: #4A7C59; }
 
         .risk-kpi-content {
@@ -474,9 +494,9 @@
             line-height: 1;
         }
 
-        .risk-kpi.critical .risk-kpi-value { color: #DC3545; }
-        .risk-kpi.high .risk-kpi-value { color: #E65100; }
-        .risk-kpi.moderate .risk-kpi-value { color: #D4A017; }
+        .risk-kpi.critical .risk-kpi-value { color: #8F4A4A; }
+        .risk-kpi.high .risk-kpi-value { color: #8B7355; }
+        .risk-kpi.moderate .risk-kpi-value { color: var(--warning); }
         .risk-kpi.normal .risk-kpi-value { color: #4A7C59; }
 
         .risk-kpi-label {
@@ -513,7 +533,7 @@
 
         .risk-matrix {
             border-collapse: collapse;
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border-radius: 10px;
             overflow: hidden;
         }
@@ -525,7 +545,7 @@
         }
 
         .matrix-corner {
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
         }
 
         .matrix-header {
@@ -533,7 +553,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             color: var(--text-secondary, #E0DED8);
         }
 
@@ -541,7 +561,7 @@
             font-size: 0.75rem;
             font-weight: 600;
             text-align: left !important;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             color: var(--text-secondary, #E0DED8);
         }
 
@@ -559,7 +579,7 @@
 
         .matrix-cell.critical {
             background: rgba(220, 53, 69, 0.3);
-            color: #DC3545;
+            color: #8F4A4A;
         }
 
         .matrix-cell.critical.pulse {
@@ -573,12 +593,12 @@
 
         .matrix-cell.high {
             background: rgba(230, 81, 0, 0.25);
-            color: #E65100;
+            color: #8B7355;
         }
 
         .matrix-cell.moderate {
-            background: rgba(212, 160, 23, 0.2);
-            color: #D4A017;
+            background: rgba(139, 115, 85, 0.2);
+            color: var(--warning);
         }
 
         .matrix-cell.normal {
@@ -606,9 +626,9 @@
             border-radius: 50%;
         }
 
-        .legend-dot.critical { background: #DC3545; }
-        .legend-dot.high { background: #E65100; }
-        .legend-dot.moderate { background: #D4A017; }
+        .legend-dot.critical { background: #8F4A4A; }
+        .legend-dot.high { background: #8B7355; }
+        .legend-dot.moderate { background: var(--warning); }
         .legend-dot.normal { background: #4A7C59; }
 
         /* Main Grid: Municipalities + Detail Panel */
@@ -624,7 +644,7 @@
         }
 
         .critical-municipalities-section {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             padding: 1rem;
@@ -648,19 +668,19 @@
         }
 
         .filter-pill:hover, .filter-pill.active {
-            background: var(--accent, #C9A227);
-            border-color: var(--accent, #C9A227);
-            color: var(--bg, #0A0A0A);
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg, #FFFFFF);
         }
 
         .filter-pill.critical.active {
-            background: #DC3545;
-            border-color: #DC3545;
+            background: #8F4A4A;
+            border-color: #8F4A4A;
         }
 
         .filter-pill.high.active {
-            background: #E65100;
-            border-color: #E65100;
+            background: #8B7355;
+            border-color: #8B7355;
         }
 
         .municipalities-list {
@@ -682,20 +702,20 @@
         }
 
         .municipality-item:hover {
-            background: rgba(201, 162, 39, 0.1);
+            background: rgba(111, 106, 99, 0.1);
         }
 
         .municipality-item.selected {
-            background: rgba(201, 162, 39, 0.15);
-            border-left-color: var(--accent, #C9A227);
+            background: rgba(111, 106, 99, 0.15);
+            border-left-color: var(--accent);
         }
 
         .municipality-item.extreme {
-            border-left-color: #DC3545;
+            border-left-color: #8F4A4A;
         }
 
         .municipality-item.high {
-            border-left-color: #E65100;
+            border-left-color: #8B7355;
         }
 
         .muni-info {
@@ -725,12 +745,12 @@
 
         .muni-risk-badge.extreme {
             background: rgba(220, 53, 69, 0.2);
-            color: #DC3545;
+            color: #8F4A4A;
         }
 
         .muni-risk-badge.high {
             background: rgba(230, 81, 0, 0.2);
-            color: #E65100;
+            color: #8B7355;
         }
 
         /* Department Groups */
@@ -743,15 +763,15 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.6rem 0.8rem;
-            background: rgba(201, 162, 39, 0.1);
-            border-left: 3px solid var(--accent, #C9A227);
+            background: rgba(111, 106, 99, 0.1);
+            border-left: 3px solid var(--accent);
             margin-bottom: 0.25rem;
         }
 
         .dept-group-name {
             font-weight: 700;
             font-size: 0.85rem;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
         }
 
         .dept-group-counts {
@@ -761,12 +781,12 @@
         }
 
         .dept-group-counts .count-extreme {
-            color: #DC3545;
+            color: #8F4A4A;
             font-weight: 600;
         }
 
         .dept-group-counts .count-high {
-            color: #E65100;
+            color: #8B7355;
             font-weight: 600;
         }
 
@@ -786,19 +806,19 @@
 
         /* Filter pill extreme style */
         .filter-pill.extreme {
-            border-color: #DC3545;
+            border-color: #8F4A4A;
         }
 
         .filter-pill.extreme.active,
         .filter-pill.extreme:hover {
             background: rgba(220, 53, 69, 0.2);
-            color: #DC3545;
-            border-color: #DC3545;
+            color: #8F4A4A;
+            border-color: #8F4A4A;
         }
 
         /* Municipality Detail Panel */
         .municipality-detail-panel {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             overflow: hidden;
@@ -806,7 +826,7 @@
 
         .detail-panel-header {
             padding: 1rem;
-            background: linear-gradient(90deg, rgba(220, 53, 69, 0.15), transparent);
+            background: rgba(143, 74, 74, 0.15);
             border-bottom: 1px solid var(--border, #2A2A2A);
         }
 
@@ -897,7 +917,7 @@
             padding: 0.75rem;
             background: rgba(220, 53, 69, 0.1);
             border-radius: 6px;
-            border-left: 3px solid #DC3545;
+            border-left: 3px solid #8F4A4A;
         }
 
         .armed-group-label {
@@ -909,7 +929,7 @@
         .armed-group-name {
             font-size: 0.9rem;
             font-weight: 600;
-            color: #DC3545;
+            color: #8F4A4A;
         }
 
         /* Risk Factors Section */
@@ -932,7 +952,7 @@
             align-items: center;
             gap: 1rem;
             padding: 0.75rem;
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 8px;
         }
@@ -963,7 +983,7 @@
 
         .factor-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #DC3545, #E65100);
+            background: #8F4A4A;
             border-radius: 4px;
             transition: width 0.5s ease;
         }
@@ -977,8 +997,8 @@
         }
 
         .risk-factor-bar:hover {
-            background: rgba(201, 162, 39, 0.1);
-            border-color: var(--accent, #C9A227);
+            background: rgba(111, 106, 99, 0.1);
+            border-color: var(--accent);
         }
 
         /* Factor Popup */
@@ -987,7 +1007,7 @@
             position: fixed;
             z-index: 10000;
             background: var(--panel, #121212);
-            border: 1px solid var(--accent, #C9A227);
+            border: 1px solid var(--accent);
             border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
             max-width: 500px;
@@ -1000,7 +1020,7 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem 1.25rem;
-            background: linear-gradient(90deg, rgba(201, 162, 39, 0.2), transparent);
+            background: rgba(111, 106, 99, 0.15);
             border-bottom: 1px solid var(--border, #2A2A2A);
         }
 
@@ -1008,7 +1028,7 @@
             margin: 0;
             font-size: 1rem;
             font-weight: 700;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
         }
 
         .factor-popup-count {
@@ -1070,12 +1090,12 @@
 
         .factor-popup-muni.extreme {
             background: rgba(220, 53, 69, 0.2);
-            color: #DC3545;
+            color: #8F4A4A;
         }
 
         .factor-popup-muni.high {
             background: rgba(230, 81, 0, 0.2);
-            color: #E65100;
+            color: #8B7355;
         }
 
         /* Departments Ranking */
@@ -1090,16 +1110,16 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 8px;
-            border-left: 4px solid var(--accent, #C9A227);
+            border-left: 4px solid var(--accent);
         }
 
         .dept-rank-position {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
             min-width: 30px;
         }
 
@@ -1120,8 +1140,8 @@
             margin-top: 0.25rem;
         }
 
-        .dept-rank-stat.extreme { color: #DC3545; }
-        .dept-rank-stat.high { color: #E65100; }
+        .dept-rank-stat.extreme { color: #8F4A4A; }
+        .dept-rank-stat.high { color: #8B7355; }
 
         .loading-state {
             text-align: center;
@@ -1183,18 +1203,18 @@
         }
 
         .btn-action:hover {
-            border-color: var(--accent, #C9A227);
-            color: var(--accent, #C9A227);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .btn-action.primary {
-            background: var(--accent, #C9A227);
-            border-color: var(--accent, #C9A227);
-            color: var(--bg, #0A0A0A);
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg, #FFFFFF);
         }
 
         .btn-action.primary:hover {
-            background: var(--accent-strong, #D4AF37);
+            background: var(--accent-hover);
         }
 
         .btn-action.danger {
@@ -1209,7 +1229,7 @@
 
         /* Votes Table */
         .votes-table-container {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             overflow: hidden;
@@ -1233,7 +1253,7 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: var(--muted, #9A8F7C);
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             position: sticky;
             top: 0;
         }
@@ -1244,7 +1264,7 @@
         }
 
         .votes-table th.sortable:hover {
-            color: var(--accent, #C9A227);
+            color: var(--accent);
         }
 
         .votes-table th .sort-icon {
@@ -1254,7 +1274,7 @@
 
         .votes-table th.sorted .sort-icon {
             opacity: 1;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
         }
 
         .votes-table td {
@@ -1263,7 +1283,7 @@
         }
 
         .votes-table tr:hover td {
-            background: rgba(201, 162, 39, 0.05);
+            background: rgba(111, 106, 99, 0.05);
         }
 
         .votes-table .party-name {
@@ -1286,7 +1306,7 @@
 
         .vote-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent, #C9A227), var(--accent-light, #E8D48A));
+            background: var(--accent);
             border-radius: 999px;
             transition: width 0.3s ease;
         }
@@ -1297,7 +1317,7 @@
         }
 
         .witness-map-placeholder {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             padding: 2rem;
@@ -1324,7 +1344,7 @@
         }
 
         .witness-card {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             padding: 1.25rem;
@@ -1355,8 +1375,8 @@
         }
 
         .witness-status.busy {
-            background: rgba(212, 160, 23, 0.2);
-            color: var(--warning, #D4A017);
+            background: rgba(139, 115, 85, 0.2);
+            color: var(--warning);
         }
 
         .witness-location {
@@ -1367,7 +1387,7 @@
 
         .witness-distance {
             font-size: 0.75rem;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
             margin-bottom: 1rem;
         }
 
@@ -1385,7 +1405,7 @@
         }
 
         .chart-card {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             padding: 1.25rem;
@@ -1421,13 +1441,13 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.75rem;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             border-radius: 6px;
-            border-left: 3px solid var(--danger, #DC3545);
+            border-left: 3px solid var(--danger, #8F4A4A);
         }
 
         .ocr-problem-item.medium {
-            border-left-color: var(--warning, #D4A017);
+            border-left-color: var(--warning);
         }
 
         .ocr-problem-location {
@@ -1444,7 +1464,7 @@
 
         .ocr-problem-geo {
             font-size: 0.8rem;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
             font-weight: 600;
         }
 
@@ -1466,11 +1486,11 @@
         }
 
         .ocr-problem-value.critical {
-            color: var(--danger, #DC3545);
+            color: var(--danger, #8F4A4A);
         }
 
         .ocr-problem-value.warning {
-            color: var(--warning, #D4A017);
+            color: var(--warning);
         }
 
         .ocr-problem-label {
@@ -1552,7 +1572,7 @@
             width: 48px;
             height: 48px;
             border: 4px solid var(--border, #2A2A2A);
-            border-top-color: var(--accent, #C9A227);
+            border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -1589,7 +1609,7 @@
 
         .modal-box {
             background: #1E1E1E;
-            border: 2px solid #C9A227;
+            border: 2px solid var(--accent);
             border-radius: 12px;
             width: 100%;
             max-width: 500px;
@@ -1597,7 +1617,7 @@
             overflow-y: auto;
             padding: 1.5rem;
             position: relative;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 162, 39, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(111, 106, 99, 0.3);
             color: #F5F5F0;
         }
 
@@ -1658,7 +1678,7 @@
         }
 
         .candidate-track-card {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             padding: 1rem 1.25rem;
@@ -1674,25 +1694,25 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--accent, #C9A227), var(--accent-light, #E8D48A));
+            background: var(--accent);
         }
 
         .candidate-track-card:hover {
-            border-color: var(--border-gold, rgba(201, 162, 39, 0.3));
+            border-color: var(--border-gold);
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
         }
 
         .candidate-track-card.leading::before {
-            background: linear-gradient(90deg, var(--success, #4A7C59), #6BA87A);
+            background: var(--success);
         }
 
         .candidate-track-card.warning::before {
-            background: linear-gradient(90deg, var(--warning, #D4A017), #E8B832);
+            background: var(--warning);
         }
 
         .candidate-track-card.danger::before {
-            background: linear-gradient(90deg, var(--error, #8B3A3A), #A85454);
+            background: var(--danger);
         }
 
         .candidate-track-header {
@@ -1721,8 +1741,8 @@
             letter-spacing: 0.05em;
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
-            background: rgba(201, 162, 39, 0.15);
-            color: var(--accent, #C9A227);
+            background: rgba(111, 106, 99, 0.15);
+            color: var(--accent);
         }
 
         .candidate-track-position.top-3 {
@@ -1748,7 +1768,7 @@
             font-size: 1.1rem;
             font-weight: 700;
             font-family: var(--font-display);
-            color: var(--accent, #C9A227);
+            color: var(--accent);
         }
 
         .candidate-stat-label {
@@ -1771,7 +1791,7 @@
 
         .candidate-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent, #C9A227), var(--accent-light, #E8D48A));
+            background: var(--accent);
             border-radius: 3px;
             transition: width 0.5s ease;
         }
@@ -1815,7 +1835,7 @@
             flex-wrap: wrap;
             gap: 1rem;
             padding: 1rem 1.25rem;
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             margin-bottom: 1rem;
@@ -1840,13 +1860,13 @@
             padding: 0.5rem 0.75rem;
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 6px;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             color: var(--text, #F5F5F0);
             font-size: 0.85rem;
         }
 
         .e14-filters-bar .filter-group select:focus {
-            border-color: var(--accent, #C9A227);
+            border-color: var(--accent);
             outline: none;
         }
 
@@ -1863,7 +1883,7 @@
         }
 
         .votes-detail-grid .chart-card {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             padding: 1rem;
@@ -1878,8 +1898,8 @@
         }
 
         .e14-form-card {
-            background: linear-gradient(135deg, var(--panel-alt, #1C1C1C), rgba(201, 162, 39, 0.03));
-            border: 2px solid var(--border-gold, rgba(201, 162, 39, 0.3));
+            background: var(--panel-alt, #F7F4EE);
+            border: 2px solid var(--border-gold);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
@@ -1890,7 +1910,7 @@
             justify-content: space-between;
             align-items: flex-start;
             padding: 1.25rem 1.5rem;
-            background: linear-gradient(90deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
+            background: rgba(111, 106, 99, 0.1);
             border-bottom: 1px solid var(--border, #2A2A2A);
         }
 
@@ -1898,7 +1918,7 @@
             font-size: 1.1rem;
             font-weight: 700;
             font-family: var(--font-display);
-            color: var(--accent, #C9A227);
+            color: var(--accent);
             letter-spacing: 0.05em;
         }
 
@@ -1938,7 +1958,7 @@
         }
 
         .e14-confidence.medium {
-            color: var(--warning, #D4A017) !important;
+            color: var(--warning) !important;
         }
 
         .e14-confidence.low {
@@ -1949,7 +1969,7 @@
             display: flex;
             justify-content: space-between;
             padding: 0.75rem 1.5rem;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             font-size: 0.8rem;
             color: var(--text-secondary, #E0DED8);
             border-bottom: 1px solid var(--border, #2A2A2A);
@@ -1972,7 +1992,7 @@
             flex: 1;
             min-width: 100px;
             padding: 0.5rem 0.75rem;
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 6px;
             text-align: center;
@@ -1991,7 +2011,7 @@
             font-size: 1.1rem;
             font-weight: 700;
             font-family: var(--font-display);
-            color: var(--accent, #C9A227);
+            color: var(--accent);
         }
 
         .e14-candidates-section {
@@ -2027,7 +2047,7 @@
         }
 
         .e14-candidate-row:hover {
-            background: rgba(201, 162, 39, 0.1);
+            background: rgba(111, 106, 99, 0.1);
         }
 
         .e14-candidate-row.updated {
@@ -2045,7 +2065,7 @@
         }
 
         .e14-candidate-row.top-position {
-            background: linear-gradient(135deg, rgba(201, 162, 39, 0.1), transparent);
+            background: rgba(111, 106, 99, 0.1);
         }
 
         .e14-candidate-info {
@@ -2058,7 +2078,7 @@
         .e14-candidate-position {
             font-size: 0.75rem;
             font-weight: 700;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
             min-width: 28px;
         }
 
@@ -2083,7 +2103,7 @@
             font-size: 1.1rem;
             font-weight: 700;
             font-family: var(--font-display);
-            color: var(--accent, #C9A227);
+            color: var(--accent);
             text-align: right;
         }
 
@@ -2109,7 +2129,7 @@
         }
 
         .e14-ocr-fill.high { background: var(--success, #4A7C59); }
-        .e14-ocr-fill.medium { background: var(--warning, #D4A017); }
+        .e14-ocr-fill.medium { background: var(--warning); }
         .e14-ocr-fill.low { background: var(--error, #8B3A3A); }
 
         .e14-ocr-value {
@@ -2124,7 +2144,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.75rem 1.5rem;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             border-top: 1px solid var(--border, #2A2A2A);
             font-size: 0.75rem;
             color: var(--muted, #9A8F7C);
@@ -2168,7 +2188,7 @@
         }
 
         .warroom-kpi {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 8px;
             padding: 1rem;
@@ -2184,11 +2204,11 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: var(--accent, #C9A227);
+            background: var(--accent);
         }
 
         .warroom-kpi.success::before { background: var(--success, #4A7C59); }
-        .warroom-kpi.warning::before { background: var(--warning, #D4A017); }
+        .warroom-kpi.warning::before { background: var(--warning); }
         .warroom-kpi.danger::before { background: var(--error, #8B3A3A); }
         .warroom-kpi.info::before { background: #4A7C9F; }
 
@@ -2201,7 +2221,7 @@
         }
 
         .warroom-kpi-value.text-success { color: var(--success, #4A7C59); }
-        .warroom-kpi-value.text-warning { color: var(--warning, #D4A017); }
+        .warroom-kpi-value.text-warning { color: var(--warning); }
         .warroom-kpi-value.text-danger { color: var(--error, #8B3A3A); }
 
         .warroom-kpi-label {
@@ -2214,7 +2234,7 @@
 
         /* ========== RECUENTO SECTION ========== */
         .recuento-section {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             padding: 1.25rem;
@@ -2258,7 +2278,7 @@
         }
 
         .recuento-value.si {
-            color: var(--warning, #D4A017);
+            color: var(--warning);
         }
 
         .recuento-value.no {
@@ -2291,14 +2311,14 @@
         }
 
         .incident-filter-btn:hover {
-            border-color: var(--accent, #C9A227);
-            color: var(--accent, #C9A227);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .incident-filter-btn.active {
-            background: var(--accent, #C9A227);
-            border-color: var(--accent, #C9A227);
-            color: var(--bg, #0A0A0A);
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg, #FFFFFF);
         }
 
         .incident-filter-btn.p0.active {
@@ -2308,13 +2328,13 @@
         }
 
         .incident-filter-btn.p1.active {
-            background: var(--warning, #D4A017);
-            border-color: var(--warning, #D4A017);
-            color: var(--bg, #0A0A0A);
+            background: var(--warning);
+            border-color: var(--warning);
+            color: var(--bg, #FFFFFF);
         }
 
         .incident-table-container {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             overflow: hidden;
@@ -2337,7 +2357,7 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: var(--muted, #9A8F7C);
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             position: sticky;
             top: 0;
         }
@@ -2348,7 +2368,7 @@
         }
 
         .incident-table tr:hover td {
-            background: rgba(201, 162, 39, 0.05);
+            background: rgba(111, 106, 99, 0.05);
         }
 
         .severity-badge {
@@ -2367,13 +2387,13 @@
         }
 
         @keyframes pulse-p0 {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(139, 58, 58, 0.4); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(143, 74, 74, 0.4); }
             50% { box-shadow: 0 0 8px 2px rgba(139, 58, 58, 0.2); }
         }
 
         .severity-badge.p1 {
-            background: rgba(212, 160, 23, 0.2);
-            color: var(--warning, #D4A017);
+            background: rgba(139, 115, 85, 0.2);
+            color: var(--warning);
         }
 
         .severity-badge.p2 {
@@ -2396,7 +2416,7 @@
 
         .incident-mesa {
             font-weight: 600;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
         }
 
         .incident-sla {
@@ -2411,7 +2431,7 @@
         }
 
         .incident-sla.warning {
-            color: var(--warning, #D4A017);
+            color: var(--warning);
         }
 
         .incident-sla.ok {
@@ -2435,14 +2455,14 @@
         }
 
         .incident-action-btn:hover {
-            border-color: var(--accent, #C9A227);
-            color: var(--accent, #C9A227);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .incident-action-btn.primary {
-            background: var(--accent, #C9A227);
-            border-color: var(--accent, #C9A227);
-            color: var(--bg, #0A0A0A);
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg, #FFFFFF);
         }
 
         .incident-action-btn.danger {
@@ -2471,7 +2491,7 @@
         }
 
         .incident-stat.p0 strong { color: var(--error, #8B3A3A); }
-        .incident-stat.p1 strong { color: var(--warning, #D4A017); }
+        .incident-stat.p1 strong { color: var(--warning); }
 
         /* ========== CHOROPLETH MAP STYLES ========== */
         .map-section {
@@ -2482,7 +2502,7 @@
             display: flex;
             gap: 1rem;
             padding: 1rem;
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             margin-bottom: 1rem;
@@ -2505,7 +2525,7 @@
 
         .map-filters-bar .filter-group select {
             padding: 0.5rem;
-            background: var(--bg, #0A0A0A);
+            background: var(--bg, #FFFFFF);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 6px;
             color: var(--text, #F5F5F0);
@@ -2526,7 +2546,7 @@
         }
 
         .map-card {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             overflow: hidden;
@@ -2537,7 +2557,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.75rem 1rem;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             border-bottom: 1px solid var(--border, #2A2A2A);
         }
 
@@ -2568,19 +2588,19 @@
         }
 
         .map-mode-btn:hover {
-            border-color: var(--accent, #C9A227);
-            color: var(--accent, #C9A227);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .map-mode-btn.active {
-            background: var(--accent, #C9A227);
-            border-color: var(--accent, #C9A227);
-            color: var(--bg, #0A0A0A);
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg, #FFFFFF);
         }
 
         #colombia-map {
             height: 400px;
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
         }
 
         .map-legend {
@@ -2588,7 +2608,7 @@
             justify-content: center;
             gap: 1rem;
             padding: 0.5rem;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             border-top: 1px solid var(--border, #2A2A2A);
             flex-wrap: wrap;
         }
@@ -2610,7 +2630,7 @@
 
         /* Department Info Panel */
         .dept-info-panel {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             border: 1px solid var(--border, #2A2A2A);
             border-radius: 10px;
             display: flex;
@@ -2619,14 +2639,14 @@
 
         .dept-info-header {
             padding: 1rem;
-            background: linear-gradient(90deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
+            background: rgba(111, 106, 99, 0.1);
             border-bottom: 1px solid var(--border, #2A2A2A);
         }
 
         .dept-info-title {
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
             margin-bottom: 0.25rem;
         }
 
@@ -2687,11 +2707,11 @@
         }
 
         .dept-stat-value.danger {
-            color: var(--error, #DC3545);
+            color: var(--error, #8F4A4A);
         }
 
         .dept-stat-value.warning {
-            color: var(--warning, #D4A017);
+            color: var(--warning);
         }
 
         .dept-preview-hint {
@@ -2700,14 +2720,14 @@
             text-align: center;
             font-size: 0.75rem;
             color: var(--muted, #9A8F7C);
-            background: rgba(201, 162, 39, 0.1);
+            background: rgba(111, 106, 99, 0.1);
             border-radius: 6px;
-            border: 1px dashed rgba(201, 162, 39, 0.3);
+            border: 1px dashed rgba(111, 106, 99, 0.3);
         }
 
         .dept-info-panel.preview-active {
-            border-color: var(--accent, #C9A227);
-            box-shadow: 0 0 15px rgba(201, 162, 39, 0.15);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(111, 106, 99, 0.15);
         }
 
         .dept-kpis {
@@ -2732,7 +2752,7 @@
         }
 
         .dept-kpi-value.success { color: var(--success, #4A7C59); }
-        .dept-kpi-value.warning { color: var(--warning, #D4A017); }
+        .dept-kpi-value.warning { color: var(--warning); }
         .dept-kpi-value.danger { color: var(--error, #8B3A3A); }
 
         .dept-kpi-label {
@@ -2828,7 +2848,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 1.5rem;
-            background: linear-gradient(90deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
+            background: rgba(111, 106, 99, 0.1);
             border-bottom: 1px solid var(--border, #2A2A2A);
         }
 
@@ -2841,7 +2861,7 @@
         .mesa-header-id {
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--accent, #C9A227);
+            color: var(--accent);
             font-family: var(--font-display);
         }
 
@@ -2870,8 +2890,8 @@
         }
 
         .mesa-status-badge.needs-review {
-            background: rgba(212, 160, 23, 0.2);
-            color: var(--warning, #D4A017);
+            background: rgba(139, 115, 85, 0.2);
+            color: var(--warning);
         }
 
         .mesa-status-badge.high-risk {
@@ -2890,7 +2910,7 @@
         }
 
         .mesa-confidence-value.high { color: var(--success, #4A7C59); }
-        .mesa-confidence-value.medium { color: var(--warning, #D4A017); }
+        .mesa-confidence-value.medium { color: var(--warning); }
         .mesa-confidence-value.low { color: var(--error, #8B3A3A); }
 
         .mesa-confidence-label {
@@ -2913,7 +2933,7 @@
         }
 
         .mesa-section {
-            background: var(--panel-alt, #1C1C1C);
+            background: var(--panel-alt, #F7F4EE);
             padding: 1rem;
         }
 
@@ -2985,8 +3005,8 @@
         }
 
         .ocr-field-confidence.medium {
-            background: rgba(212, 160, 23, 0.2);
-            color: var(--warning, #D4A017);
+            background: rgba(139, 115, 85, 0.2);
+            color: var(--warning);
         }
 
         .ocr-field-confidence.low {
@@ -3107,7 +3127,7 @@
             display: flex;
             justify-content: space-between;
             padding: 1rem 1.5rem;
-            background: var(--panel, #141414);
+            background: var(--panel, #FFFFFF);
             border-top: 1px solid var(--border, #2A2A2A);
         }
 
@@ -3194,13 +3214,6 @@
                     Base de Datos E-14
                     <span class="badge" id="db-badge" style="background: var(--accent);">RAG</span>
                 </button>
-                <button class="tab-btn" data-tab="chat-rag" role="tab" aria-selected="false">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                    </svg>
-                    Chat RAG
-                    <span class="badge" style="background: var(--success);">IA</span>
-                </button>
                 <button class="tab-btn" data-tab="litigio" role="tab" aria-selected="false">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -3217,7 +3230,166 @@
             <!-- ==================== CONTIENDA ELECTORAL TAB ==================== -->
             <section id="contienda" class="tab-content active" role="tabpanel">
 
-                <!-- Filters -->
+                <!-- ========== 1. RESUMEN GENERAL DE LA CONTIENDA ========== -->
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <h2 class="section-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        Resumen General de la Contienda
+                    </h2>
+                </div>
+
+                <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #4A7C59;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="contienda-mesas-procesadas">--</div>
+                            <div class="stat-label">Mesas Procesadas</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #6F6A63;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13" stroke="white" stroke-width="2"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="contienda-mesas-incidencias">--</div>
+                            <div class="stat-label">Mesas con Incidencias</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #7A7F85;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="contienda-comisiones">--</div>
+                            <div class="stat-label">Comisiones Afectadas</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #6F6A63;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="contienda-cobertura">--%</div>
+                            <div class="stat-label">Cobertura E-14</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 2. MESAS CON INCIDENCIAS (HEADLINE PRINCIPAL) ========== -->
+                <div class="incident-queue-section" style="margin-bottom: 1.5rem;">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            Mesas con Incidencias
+                        </h2>
+                        <div class="incident-stats">
+                            <span class="incident-stat p0">Criticas: <strong id="incident-critica-count">0</strong></span>
+                            <span class="incident-stat p1">Medias: <strong id="incident-media-count">0</strong></span>
+                            <span class="incident-stat">Bajas: <strong id="incident-baja-count">0</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- 4. NIVEL DE IMPORTANCIA (Semaforo) -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                        <div style="background: rgba(143, 74, 74, 0.15); border: 1px solid rgba(143, 74, 74, 0.4); border-radius: 10px; padding: 1rem; cursor: pointer;" onclick="filterIncidentsByLevel('critica')">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 16px; height: 16px; background: #8B3A3A; border-radius: 50%; box-shadow: 0 0 10px rgba(139, 58, 58, 0.5);"></div>
+                                <div>
+                                    <div style="font-weight: 700; color: #A85454; font-size: 1.25rem;" id="nivel-critica">0</div>
+                                    <div style="font-size: 0.75rem; color: var(--text);">CRITICA - Accion urgente</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: rgba(139, 115, 85, 0.1); border: 1px solid rgba(139, 115, 85, 0.4); border-radius: 10px; padding: 1rem; cursor: pointer;" onclick="filterIncidentsByLevel('media')">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 16px; height: 16px; background: #8B7355; border-radius: 50%;"></div>
+                                <div>
+                                    <div style="font-weight: 700; color: #8B7355; font-size: 1.25rem;" id="nivel-media">0</div>
+                                    <div style="font-size: 0.75rem; color: var(--text);">MEDIA - Revisar</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: rgba(122, 127, 133, 0.1); border: 1px solid rgba(122, 127, 133, 0.4); border-radius: 10px; padding: 1rem; cursor: pointer;" onclick="filterIncidentsByLevel('baja')">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 16px; height: 16px; background: #7A7F85; border-radius: 50%;"></div>
+                                <div>
+                                    <div style="font-weight: 700; color: #7A7F85; font-size: 1.25rem;" id="nivel-baja">0</div>
+                                    <div style="font-size: 0.75rem; color: var(--text);">BAJA - Observacion</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. CLASIFICACION DE INCIDENCIAS -->
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; padding: 1rem; background: var(--panel); border: 1px solid var(--border); border-radius: 10px;">
+                        <span style="font-size: 0.8rem; color: var(--muted); margin-right: 0.5rem;">Clasificacion:</span>
+                        <span class="badge" style="background: #8B3A3A; cursor: pointer;" onclick="filterIncidentsByType('firmas')" id="badge-firmas">Firmas <span id="count-firmas">0</span></span>
+                        <span class="badge" style="background: #8B7355; cursor: pointer;" onclick="filterIncidentsByType('aritmetica')" id="badge-aritmetica">Incongruencia Aritmetica <span id="count-aritmetica">0</span></span>
+                        <span class="badge" style="background: #5B7BB3; cursor: pointer;" onclick="filterIncidentsByType('sufragantes')" id="badge-sufragantes">Votos vs Sufragantes <span id="count-sufragantes">0</span></span>
+                        <span class="badge" style="background: #8B3A5A; cursor: pointer;" onclick="filterIncidentsByType('alteraciones')" id="badge-alteraciones">Alteraciones/Tachaduras <span id="count-alteraciones">0</span></span>
+                        <span class="badge" style="background: #666; cursor: pointer;" onclick="filterIncidentsByType('ocr')" id="badge-ocr">OCR Bajo/Ilegible <span id="count-ocr">0</span></span>
+                        <button style="margin-left: auto; background: transparent; border: 1px solid var(--border); color: var(--text); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; cursor: pointer;" onclick="clearIncidentFilters()">Limpiar filtros</button>
+                    </div>
+
+                    <!-- 5. POSIBLE IMPACTO LEGAL (PUENTE a Litigio) -->
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; padding: 0.75rem 1rem; background: rgba(111, 106, 99, 0.05); border: 1px solid var(--border); border-radius: 8px;">
+                        <span style="font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            Posible Impacto Legal:
+                        </span>
+                        <span style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.8rem;"><span style="width: 10px; height: 10px; background: #8F4A4A; border-radius: 2px;"></span> Posible Nulidad: <strong id="impacto-nulidad">0</strong></span>
+                        <span style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.8rem;"><span style="width: 10px; height: 10px; background: #8B7355; border-radius: 2px;"></span> Reclamable: <strong id="impacto-reclamable">0</strong></span>
+                        <span style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.8rem;"><span style="width: 10px; height: 10px; background: #7A7F85; border-radius: 2px;"></span> Observacion: <strong id="impacto-observacion">0</strong></span>
+                        <button class="btn-action" onclick="escalarALitigio()" style="margin-left: auto; padding: 0.4rem 0.75rem; font-size: 0.75rem; gap: 0.25rem;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            Escalar a Litigio
+                        </button>
+                    </div>
+
+                    <!-- Tabla de Mesas con Incidencias -->
+                    <div class="incident-table-container" style="max-height: 350px; overflow-y: auto;">
+                        <table class="incident-table" id="incident-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px;"><input type="checkbox" id="select-all-incidents" onchange="toggleSelectAllIncidents()"></th>
+                                    <th>Mesa</th>
+                                    <th>Comision</th>
+                                    <th>Tipo de Incidencia</th>
+                                    <th>Nivel Importancia</th>
+                                    <th>Impacto Legal</th>
+                                    <th>Conf. OCR</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="incident-tbody">
+                                <tr><td colspan="8" style="text-align: center; color: var(--muted);">Cargando incidencias...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Filtros Generales -->
                 <div class="filters-bar">
                     <div class="filter-group">
                         <label>Departamento</label>
@@ -3324,7 +3496,7 @@
                     </div>
                 </div>
 
-                <!-- 1. Candidatos en Seguimiento (PRIMERO) -->
+                <!-- 1. Partidos - Congreso 2022 (E-14 Real) -->
                 <div class="candidates-tracking-section">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -3334,18 +3506,18 @@
                                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                             </svg>
-                            Candidatos en Seguimiento
+                            Partidos - Congreso 2022 (E-14 Real)
                         </h2>
-                        <span class="tracking-count">9 candidatos</span>
+                        <span class="tracking-count" id="parties-count">-- partidos</span>
                     </div>
 
-                    <div class="candidates-tracking-grid" id="candidates-tracking-grid">
+                    <div class="candidates-tracking-grid" id="parties-tracking-grid">
                         <!-- Placeholder mientras carga -->
                         <div class="candidate-track-card" style="border-left: 4px solid #E91E63;">
                             <div class="candidate-track-header">
                                 <div>
-                                    <div class="candidate-track-name">Cargando candidatos...</div>
-                                    <div class="candidate-track-party">Espere por favor</div>
+                                    <div class="candidate-track-name">Cargando partidos...</div>
+                                    <div class="candidate-track-party">225,702 formularios E-14</div>
                                 </div>
                             </div>
                         </div>
@@ -3548,61 +3720,7 @@
                     </div>
                 </div>
 
-                <!-- 4. Cola de Incidentes -->
-                <div class="incident-queue-section">
-                    <div class="section-header">
-                        <h2 class="section-title">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                                <line x1="12" y1="9" x2="12" y2="13"/>
-                                <line x1="12" y1="17" x2="12.01" y2="17"/>
-                            </svg>
-                            Cola de Incidentes
-                        </h2>
-                        <div class="incident-stats">
-                            <span class="incident-stat p0">P0: <strong id="incident-p0-count">0</strong></span>
-                            <span class="incident-stat p1">P1: <strong id="incident-p1-count">0</strong></span>
-                            <span class="incident-stat">Total: <strong id="incident-total-count">0</strong></span>
-                        </div>
-                    </div>
-
-                    <div class="incident-filters">
-                        <button class="incident-filter-btn active" data-filter="all">Todos</button>
-                        <button class="incident-filter-btn p0" data-filter="P0">P0</button>
-                        <button class="incident-filter-btn p1" data-filter="P1">P1</button>
-                        <button class="incident-filter-btn" data-filter="P2">P2</button>
-                        <button class="incident-filter-btn" data-filter="OPEN">Abiertos</button>
-                        <button class="incident-filter-btn" data-filter="ASSIGNED">Asignados</button>
-                        <button class="btn-action" onclick="refreshIncidents()" style="margin-left: auto;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="23 4 23 10 17 10"/>
-                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
-                            </svg>
-                            Actualizar
-                        </button>
-                    </div>
-
-                    <div class="incident-table-container" style="max-height: 350px; overflow-y: auto;">
-                        <table class="incident-table" id="incident-table">
-                            <thead>
-                                <tr>
-                                    <th title="Severidad: Prioridad del incidente">Severidad</th>
-                                    <th>Mesa</th>
-                                    <th>Tipo de Incidente</th>
-                                    <th>Ubicación</th>
-                                    <th title="Confianza OCR">Conf. OCR</th>
-                                    <th title="Tiempo transcurrido">Tiempo</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody id="incident-tbody">
-                                <tr><td colspan="7" style="text-align: center; color: var(--muted);">Cargando incidentes...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 5. Mapa Electoral Colombia (AL FINAL) -->
+                <!-- Mapa Electoral Colombia -->
                 <div class="map-section">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -3661,8 +3779,8 @@
                             <div class="map-legend" id="map-legend">
                                 <div class="legend-item"><span class="legend-color" style="background: #4A7C59;"></span> Alto (>80%)</div>
                                 <div class="legend-item"><span class="legend-color" style="background: #7CB342;"></span> Medio-Alto (60-80%)</div>
-                                <div class="legend-item"><span class="legend-color" style="background: #D4A017;"></span> Medio (40-60%)</div>
-                                <div class="legend-item"><span class="legend-color" style="background: #E65100;"></span> Bajo (20-40%)</div>
+                                <div class="legend-item"><span class="legend-color" style="background: #8B7355;"></span> Medio (40-60%)</div>
+                                <div class="legend-item"><span class="legend-color" style="background: #8B7355;"></span> Bajo (20-40%)</div>
                                 <div class="legend-item"><span class="legend-color" style="background: #8B3A3A;"></span> Crítico (<20%)</div>
                             </div>
                         </div>
@@ -3919,8 +4037,8 @@
                 </div>
 
                 <!-- Register Witness Form -->
-                <div id="register-witness-form" style="display: none; background: var(--panel-alt, #1a1a1a); border: 1px solid var(--border-gold, rgba(201, 162, 39, 0.3)); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
-                    <h3 style="margin: 0 0 1rem; font-size: 1rem; color: var(--accent, #C9A227);">
+                <div id="register-witness-form" style="display: none; background: var(--panel-alt, #1a1a1a); border: 1px solid var(--border-gold); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem; font-size: 1rem; color: var(--accent);">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
                             <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
                             <circle cx="8.5" cy="7" r="4"/>
@@ -4034,18 +4152,57 @@
             <section id="base-datos" class="tab-content" role="tabpanel">
                 <div class="section-header">
                     <h2 class="section-title">Base de Datos RAG - E-14 Electorales</h2>
-                    <button class="btn-action" onclick="loadE14Database()" style="gap: 0.5rem;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-                        </svg>
-                        Actualizar
-                    </button>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn-action" onclick="syncRAGIndex()" id="btn-sync-rag" style="gap: 0.5rem; background: var(--success);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/>
+                            </svg>
+                            Sincronizar RAG
+                        </button>
+                        <button class="btn-action" onclick="loadE14Database()" style="gap: 0.5rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                            </svg>
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- RAG Status Panel -->
+                <div style="background: rgba(111, 106, 99, 0.1); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 40px; height: 40px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+                                    <circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 style="margin: 0; font-size: 0.95rem; color: var(--text);">Estado del Indice RAG</h4>
+                                <p style="margin: 0.25rem 0 0; font-size: 0.8rem; color: var(--muted);" id="rag-status-text">Cargando...</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent);" id="rag-vectors-count">--</div>
+                                <div style="font-size: 0.75rem; color: var(--muted);">Vectores</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--success);" id="rag-sync-status">--</div>
+                                <div style="font-size: 0.75rem; color: var(--muted);">Sincronizado</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.85rem; font-weight: 600; color: var(--text);" id="rag-embedding-model">--</div>
+                                <div style="font-size: 0.75rem; color: var(--muted);">Modelo Embeddings</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Stats Cards -->
                 <div class="stats-grid" style="margin-bottom: 1.5rem;">
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #C9A227, #D4AF37);">
+                        <div class="stat-icon" style="background: #6F6A63;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                                 <polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/>
@@ -4057,7 +4214,7 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #4A7C59, #5D9A6B);">
+                        <div class="stat-icon" style="background: #4A7C59;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                 <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
                                 <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
@@ -4069,7 +4226,7 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #5B7BB3, #7A9AD0);">
+                        <div class="stat-icon" style="background: #7A7F85;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                                 <circle cx="12" cy="10" r="3"/>
@@ -4081,7 +4238,7 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #8B5A5A, #A86E6E);">
+                        <div class="stat-icon" style="background: #8F4A4A;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                             </svg>
@@ -4147,254 +4304,325 @@
                 </div>
             </section>
 
-            <!-- ==================== CHAT RAG TAB ==================== -->
-            <section id="chat-rag" class="tab-content" role="tabpanel">
-                <div class="section-header">
-                    <h2 class="section-title">Chat RAG - Consulta Electoral</h2>
-                    <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">Consulta la base de datos E-14 usando lenguaje natural</p>
-                </div>
-
-                <!-- Chat Container -->
-                <div class="chat-container" style="display: flex; flex-direction: column; height: calc(100vh - 300px); min-height: 400px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
-
-                    <!-- Chat Messages -->
-                    <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                        <!-- Welcome Message -->
-                        <div class="chat-message assistant" style="display: flex; gap: 1rem; max-width: 80%;">
-                            <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--success)); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                            </div>
-                            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 12px; border-top-left-radius: 4px;">
-                                <p style="margin: 0; color: var(--text);">Hola, soy el asistente electoral de CASTOR. Puedo ayudarte a consultar los datos de las actas E-14. Ejemplos de preguntas:</p>
-                                <ul style="margin: 0.75rem 0 0; padding-left: 1.25rem; color: var(--text-secondary);">
-                                    <li>¿Cuántos votos obtuvo el Senado en Antioquia?</li>
-                                    <li>¿Cuáles mesas tienen diferencias aritméticas?</li>
-                                    <li>Muestra las mesas con baja confianza OCR en Bogotá</li>
-                                    <li>¿Cuál es el total de votos nulos por departamento?</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Suggested Questions -->
-                    <div id="suggested-questions" style="padding: 0.75rem 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button class="suggestion-btn" onclick="askSuggestion('¿Cuántas mesas hay procesadas?')" style="padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">¿Cuántas mesas procesadas?</button>
-                        <button class="suggestion-btn" onclick="askSuggestion('¿Qué departamentos tienen más irregularidades?')" style="padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">Departamentos con irregularidades</button>
-                        <button class="suggestion-btn" onclick="askSuggestion('Resumen de votos por corporación')" style="padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">Votos por corporación</button>
-                    </div>
-
-                    <!-- Chat Input -->
-                    <div style="padding: 1rem 1.5rem; border-top: 1px solid var(--border); background: var(--bg-secondary);">
-                        <div style="display: flex; gap: 0.75rem; align-items: flex-end;">
-                            <textarea id="chat-input" placeholder="Escribe tu consulta sobre los datos E-14..." rows="1" style="flex: 1; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); color: var(--text); font-size: 0.95rem; resize: none; font-family: inherit; max-height: 120px;" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendChatMessage();}"></textarea>
-                            <button onclick="sendChatMessage()" style="padding: 0.75rem 1.25rem; background: var(--accent); color: white; border: none; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                                </svg>
-                                Enviar
-                            </button>
-                        </div>
-                        <p style="margin: 0.5rem 0 0; font-size: 0.75rem; color: var(--muted);">Presiona Enter para enviar, Shift+Enter para nueva línea</p>
-                    </div>
-                </div>
-            </section>
-
             <!-- ==================== LITIGIO ELECTORAL TAB ==================== -->
             <section id="litigio" class="tab-content" role="tabpanel">
                 <div class="section-header">
-                    <h2 class="section-title">Litigio Electoral</h2>
-                    <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">Seguimiento de casos escalados al equipo jurídico</p>
+                    <h2 class="section-title">Litigio Electoral - Analisis Juridico</h2>
+                    <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">E-14 juridicamente controvertibles segun CPACA</p>
                 </div>
 
-                <!-- Litigio KPIs -->
+                <!-- 1. RESUMEN JURIDICO -->
                 <div class="stats-grid" style="margin-bottom: 1.5rem;">
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #8B3A3A, #A85454);">
+                        <div class="stat-icon" style="background: #8F4A4A;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                             </svg>
                         </div>
                         <div class="stat-content">
                             <div class="stat-value" id="litigio-total">0</div>
-                            <div class="stat-label">Casos Activos</div>
+                            <div class="stat-label">Incidencias Juridicas</div>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #D4A017, #E8B92A);">
+                        <div class="stat-icon" style="background: #6F6A63;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
                             </svg>
                         </div>
                         <div class="stat-content">
-                            <div class="stat-value" id="litigio-pending">0</div>
-                            <div class="stat-label">Pendientes</div>
+                            <div class="stat-value" id="litigio-mesas">0</div>
+                            <div class="stat-label">Mesas Controvertibles</div>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #5B7BB3, #7A9AD0);">
+                        <div class="stat-icon" style="background: #7A7F85;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                             </svg>
                         </div>
                         <div class="stat-content">
-                            <div class="stat-value" id="litigio-docs">0</div>
-                            <div class="stat-label">Documentos</div>
+                            <div class="stat-value" id="litigio-comisiones">0</div>
+                            <div class="stat-label">Comisiones Involucradas</div>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #4A7C59, #5D9A6B);">
+                        <div class="stat-icon" style="background: #4A7C59;">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                                 <polyline points="22 4 12 14.01 9 11.01"/>
                             </svg>
                         </div>
                         <div class="stat-content">
-                            <div class="stat-value" id="litigio-resolved">0</div>
-                            <div class="stat-label">Resueltos</div>
+                            <div class="stat-value" id="litigio-votos">0</div>
+                            <div class="stat-label">Votos Afectados</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Action Bar -->
+                <!-- 2. TIPOLOGIA JURIDICA CPACA -->
+                <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        Tipologia Juridica - Clasificacion CPACA
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                        <div style="background: rgba(139, 58, 58, 0.15); border: 1px solid rgba(139, 58, 58, 0.3); border-radius: 10px; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-weight: 700; color: #A85454;">Art. 223</span>
+                                <span class="badge" style="background: #8B3A3A;" id="cpaca-223-count">0</span>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text);">Irregularidades de Escrutinio</div>
+                            <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem;">Errores aritmeticos, sumas incorrectas</div>
+                        </div>
+                        <div style="background: rgba(139, 115, 85, 0.15); border: 1px solid rgba(139, 115, 85, 0.3); border-radius: 10px; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-weight: 700; color: #8B7355;">Art. 224</span>
+                                <span class="badge" style="background: #8B7355;" id="cpaca-224-count">0</span>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text);">Vicios de Forma</div>
+                            <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem;">Firmas faltantes, campos incompletos</div>
+                        </div>
+                        <div style="background: rgba(139, 58, 90, 0.15); border: 1px solid rgba(139, 58, 90, 0.3); border-radius: 10px; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-weight: 700; color: #B3547A;">Art. 225</span>
+                                <span class="badge" style="background: #8B3A5A;" id="cpaca-225-count">0</span>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text);">Fraude Electoral</div>
+                            <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem;">Alteraciones, tachaduras sospechosas</div>
+                        </div>
+                        <div style="background: rgba(91, 123, 179, 0.15); border: 1px solid rgba(91, 123, 179, 0.3); border-radius: 10px; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-weight: 700; color: #7A9AD0;">Art. 226</span>
+                                <span class="badge" style="background: #5B7BB3;" id="cpaca-226-count">0</span>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text);">Anomalias</div>
+                            <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem;">Discrepancias con RNEC, datos inconsistentes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. PRIORIDAD DE ACTUACION -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="background: rgba(143, 74, 74, 0.15); border: 1px solid rgba(143, 74, 74, 0.4); border-radius: 10px; padding: 1rem; cursor: pointer;" onclick="filterByPriority('alta')">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 12px; height: 12px; background: #8B3A3A; border-radius: 50%; animation: pulse 1.5s infinite;"></div>
+                            <div>
+                                <div style="font-weight: 700; color: #A85454; font-size: 1.25rem;" id="priority-alta">0</div>
+                                <div style="font-size: 0.75rem; color: var(--text);">ALTA - Accion inmediata</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: rgba(139, 115, 85, 0.1); border: 1px solid rgba(139, 115, 85, 0.4); border-radius: 10px; padding: 1rem; cursor: pointer;" onclick="filterByPriority('media')">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 12px; height: 12px; background: #8B7355; border-radius: 50%;"></div>
+                            <div>
+                                <div style="font-weight: 700; color: #8B7355; font-size: 1.25rem;" id="priority-media">0</div>
+                                <div style="font-size: 0.75rem; color: var(--text);">MEDIA - Analisis complementario</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: rgba(122, 127, 133, 0.15); border: 1px solid rgba(122, 127, 133, 0.4); border-radius: 10px; padding: 1rem; cursor: pointer;" onclick="filterByPriority('baja')">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 12px; height: 12px; background: #5B7BB3; border-radius: 50%;"></div>
+                            <div>
+                                <div style="font-weight: 700; color: #7A9AD0; font-size: 1.25rem;" id="priority-baja">0</div>
+                                <div style="font-size: 0.75rem; color: var(--text);">BAJA - Archivo / seguimiento</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters & Actions -->
                 <div class="filters-bar" style="margin-bottom: 1rem;">
                     <div class="filter-group">
-                        <label>Estado</label>
-                        <select id="litigio-filter-status" onchange="filterLitigioCases()">
+                        <label>Articulo CPACA</label>
+                        <select id="litigio-filter-cpaca" onchange="filterLitigioCases()">
                             <option value="">Todos</option>
-                            <option value="pending">Pendiente</option>
-                            <option value="in_progress">En Proceso</option>
-                            <option value="submitted">Radicado</option>
-                            <option value="resolved">Resuelto</option>
+                            <option value="223">Art. 223 - Irregularidades</option>
+                            <option value="224">Art. 224 - Vicios Forma</option>
+                            <option value="225">Art. 225 - Fraude</option>
+                            <option value="226">Art. 226 - Anomalias</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label>Tipo</label>
-                        <select id="litigio-filter-type" onchange="filterLitigioCases()">
-                            <option value="">Todos</option>
-                            <option value="arithmetic">Diferencia Aritmética</option>
-                            <option value="discrepancy">Discrepancia RNEC</option>
-                            <option value="recount">Solicitud Recuento</option>
-                            <option value="nullity">Nulidad Mesa</option>
+                        <label>Prioridad</label>
+                        <select id="litigio-filter-priority" onchange="filterLitigioCases()">
+                            <option value="">Todas</option>
+                            <option value="alta">Alta</option>
+                            <option value="media">Media</option>
+                            <option value="baja">Baja</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Corporacion</label>
+                        <select id="litigio-filter-corp" onchange="filterLitigioCases()">
+                            <option value="">Todas</option>
+                            <option value="PRESIDENCIA">Presidencia</option>
+                            <option value="SENADO">Senado</option>
+                            <option value="CAMARA">Camara</option>
                         </select>
                     </div>
                     <div class="filter-group" style="flex: 1;">
                         <label>Buscar</label>
-                        <input type="text" id="litigio-search" placeholder="Mesa, departamento, abogado..." onkeyup="filterLitigioCases()">
+                        <input type="text" id="litigio-search" placeholder="Mesa, departamento, incidencia..." onkeyup="filterLitigioCases()">
                     </div>
-                    <button class="btn-action primary" onclick="openNewCaseModal()" style="margin-top: auto; gap: 0.5rem;">
+                </div>
+
+                <!-- 7. PREPARACION DE ACCION ELECTORAL -->
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <button class="btn-action primary" onclick="exportLitigioInforme()" style="gap: 0.5rem;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
                         </svg>
-                        Nuevo Caso
+                        Exportar Informe Juridico
                     </button>
-                    <button class="btn-action" onclick="exportLitigioCases()" style="margin-top: auto; gap: 0.5rem;">
+                    <button class="btn-action" onclick="armarCarpetaProbatoria()" style="gap: 0.5rem;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
                         </svg>
-                        Exportar
+                        Armar Carpeta Probatoria
+                    </button>
+                    <button class="btn-action" onclick="marcarParaDemanda()" style="gap: 0.5rem; background: var(--danger);">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        Marcar para Demanda de Nulidad
+                    </button>
+                    <button class="btn-action" onclick="syncFromContienda()" style="gap: 0.5rem; margin-left: auto;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                        </svg>
+                        Sincronizar desde Contienda
                     </button>
                 </div>
 
-                <!-- Cases Table -->
+                <!-- 3. MESAS CON VIABILIDAD JURIDICA -->
                 <div class="votes-table-container">
                     <table class="votes-table" id="litigio-table">
                         <thead>
                             <tr>
-                                <th>Caso #</th>
-                                <th>Mesa</th>
-                                <th>Tipo</th>
-                                <th>Departamento</th>
-                                <th>Estado</th>
-                                <th>Fecha Límite</th>
-                                <th>Abogado</th>
+                                <th style="width: 40px;"><input type="checkbox" id="select-all-litigio" onchange="toggleSelectAllLitigio()"></th>
+                                <th>Mesa / Comision</th>
+                                <th>Incidencia E-14</th>
+                                <th>Art. CPACA</th>
+                                <th>Severidad</th>
+                                <th>Viabilidad Nulidad</th>
+                                <th>Votos Afectados</th>
+                                <th>Prioridad</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="litigio-tbody">
-                            <!-- Demo cases -->
-                            <tr>
-                                <td><strong>LIT-001</strong></td>
-                                <td>05-001-001-01-003</td>
-                                <td><span class="badge" style="background: var(--danger);">Diferencia Aritmética</span></td>
-                                <td>Antioquia</td>
-                                <td><span class="status-badge pending">Pendiente</span></td>
-                                <td style="color: var(--danger); font-weight: 600;">2026-02-05</td>
-                                <td>Sin asignar</td>
-                                <td>
-                                    <button class="btn-sm" onclick="viewLitigioCase('LIT-001')" title="Ver detalle">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    </button>
-                                    <button class="btn-sm" onclick="assignLawyer('LIT-001')" title="Asignar abogado">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>LIT-002</strong></td>
-                                <td>11-001-015-02-007</td>
-                                <td><span class="badge" style="background: var(--warning);">Discrepancia RNEC</span></td>
-                                <td>Bogotá D.C.</td>
-                                <td><span class="status-badge in-progress">En Proceso</span></td>
-                                <td>2026-02-07</td>
-                                <td>Dr. García</td>
-                                <td>
-                                    <button class="btn-sm" onclick="viewLitigioCase('LIT-002')" title="Ver detalle">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    </button>
-                                    <button class="btn-sm" onclick="uploadEvidence('LIT-002')" title="Subir evidencia">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>LIT-003</strong></td>
-                                <td>76-001-008-01-012</td>
-                                <td><span class="badge" style="background: var(--info);">Solicitud Recuento</span></td>
-                                <td>Valle del Cauca</td>
-                                <td><span class="status-badge submitted">Radicado</span></td>
-                                <td>2026-02-10</td>
-                                <td>Dra. López</td>
-                                <td>
-                                    <button class="btn-sm" onclick="viewLitigioCase('LIT-003')" title="Ver detalle">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    </button>
-                                    <button class="btn-sm" onclick="downloadExpediente('LIT-003')" title="Descargar expediente">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                    </button>
-                                </td>
-                            </tr>
+                            <tr><td colspan="9" style="text-align: center; color: var(--muted); padding: 2rem;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom: 0.5rem; opacity: 0.5;">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                <br>Cargando incidencias juridicas desde Contienda Electoral...
+                                <br><small>Sincroniza los datos para ver mesas controvertibles</small>
+                            </td></tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Timeline / Plazos -->
-                <div style="margin-top: 1.5rem; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem;">
-                    <h3 style="margin: 0 0 1rem; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        Plazos Críticos
-                    </h3>
-                    <div class="timeline-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
-                        <div class="timeline-item" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(139, 58, 58, 0.1); border-left: 3px solid var(--danger); border-radius: 0 8px 8px 0;">
-                            <div style="font-weight: 700; color: var(--danger); min-width: 80px;">2 días</div>
-                            <div style="flex: 1;">
-                                <strong>LIT-001</strong> - Vence plazo para radicar reclamación aritmética
+                <!-- 5. IMPACTO ELECTORAL POR CORPORACION -->
+                <div style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                    <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
+                        <h4 style="margin: 0 0 1rem; font-size: 0.9rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                            Impacto por Corporacion
+                        </h4>
+                        <div id="impacto-corporacion" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border);">
+                                <span style="font-size: 0.85rem;">Presidencia</span>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="font-weight: 600;" id="impact-presidencia">0</span>
+                                    <span style="font-size: 0.75rem; color: var(--muted);">votos</span>
+                                </div>
                             </div>
-                            <span class="badge" style="background: var(--danger);">URGENTE</span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border);">
+                                <span style="font-size: 0.85rem;">Senado</span>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="font-weight: 600;" id="impact-senado">0</span>
+                                    <span style="font-size: 0.75rem; color: var(--muted);">votos</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;">
+                                <span style="font-size: 0.85rem;">Camara</span>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="font-weight: 600;" id="impact-camara">0</span>
+                                    <span style="font-size: 0.75rem; color: var(--muted);">votos</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="timeline-item" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(212, 160, 23, 0.1); border-left: 3px solid var(--warning); border-radius: 0 8px 8px 0;">
-                            <div style="font-weight: 700; color: var(--warning); min-width: 80px;">4 días</div>
-                            <div style="flex: 1;">
-                                <strong>LIT-002</strong> - Audiencia de conciliación programada
+                    </div>
+
+                    <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
+                        <h4 style="margin: 0 0 1rem; font-size: 0.9rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            Plazos Criticos
+                        </h4>
+                        <div id="plazos-criticos" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; background: rgba(139, 58, 58, 0.1); border-radius: 6px;">
+                                <span style="font-weight: 700; color: var(--danger); min-width: 50px; font-size: 0.85rem;">48h</span>
+                                <span style="font-size: 0.8rem; flex: 1;">Radicar reclamaciones Art. 223</span>
                             </div>
-                            <span class="badge" style="background: var(--warning);">PRÓXIMO</span>
+                            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; background: rgba(139, 115, 85, 0.1); border-radius: 6px;">
+                                <span style="font-weight: 700; color: var(--warning); min-width: 50px; font-size: 0.85rem;">5 dias</span>
+                                <span style="font-size: 0.8rem; flex: 1;">Solicitudes de recuento</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; background: rgba(91, 123, 179, 0.1); border-radius: 6px;">
+                                <span style="font-weight: 700; color: var(--info); min-width: 50px; font-size: 0.85rem;">30 dias</span>
+                                <span style="font-size: 0.8rem; flex: 1;">Demandas de nulidad electoral</span>
+                            </div>
                         </div>
-                        <div class="timeline-item" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(74, 124, 89, 0.1); border-left: 3px solid var(--success); border-radius: 0 8px 8px 0;">
-                            <div style="font-weight: 700; color: var(--success); min-width: 80px;">7 días</div>
-                            <div style="flex: 1;">
-                                <strong>LIT-003</strong> - Respuesta esperada del CNE
+                    </div>
+                </div>
+
+                <!-- 4. DETALLE PROBATORIO (Modal/Panel) -->
+                <div id="litigio-detail-panel" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; padding: 2rem; overflow-y: auto;">
+                    <div style="max-width: 900px; margin: 0 auto; background: var(--panel); border-radius: 16px; overflow: hidden;">
+                        <div style="padding: 1.25rem 1.5rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="margin: 0; font-size: 1.1rem;" id="detail-title">Detalle Probatorio E-14</h3>
+                            <button onclick="closeLitigioDetail()" style="background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 1.5rem;">&times;</button>
+                        </div>
+                        <div style="padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;" id="detail-content">
+                            <!-- Left: E-14 Image -->
+                            <div>
+                                <h4 style="margin: 0 0 1rem; font-size: 0.9rem; color: var(--muted);">Imagen E-14</h4>
+                                <div id="detail-e14-image" style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; min-height: 300px; display: flex; align-items: center; justify-content: center; color: var(--muted);">
+                                    Sin imagen disponible
+                                </div>
                             </div>
-                            <span class="badge" style="background: var(--success);">EN CURSO</span>
+                            <!-- Right: OCR Evidence & Observations -->
+                            <div>
+                                <h4 style="margin: 0 0 1rem; font-size: 0.9rem; color: var(--muted);">Evidencia OCR</h4>
+                                <div id="detail-ocr-data" style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem; max-height: 200px; overflow-y: auto;">
+                                    --
+                                </div>
+                                <h4 style="margin: 1.5rem 0 1rem; font-size: 0.9rem; color: var(--muted);">Observaciones Juridicas</h4>
+                                <div id="detail-observations" style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-size: 0.85rem;">
+                                    --
+                                </div>
+                                <h4 style="margin: 1.5rem 0 1rem; font-size: 0.9rem; color: var(--muted);">Trazabilidad</h4>
+                                <div id="detail-traceability" style="font-size: 0.8rem; color: var(--text-secondary);">
+                                    <p><strong>Fuente:</strong> <span id="trace-source">--</span></p>
+                                    <p><strong>Procesado:</strong> <span id="trace-date">--</span></p>
+                                    <p><strong>Confianza OCR:</strong> <span id="trace-confidence">--</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 1rem 1.5rem; background: var(--bg-secondary); border-top: 1px solid var(--border); display: flex; gap: 0.5rem; justify-content: flex-end;">
+                            <button class="btn-action" onclick="downloadE14Evidence()" style="gap: 0.5rem;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Descargar Evidencia
+                            </button>
+                            <button class="btn-action primary" onclick="addToCarpeta()" style="gap: 0.5rem;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                                Agregar a Carpeta
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -4706,273 +4934,884 @@
         </div>
     </div>
 
-    <script src="/static/js/campaign_team_dashboard.js?v=7"></script>
+    <script src="/static/js/campaign_team_dashboard.js?v=8"></script>
 
-    <!-- Chat RAG & Litigio Electoral Functions -->
+    <!-- E14 Database & RAG Functions -->
     <script>
-    // ==================== CHAT RAG FUNCTIONS ====================
+    // ==================== E14 DATABASE & RAG FUNCTIONS ====================
 
-    let chatHistory = [];
+    async function loadE14Database() {
+        try {
+            // Load RAG stats
+            await loadRAGStats();
 
-    function sendChatMessage() {
-        const input = document.getElementById('chat-input');
-        const message = input.value.trim();
-        if (!message) return;
+            // Load E14 stats from API
+            const response = await fetch('/api/chat/rag/e14/stats');
+            const data = await response.json();
 
-        // Add user message to UI
-        addChatMessage('user', message);
-        input.value = '';
-        input.style.height = 'auto';
+            if (data.success) {
+                document.getElementById('e14-total-docs').textContent = data.documents_indexed || 0;
+                document.getElementById('e14-total-mesas').textContent = data.mesas_count || 0;
+                document.getElementById('e14-total-deptos').textContent = data.departamentos_count || 0;
+                document.getElementById('e14-total-corps').textContent = data.corporaciones_count || 0;
 
-        // Hide suggestions after first message
-        document.getElementById('suggested-questions').style.display = 'none';
-
-        // Show typing indicator
-        const typingId = addTypingIndicator();
-
-        // Send to API
-        fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                message: message,
-                context: { source: 'campaign_team_dashboard', mode: 'e14_rag' }
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            removeTypingIndicator(typingId);
-            if (data.success && data.response) {
-                addChatMessage('assistant', data.response);
-            } else {
-                addChatMessage('assistant', 'Lo siento, hubo un error al procesar tu consulta. Por favor intenta de nuevo.');
+                // Render department table if data available
+                if (data.by_departamento) {
+                    renderE14DeptTable(data.by_departamento);
+                }
             }
-        })
-        .catch(err => {
-            removeTypingIndicator(typingId);
-            addChatMessage('assistant', 'Error de conexión. Verifica que el servidor esté activo.');
-            console.error('Chat error:', err);
+        } catch (err) {
+            console.error('Error loading E14 database:', err);
+            document.getElementById('rag-status-text').textContent = 'Error al cargar datos';
+        }
+    }
+
+    async function loadRAGStats() {
+        try {
+            const response = await fetch('/api/chat/rag/stats');
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('rag-vectors-count').textContent = data.documents_indexed || 0;
+                document.getElementById('rag-embedding-model').textContent = data.embedding_model || 'N/A';
+                document.getElementById('rag-sync-status').textContent = 'Activo';
+                document.getElementById('rag-sync-status').style.color = 'var(--success)';
+                document.getElementById('rag-status-text').textContent = `Ultimo sync: ${new Date().toLocaleTimeString()}`;
+            } else {
+                document.getElementById('rag-sync-status').textContent = 'Offline';
+                document.getElementById('rag-sync-status').style.color = 'var(--danger)';
+                document.getElementById('rag-status-text').textContent = 'Servicio RAG no disponible';
+            }
+        } catch (err) {
+            console.error('Error loading RAG stats:', err);
+            document.getElementById('rag-sync-status').textContent = 'Error';
+            document.getElementById('rag-sync-status').style.color = 'var(--danger)';
+            document.getElementById('rag-status-text').textContent = 'Error conectando al servicio RAG';
+        }
+    }
+
+    async function syncRAGIndex() {
+        const btn = document.getElementById('btn-sync-rag');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Sincronizando...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('/api/chat/rag/sync-latest', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('rag-status-text').textContent = `Sincronizado: ${data.documents_synced || 0} nuevos documentos`;
+                await loadE14Database();
+                alert('Sincronizacion completada exitosamente');
+            } else {
+                alert('Error en sincronizacion: ' + (data.error || 'Error desconocido'));
+            }
+        } catch (err) {
+            console.error('Error syncing RAG:', err);
+            alert('Error de conexion al sincronizar');
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    function renderE14DeptTable(deptData) {
+        const tbody = document.getElementById('e14-dept-tbody');
+        if (!deptData || Object.keys(deptData).length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted); padding: 2rem;">No hay datos disponibles</td></tr>';
+            return;
+        }
+
+        let html = '';
+        for (const [dept, stats] of Object.entries(deptData)) {
+            html += `
+                <tr>
+                    <td style="font-weight: 600;">${dept}</td>
+                    <td>${stats.mesas || 0}</td>
+                    <td>${(stats.senado || 0).toLocaleString()}</td>
+                    <td>${(stats.camara || 0).toLocaleString()}</td>
+                    <td>${stats.documentos || 0}</td>
+                    <td>
+                        <button onclick="viewE14Detail('${dept}')" style="padding: 0.3rem 0.6rem; background: var(--accent); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Ver</button>
+                    </td>
+                </tr>
+            `;
+        }
+        tbody.innerHTML = html;
+    }
+
+    function viewE14Detail(dept) {
+        document.getElementById('e14-detail-panel').style.display = 'block';
+        document.getElementById('e14-detail-title').textContent = `Detalle: ${dept}`;
+        document.getElementById('e14-detail-content').innerHTML = '<p style="color: var(--muted);">Cargando datos detallados...</p>';
+        // Could load detailed data here via API
+    }
+
+    function closeE14Detail() {
+        document.getElementById('e14-detail-panel').style.display = 'none';
+    }
+
+    function filterE14Table() {
+        const corp = document.getElementById('e14-filter-corp').value.toLowerCase();
+        const search = document.getElementById('e14-search').value.toLowerCase();
+        const rows = document.querySelectorAll('#e14-dept-tbody tr');
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            const show = (!search || text.includes(search));
+            row.style.display = show ? '' : 'none';
         });
     }
 
-    function addChatMessage(role, content) {
-        const container = document.getElementById('chat-messages');
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `chat-message ${role}`;
-        msgDiv.style.cssText = 'display: flex; gap: 1rem; max-width: 80%;' + (role === 'user' ? ' align-self: flex-end; flex-direction: row-reverse;' : '');
-
-        const icon = role === 'user' ?
-            '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' :
-            '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>';
-
-        const iconBg = role === 'user' ? 'var(--accent)' : 'linear-gradient(135deg, var(--accent), var(--success))';
-        const bubbleBg = role === 'user' ? 'var(--accent)' : 'var(--bg-secondary)';
-        const textColor = role === 'user' ? 'white' : 'var(--text)';
-
-        msgDiv.innerHTML = `
-            <div style="width: 36px; height: 36px; border-radius: 50%; background: ${iconBg}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white">${icon}</svg>
-            </div>
-            <div style="background: ${bubbleBg}; padding: 1rem; border-radius: 12px; color: ${textColor};">
-                <p style="margin: 0; white-space: pre-wrap;">${formatMessage(content)}</p>
-            </div>
-        `;
-
-        container.appendChild(msgDiv);
-        container.scrollTop = container.scrollHeight;
-        chatHistory.push({ role, content });
-    }
-
-    function formatMessage(text) {
-        // Simple markdown-like formatting
-        return text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\*(.*?)\*/g, '<em>$1</em>')
-            .replace(/`(.*?)`/g, '<code style="background: rgba(0,0,0,0.1); padding: 0.1rem 0.3rem; border-radius: 3px;">$1</code>');
-    }
-
-    function addTypingIndicator() {
-        const container = document.getElementById('chat-messages');
-        const typingDiv = document.createElement('div');
-        typingDiv.id = 'typing-indicator';
-        typingDiv.className = 'chat-message assistant';
-        typingDiv.style.cssText = 'display: flex; gap: 1rem; max-width: 80%;';
-        typingDiv.innerHTML = `
-            <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--success)); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-            </div>
-            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 12px;">
-                <div style="display: flex; gap: 4px;">
-                    <span style="width: 8px; height: 8px; background: var(--muted); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: -0.32s;"></span>
-                    <span style="width: 8px; height: 8px; background: var(--muted); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: -0.16s;"></span>
-                    <span style="width: 8px; height: 8px; background: var(--muted); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both;"></span>
-                </div>
-            </div>
-        `;
-        container.appendChild(typingDiv);
-        container.scrollTop = container.scrollHeight;
-        return 'typing-indicator';
-    }
-
-    function removeTypingIndicator(id) {
-        const el = document.getElementById(id);
-        if (el) el.remove();
-    }
-
-    function askSuggestion(question) {
-        document.getElementById('chat-input').value = question;
-        sendChatMessage();
-    }
-
-    // Auto-resize textarea
+    // Load E14 data when tab is shown
     document.addEventListener('DOMContentLoaded', function() {
-        const textarea = document.getElementById('chat-input');
-        if (textarea) {
-            textarea.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        // Load when base-datos tab is clicked
+        document.querySelectorAll('[data-tab="base-datos"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                setTimeout(loadE14Database, 100);
             });
-        }
+        });
     });
 
-    // ==================== LITIGIO ELECTORAL FUNCTIONS ====================
+    // Add spin animation
+    const ragStyle = document.createElement('style');
+    ragStyle.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+    document.head.appendChild(ragStyle);
+    </script>
 
-    let litigioCases = [
-        { id: 'LIT-001', mesa: '05-001-001-01-003', type: 'arithmetic', dept: 'Antioquia', status: 'pending', deadline: '2026-02-05', lawyer: null, docs: 2 },
-        { id: 'LIT-002', mesa: '11-001-015-02-007', type: 'discrepancy', dept: 'Bogotá D.C.', status: 'in_progress', deadline: '2026-02-07', lawyer: 'Dr. García', docs: 5 },
-        { id: 'LIT-003', mesa: '76-001-008-01-012', type: 'recount', dept: 'Valle del Cauca', status: 'submitted', deadline: '2026-02-10', lawyer: 'Dra. López', docs: 8 }
-    ];
+    <!-- Contienda Electoral - Funciones de Incidencias -->
+    <script>
+    // ==================== CONTIENDA ELECTORAL - FUNCIONES DE INCIDENCIAS ====================
+
+    let contiendaIncidencias = [];
+    let selectedIncidents = new Set();
+
+    // Clasificar incidencia por tipo
+    function classifyIncidentType(incident) {
+        const desc = (incident.description || incident.type || '').toLowerCase();
+        if (desc.includes('firma') || desc.includes('jurado')) return 'firmas';
+        if (desc.includes('aritmet') || desc.includes('suma') || desc.includes('diferencia')) return 'aritmetica';
+        if (desc.includes('sufragante') || desc.includes('votante') || desc.includes('censo')) return 'sufragantes';
+        if (desc.includes('tachadura') || desc.includes('alterac') || desc.includes('correc')) return 'alteraciones';
+        if (desc.includes('ocr') || desc.includes('ilegible') || desc.includes('confianza')) return 'ocr';
+        return 'ocr'; // Default
+    }
+
+    // Determinar nivel de importancia
+    function getImportanceLevel(incident) {
+        const severity = incident.severity || incident.priority || '';
+        if (severity === 'P0' || severity === 'critical' || severity === 'critica') return 'critica';
+        if (severity === 'P1' || severity === 'high' || severity === 'alta') return 'media';
+        return 'baja';
+    }
+
+    // Determinar impacto legal
+    function getLegalImpact(incident) {
+        const type = classifyIncidentType(incident);
+        const level = getImportanceLevel(incident);
+        if (level === 'critica' && (type === 'aritmetica' || type === 'alteraciones')) return 'nulidad';
+        if (level === 'critica' || type === 'firmas' || type === 'aritmetica') return 'reclamable';
+        return 'observacion';
+    }
+
+    // Actualizar contadores de Contienda
+    function updateContiendaStats() {
+        const incidents = contiendaIncidencias;
+
+        // KPIs principales
+        const totalMesas = new Set(incidents.map(i => i.mesa_id)).size || 0;
+        const mesasIncidencias = incidents.length;
+        const comisiones = new Set(incidents.map(i => i.comision || 'N/A')).size;
+
+        document.getElementById('contienda-mesas-procesadas').textContent = totalMesas;
+        document.getElementById('contienda-mesas-incidencias').textContent = mesasIncidencias;
+        document.getElementById('contienda-comisiones').textContent = comisiones;
+
+        // Contadores por nivel
+        const critica = incidents.filter(i => getImportanceLevel(i) === 'critica').length;
+        const media = incidents.filter(i => getImportanceLevel(i) === 'media').length;
+        const baja = incidents.filter(i => getImportanceLevel(i) === 'baja').length;
+
+        document.getElementById('nivel-critica').textContent = critica;
+        document.getElementById('nivel-media').textContent = media;
+        document.getElementById('nivel-baja').textContent = baja;
+        document.getElementById('incident-critica-count').textContent = critica;
+        document.getElementById('incident-media-count').textContent = media;
+        document.getElementById('incident-baja-count').textContent = baja;
+
+        // Contadores por clasificacion
+        document.getElementById('count-firmas').textContent = incidents.filter(i => classifyIncidentType(i) === 'firmas').length;
+        document.getElementById('count-aritmetica').textContent = incidents.filter(i => classifyIncidentType(i) === 'aritmetica').length;
+        document.getElementById('count-sufragantes').textContent = incidents.filter(i => classifyIncidentType(i) === 'sufragantes').length;
+        document.getElementById('count-alteraciones').textContent = incidents.filter(i => classifyIncidentType(i) === 'alteraciones').length;
+        document.getElementById('count-ocr').textContent = incidents.filter(i => classifyIncidentType(i) === 'ocr').length;
+
+        // Contadores impacto legal
+        document.getElementById('impacto-nulidad').textContent = incidents.filter(i => getLegalImpact(i) === 'nulidad').length;
+        document.getElementById('impacto-reclamable').textContent = incidents.filter(i => getLegalImpact(i) === 'reclamable').length;
+        document.getElementById('impacto-observacion').textContent = incidents.filter(i => getLegalImpact(i) === 'observacion').length;
+    }
+
+    // Filtrar por nivel de importancia
+    function filterIncidentsByLevel(level) {
+        document.querySelectorAll('#incident-tbody tr').forEach(row => {
+            if (!row.dataset.level) return;
+            row.style.display = row.dataset.level === level ? '' : 'none';
+        });
+    }
+
+    // Filtrar por tipo de clasificacion
+    function filterIncidentsByType(type) {
+        document.querySelectorAll('#incident-tbody tr').forEach(row => {
+            if (!row.dataset.type) return;
+            row.style.display = row.dataset.type === type ? '' : 'none';
+        });
+    }
+
+    // Limpiar filtros
+    function clearIncidentFilters() {
+        document.querySelectorAll('#incident-tbody tr').forEach(row => {
+            row.style.display = '';
+        });
+    }
+
+    // Seleccionar todos los incidentes
+    function toggleSelectAllIncidents() {
+        const checked = document.getElementById('select-all-incidents').checked;
+        document.querySelectorAll('.incident-check').forEach(cb => {
+            cb.checked = checked;
+            const id = cb.dataset.id;
+            if (checked) selectedIncidents.add(id);
+            else selectedIncidents.delete(id);
+        });
+    }
+
+    // Escalar a Litigio Electoral
+    function escalarALitigio() {
+        const count = selectedIncidents.size;
+        if (count === 0) {
+            alert('Selecciona al menos una incidencia para escalar a Litigio Electoral.');
+            return;
+        }
+        if (confirm(`¿Escalar ${count} incidencia(s) al tab de Litigio Electoral para analisis juridico?`)) {
+            // Cambiar al tab de Litigio
+            document.querySelector('[data-tab="litigio"]').click();
+            alert(`${count} incidencia(s) escaladas a Litigio Electoral.\n\nRevisa el tab de Litigio para analisis juridico CPACA.`);
+        }
+    }
+
+    // Acciones de Contienda
+    function verE14(mesaId) {
+        alert(`Ver formulario E-14 de mesa: ${mesaId}`);
+        // Aqui se abriria el modal con la imagen del E-14
+    }
+
+    function solicitarRevision(mesaId) {
+        if (confirm(`¿Solicitar revision de mesa ${mesaId}?`)) {
+            alert('Solicitud de revision enviada.');
+        }
+    }
+
+    function escalarIncidente(incidentId) {
+        selectedIncidents.add(incidentId);
+        escalarALitigio();
+    }
+    </script>
+
+    <!-- Litigio Electoral Functions - Analisis Juridico CPACA -->
+    <script>
+    // ==================== LITIGIO ELECTORAL - FUNCIONES JURIDICAS ====================
+
+    let litigioIncidencias = [];
+    let selectedLitigioCases = new Set();
+
+    // Sincronizar desde Contienda Electoral (tab principal con alertas E-14)
+    async function syncFromContienda() {
+        const tbody = document.getElementById('litigio-tbody');
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem;"><div style="display: inline-block; width: 24px; height: 24px; border: 2px solid var(--accent); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div><br>Sincronizando incidencias...</td></tr>';
+
+        try {
+            // Obtener alertas del tab Contienda (datos E-14 con problemas)
+            const response = await fetch('/api/e14/alerts');
+            const data = await response.json();
+
+            if (data.success && data.alerts) {
+                litigioIncidencias = data.alerts.map((alert, idx) => ({
+                    id: `INC-${String(idx + 1).padStart(4, '0')}`,
+                    mesa: alert.mesa_id || alert.id,
+                    comision: alert.corporacion || 'N/A',
+                    incidencia: alert.tipo_alerta || alert.issue,
+                    cpaca: mapToCPACA(alert.tipo_alerta || alert.issue),
+                    severidad: alert.severidad || calcSeveridad(alert),
+                    viabilidad: alert.viabilidad || calcViabilidad(alert),
+                    votos: alert.votos_afectados || 0,
+                    prioridad: alert.prioridad || calcPrioridad(alert),
+                    departamento: alert.departamento || 'N/A',
+                    ocr_data: alert.ocr_data || null,
+                    imagen_url: alert.imagen_url || null,
+                    observaciones: alert.observaciones || ''
+                }));
+                renderLitigioTable();
+                updateLitigioStats();
+            } else {
+                // Demo data if no API
+                loadDemoLitigioData();
+            }
+        } catch (err) {
+            console.error('Error syncing from Contienda:', err);
+            loadDemoLitigioData();
+        }
+    }
+
+    function loadDemoLitigioData() {
+        litigioIncidencias = [
+            { id: 'INC-0001', mesa: '05-001-001-01-003', comision: 'SENADO', incidencia: 'Diferencia aritmetica en suma total', cpaca: '223', severidad: 'critica', viabilidad: 92, votos: 145, prioridad: 'alta', departamento: 'Antioquia' },
+            { id: 'INC-0002', mesa: '11-001-015-02-007', comision: 'PRESIDENCIA', incidencia: 'Votos nulos sin firmas de jurados', cpaca: '224', severidad: 'alta', viabilidad: 78, votos: 89, prioridad: 'alta', departamento: 'Bogota D.C.' },
+            { id: 'INC-0003', mesa: '76-001-008-01-012', comision: 'CAMARA', incidencia: 'Discrepancia con datos RNEC', cpaca: '226', severidad: 'media', viabilidad: 65, votos: 234, prioridad: 'media', departamento: 'Valle del Cauca' },
+            { id: 'INC-0004', mesa: '08-001-023-03-015', comision: 'SENADO', incidencia: 'Tachaduras y correcciones sospechosas', cpaca: '225', severidad: 'critica', viabilidad: 85, votos: 67, prioridad: 'alta', departamento: 'Atlantico' },
+            { id: 'INC-0005', mesa: '25-001-045-01-008', comision: 'PRESIDENCIA', incidencia: 'Campos obligatorios incompletos', cpaca: '224', severidad: 'baja', viabilidad: 45, votos: 12, prioridad: 'baja', departamento: 'Cundinamarca' }
+        ];
+        renderLitigioTable();
+        updateLitigioStats();
+    }
+
+    function mapToCPACA(incidencia) {
+        const lower = (incidencia || '').toLowerCase();
+        if (lower.includes('aritmet') || lower.includes('suma') || lower.includes('conteo')) return '223';
+        if (lower.includes('firma') || lower.includes('campo') || lower.includes('incompleto') || lower.includes('forma')) return '224';
+        if (lower.includes('tachadura') || lower.includes('alterac') || lower.includes('fraude') || lower.includes('sospech')) return '225';
+        return '226'; // Default: Anomalias
+    }
+
+    function calcSeveridad(alert) {
+        if (alert.diferencia_aritmetica > 50 || alert.confidence < 0.5) return 'critica';
+        if (alert.diferencia_aritmetica > 20 || alert.confidence < 0.7) return 'alta';
+        if (alert.diferencia_aritmetica > 5) return 'media';
+        return 'baja';
+    }
+
+    function calcViabilidad(alert) {
+        let score = 50;
+        if (alert.diferencia_aritmetica > 0) score += 20;
+        if (alert.confidence < 0.7) score += 15;
+        if (alert.firmas_faltantes) score += 10;
+        return Math.min(score, 95);
+    }
+
+    function calcPrioridad(alert) {
+        const sev = calcSeveridad(alert);
+        if (sev === 'critica') return 'alta';
+        if (sev === 'alta') return 'alta';
+        if (sev === 'media') return 'media';
+        return 'baja';
+    }
 
     function updateLitigioStats() {
-        const total = litigioCases.length;
-        const pending = litigioCases.filter(c => c.status === 'pending').length;
-        const resolved = litigioCases.filter(c => c.status === 'resolved').length;
-        const docs = litigioCases.reduce((sum, c) => sum + (c.docs || 0), 0);
+        const total = litigioIncidencias.length;
+        const mesas = new Set(litigioIncidencias.map(i => i.mesa)).size;
+        const comisiones = new Set(litigioIncidencias.map(i => i.comision)).size;
+        const votos = litigioIncidencias.reduce((sum, i) => sum + (i.votos || 0), 0);
 
         document.getElementById('litigio-total').textContent = total;
-        document.getElementById('litigio-pending').textContent = pending;
-        document.getElementById('litigio-resolved').textContent = resolved;
-        document.getElementById('litigio-docs').textContent = docs;
+        document.getElementById('litigio-mesas').textContent = mesas;
+        document.getElementById('litigio-comisiones').textContent = comisiones;
+        document.getElementById('litigio-votos').textContent = votos.toLocaleString();
+
+        // CPACA counts
+        document.getElementById('cpaca-223-count').textContent = litigioIncidencias.filter(i => i.cpaca === '223').length;
+        document.getElementById('cpaca-224-count').textContent = litigioIncidencias.filter(i => i.cpaca === '224').length;
+        document.getElementById('cpaca-225-count').textContent = litigioIncidencias.filter(i => i.cpaca === '225').length;
+        document.getElementById('cpaca-226-count').textContent = litigioIncidencias.filter(i => i.cpaca === '226').length;
+
+        // Priority counts
+        document.getElementById('priority-alta').textContent = litigioIncidencias.filter(i => i.prioridad === 'alta').length;
+        document.getElementById('priority-media').textContent = litigioIncidencias.filter(i => i.prioridad === 'media').length;
+        document.getElementById('priority-baja').textContent = litigioIncidencias.filter(i => i.prioridad === 'baja').length;
+
+        // Impact by corporation
+        const byPres = litigioIncidencias.filter(i => i.comision === 'PRESIDENCIA').reduce((s, i) => s + (i.votos || 0), 0);
+        const bySen = litigioIncidencias.filter(i => i.comision === 'SENADO').reduce((s, i) => s + (i.votos || 0), 0);
+        const byCam = litigioIncidencias.filter(i => i.comision === 'CAMARA').reduce((s, i) => s + (i.votos || 0), 0);
+        document.getElementById('impact-presidencia').textContent = byPres.toLocaleString();
+        document.getElementById('impact-senado').textContent = bySen.toLocaleString();
+        document.getElementById('impact-camara').textContent = byCam.toLocaleString();
 
         // Update badge
         const badge = document.getElementById('litigio-badge');
-        if (pending > 0) {
-            badge.textContent = pending;
+        const alta = litigioIncidencias.filter(i => i.prioridad === 'alta').length;
+        if (alta > 0) {
+            badge.textContent = alta;
             badge.style.display = 'inline-block';
         } else {
             badge.style.display = 'none';
         }
     }
 
+    function renderLitigioTable() {
+        const tbody = document.getElementById('litigio-tbody');
+        if (litigioIncidencias.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: var(--muted); padding: 2rem;">No hay incidencias juridicas. Sincroniza desde Contienda Electoral.</td></tr>';
+            return;
+        }
+
+        const severityColors = { critica: '#8F4A4A', alta: '#8B7355', media: '#7A7F85', baja: '#4A7C59' };
+        const priorityLabels = { alta: 'ALTA', media: 'MEDIA', baja: 'BAJA' };
+        const cpacaLabels = { '223': 'Art. 223', '224': 'Art. 224', '225': 'Art. 225', '226': 'Art. 226' };
+
+        tbody.innerHTML = litigioIncidencias.map(inc => `
+            <tr data-cpaca="${inc.cpaca}" data-priority="${inc.prioridad}" data-corp="${inc.comision}">
+                <td><input type="checkbox" class="litigio-check" data-id="${inc.id}" onchange="toggleLitigioSelection('${inc.id}')"></td>
+                <td>
+                    <div style="font-weight: 600;">${inc.mesa}</div>
+                    <div style="font-size: 0.75rem; color: var(--muted);">${inc.comision} - ${inc.departamento}</div>
+                </td>
+                <td style="max-width: 200px;">
+                    <div style="font-size: 0.85rem;">${inc.incidencia}</div>
+                </td>
+                <td><span class="badge" style="background: ${getCPACAColor(inc.cpaca)};">${cpacaLabels[inc.cpaca] || inc.cpaca}</span></td>
+                <td><span class="badge" style="background: ${severityColors[inc.severidad] || '#666'};">${inc.severidad.toUpperCase()}</span></td>
+                <td>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden;">
+                            <div style="width: ${inc.viabilidad}%; height: 100%; background: ${inc.viabilidad > 70 ? 'var(--success)' : inc.viabilidad > 50 ? 'var(--warning)' : 'var(--muted)'}; border-radius: 3px;"></div>
+                        </div>
+                        <span style="font-weight: 600; font-size: 0.85rem;">${inc.viabilidad}%</span>
+                    </div>
+                </td>
+                <td style="font-weight: 600;">${(inc.votos || 0).toLocaleString()}</td>
+                <td><span class="badge" style="background: ${inc.prioridad === 'alta' ? 'var(--danger)' : inc.prioridad === 'media' ? 'var(--warning)' : 'var(--info)'};">${priorityLabels[inc.prioridad]}</span></td>
+                <td>
+                    <button class="btn-sm" onclick="viewLitigioDetail('${inc.id}')" title="Ver detalle probatorio">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function getCPACAColor(art) {
+        const colors = { '223': '#8F4A4A', '224': '#8B7355', '225': '#8B3A5A', '226': '#7A7F85' };
+        return colors[art] || '#666';
+    }
+
     function filterLitigioCases() {
-        const status = document.getElementById('litigio-filter-status').value;
-        const type = document.getElementById('litigio-filter-type').value;
+        const cpaca = document.getElementById('litigio-filter-cpaca').value;
+        const priority = document.getElementById('litigio-filter-priority').value;
+        const corp = document.getElementById('litigio-filter-corp').value;
         const search = document.getElementById('litigio-search').value.toLowerCase();
 
-        const rows = document.querySelectorAll('#litigio-tbody tr');
-        rows.forEach(row => {
-            const rowStatus = row.querySelector('.status-badge')?.className || '';
-            const rowType = row.cells[2]?.textContent?.toLowerCase() || '';
-            const rowText = row.textContent.toLowerCase();
-
-            let show = true;
-            if (status && !rowStatus.includes(status.replace('_', '-'))) show = false;
-            if (type && !rowType.includes(getTypeLabel(type).toLowerCase())) show = false;
-            if (search && !rowText.includes(search)) show = false;
-
-            row.style.display = show ? '' : 'none';
+        document.querySelectorAll('#litigio-tbody tr').forEach(row => {
+            if (!row.dataset.cpaca) return; // Skip loading row
+            const matchCpaca = !cpaca || row.dataset.cpaca === cpaca;
+            const matchPriority = !priority || row.dataset.priority === priority;
+            const matchCorp = !corp || row.dataset.corp === corp;
+            const matchSearch = !search || row.textContent.toLowerCase().includes(search);
+            row.style.display = (matchCpaca && matchPriority && matchCorp && matchSearch) ? '' : 'none';
         });
     }
 
-    function getTypeLabel(type) {
-        const labels = {
-            'arithmetic': 'Diferencia Aritmética',
-            'discrepancy': 'Discrepancia RNEC',
-            'recount': 'Solicitud Recuento',
-            'nullity': 'Nulidad Mesa'
-        };
-        return labels[type] || type;
+    function filterByPriority(priority) {
+        document.getElementById('litigio-filter-priority').value = priority;
+        filterLitigioCases();
     }
 
-    function viewLitigioCase(caseId) {
-        const caso = litigioCases.find(c => c.id === caseId);
-        if (!caso) return;
-
-        alert(`Caso: ${caso.id}\nMesa: ${caso.mesa}\nDepartamento: ${caso.dept}\nEstado: ${caso.status}\nAbogado: ${caso.lawyer || 'Sin asignar'}\nDocumentos: ${caso.docs}\nFecha límite: ${caso.deadline}`);
+    function toggleSelectAllLitigio() {
+        const checked = document.getElementById('select-all-litigio').checked;
+        document.querySelectorAll('.litigio-check').forEach(cb => {
+            cb.checked = checked;
+            const id = cb.dataset.id;
+            if (checked) selectedLitigioCases.add(id);
+            else selectedLitigioCases.delete(id);
+        });
     }
 
-    function assignLawyer(caseId) {
-        const lawyer = prompt('Nombre del abogado asignado:');
-        if (lawyer) {
-            const caso = litigioCases.find(c => c.id === caseId);
-            if (caso) {
-                caso.lawyer = lawyer;
-                caso.status = 'in_progress';
-                alert(`Abogado ${lawyer} asignado al caso ${caseId}`);
-                location.reload();
-            }
-        }
+    function toggleLitigioSelection(id) {
+        if (selectedLitigioCases.has(id)) selectedLitigioCases.delete(id);
+        else selectedLitigioCases.add(id);
     }
 
-    function uploadEvidence(caseId) {
-        alert(`Función de subir evidencia para ${caseId}.\n\nEsta funcionalidad permitirá:\n- Subir fotos del E-14\n- Adjuntar capturas de pantalla\n- Cargar documentos PDF`);
+    function viewLitigioDetail(id) {
+        const inc = litigioIncidencias.find(i => i.id === id);
+        if (!inc) return;
+
+        document.getElementById('detail-title').textContent = `Detalle Probatorio: ${inc.mesa}`;
+        document.getElementById('detail-e14-image').innerHTML = inc.imagen_url
+            ? `<img src="${inc.imagen_url}" style="max-width: 100%; border-radius: 8px;">`
+            : '<div style="padding: 2rem; text-align: center; color: var(--muted);">Imagen E-14 no disponible<br><small>Sincronizar para obtener imagen</small></div>';
+        document.getElementById('detail-ocr-data').textContent = inc.ocr_data ? JSON.stringify(inc.ocr_data, null, 2) : 'Datos OCR no disponibles';
+        document.getElementById('detail-observations').innerHTML = `
+            <p><strong>Incidencia:</strong> ${inc.incidencia}</p>
+            <p><strong>Articulo CPACA:</strong> Art. ${inc.cpaca}</p>
+            <p><strong>Severidad:</strong> ${inc.severidad}</p>
+            <p><strong>Viabilidad de Nulidad:</strong> ${inc.viabilidad}%</p>
+            <p><strong>Votos Afectados:</strong> ${inc.votos}</p>
+            ${inc.observaciones ? `<p><strong>Notas:</strong> ${inc.observaciones}</p>` : ''}
+        `;
+        document.getElementById('trace-source').textContent = 'RNEC / OCR CASTOR';
+        document.getElementById('trace-date').textContent = new Date().toLocaleString();
+        document.getElementById('trace-confidence').textContent = inc.ocr_data?.confidence ? `${(inc.ocr_data.confidence * 100).toFixed(1)}%` : 'N/A';
+
+        document.getElementById('litigio-detail-panel').style.display = 'block';
     }
 
-    function downloadExpediente(caseId) {
-        alert(`Descargando expediente de ${caseId}...\n\nEl expediente incluirá:\n- Acta E-14 original\n- Comparativo OCR vs RNEC\n- Evidencias adjuntas\n- Historial del caso`);
+    function closeLitigioDetail() {
+        document.getElementById('litigio-detail-panel').style.display = 'none';
     }
 
-    function openNewCaseModal() {
-        const mesa = prompt('ID de la mesa para el nuevo caso (ej: 05-001-001-01-003):');
-        if (!mesa) return;
+    function exportLitigioInforme() {
+        const selected = selectedLitigioCases.size > 0
+            ? litigioIncidencias.filter(i => selectedLitigioCases.has(i.id))
+            : litigioIncidencias;
 
-        const type = prompt('Tipo de caso:\n1. Diferencia Aritmética\n2. Discrepancia RNEC\n3. Solicitud Recuento\n4. Nulidad Mesa\n\nIngrese número:');
-        const types = ['arithmetic', 'discrepancy', 'recount', 'nullity'];
-        const typeIndex = parseInt(type) - 1;
-
-        if (typeIndex >= 0 && typeIndex < types.length) {
-            const newCase = {
-                id: 'LIT-' + String(litigioCases.length + 1).padStart(3, '0'),
-                mesa: mesa,
-                type: types[typeIndex],
-                dept: 'Por determinar',
-                status: 'pending',
-                deadline: new Date(Date.now() + 7*24*60*60*1000).toISOString().split('T')[0],
-                lawyer: null,
-                docs: 0
-            };
-            litigioCases.push(newCase);
-            alert(`Caso ${newCase.id} creado exitosamente`);
-            updateLitigioStats();
-        }
-    }
-
-    function exportLitigioCases() {
-        const csv = 'Caso,Mesa,Tipo,Departamento,Estado,Fecha Límite,Abogado\n' +
-            litigioCases.map(c => `${c.id},${c.mesa},${getTypeLabel(c.type)},${c.dept},${c.status},${c.deadline},${c.lawyer || 'Sin asignar'}`).join('\n');
+        const csv = 'ID,Mesa,Comision,Departamento,Incidencia,Art. CPACA,Severidad,Viabilidad %,Votos Afectados,Prioridad\n' +
+            selected.map(i => `${i.id},${i.mesa},${i.comision},${i.departamento},"${i.incidencia}",Art. ${i.cpaca},${i.severidad},${i.viabilidad},${i.votos},${i.prioridad}`).join('\n');
 
         const blob = new Blob([csv], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'litigio_electoral_' + new Date().toISOString().split('T')[0] + '.csv';
+        a.download = `informe_juridico_${new Date().toISOString().split('T')[0]}.csv`;
         a.click();
     }
 
-    // Initialize litigio stats on page load
+    function armarCarpetaProbatoria() {
+        const count = selectedLitigioCases.size || litigioIncidencias.length;
+        alert(`Preparando carpeta probatoria con ${count} incidencias.\n\nIncluira:\n- Imagenes E-14\n- Datos OCR\n- Informe juridico\n- Trazabilidad de documentos`);
+    }
+
+    function marcarParaDemanda() {
+        const count = selectedLitigioCases.size;
+        if (count === 0) {
+            alert('Selecciona al menos una incidencia para marcar para demanda de nulidad.');
+            return;
+        }
+        if (confirm(`¿Marcar ${count} incidencia(s) para demanda de nulidad electoral?`)) {
+            alert(`${count} caso(s) marcados para demanda de nulidad.\n\nSe generara el expediente legal correspondiente.`);
+        }
+    }
+
+    function downloadE14Evidence() {
+        alert('Descargando evidencia E-14...\n\nIncluye imagen original y datos OCR.');
+    }
+
+    function addToCarpeta() {
+        alert('Agregado a la carpeta probatoria.');
+        closeLitigioDetail();
+    }
+
+    // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
-        updateLitigioStats();
+        // Load when litigio tab is clicked
+        document.querySelectorAll('[data-tab="litigio"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (litigioIncidencias.length === 0) {
+                    setTimeout(loadDemoLitigioData, 100);
+                }
+            });
+        });
     });
 
-    // Add bounce animation for typing indicator
-    const style = document.createElement('style');
-    style.textContent = `
+    // Add pulse animation for priority indicators
+    const litigioStyle = document.createElement('style');
+    litigioStyle.textContent = `
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
         @keyframes bounce {
             0%, 80%, 100% { transform: scale(0); }
             40% { transform: scale(1); }
         }
     `;
-    document.head.appendChild(style);
+    document.head.appendChild(litigioStyle);
+    </script>
+
+    <!-- ==================== RAG CHAT FLOATING WIDGET ==================== -->
+    <style>
+        .rag-chat-fab {
+            position: fixed !important;
+            bottom: 24px !important;
+            right: 24px !important;
+            display: flex !important;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--accent) !important;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(111, 106, 99, 0.6);
+            transition: all 0.3s ease;
+            z-index: 99999 !important;
+        }
+        .rag-chat-fab:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(111, 106, 99, 0.5);
+        }
+        .rag-chat-fab svg {
+            width: 20px;
+            height: 20px;
+            fill: #FFFFFF;
+        }
+        .rag-chat-fab-text {
+            color: #FFFFFF;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .rag-chat-panel {
+            position: fixed !important;
+            bottom: 90px !important;
+            right: 24px !important;
+            width: 380px;
+            max-height: 500px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            z-index: 100000 !important;
+            overflow: hidden;
+        }
+        .rag-chat-panel.open {
+            display: flex;
+        }
+        .rag-chat-header {
+            padding: 14px 16px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .rag-chat-header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .rag-chat-header-brand img {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+        }
+        .rag-chat-header h3 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .rag-chat-header button {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .rag-chat-header button:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+        .rag-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: var(--bg);
+            max-height: 320px;
+        }
+        .rag-message {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            max-width: 85%;
+        }
+        .rag-message.assistant {
+            background: var(--bg-secondary);
+            color: var(--text);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .rag-message.user {
+            background: var(--accent);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .rag-chat-input-area {
+            padding: 12px 16px;
+            background: var(--panel);
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
+        .rag-chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.875rem;
+        }
+        .rag-chat-input-area input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .rag-chat-input-area button {
+            padding: 10px 16px;
+            background: var(--accent);
+            border: none;
+            border-radius: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .rag-chat-input-area button:hover {
+            opacity: 0.9;
+        }
+        .rag-chat-input-area button svg {
+            fill: white;
+        }
+        @media (max-width: 480px) {
+            .rag-chat-panel {
+                width: calc(100vw - 32px);
+                right: 16px;
+                bottom: 80px;
+            }
+            .rag-chat-fab {
+                right: 16px;
+                bottom: 16px;
+            }
+        }
+    </style>
+
+    <!-- RAG Chat FAB Button -->
+    <button class="rag-chat-fab" id="rag-chat-toggle" aria-label="Chat CASTOR">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            <circle cx="8" cy="10" r="1.5"/>
+            <circle cx="12" cy="10" r="1.5"/>
+            <circle cx="16" cy="10" r="1.5"/>
+        </svg>
+        <span class="rag-chat-fab-text">Preguntale a CASTOR</span>
+    </button>
+
+    <!-- RAG Chat Panel -->
+    <div class="rag-chat-panel" id="rag-chat-panel">
+        <div class="rag-chat-header">
+            <div class="rag-chat-header-brand">
+                <img src="/static/images/logo.png" alt="CASTOR">
+                <h3>CASTOR E-14</h3>
+            </div>
+            <button id="rag-close-btn" aria-label="Cerrar chat">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="rag-chat-messages" id="rag-chat-messages">
+            <div class="rag-message assistant">Hola, soy el asistente de CASTOR. Puedo ayudarte a consultar los datos E-14. Preguntame sobre mesas, votos, irregularidades o cualquier dato electoral.</div>
+        </div>
+        <div class="rag-chat-input-area">
+            <input type="text" id="rag-chat-input" placeholder="Escribe tu pregunta..." autocomplete="off">
+            <button id="rag-send-btn" aria-label="Enviar">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- RAG Chat Widget Script -->
+    <script>
+    (function() {
+        const toggle = document.getElementById('rag-chat-toggle');
+        const panel = document.getElementById('rag-chat-panel');
+        const closeBtn = document.getElementById('rag-close-btn');
+        const input = document.getElementById('rag-chat-input');
+        const sendBtn = document.getElementById('rag-send-btn');
+        const messagesContainer = document.getElementById('rag-chat-messages');
+
+        toggle.addEventListener('click', () => {
+            panel.classList.toggle('open');
+            if (panel.classList.contains('open')) {
+                input.focus();
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            panel.classList.remove('open');
+        });
+
+        function addMessage(role, content) {
+            const msg = document.createElement('div');
+            msg.className = `rag-message ${role}`;
+            msg.innerHTML = content.replace(/\n/g, '<br>');
+            messagesContainer.appendChild(msg);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage('user', message);
+            input.value = '';
+
+            // Show typing indicator
+            const typingMsg = document.createElement('div');
+            typingMsg.className = 'rag-message assistant';
+            typingMsg.id = 'rag-typing';
+            typingMsg.innerHTML = '<span style="opacity:0.6;">Pensando...</span>';
+            messagesContainer.appendChild(typingMsg);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: message,
+                    context: { source: 'campaign_team_dashboard', mode: 'e14_rag' }
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const typing = document.getElementById('rag-typing');
+                if (typing) typing.remove();
+
+                if (data.success && data.response) {
+                    addMessage('assistant', data.response);
+                } else {
+                    addMessage('assistant', 'Lo siento, hubo un error. Intenta de nuevo.');
+                }
+            })
+            .catch(err => {
+                const typing = document.getElementById('rag-typing');
+                if (typing) typing.remove();
+                addMessage('assistant', 'Error de conexion. Verifica el servidor.');
+                console.error('RAG Chat error:', err);
+            });
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    })();
     </script>
 </body>
 </html>
