@@ -406,7 +406,7 @@ Usuario → POST /api/campaign/signatures/collect
 - **Twitter API**: $0 (Free tier) → $100-500/mes (tier pagado)
 - **OpenAI API**: $50-200/mes (depende de uso)
 - **Infraestructura**: $50-200/mes (Vercel/Heroku/AWS)
-- **Base de Datos**: $20-100/mes (Supabase/PostgreSQL)
+- **Base de Datos**: $20-100/mes (PostgreSQL)
 - **Total**: ~$120-1,000/mes (depende de escala)
 
 ### Proyección de Ingresos (Conservadora)

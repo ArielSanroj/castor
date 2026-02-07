@@ -70,8 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCriticalMesaSelect();
     setupModalCloseOnOverlay();
 
+    // Load real party data from E-14 database (225K forms)
+    loadPartiesFromAPI();
+
     // Initial load
     loadDashboardData();
+    loadWitnessesFromAPI();
 
     // Start real-time refresh
     startRealTimeRefresh();
@@ -158,16 +162,14 @@ async function loadDashboardData() {
 
     try {
         // Load data from API including E-14 live data
-        const [statsResponse, votesResponse, alertsResponse, e14Response] = await Promise.all([
+        const [statsResponse, votesResponse, e14Response] = await Promise.all([
             fetch(`/api/campaign-team/war-room/stats?contest_id=${currentContestId}`).catch(() => null),
             fetch(`/api/campaign-team/reports/votes-by-candidate?contest_id=${currentContestId}`).catch(() => null),
-            fetch(`/api/campaign-team/war-room/alerts?contest_id=${currentContestId}&limit=100`).catch(() => null),
             fetch(`/api/campaign-team/e14-live?limit=500`).catch(() => null)
         ]);
 
         const statsData = statsResponse ? await safeJson(statsResponse) : { success: false };
         const votesData = votesResponse ? await safeJson(votesResponse) : { success: false };
-        const alertsData = alertsResponse ? await safeJson(alertsResponse) : { success: false };
         const e14Data = e14Response ? await safeJson(e14Response) : { success: false };
 
         // Process and store data
@@ -177,10 +179,6 @@ async function loadDashboardData() {
 
         if (votesData.success) {
             processVotesData(votesData);
-        }
-
-        if (alertsData.success) {
-            processAlertsData(alertsData);
         }
 
         // Render E-14 live form
@@ -201,12 +199,6 @@ async function loadDashboardData() {
             }
         }
 
-        // Generate mock risk data based on actual data
-        generateMockRiskData();
-
-        // Populate filters
-        populateFilters();
-
         // Render initial tab (contienda)
         renderContiendaTab();
 
@@ -214,9 +206,6 @@ async function loadDashboardData() {
 
     } catch (error) {
         console.error('Error loading dashboard data:', error);
-        // Still try to render with fallback data
-        generateMockRiskData();
-        populateFilters();
         renderContiendaTab();
     } finally {
         showLoading(false);
@@ -324,10 +313,11 @@ function processE14VotesData() {
     // Fallback: aggregate from forms if no party_summary
     const forms = window.e14LiveData?.forms || [];
 
-    // If no forms, use demo data from tracked candidates
+    // If no forms, render empty state
     if (forms.length === 0) {
-        console.log('No E-14 forms, using tracked candidates for party chart');
-        useFallbackPartyData();
+        allVotes = [];
+        renderVotesTable(allVotes);
+        renderPartyChart(allVotes);
         return;
     }
 
@@ -391,46 +381,7 @@ function processE14VotesData() {
     renderPartyChart(allVotes);
 }
 
-/**
- * Fallback function to populate party chart with tracked candidates data
- * Used when no E-14 forms are available from the API
- */
-function useFallbackPartyData() {
-    // Ensure candidates have demo data
-    const hasData = trackedCandidates.some(c => c.votes > 0);
-    if (!hasData && typeof simulateCandidateDataFallback === 'function') {
-        simulateCandidateDataFallback();
-    }
-
-    // Use tracked candidates (9 presidential candidates) as party data
-    const partyData = trackedCandidates.map((candidate, index) => ({
-        id: index + 1,
-        party_name: candidate.party || candidate.name,
-        party_code: candidate.id,
-        total_votes: candidate.votes || 0,
-        percentage: candidate.percentage || 0,
-        ocrConfidence: 85 + Math.random() * 10, // Simulate 85-95% confidence
-        riskLevel: 'low',
-        color: candidate.color
-    }));
-
-    // Sort by votes descending
-    partyData.sort((a, b) => b.total_votes - a.total_votes);
-
-    // Update global allVotes
-    allVotes = partyData;
-
-    console.log('Using fallback party data:', partyData.length, 'parties');
-
-    // Render the votes table
-    renderVotesTable(allVotes);
-
-    // Render party chart
-    renderPartyChart(allVotes);
-
-    // Render OCR problems list (empty since this is fallback data)
-    renderOCRProblemsList([]);
-}
+// No fallback party data; use real E-14 sources only.
 
 /**
  * Update KPI cards with real E-14 data
@@ -491,6 +442,15 @@ function updateE14KPIs(data) {
         totalVotosNulos = summary.votos_nulos || 0;
         totalNoMarcados = summary.votos_no_marcados || 0;
     }
+    const stats = data?.stats || null;
+    if (stats) {
+        totalVotosValidos = stats.total_votes || totalVotosValidos || 0;
+        totalVotosBlanco = stats.total_blancos || totalVotosBlanco || 0;
+        totalVotosNulos = stats.total_nulos || totalVotosNulos || 0;
+        totalVotosUrna = totalVotosValidos + totalVotosBlanco + totalVotosNulos;
+        totalSufragantes = totalVotosUrna;
+        totalNoMarcados = 0;
+    }
 
     // Update KPI cards
     const kpiSufragantes = document.getElementById('kpi-sufragantes');
@@ -541,82 +501,50 @@ function updateE14KPIs(data) {
     });
 }
 
-function processAlertsData(data) {
-    // Convert alerts to mesa risk data
-    const alerts = data.alerts || [];
-
-    allMesas = alerts.map((alert, index) => ({
-        id: alert.id || index + 1,
-        mesaId: alert.mesa_id || `Mesa ${index + 1}`,
-        dept: 'Antioquia',
-        muni: 'Medellín',
-        puesto: `Puesto de Votación ${Math.floor(index / 3) + 1}`,
-        location: `Calle ${index + 10} # ${index + 5}-${index + 20}`,
-        ocrConfidence: Math.max(40, Math.min(95, 75 + Math.random() * 30 - Math.random() * 35)),
-        reason: alert.message || 'OCR con baja confianza',
-        totalVotes: Math.floor(Math.random() * 500) + 100,
-        status: alert.status || 'OPEN',
-        severity: alert.severity || 'MEDIUM'
-    }));
-
-    // Add risk classification
-    allMesas.forEach(mesa => {
-        if (mesa.ocrConfidence < 70) {
-            mesa.riskLevel = 'high';
-        } else if (mesa.ocrConfidence < 85) {
-            mesa.riskLevel = 'medium';
-        } else {
-            mesa.riskLevel = 'low';
-        }
-    });
+function normalizeOcrConfidence(value) {
+    if (value === null || value === undefined) return null;
+    const num = Number(value);
+    if (Number.isNaN(num)) return null;
+    return num <= 1 ? num * 100 : num;
 }
 
-function generateMockRiskData() {
-    // Generate additional mesa data if not enough
-    if (allMesas.length < 10) {
-        const puestos = ['I.E. San José', 'Coliseo Municipal', 'Casa de la Cultura', 'Centro Comunitario', 'Escuela Rural'];
-        const deptsMunis = [
-            { departamento: 'Antioquia', municipio: 'Medellín' },
-            { departamento: 'Antioquia', municipio: 'Envigado' },
-            { departamento: 'Antioquia', municipio: 'Itagüí' },
-            { departamento: 'Valle del Cauca', municipio: 'Cali' },
-            { departamento: 'Cundinamarca', municipio: 'Bogotá' },
-            { departamento: 'Atlántico', municipio: 'Barranquilla' },
-            { departamento: 'Santander', municipio: 'Bucaramanga' },
-            { departamento: 'Nariño', municipio: 'Pasto' }
-        ];
-
-        for (let i = allMesas.length; i < 25; i++) {
-            const confidence = Math.max(40, Math.min(98, 70 + Math.random() * 30 - Math.random() * 30));
-            const loc = deptsMunis[i % deptsMunis.length];
-            allMesas.push({
-                id: i + 1,
-                mesa: i + 1,
-                departamento: loc.departamento,
-                municipio: loc.municipio,
-                puesto: puestos[i % puestos.length],
-                ocrConfidence: confidence,
-                reason: confidence < 70 ? 'Imagen borrosa o dañada' : (confidence < 85 ? 'Algunos campos ilegibles' : 'Validación exitosa'),
-                totalVotes: Math.floor(Math.random() * 500) + 100,
-                status: confidence < 70 ? 'NEEDS_REVIEW' : 'VALIDATED',
-                riskLevel: confidence < 70 ? 'high' : (confidence < 85 ? 'medium' : 'low')
-            });
+function setMesasFromIncidents(incidents) {
+    const mesasMap = new Map();
+    incidents.forEach((incident, index) => {
+        const mesaId = incident.mesa_id || incident.polling_table_id || `Mesa ${incident.id || index + 1}`;
+        const ocr = normalizeOcrConfidence(incident.ocr_confidence);
+        const severity = incident.severity || 'P2';
+        let riskLevel = 'low';
+        if (severity === 'P0' || severity === 'P1') riskLevel = 'high';
+        else if (severity === 'P2') riskLevel = 'medium';
+        if (ocr !== null) {
+            if (ocr < 70) riskLevel = 'high';
+            else if (ocr < 85) riskLevel = 'medium';
         }
-    }
 
-    // Update OCR problems list with the generated data
+        const id = incident.id || index + 1;
+        if (mesasMap.has(id)) return;
+
+        mesasMap.set(id, {
+            id,
+            mesaId,
+            dept: incident.dept_name || incident.dept_code || '',
+            muni: incident.muni_name || incident.muni_code || '',
+            dept_code: incident.dept_code || '',
+            muni_code: incident.muni_code || '',
+            puesto: incident.puesto || incident.station_name || incident.puesto_cod || '',
+            location: incident.puesto || incident.station_name || '',
+            ocrConfidence: ocr ?? 0,
+            reason: incident.description || incident.incident_type || 'Incidencia',
+            totalVotes: incident.votos_afectados || 0,
+            status: incident.status || 'OPEN',
+            severity,
+            riskLevel
+        });
+    });
+
+    allMesas = Array.from(mesasMap.values());
     renderOCRProblemsList(allMesas);
-
-    // Generate mock witnesses
-    const witnessNames = ['Carlos Rodríguez', 'María García', 'Juan López', 'Ana Martínez', 'Pedro Sánchez', 'Laura Torres', 'Diego Hernández', 'Carmen Gómez'];
-    allWitnesses = witnessNames.map((name, i) => ({
-        id: i + 1,
-        name: name,
-        phone: `300${Math.floor(Math.random() * 9000000) + 1000000}`,
-        currentLocation: allMesas[i % allMesas.length]?.puesto || 'Sin ubicación',
-        status: i % 4 === 0 ? 'busy' : 'available',
-        distance: (Math.random() * 2).toFixed(1)
-    }));
 }
 
 // ============================================================
@@ -718,12 +646,6 @@ function renderContiendaTab() {
     const filteredMesas = getFilteredMesas();
     let filteredVotes = getFilteredVotes();
 
-    // If no votes data, use fallback
-    if (filteredVotes.length === 0) {
-        useFallbackPartyData();
-        filteredVotes = getFilteredVotes();
-    }
-
     // Update KPIs
     updateContiendaKPIs(filteredMesas, filteredVotes);
 
@@ -772,6 +694,20 @@ function updateContiendaKPIs(mesas, votes) {
         if (constancias.recuento_en_representacion_de) recuentoRepresentacion = constancias.recuento_en_representacion_de;
         juradosFirmantes = Math.max(juradosFirmantes, constancias.num_jurados_firmantes || 0);
     });
+
+    // If forms don't include nivelacion data, fall back to aggregated stats
+    const stats = window.e14LiveData?.stats || {};
+    if (totalSufragantes === 0 && totalVotosUrna === 0 && (stats.total_votes || stats.total_blancos || stats.total_nulos)) {
+        const totalVotes = stats.total_votes || 0;
+        const totalBlancos = stats.total_blancos || 0;
+        const totalNulos = stats.total_nulos || 0;
+        totalSufragantes = totalVotes + totalBlancos + totalNulos;
+        totalVotosUrna = totalSufragantes;
+        totalVotosValidos = totalVotes;
+        totalVotosBlanco = totalBlancos;
+        totalVotosNulos = totalNulos;
+        totalNoMarcados = 0;
+    }
 
     // Update KPI elements (with null checks)
     const setKPI = (id, value) => {
@@ -860,8 +796,20 @@ function renderOCRProblemsList(mesas) {
     const countEl = document.getElementById('ocr-problems-count');
     if (!container) return;
 
+    // Deduplicate by mesa id and keep lowest confidence
+    const uniqueByMesa = new Map();
+    mesas.forEach(m => {
+        const key = m.mesaId || m.mesa_id || m.id;
+        if (!key) return;
+        const conf = m.ocrConfidence || m.confidence || 100;
+        const existing = uniqueByMesa.get(key);
+        if (!existing || conf < (existing.ocrConfidence || existing.confidence || 100)) {
+            uniqueByMesa.set(key, m);
+        }
+    });
+
     // Filter mesas with OCR confidence < 90%
-    const problemMesas = mesas
+    const problemMesas = Array.from(uniqueByMesa.values())
         .filter(m => (m.ocrConfidence || m.confidence || 100) < 90)
         .sort((a, b) => (a.ocrConfidence || a.confidence || 0) - (b.ocrConfidence || b.confidence || 0))
         .slice(0, 20); // Show top 20 worst
@@ -980,58 +928,14 @@ async function loadMOERiskData() {
             if (data.success) {
                 moeRiskData = data;
             } else {
-                moeRiskData = getMOEFallbackData();
+                moeRiskData = { municipalities: [], risk_factors: {}, metadata: {}, department_summary: {} };
             }
         } else {
-            // Use embedded fallback data
-            moeRiskData = getMOEFallbackData();
+            moeRiskData = { municipalities: [], risk_factors: {}, metadata: {}, department_summary: {} };
         }
-        console.log('MOE data loaded:', moeRiskData?.municipalities?.length, 'municipalities');
     } catch (error) {
-        console.log('Using MOE fallback data');
-        moeRiskData = getMOEFallbackData();
+        moeRiskData = { municipalities: [], risk_factors: {}, metadata: {}, department_summary: {} };
     }
-}
-
-function getMOEFallbackData() {
-    // Embedded subset of critical municipalities for fallback
-    return {
-        metadata: { total_risk_municipalities: 166, extreme_risk_count: 104, high_risk_count: 62 },
-        risk_factors: {
-            ARMED_GROUPS: "Presencia de grupos armados ilegales",
-            ILLEGAL_ECONOMY: "Economías ilegales (coca, minería)",
-            TRASHUMANTISMO: "Migración ficticia de votantes",
-            LEADER_ATTACKS: "Ataques a líderes políticos",
-            MOBILITY_RESTRICTIONS: "Restricciones a la movilidad",
-            BORDER_VULNERABILITY: "Vulnerabilidad fronteriza"
-        },
-        municipalities: [
-            { code: "52835", name: "Tumaco", department: "Nariño", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "ILLEGAL_ECONOMY", "TRASHUMANTISMO", "LEADER_ATTACKS"], armed_group: "Disidencias FARC" },
-            { code: "54810", name: "Tibú", department: "Norte de Santander", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "ILLEGAL_ECONOMY", "LEADER_ATTACKS", "MOBILITY_RESTRICTIONS"], armed_group: "ELN" },
-            { code: "05142", name: "Caucasia", department: "Antioquia", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "ILLEGAL_ECONOMY", "POLITICAL_DOMINANCE"], armed_group: "Clan del Golfo" },
-            { code: "27001", name: "Quibdó", department: "Chocó", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "ILLEGAL_ECONOMY", "LEADER_ATTACKS"], armed_group: "ELN" },
-            { code: "19698", name: "Santander de Quilichao", department: "Cauca", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "LEADER_ATTACKS"], armed_group: "Disidencias FARC" },
-            { code: "54001", name: "Cúcuta", department: "Norte de Santander", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "BORDER_VULNERABILITY", "TRASHUMANTISMO"], armed_group: "ELN" },
-            { code: "76109", name: "Buenaventura", department: "Valle del Cauca", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "ILLEGAL_ECONOMY", "LEADER_ATTACKS"], armed_group: "Clan del Golfo" },
-            { code: "81001", name: "Arauca", department: "Arauca", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "BORDER_VULNERABILITY", "MOBILITY_RESTRICTIONS"], armed_group: "ELN" },
-            { code: "18001", name: "Florencia", department: "Caquetá", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "LEADER_ATTACKS"], armed_group: "Disidencias FARC" },
-            { code: "23417", name: "Montelíbano", department: "Córdoba", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "ILLEGAL_ECONOMY", "POLITICAL_DOMINANCE"], armed_group: "Clan del Golfo" },
-            { code: "05736", name: "Segovia", department: "Antioquia", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "ILLEGAL_ECONOMY", "LEADER_ATTACKS"], armed_group: "ELN" },
-            { code: "19212", name: "Corinto", department: "Cauca", risk_level: "EXTREME", factors: ["ARMED_GROUPS", "ILLEGAL_ECONOMY", "LEADER_ATTACKS"], armed_group: "Disidencias FARC" },
-            { code: "05837", name: "Turbo", department: "Antioquia", risk_level: "HIGH", factors: ["ARMED_GROUPS", "TRASHUMANTISMO", "BORDER_VULNERABILITY"], armed_group: "Clan del Golfo" },
-            { code: "52356", name: "Ipiales", department: "Nariño", risk_level: "HIGH", factors: ["BORDER_VULNERABILITY", "TRASHUMANTISMO"] },
-            { code: "19001", name: "Popayán", department: "Cauca", risk_level: "HIGH", factors: ["LEADER_ATTACKS", "POLITICAL_DOMINANCE"] },
-            { code: "76834", name: "Tuluá", department: "Valle del Cauca", risk_level: "HIGH", factors: ["ARMED_GROUPS", "LEADER_ATTACKS"] },
-            { code: "68081", name: "Barrancabermeja", department: "Santander", risk_level: "HIGH", factors: ["ARMED_GROUPS", "LEADER_ATTACKS"], armed_group: "ELN" }
-        ],
-        department_summary: {
-            "05": { name: "Antioquia", extreme: 11, high: 5, main_threat: "Clan del Golfo" },
-            "19": { name: "Cauca", extreme: 10, high: 4, main_threat: "Disidencias FARC" },
-            "27": { name: "Chocó", extreme: 8, high: 4, main_threat: "ELN" },
-            "52": { name: "Nariño", extreme: 9, high: 4, main_threat: "Disidencias FARC" },
-            "54": { name: "Norte de Santander", extreme: 6, high: 1, main_threat: "ELN" }
-        }
-    };
 }
 
 function renderRiskZonesTab() {
@@ -1066,13 +970,14 @@ function calculateCompositeRisk() {
     // Create lookup for OCR confidence by municipality
     const ocrByMuni = {};
     ocrData.forEach(mesa => {
-        const muniCode = mesa.muni_code || mesa.municipio_code;
-        if (!ocrByMuni[muniCode]) {
-            ocrByMuni[muniCode] = { total: 0, sum: 0, lowCount: 0 };
+        const muniKey = mesa.muni_code || mesa.municipio_code || mesa.muni || mesa.municipio;
+        if (!muniKey) return;
+        if (!ocrByMuni[muniKey]) {
+            ocrByMuni[muniKey] = { total: 0, sum: 0, lowCount: 0 };
         }
-        ocrByMuni[muniCode].total++;
-        ocrByMuni[muniCode].sum += mesa.ocrConfidence || 85;
-        if ((mesa.ocrConfidence || 85) < 70) ocrByMuni[muniCode].lowCount++;
+        ocrByMuni[muniKey].total++;
+        ocrByMuni[muniKey].sum += mesa.ocrConfidence || 85;
+        if ((mesa.ocrConfidence || 85) < 70) ocrByMuni[muniKey].lowCount++;
     });
 
     // Calculate composite risk for each municipality
@@ -1089,7 +994,7 @@ function calculateCompositeRisk() {
     };
 
     municipalities.forEach(muni => {
-        const ocrInfo = ocrByMuni[muni.code] || { total: 0, sum: 0 };
+        const ocrInfo = ocrByMuni[muni.code] || ocrByMuni[muni.name] || { total: 0, sum: 0 };
         const avgOcr = ocrInfo.total > 0 ? ocrInfo.sum / ocrInfo.total : 90;
 
         // Determine OCR level
@@ -1380,46 +1285,60 @@ function loadMunicipalityE14Results(muniCode, muniName) {
 
     if (!mesasEl || !confianzaEl || !candidatesEl) return;
 
-    // Generate mock E-14 data for this municipality
-    // In production, this would fetch from an API endpoint
-    const seed = muniCode.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-    const random = (min, max) => {
-        const x = Math.sin(seed * 9999) * 10000;
-        return Math.floor((x - Math.floor(x)) * (max - min + 1)) + min;
-    };
+    const muni = moeRiskData?.municipalities?.find(m => m.code === muniCode);
+    const departamento = muni?.department;
 
-    const mesasCount = random(5, 45);
-    const confianza = random(65, 95);
+    if (!departamento || !muniName) {
+        mesasEl.textContent = '0';
+        confianzaEl.textContent = '--%';
+        candidatesEl.innerHTML = '<div class="e14-empty">Sin datos disponibles</div>';
+        return;
+    }
 
-    mesasEl.textContent = mesasCount;
-    confianzaEl.textContent = `${confianza}%`;
-    confianzaEl.style.color = confianza < 70 ? '#DC3545' : confianza < 85 ? '#E65100' : '#27AE60';
+    const params = new URLSearchParams();
+    params.append('departamento', departamento);
+    params.append('municipio', muniName);
+    params.append('limit', '500');
 
-    // Generate votes for top candidates based on municipality
-    const candidateVotes = trackedCandidates.map(c => {
-        const baseVotes = random(50, 500);
-        return {
-            name: c.name,
-            party: c.party,
-            votes: baseVotes,
-            color: c.color
-        };
-    }).sort((a, b) => b.votes - a.votes).slice(0, 5);
+    fetch(`/api/campaign-team/e14-live?${params.toString()}`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) throw new Error('No data');
 
-    const totalVotes = candidateVotes.reduce((sum, c) => sum + c.votes, 0);
+            const stats = data.stats || {};
+            const mesasCount = stats.total_forms || 0;
+            const confianza = Math.round((stats.avg_confidence || 0) * 100);
 
-    candidatesEl.innerHTML = candidateVotes.map((c, i) => {
-        const pct = ((c.votes / totalVotes) * 100).toFixed(1);
-        return `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0; ${i < candidateVotes.length - 1 ? 'border-bottom: 1px solid var(--border);' : ''}">
-                <span style="display: flex; align-items: center; gap: 0.4rem;">
-                    <span style="width: 8px; height: 8px; border-radius: 50%; background: ${c.color};"></span>
-                    ${c.name.split(' ').slice(0, 2).join(' ')}
-                </span>
-                <span style="font-weight: 600;">${formatNumber(c.votes)} <span style="color: var(--muted); font-weight: normal;">(${pct}%)</span></span>
-            </div>
-        `;
-    }).join('');
+            mesasEl.textContent = mesasCount;
+            confianzaEl.textContent = `${confianza}%`;
+            confianzaEl.style.color = confianza < 70 ? '#DC3545' : confianza < 85 ? '#E65100' : '#27AE60';
+
+            const partySummary = (data.party_summary || []).slice(0, 5);
+            if (partySummary.length === 0) {
+                candidatesEl.innerHTML = '<div class="e14-empty">Sin datos de votos</div>';
+                return;
+            }
+
+            const totalVotes = partySummary.reduce((sum, p) => sum + (p.total_votes || 0), 0);
+            candidatesEl.innerHTML = partySummary.map((p, i) => {
+                const pct = totalVotes > 0 ? ((p.total_votes / totalVotes) * 100).toFixed(1) : '0.0';
+                const color = getPartyColor(i);
+                return `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0; ${i < partySummary.length - 1 ? 'border-bottom: 1px solid var(--border);' : ''}">
+                        <span style="display: flex; align-items: center; gap: 0.4rem;">
+                            <span style="width: 8px; height: 8px; border-radius: 50%; background: ${color};"></span>
+                            ${escapeHtml(p.party_name || 'Partido')}
+                        </span>
+                        <span style="font-weight: 600;">${formatNumber(p.total_votes || 0)} <span style="color: var(--muted); font-weight: normal;">(${pct}%)</span></span>
+                    </div>
+                `;
+            }).join('');
+        })
+        .catch(() => {
+            mesasEl.textContent = '0';
+            confianzaEl.textContent = '--%';
+            candidatesEl.innerHTML = '<div class="e14-empty">Sin datos disponibles</div>';
+        });
 }
 
 function setupMunicipalityFilters() {
@@ -1960,194 +1879,156 @@ function generateGoldPalette(count) {
 }
 
 // ============================================================
-// CANDIDATOS EN SEGUIMIENTO
+// PARTIDOS EN SEGUIMIENTO - DATOS REALES E-14 CONGRESO 2022
 // ============================================================
 
-// 9 Candidatos Elecciones 2026
-let trackedCandidates = [
-    {
-        id: 1,
-        name: "Vicky Dávila",
-        party: "Valientes",
-        color: "#E91E63",
-        votes: 0,
-        percentage: 0,
-        mesas: 0,
-        position: null,
-        trend: 'stable',
-        trendValue: 0
-    },
-    {
-        id: 2,
-        name: "Juan Manuel Galán",
-        party: "Nuevo Liberalismo",
-        color: "#D32F2F",
-        votes: 0,
-        percentage: 0,
-        mesas: 0,
-        position: null,
-        trend: 'stable',
-        trendValue: 0
-    },
-    {
-        id: 3,
-        name: "Paloma Valencia",
-        party: "Centro Democrático",
-        color: "#1565C0",
-        votes: 0,
-        percentage: 0,
-        mesas: 0,
-        position: null,
-        trend: 'stable',
-        trendValue: 0
-    },
-    {
-        id: 4,
-        name: "Enrique Peñalosa",
-        party: "Partido Verde Oxígeno",
-        color: "#388E3C",
-        votes: 0,
-        percentage: 0,
-        mesas: 0,
-        position: null,
-        trend: 'stable',
-        trendValue: 0
-    },
-    {
-        id: 5,
-        name: "Juan Carlos Pinzón",
-        party: "Partido Verde Oxígeno",
-        color: "#43A047",
-        votes: 0,
-        percentage: 0,
-        mesas: 0,
-        position: null,
-        trend: 'stable',
-        trendValue: 0
-    },
-    {
-        id: 6,
-        name: "Aníbal Gaviria",
-        party: "Unidos - La Fuerza de las Regiones",
-        color: "#FF9800",
-        votes: 0,
-        percentage: 0,
-        mesas: 0,
-        position: null,
-        trend: 'stable',
-        trendValue: 0
-    },
-    {
-        id: 7,
-        name: "Mauricio Cárdenas",
-        party: "Avanza Colombia",
-        color: "#7B1FA2",
-        votes: 0,
-        percentage: 0,
-        mesas: 0,
-        position: null,
-        trend: 'stable',
-        trendValue: 0
-    },
-    {
-        id: 8,
-        name: "David Luna",
-        party: "Sí Hay Un Camino",
-        color: "#00ACC1",
-        votes: 0,
-        percentage: 0,
-        mesas: 0,
-        position: null,
-        trend: 'stable',
-        trendValue: 0
-    },
-    {
-        id: 9,
-        name: "Juan Daniel Oviedo",
-        party: "Con Toda Por Colombia",
-        color: "#5E35B1",
-        votes: 0,
-        percentage: 0,
-        mesas: 0,
-        position: null,
-        trend: 'stable',
-        trendValue: 0
-    }
-];
+// Dynamic array populated from /api/e14-data/party-totals (225K forms)
+let trackedParties = [];
 
-function renderTrackedCandidates() {
-    const grid = document.getElementById('candidates-tracking-grid');
+// Backward compatibility alias
+let trackedCandidates = trackedParties;
+
+/**
+ * Load real party data from E-14 scraper database
+ * Source: 225,702 E-14 forms from Congreso 2022
+ */
+async function loadPartiesFromAPI() {
+    try {
+        console.log('Loading real party data from E-14 database...');
+        const response = await fetch('/api/e14-data/party-totals?limit=15');
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Received party data:', data.length, 'parties');
+
+        // Map API response to tracked parties format
+        trackedParties = data.map((party, index) => ({
+            id: index + 1,
+            name: party.party_name,
+            party: party.party_name,
+            votes: party.total_votes || 0,
+            percentage: party.percentage || 0,
+            mesas: party.mesas_count || 0,
+            avg_confidence: party.avg_confidence || 0,
+            position: index + 1,
+            trend: 'stable',
+            trendValue: 0,
+            color: getPartyColor(index)
+        }));
+
+        // Update backward compatibility alias
+        trackedCandidates = trackedParties;
+
+        // Update party count in UI
+        const countEl = document.getElementById('parties-count');
+        if (countEl) {
+            countEl.textContent = `${trackedParties.length} partidos`;
+        }
+
+        console.log('Loaded parties:', trackedParties.map(p => ({
+            name: p.name,
+            votes: p.votes
+        })));
+
+        // Render the parties
+        renderTrackedParties();
+
+        return trackedParties;
+    } catch (error) {
+        console.error('Error loading parties from API:', error);
+        return [];
+    }
+}
+
+/**
+ * Get consistent color for party by index
+ */
+function getPartyColor(index) {
+    const colors = [
+        "#E91E63", "#D32F2F", "#1565C0", "#388E3C", "#43A047",
+        "#FF9800", "#7B1FA2", "#00ACC1", "#5E35B1", "#F44336",
+        "#3F51B5", "#009688", "#795548", "#607D8B", "#673AB7"
+    ];
+    return colors[index % colors.length];
+}
+
+/**
+ * Render tracked parties grid with real E-14 data
+ * Backward compatible: also aliased as renderTrackedCandidates
+ */
+function renderTrackedParties() {
+    // Try both element IDs for backward compatibility
+    const grid = document.getElementById('parties-tracking-grid') ||
+                 document.getElementById('candidates-tracking-grid');
     if (!grid) {
-        console.error('candidates-tracking-grid not found');
+        console.error('parties-tracking-grid not found');
         return;
     }
 
-    // Always ensure we have data - use fallback if no votes loaded
-    const hasData = trackedCandidates.some(c => c.votes > 0);
-    if (!hasData) {
-        console.log('No candidate data, using fallback');
-        simulateCandidateDataFallback();
+    // If no data loaded, trigger API load
+    if (trackedParties.length === 0) {
+        console.log('No party data, loading from API...');
+        loadPartiesFromAPI();
+        return;
     }
 
-    console.log('Rendering candidates:', trackedCandidates.map(c => ({name: c.name, votes: c.votes})));
+    console.log('Rendering parties:', trackedParties.map(p => ({name: p.name, votes: p.votes})));
 
     // Sort by votes descending
-    const sortedCandidates = [...trackedCandidates].sort((a, b) => b.votes - a.votes);
+    const sortedParties = [...trackedParties].sort((a, b) => b.votes - a.votes);
 
     // Assign positions
-    sortedCandidates.forEach((c, i) => {
-        const original = trackedCandidates.find(tc => tc.id === c.id);
+    sortedParties.forEach((p, i) => {
+        const original = trackedParties.find(tp => tp.id === p.id);
         if (original) original.position = i + 1;
     });
 
     // Sort by position for display
-    const sortedForDisplay = [...trackedCandidates].sort((a, b) => (a.position || 99) - (b.position || 99));
+    const sortedForDisplay = [...trackedParties].sort((a, b) => (a.position || 99) - (b.position || 99));
 
-    grid.innerHTML = sortedForDisplay.map(candidate => {
-        const positionClass = candidate.position <= 3 ? 'top-3' : '';
-        const cardClass = candidate.position === 1 ? 'leading' :
-                         (candidate.position <= 3 ? '' :
-                         (candidate.position >= 7 ? 'danger' : 'warning'));
+    grid.innerHTML = sortedForDisplay.map(party => {
+        const positionClass = party.position <= 3 ? 'top-3' : '';
+        const cardClass = party.position === 1 ? 'leading' :
+                         (party.position <= 3 ? '' :
+                         (party.position >= 10 ? 'danger' : 'warning'));
 
-        const trendIcon = candidate.trend === 'up' ? '↑' :
-                         (candidate.trend === 'down' ? '↓' : '→');
-        const trendClass = candidate.trend === 'up' ? 'trend-up' :
-                          (candidate.trend === 'down' ? 'trend-down' : 'trend-stable');
-        const trendText = candidate.trend === 'up' ? `+${Math.abs(candidate.trendValue)}%` :
-                         (candidate.trend === 'down' ? `-${Math.abs(candidate.trendValue)}%` : 'Estable');
+        const confidencePercent = Math.round((party.avg_confidence || 0.85) * 100);
 
-        const maxVotes = Math.max(...trackedCandidates.map(c => c.votes));
-        const progressWidth = maxVotes > 0 ? (candidate.votes / maxVotes * 100) : 0;
-        const candidateColor = candidate.color || '#C9A227';
+        const maxVotes = Math.max(...trackedParties.map(p => p.votes));
+        const progressWidth = maxVotes > 0 ? (party.votes / maxVotes * 100) : 0;
+        const partyColor = party.color || '#C9A227';
 
         return `
-            <div class="candidate-track-card ${cardClass}" style="border-left: 4px solid ${candidateColor}">
+            <div class="candidate-track-card ${cardClass}" style="border-left: 4px solid ${partyColor}">
                 <div class="candidate-track-header">
                     <div>
-                        <div class="candidate-track-name">${escapeHtml(candidate.name)}</div>
-                        <div class="candidate-track-party" style="color: ${candidateColor}">${escapeHtml(candidate.party)}</div>
+                        <div class="candidate-track-name">${escapeHtml(party.name)}</div>
+                        <div class="candidate-track-party" style="color: ${partyColor}">Congreso 2022</div>
                     </div>
-                    <span class="candidate-track-position ${positionClass}">#${candidate.position || '--'}</span>
+                    <span class="candidate-track-position ${positionClass}">#${party.position || '--'}</span>
                 </div>
 
                 <div class="candidate-track-stats">
                     <div class="candidate-stat">
-                        <div class="candidate-stat-value">${formatNumber(candidate.votes)}</div>
+                        <div class="candidate-stat-value">${formatNumber(party.votes)}</div>
                         <div class="candidate-stat-label">Votos E-14</div>
                     </div>
                     <div class="candidate-stat">
-                        <div class="candidate-stat-value">${candidate.percentage.toFixed(1)}%</div>
+                        <div class="candidate-stat-value">${(party.percentage || 0).toFixed(1)}%</div>
                         <div class="candidate-stat-label">Porcentaje</div>
                     </div>
                     <div class="candidate-stat">
-                        <div class="candidate-stat-value">${formatNumber(candidate.mesas)}</div>
+                        <div class="candidate-stat-value">${formatNumber(party.mesas)}</div>
                         <div class="candidate-stat-label">Mesas</div>
                     </div>
                 </div>
 
                 <div class="candidate-track-progress">
                     <div class="candidate-progress-bar">
-                        <div class="candidate-progress-fill" style="width: ${progressWidth}%; background: ${candidateColor}"></div>
+                        <div class="candidate-progress-fill" style="width: ${progressWidth}%; background: ${partyColor}"></div>
                     </div>
                     <div class="candidate-progress-labels">
                         <span>0</span>
@@ -2155,75 +2036,54 @@ function renderTrackedCandidates() {
                     </div>
                 </div>
 
-                <div class="candidate-trend ${candidate.trend}">
-                    <span>${trendIcon}</span>
-                    <span>${trendText}</span>
+                <div class="candidate-trend stable">
+                    <span>OCR: ${confidencePercent}%</span>
                 </div>
             </div>
         `;
     }).join('');
 }
 
-async function loadCandidatesFromAPI() {
-    try {
-        const response = await fetch('/api/campaign-team/reports/votes-by-candidate?contest_id=1');
-        const data = await response.json();
-
-        if (data.success && data.candidates) {
-            // Update trackedCandidates with API data
-            data.candidates.forEach(apiCandidate => {
-                const candidate = trackedCandidates.find(c => c.name === apiCandidate.name);
-                if (candidate) {
-                    candidate.votes = apiCandidate.votes || 0;
-                    candidate.percentage = apiCandidate.percentage || 0;
-                    candidate.mesas = apiCandidate.mesas_processed || 0;
-                    candidate.trend = apiCandidate.trend || 'stable';
-                    candidate.trendValue = apiCandidate.trend_value || 0;
-                    candidate.color = apiCandidate.color || candidate.color;
-                    candidate.coverage = apiCandidate.coverage_pct || 0;
-                }
-            });
-        }
-    } catch (error) {
-        console.error('Error loading candidates from API:', error);
-        // Fallback to simulated data if API fails
-        simulateCandidateDataFallback();
-    }
+// Backward compatibility alias
+function renderTrackedCandidates() {
+    renderTrackedParties();
 }
 
-function simulateCandidateDataFallback() {
-    // Fallback data if API is unavailable
-    const baseVotes = [
-        { name: "Vicky Dávila", votes: 223000, percentage: 18.8, mesas: 5200, trend: 'up', trendValue: 2.3 },
-        { name: "Juan Manuel Galán", votes: 208000, percentage: 17.5, mesas: 4800, trend: 'up', trendValue: 1.8 },
-        { name: "Paloma Valencia", votes: 160000, percentage: 13.5, mesas: 4500, trend: 'stable', trendValue: 0 },
-        { name: "Enrique Peñalosa", votes: 134000, percentage: 11.3, mesas: 4200, trend: 'up', trendValue: 0.8 },
-        { name: "Juan Carlos Pinzón", votes: 143000, percentage: 12.0, mesas: 4100, trend: 'stable', trendValue: 0 },
-        { name: "Aníbal Gaviria", votes: 120000, percentage: 10.1, mesas: 3800, trend: 'up', trendValue: 0.4 },
-        { name: "Mauricio Cárdenas", votes: 87000, percentage: 7.3, mesas: 3500, trend: 'down', trendValue: -0.5 },
-        { name: "David Luna", votes: 51000, percentage: 4.3, mesas: 3000, trend: 'down', trendValue: -1.2 },
-        { name: "Juan Daniel Oviedo", votes: 62000, percentage: 5.2, mesas: 2800, trend: 'stable', trendValue: 0 }
-    ];
+/**
+ * Load candidates/parties from API - now uses real E-14 data
+ * Backward compatible wrapper around loadPartiesFromAPI()
+ */
+async function loadCandidatesFromAPI() {
+    await loadPartiesFromAPI();
+}
 
-    baseVotes.forEach(data => {
-        const candidate = trackedCandidates.find(c => c.name === data.name);
-        if (candidate) {
-            candidate.votes = data.votes;
-            candidate.percentage = data.percentage;
-            candidate.mesas = data.mesas;
-            candidate.trend = data.trend;
-            candidate.trendValue = data.trendValue;
+/**
+ * Fallback function - now loads from real API instead of hardcoded data
+ * Kept for backward compatibility with existing code that calls it
+ */
+function simulateCandidateDataFallback() {
+    console.log('simulateCandidateDataFallback called - loading real data from API');
+    loadPartiesFromAPI();
+}
+
+/**
+ * Update tracked parties from E-14 live data
+ */
+function updateTrackedCandidatesFromE14(e14Data) {
+    if (!e14Data || !e14Data.party_summary) return;
+
+    // Update tracked parties with fresh data
+    e14Data.party_summary.forEach((apiParty, index) => {
+        const party = trackedParties.find(p => p.name === apiParty.party_name);
+        if (party) {
+            party.votes = apiParty.total_votes || 0;
+            party.percentage = apiParty.percentage || 0;
+            party.mesas = apiParty.mesas_count || 0;
+            party.avg_confidence = apiParty.avg_confidence || 0;
         }
     });
-}
 
-function updateTrackedCandidatesFromE14(e14Candidates) {
-    // Match E-14 candidates with tracked candidates
-    if (!e14Candidates) return;
-
-    // In a real implementation, we would match by candidate name/number
-    // For now, just trigger a re-render
-    renderTrackedCandidates();
+    renderTrackedParties();
 }
 
 // ============================================================
@@ -2242,7 +2102,11 @@ function renderE14LiveForm(data) {
     const partySummary = data.party_summary || [];
     const forms = data.forms || [];
     const totalForms = data.total_forms || forms.length || 0;
-    const totalVotes = data.total_votes || 0;
+    const stats = data.stats || {};
+    const totalVotes = stats.total_votes || data.total_votes || 0;
+    const totalBlancos = stats.total_blancos || data.total_blancos || 0;
+    const totalNulos = stats.total_nulos || data.total_nulos || 0;
+    const totalUrna = totalVotes + totalBlancos + totalNulos;
     const totalParties = data.total_parties || partySummary.length || 0;
 
     // Determine election type from data
@@ -2295,12 +2159,12 @@ function renderE14LiveForm(data) {
     }
 
     // Update nivelación with totals
-    const totalSufragantes = totalVotes > 0 ? Math.round(totalVotes * 1.02) : 1200000;
+    const totalSufragantes = totalUrna;
     document.getElementById('e14-sufragantes').textContent = formatNumber(totalSufragantes);
-    document.getElementById('e14-urna').textContent = formatNumber(totalVotes > 0 ? Math.round(totalVotes * 1.01) : 1180000);
-    document.getElementById('e14-validos').textContent = formatNumber(totalVotes || 1150000);
-    document.getElementById('e14-blancos').textContent = formatNumber(Math.round((totalVotes || 1150000) * 0.02));
-    document.getElementById('e14-nulos').textContent = formatNumber(Math.round((totalVotes || 1150000) * 0.01));
+    document.getElementById('e14-urna').textContent = formatNumber(totalUrna);
+    document.getElementById('e14-validos').textContent = formatNumber(totalVotes);
+    document.getElementById('e14-blancos').textContent = formatNumber(totalBlancos);
+    document.getElementById('e14-nulos').textContent = formatNumber(totalNulos);
 
     // Render candidates/parties based on data source
     if (isCongressData && partySummary.length > 0) {
@@ -2333,7 +2197,8 @@ function renderE14LiveForm(data) {
     }
 
     // Update footer with appropriate info
-    const coveragePercent = totalForms > 0 ? Math.round((totalForms / 500) * 100) : 67;
+    const totalAvailable = window.e14LiveData?.total_forms || data.total_forms || totalForms;
+    const coveragePercent = totalAvailable > 0 ? Math.round((totalForms / totalAvailable) * 100) : 0;
     document.getElementById('e14-extraction-info').textContent =
         `Actualizado: ${new Date().toLocaleString('es-CO')} | ${isCongressData ? `${totalParties} partidos | ${formatNumber(totalVotes)} votos` : `Cobertura: ${coveragePercent}%`}`;
 
@@ -2529,23 +2394,23 @@ let e14Filters = {
 // Load filter options from data
 async function loadE14FilterOptions() {
     try {
-        // Get departments from geography endpoint
-        const deptResponse = await fetch('/api/geography/choropleth?mode=coverage');
+        const deptResponse = await fetch('/api/e14-data/departamentos');
         const deptData = await deptResponse.json();
 
         const deptSelect = document.getElementById('e14-filter-dept');
-        if (deptSelect && deptData.features) {
+        if (deptSelect && Array.isArray(deptData)) {
             // Clear existing options
             deptSelect.innerHTML = '<option value="">Todos</option>';
 
             // Sort departments by name
-            const depts = deptData.features
-                .map(f => ({ code: f.properties.code, name: f.properties.name }))
+            const depts = deptData
+                .map(d => ({ name: d.departamento }))
+                .filter(d => d.name)
                 .sort((a, b) => a.name.localeCompare(b.name));
 
             depts.forEach(dept => {
                 const option = document.createElement('option');
-                option.value = dept.code;
+                option.value = dept.name;
                 option.textContent = dept.name;
                 deptSelect.appendChild(option);
             });
@@ -2575,16 +2440,23 @@ function filterE14ByDept() {
 }
 
 async function loadMunicipiosForDept(deptCode) {
-    // For now, populate with demo municipalities
     const muniSelect = document.getElementById('e14-filter-muni');
     muniSelect.innerHTML = '<option value="">Todos</option>';
 
-    // Demo municipalities - in production this would come from an API
-    for (let i = 1; i <= 10; i++) {
-        const option = document.createElement('option');
-        option.value = `${deptCode}-${String(i).padStart(3, '0')}`;
-        option.textContent = `Municipio ${i}`;
-        muniSelect.appendChild(option);
+    try {
+        const response = await fetch(`/api/e14-data/municipios/${encodeURIComponent(deptCode)}`);
+        const data = await response.json();
+        if (Array.isArray(data)) {
+            data.forEach(muni => {
+                if (!muni.municipio) return;
+                const option = document.createElement('option');
+                option.value = muni.municipio;
+                option.textContent = muni.municipio;
+                muniSelect.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading municipios:', error);
     }
 }
 
@@ -2609,12 +2481,20 @@ async function loadPuestosForMuni(muniCode) {
     const puestoSelect = document.getElementById('e14-filter-puesto');
     puestoSelect.innerHTML = '<option value="">Todos</option>';
 
-    // Demo puestos
-    for (let i = 1; i <= 5; i++) {
-        const option = document.createElement('option');
-        option.value = `${muniCode}-${String(i).padStart(2, '0')}`;
-        option.textContent = `Puesto ${i}`;
-        puestoSelect.appendChild(option);
+    try {
+        const response = await fetch(`/api/e14-data/puestos/${encodeURIComponent(e14Filters.dept)}/${encodeURIComponent(muniCode)}`);
+        const data = await response.json();
+        if (Array.isArray(data)) {
+            data.forEach(puesto => {
+                if (!puesto.puesto_cod) return;
+                const option = document.createElement('option');
+                option.value = puesto.puesto_cod;
+                option.textContent = `Puesto ${puesto.puesto_cod}`;
+                puestoSelect.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading puestos:', error);
     }
 }
 
@@ -2637,12 +2517,20 @@ async function loadMesasForPuesto(puestoCode) {
     const mesaSelect = document.getElementById('e14-filter-mesa');
     mesaSelect.innerHTML = '<option value="">Todas</option>';
 
-    // Demo mesas
-    for (let i = 1; i <= 8; i++) {
-        const option = document.createElement('option');
-        option.value = `${puestoCode}-${String(i).padStart(3, '0')}`;
-        option.textContent = `Mesa ${i}`;
-        mesaSelect.appendChild(option);
+    try {
+        const response = await fetch(`/api/e14-data/mesas/${encodeURIComponent(e14Filters.dept)}/${encodeURIComponent(e14Filters.muni)}/${encodeURIComponent(puestoCode)}`);
+        const data = await response.json();
+        if (Array.isArray(data)) {
+            data.forEach(mesa => {
+                if (mesa.mesa_num === undefined || mesa.mesa_num === null) return;
+                const option = document.createElement('option');
+                option.value = mesa.mesa_num;
+                option.textContent = `Mesa ${mesa.mesa_num}`;
+                mesaSelect.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading mesas:', error);
     }
 }
 
@@ -2661,9 +2549,9 @@ function filterE14ByRisk() {
 async function applyE14Filters() {
     // Build query params
     const params = new URLSearchParams();
-    params.append('limit', '500');  // Always get all forms
-    if (e14Filters.dept) params.append('dept', e14Filters.dept);
-    if (e14Filters.muni) params.append('muni', e14Filters.muni);
+    params.append('limit', '500');
+    if (e14Filters.dept) params.append('departamento', e14Filters.dept);
+    if (e14Filters.muni) params.append('municipio', e14Filters.muni);
     if (e14Filters.puesto) params.append('puesto', e14Filters.puesto);
     if (e14Filters.mesa) params.append('mesa', e14Filters.mesa);
     if (e14Filters.risk) params.append('risk', e14Filters.risk);
@@ -2674,7 +2562,15 @@ async function applyE14Filters() {
         const data = await response.json();
 
         if (data.success) {
+            window.e14LiveData = data;
             renderE14LiveForm(data);
+            if (typeof processE14VotesData === 'function') {
+                processE14VotesData();
+            }
+            if (typeof updateE14KPIs === 'function') {
+                updateE14KPIs(data);
+            }
+            renderContiendaTab();
         }
     } catch (error) {
         console.error('Error applying E-14 filters:', error);
@@ -2743,9 +2639,26 @@ async function loadIncidents() {
         const data = await response.json();
 
         if (data.success) {
-            allIncidents = data.incidents || [];
+            const unique = new Map();
+            (data.incidents || []).forEach(incident => {
+                const key = incident.id || `${incident.mesa_id || ''}-${incident.incident_type || ''}-${incident.created_at || ''}`;
+                if (!unique.has(key)) unique.set(key, incident);
+            });
+            allIncidents = Array.from(unique.values());
             updateIncidentStats(data);
             renderIncidentTable();
+            window.contiendaIncidencias = allIncidents;
+            setMesasFromIncidents(allIncidents);
+            populateFilters();
+            renderContiendaTab();
+            renderWitnessTab();
+            if (typeof updateContiendaStats === 'function') {
+                updateContiendaStats();
+            }
+            window.dispatchEvent(new Event('contienda:incidents-updated'));
+            if (typeof window.onContiendaIncidentsUpdated === 'function') {
+                window.onContiendaIncidentsUpdated();
+            }
         }
     } catch (error) {
         console.error('Error loading incidents:', error);

@@ -491,6 +491,15 @@ function updateE14KPIs(data) {
         totalVotosNulos = summary.votos_nulos || 0;
         totalNoMarcados = summary.votos_no_marcados || 0;
     }
+    const stats = data?.stats || null;
+    if (stats) {
+        totalVotosValidos = stats.total_votes || totalVotosValidos || 0;
+        totalVotosBlanco = stats.total_blancos || totalVotosBlanco || 0;
+        totalVotosNulos = stats.total_nulos || totalVotosNulos || 0;
+        totalVotosUrna = totalVotosValidos + totalVotosBlanco + totalVotosNulos;
+        totalSufragantes = totalVotosUrna;
+        totalNoMarcados = 0;
+    }
 
     // Update KPI cards
     const kpiSufragantes = document.getElementById('kpi-sufragantes');
@@ -2242,7 +2251,11 @@ function renderE14LiveForm(data) {
     const partySummary = data.party_summary || [];
     const forms = data.forms || [];
     const totalForms = data.total_forms || forms.length || 0;
-    const totalVotes = data.total_votes || 0;
+    const stats = data.stats || {};
+    const totalVotes = stats.total_votes || data.total_votes || 0;
+    const totalBlancos = stats.total_blancos || data.total_blancos || 0;
+    const totalNulos = stats.total_nulos || data.total_nulos || 0;
+    const totalUrna = totalVotes + totalBlancos + totalNulos;
     const totalParties = data.total_parties || partySummary.length || 0;
 
     // Determine election type from data
@@ -2295,12 +2308,12 @@ function renderE14LiveForm(data) {
     }
 
     // Update nivelación with totals
-    const totalSufragantes = totalVotes > 0 ? Math.round(totalVotes * 1.02) : 1200000;
+    const totalSufragantes = totalUrna;
     document.getElementById('e14-sufragantes').textContent = formatNumber(totalSufragantes);
-    document.getElementById('e14-urna').textContent = formatNumber(totalVotes > 0 ? Math.round(totalVotes * 1.01) : 1180000);
-    document.getElementById('e14-validos').textContent = formatNumber(totalVotes || 1150000);
-    document.getElementById('e14-blancos').textContent = formatNumber(Math.round((totalVotes || 1150000) * 0.02));
-    document.getElementById('e14-nulos').textContent = formatNumber(Math.round((totalVotes || 1150000) * 0.01));
+    document.getElementById('e14-urna').textContent = formatNumber(totalUrna);
+    document.getElementById('e14-validos').textContent = formatNumber(totalVotes);
+    document.getElementById('e14-blancos').textContent = formatNumber(totalBlancos);
+    document.getElementById('e14-nulos').textContent = formatNumber(totalNulos);
 
     // Render candidates/parties based on data source
     if (isCongressData && partySummary.length > 0) {
@@ -2746,6 +2759,14 @@ async function loadIncidents() {
             allIncidents = data.incidents || [];
             updateIncidentStats(data);
             renderIncidentTable();
+            window.contiendaIncidencias = allIncidents;
+            if (typeof updateContiendaStats === 'function') {
+                updateContiendaStats();
+            }
+            window.dispatchEvent(new Event('contienda:incidents-updated'));
+            if (typeof window.onContiendaIncidentsUpdated === 'function') {
+                window.onContiendaIncidentsUpdated();
+            }
         }
     } catch (error) {
         console.error('Error loading incidents:', error);

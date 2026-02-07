@@ -10,10 +10,16 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from flask import Blueprint, jsonify, request, current_app
-import qrcode
-import qrcode.image.svg
 from io import BytesIO
 import base64
+
+try:
+    import qrcode
+    import qrcode.image.svg
+    QRCODE_AVAILABLE = True
+except ImportError:
+    QRCODE_AVAILABLE = False
+    logging.warning("qrcode not installed. QR generation disabled.")
 
 # Web Push
 try:
@@ -59,8 +65,8 @@ _notification_id_counter = 1
 
 # VAPID keys (generate real ones for production)
 # Generate with: vapid --gen
-VAPID_PUBLIC_KEY = os.getenv('VAPID_PUBLIC_KEY', '***REMOVED***')
-VAPID_PRIVATE_KEY = os.getenv('VAPID_PRIVATE_KEY', '***REMOVED***')
+VAPID_PUBLIC_KEY = os.getenv('VAPID_PUBLIC_KEY', 'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U')
+VAPID_PRIVATE_KEY = os.getenv('VAPID_PRIVATE_KEY', 'Dl8TlWAXFHsrYLOqCcNTdLX_2dvGGj0zSqFQx3OcvP4')
 VAPID_SUBJECT = os.getenv('VAPID_SUBJECT', 'mailto:castor@example.com')
 
 
@@ -83,6 +89,12 @@ def generate_qr_code():
         req = QRCodeGenerateRequest(**data)
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 400
+
+    if not QRCODE_AVAILABLE:
+        return jsonify({
+            'success': False,
+            'error': 'QR generation unavailable (qrcode not installed)'
+        }), 503
 
     # Generar código único
     code = str(uuid.uuid4())

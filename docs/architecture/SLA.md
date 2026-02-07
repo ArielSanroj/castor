@@ -57,7 +57,7 @@ Este documento define los objetivos de nivel de servicio (SLOs) y acuerdos de ni
 |----------|-------------------|-------------------|
 | Twitter API | 99.5% | Degradado (cache fallback) |
 | OpenAI API | 99.9% | Degradado (sin generacion IA) |
-| Supabase | 99.9% | Critico (sin persistencia) |
+| PostgreSQL | 99.9% | Critico (sin persistencia) |
 | Redis (Upstash) | 99.9% | Degradado (in-memory fallback) |
 
 ### 3.3 Ventanas de Mantenimiento

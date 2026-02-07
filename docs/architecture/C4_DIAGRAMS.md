@@ -326,8 +326,8 @@ Usuario                                                              Resultado
                ┌──────────────┘         └──────────────┐
                ▼                                       ▼
     ┌─────────────────┐                    ┌─────────────────┐
-    │    Supabase     │                    │     Upstash     │
-    │   [PostgreSQL]  │                    │     [Redis]     │
+    │   PostgreSQL    │                    │      Redis      │
+    │   [Database]    │                    │     [Cache]     │
     │                 │                    │                 │
     │ - Campaigns     │                    │ - Sessions      │
     │ - Leads         │                    │ - Cache         │

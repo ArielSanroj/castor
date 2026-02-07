@@ -14,7 +14,7 @@ Se ha realizado un análisis exhaustivo del proyecto CASTOR ELECCIONES y se ha c
 - ✅ Servicios separados por responsabilidad (SOLID)
 - ✅ Validación robusta con Pydantic
 - ✅ Manejo de errores completo
-- ✅ Integraciones con APIs externas (Twitter, OpenAI, Supabase, Twilio)
+- ✅ Integraciones con APIs externas (Twitter, OpenAI, Twilio)
 - ✅ Sistema de autenticación JWT
 - ✅ Documentación completa
 - ✅ Tests básicos implementados
@@ -180,7 +180,7 @@ Se ha realizado un análisis exhaustivo del proyecto CASTOR ELECCIONES y se ha c
 - Autenticación JWT
 - Variables de entorno para secretos
 - CORS configurado
-- Row Level Security en Supabase
+- Row Level Security en PostgreSQL
 
 ### ⚠️ Mejoras Necesarias
 
@@ -225,7 +225,7 @@ Se ha realizado un análisis exhaustivo del proyecto CASTOR ELECCIONES y se ha c
    - Celery o similar
 
 4. **Optimización de Queries**
-   - Usar select_related en Supabase
+   - Usar eager loading en SQLAlchemy
    - Paginación en resultados
 
 ---
@@ -249,7 +249,7 @@ Se ha realizado un análisis exhaustivo del proyecto CASTOR ELECCIONES y se ha c
    - Nginx como reverse proxy
 
 3. **Base de Datos**
-   - Read replicas para Supabase
+   - Read replicas para PostgreSQL
    - Caché de consultas frecuentes
 
 4. **CDN**

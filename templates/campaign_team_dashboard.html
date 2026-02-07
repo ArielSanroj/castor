@@ -3240,6 +3240,98 @@
                     </h2>
                 </div>
 
+                <div class="section-header" style="margin-bottom: 0.75rem;">
+                    <h2 class="section-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                        Agente Electoral
+                    </h2>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <span id="agent-status-pill" style="padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; background: rgba(122,127,133,0.2); color: var(--text);">--</span>
+                        <span style="color: var(--muted); font-size: 0.8rem;">Uptime: <strong id="agent-uptime">--</strong></span>
+                        <span style="color: var(--muted); font-size: 0.8rem;">Acciones: <strong id="agent-actions-total">--</strong></span>
+                        <span style="color: var(--muted); font-size: 0.8rem;">Batch: <strong id="agent-batch-progress">--</strong></span>
+                    </div>
+                </div>
+
+                <div class="stats-grid" style="margin-bottom: 1.25rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #4A7C59;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke="white" stroke-width="2" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="agent-anomalies">--</div>
+                            <div class="stat-label">Anomalias Detectadas</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #6F6A63;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 2l3 7h7l-5.5 4 2 7-6.5-4.5L5.5 20l2-7L2 9h7z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="agent-incidents">--</div>
+                            <div class="stat-label">Incidencias Auto-Creadas</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #7A7F85;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M6 2h9l3 3v17H6z"/><path d="M15 2v3h3"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="agent-hitl">--</div>
+                            <div class="stat-label">HITL Pendientes</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #6F6A63;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M3 3h18v6H3z"/><path d="M3 9h18v12H3z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="agent-briefings">--</div>
+                            <div class="stat-label">Briefings Generados</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <button class="btn-action" onclick="controlAgent('start')">Iniciar</button>
+                    <button class="btn-action" onclick="controlAgent('pause')">Pausar</button>
+                    <button class="btn-action" onclick="controlAgent('resume')">Reanudar</button>
+                    <button class="btn-action" onclick="controlAgent('stop')">Detener</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <h3 style="margin: 0; font-size: 1rem;">Acciones del Agente</h3>
+                            <span style="color: var(--muted); font-size: 0.8rem;" id="agent-actions-updated">--</span>
+                        </div>
+                        <div id="agent-actions-list" style="display: grid; gap: 0.5rem;">
+                            <div style="color: var(--muted); font-size: 0.85rem;">Cargando acciones...</div>
+                        </div>
+                    </div>
+                    <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <h3 style="margin: 0; font-size: 1rem;">Briefing Reciente</h3>
+                            <span style="color: var(--muted); font-size: 0.8rem;" id="agent-briefing-updated">--</span>
+                        </div>
+                        <div id="agent-briefing-content" style="color: var(--muted); font-size: 0.9rem;">Cargando briefing...</div>
+                        <div style="margin-top: 0.75rem;">
+                            <button class="btn-action" onclick="openAgentBriefingModal()">Ver briefing completo</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="stats-grid" style="margin-bottom: 1.5rem;">
                     <div class="stat-card">
                         <div class="stat-icon" style="background: #4A7C59;">
@@ -3250,7 +3342,7 @@
                         </div>
                         <div class="stat-content">
                             <div class="stat-value" id="contienda-mesas-procesadas">--</div>
-                            <div class="stat-label">Mesas Procesadas</div>
+                            <div class="stat-label">Totales / Procesadas</div>
                         </div>
                     </div>
                     <div class="stat-card">
@@ -4667,6 +4759,38 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="agent-action-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title" id="agent-action-title">Accion del Agente</h3>
+                <button class="modal-close" onclick="closeAgentActionModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin: 0 0 0.5rem; color: var(--muted);"><strong>Timestamp:</strong> <span id="agent-action-meta">--</span></p>
+                <pre id="agent-action-body" style="margin: 0; white-space: pre-wrap; font-size: 0.85rem; color: var(--text);"></pre>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-action" onclick="closeAgentActionModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="agent-briefing-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title" id="agent-briefing-title">Briefing</h3>
+                <button class="modal-close" onclick="closeAgentBriefingModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin: 0 0 0.5rem; color: var(--muted);"><strong>Generado:</strong> <span id="agent-briefing-meta">--</span></p>
+                <div id="agent-briefing-body" style="white-space: pre-wrap; font-size: 0.9rem; color: var(--text);"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-action" onclick="closeAgentBriefingModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Generate QR Modal -->
     <div class="modal-overlay" id="qr-modal">
         <div class="modal-box" style="max-width: 500px;">
@@ -4942,23 +5066,20 @@
 
     async function loadE14Database() {
         try {
-            // Load RAG stats
             await loadRAGStats();
 
-            // Load E14 stats from API
-            const response = await fetch('/api/chat/rag/e14/stats');
+            const response = await fetch('/api/e14-data/stats');
             const data = await response.json();
 
-            if (data.success) {
-                document.getElementById('e14-total-docs').textContent = data.documents_indexed || 0;
-                document.getElementById('e14-total-mesas').textContent = data.mesas_count || 0;
-                document.getElementById('e14-total-deptos').textContent = data.departamentos_count || 0;
-                document.getElementById('e14-total-corps').textContent = data.corporaciones_count || 0;
+            document.getElementById('e14-total-docs').textContent = data.total_forms || 0;
+            document.getElementById('e14-total-mesas').textContent = data.ocr_completed || 0;
+            document.getElementById('e14-total-deptos').textContent = (data.top_departamentos || []).length || 0;
+            document.getElementById('e14-total-corps').textContent = Object.keys(data.by_corporacion || {}).length || 0;
 
-                // Render department table if data available
-                if (data.by_departamento) {
-                    renderE14DeptTable(data.by_departamento);
-                }
+            const deptResp = await fetch('/api/e14-data/departamentos');
+            const deptData = await deptResp.json();
+            if (Array.isArray(deptData)) {
+                renderE14DeptTable(deptData);
             }
         } catch (err) {
             console.error('Error loading E14 database:', err);
@@ -4968,20 +5089,14 @@
 
     async function loadRAGStats() {
         try {
-            const response = await fetch('/api/chat/rag/stats');
+            const response = await fetch('/api/e14-data/stats');
             const data = await response.json();
 
-            if (data.success) {
-                document.getElementById('rag-vectors-count').textContent = data.documents_indexed || 0;
-                document.getElementById('rag-embedding-model').textContent = data.embedding_model || 'N/A';
-                document.getElementById('rag-sync-status').textContent = 'Activo';
-                document.getElementById('rag-sync-status').style.color = 'var(--success)';
-                document.getElementById('rag-status-text').textContent = `Ultimo sync: ${new Date().toLocaleTimeString()}`;
-            } else {
-                document.getElementById('rag-sync-status').textContent = 'Offline';
-                document.getElementById('rag-sync-status').style.color = 'var(--danger)';
-                document.getElementById('rag-status-text').textContent = 'Servicio RAG no disponible';
-            }
+            document.getElementById('rag-vectors-count').textContent = data.total_forms || 0;
+            document.getElementById('rag-embedding-model').textContent = 'E-14 SQLite';
+            document.getElementById('rag-sync-status').textContent = 'Unificado';
+            document.getElementById('rag-sync-status').style.color = 'var(--success)';
+            document.getElementById('rag-status-text').textContent = `Actualizado: ${new Date().toLocaleTimeString()}`;
         } catch (err) {
             console.error('Error loading RAG stats:', err);
             document.getElementById('rag-sync-status').textContent = 'Error';
@@ -4993,48 +5108,35 @@
     async function syncRAGIndex() {
         const btn = document.getElementById('btn-sync-rag');
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Sincronizando...';
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Actualizando...';
         btn.disabled = true;
 
-        try {
-            const response = await fetch('/api/chat/rag/sync-latest', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            });
-            const data = await response.json();
+        await loadRAGStats();
+        await loadE14Database();
 
-            if (data.success) {
-                document.getElementById('rag-status-text').textContent = `Sincronizado: ${data.documents_synced || 0} nuevos documentos`;
-                await loadE14Database();
-                alert('Sincronizacion completada exitosamente');
-            } else {
-                alert('Error en sincronizacion: ' + (data.error || 'Error desconocido'));
-            }
-        } catch (err) {
-            console.error('Error syncing RAG:', err);
-            alert('Error de conexion al sincronizar');
-        } finally {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }
+        btn.innerHTML = originalText;
+        btn.disabled = false;
     }
 
     function renderE14DeptTable(deptData) {
         const tbody = document.getElementById('e14-dept-tbody');
-        if (!deptData || Object.keys(deptData).length === 0) {
+        if (!deptData || deptData.length === 0) {
             tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--muted); padding: 2rem;">No hay datos disponibles</td></tr>';
             return;
         }
 
         let html = '';
-        for (const [dept, stats] of Object.entries(deptData)) {
+        for (const row of deptData) {
+            const dept = row.departamento;
+            const totalMesas = row.total_mesas || 0;
+            const ocrCompleted = row.ocr_completed || 0;
             html += `
                 <tr>
                     <td style="font-weight: 600;">${dept}</td>
-                    <td>${stats.mesas || 0}</td>
-                    <td>${(stats.senado || 0).toLocaleString()}</td>
-                    <td>${(stats.camara || 0).toLocaleString()}</td>
-                    <td>${stats.documentos || 0}</td>
+                    <td>${totalMesas}</td>
+                    <td>${ocrCompleted.toLocaleString()}</td>
+                    <td>--</td>
+                    <td>${totalMesas}</td>
                     <td>
                         <button onclick="viewE14Detail('${dept}')" style="padding: 0.3rem 0.6rem; background: var(--accent); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">Ver</button>
                     </td>
@@ -5087,12 +5189,222 @@
     <script>
     // ==================== CONTIENDA ELECTORAL - FUNCIONES DE INCIDENCIAS ====================
 
-    let contiendaIncidencias = [];
+    window.contiendaIncidencias = window.contiendaIncidencias || [];
     let selectedIncidents = new Set();
+    let contiendaE14Stats = { total_forms: 0, ocr_completed: 0 };
+    let agentRefreshTimer = null;
+    let agentActionsCache = [];
+    let agentBriefingCache = null;
+
+    function formatNumberSafe(value) {
+        if (typeof formatNumber === 'function') return formatNumber(value);
+        return new Intl.NumberFormat('es-CO').format(value || 0);
+    }
+
+    function setAgentStatusPill(status) {
+        const pill = document.getElementById('agent-status-pill');
+        if (!pill) return;
+        const normalized = (status || '').toLowerCase();
+        let bg = 'rgba(122,127,133,0.2)';
+        if (normalized === 'running') bg = 'rgba(74,124,89,0.25)';
+        if (normalized === 'paused') bg = 'rgba(111,106,99,0.25)';
+        if (normalized === 'stopped') bg = 'rgba(139,58,58,0.25)';
+        if (normalized === 'error') bg = 'rgba(139,58,58,0.35)';
+        pill.style.background = bg;
+        pill.textContent = status || '--';
+    }
+
+    function formatUptime(seconds) {
+        const s = Math.max(0, Number(seconds || 0));
+        const h = Math.floor(s / 3600);
+        const m = Math.floor((s % 3600) / 60);
+        return `${h}h ${m}m`;
+    }
+
+    function formatAgentTime(value) {
+        if (!value) return '--';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '--';
+        return date.toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' });
+    }
+
+    async function loadAgentStatus() {
+        try {
+            const response = await fetch('/api/agent/status');
+            if (!response.ok) return;
+            const data = await response.json();
+            if (!data.success) return;
+
+            const status = data.status || '--';
+            const metrics = data.metrics || {};
+
+            setAgentStatusPill(status);
+            document.getElementById('agent-uptime').textContent = formatUptime(data.uptime_seconds || 0);
+            document.getElementById('agent-actions-total').textContent = formatNumberSafe(metrics.actions_total || 0);
+            document.getElementById('agent-anomalies').textContent = formatNumberSafe(metrics.anomalies_detected_total || 0);
+            document.getElementById('agent-incidents').textContent = formatNumberSafe(metrics.incidents_auto_created || 0);
+            document.getElementById('agent-hitl').textContent = formatNumberSafe(metrics.hitl_pending || 0);
+            document.getElementById('agent-briefings').textContent = formatNumberSafe(metrics.briefings_generated || 0);
+        } catch (error) {
+            console.error('Error loading agent status:', error);
+        }
+    }
+
+    async function loadAgentBatchStatus() {
+        try {
+            const response = await fetch('/api/agent/batch/status');
+            if (!response.ok) return;
+            const data = await response.json();
+            if (!data.success) return;
+            const running = data.running ? 'RUN' : 'STOP';
+            const progress = `${data.progress || 0}/${data.total || 0} (${running})`;
+            const el = document.getElementById('agent-batch-progress');
+            if (el) el.textContent = progress;
+        } catch (error) {
+            console.error('Error loading agent batch status:', error);
+        }
+    }
+
+    async function loadAgentActions() {
+        try {
+            const response = await fetch('/api/agent/actions?limit=6');
+            if (!response.ok) return;
+            const data = await response.json();
+            if (!data.success) return;
+
+            const list = document.getElementById('agent-actions-list');
+            if (!list) return;
+
+            if (!data.actions || data.actions.length === 0) {
+                list.innerHTML = '<div style="color: var(--muted); font-size: 0.85rem;">Sin acciones recientes.</div>';
+                return;
+            }
+
+            agentActionsCache = data.actions;
+            list.innerHTML = data.actions.map(action => {
+                const when = formatAgentTime(action.timestamp);
+                const label = action.action_type || 'ACCION';
+                const target = action.target_id ? ` • ${action.target_id}` : '';
+                return `
+                    <div style="display: flex; justify-content: space-between; gap: 0.75rem; padding: 0.5rem; border-radius: 8px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); cursor: pointer;" onclick="openAgentActionModal('${action.action_id || ''}')">
+                        <div style="font-size: 0.85rem;">
+                            <strong>${label}</strong>${target}
+                            <div style="color: var(--muted); font-size: 0.78rem;">${action.trigger_rule || 'rule'}</div>
+                        </div>
+                        <div style="color: var(--muted); font-size: 0.78rem; white-space: nowrap;">${when}</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('agent-actions-updated').textContent = formatAgentTime(new Date().toISOString());
+        } catch (error) {
+            console.error('Error loading agent actions:', error);
+        }
+    }
+
+    async function loadAgentBriefing() {
+        try {
+            const response = await fetch('/api/agent/briefing/latest');
+            if (!response.ok) return;
+            const data = await response.json();
+            if (!data.success) return;
+
+            const container = document.getElementById('agent-briefing-content');
+            if (!container) return;
+
+            agentBriefingCache = data;
+            const narrative = data.narrative || '';
+            container.textContent = narrative ? narrative.slice(0, 320) + (narrative.length > 320 ? '...' : '') : 'Sin briefing disponible.';
+            document.getElementById('agent-briefing-updated').textContent = formatAgentTime(data.generated_at);
+        } catch (error) {
+            console.error('Error loading agent briefing:', error);
+        }
+    }
+
+    function openAgentActionModal(actionId) {
+        const modal = document.getElementById('agent-action-modal');
+        if (!modal) return;
+        const action = agentActionsCache.find(a => a.action_id === actionId) || {};
+        document.getElementById('agent-action-title').textContent = action.action_type || 'Accion del Agente';
+        document.getElementById('agent-action-meta').textContent = formatAgentTime(action.timestamp);
+        document.getElementById('agent-action-body').textContent =
+            action.details ? JSON.stringify(action.details, null, 2) : 'Sin detalles.';
+        modal.classList.add('active');
+    }
+
+    function closeAgentActionModal() {
+        const modal = document.getElementById('agent-action-modal');
+        if (modal) modal.classList.remove('active');
+    }
+
+    function openAgentBriefingModal() {
+        const modal = document.getElementById('agent-briefing-modal');
+        if (!modal) return;
+        const briefing = agentBriefingCache || {};
+        document.getElementById('agent-briefing-title').textContent = briefing.type || 'Briefing';
+        document.getElementById('agent-briefing-meta').textContent = formatAgentTime(briefing.generated_at);
+        document.getElementById('agent-briefing-body').textContent = briefing.narrative || 'Sin briefing disponible.';
+        modal.classList.add('active');
+    }
+
+    function closeAgentBriefingModal() {
+        const modal = document.getElementById('agent-briefing-modal');
+        if (modal) modal.classList.remove('active');
+    }
+
+    async function controlAgent(action) {
+        try {
+            const response = await fetch(`/api/agent/${action}`, { method: 'POST' });
+            await response.json().catch(() => null);
+            if (action === 'start') {
+                const maxForms = (contiendaE14Stats?.ocr_completed || window.e14LiveData?.stats?.total_forms || 0);
+                fetch('/api/agent/batch/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ batch_size: 200, max_forms: maxForms })
+                }).catch(() => null);
+            }
+            setTimeout(() => {
+                loadAgentStatus();
+                loadAgentActions();
+                loadAgentBriefing();
+                loadAgentBatchStatus();
+            }, 400);
+        } catch (error) {
+            console.error('Error controlling agent:', error);
+        }
+    }
+
+    async function loadContiendaE14Stats() {
+        try {
+            const response = await fetch('/api/e14-data/stats');
+            if (!response.ok) return;
+            const data = await response.json();
+            contiendaE14Stats = {
+                total_forms: data.total_forms || 0,
+                ocr_completed: data.ocr_completed || 0
+            };
+            updateContiendaStats();
+        } catch (error) {
+            console.error('Error loading E-14 stats:', error);
+        }
+    }
 
     // Clasificar incidencia por tipo
     function classifyIncidentType(incident) {
         const desc = (incident.description || incident.type || '').toLowerCase();
+        const incidentType = (incident.incident_type || '').toUpperCase();
+        const typeMap = {
+            'ARITHMETIC_FAIL': 'aritmetica',
+            'DISCREPANCY_RNEC': 'aritmetica',
+            'E11_VS_URNA': 'sufragantes',
+            'RNEC_DELAY': 'sufragantes',
+            'SIGNATURE_MISSING': 'firmas',
+            'OCR_LOW_CONF': 'ocr',
+            'SOURCE_MISMATCH': 'alteraciones',
+            'RECOUNT_MARKED': 'alteraciones'
+        };
+        if (incidentType && typeMap[incidentType]) return typeMap[incidentType];
         if (desc.includes('firma') || desc.includes('jurado')) return 'firmas';
         if (desc.includes('aritmet') || desc.includes('suma') || desc.includes('diferencia')) return 'aritmetica';
         if (desc.includes('sufragante') || desc.includes('votante') || desc.includes('censo')) return 'sufragantes';
@@ -5120,16 +5432,20 @@
 
     // Actualizar contadores de Contienda
     function updateContiendaStats() {
-        const incidents = contiendaIncidencias;
+        const incidents = window.contiendaIncidencias || [];
 
         // KPIs principales
-        const totalMesas = new Set(incidents.map(i => i.mesa_id)).size || 0;
+        const totalMesas = contiendaE14Stats.total_forms || 0;
+        const mesasProcesadas = contiendaE14Stats.ocr_completed || 0;
         const mesasIncidencias = incidents.length;
         const comisiones = new Set(incidents.map(i => i.comision || 'N/A')).size;
 
-        document.getElementById('contienda-mesas-procesadas').textContent = totalMesas;
+        document.getElementById('contienda-mesas-procesadas').textContent =
+            `${formatNumberSafe(totalMesas)} / ${formatNumberSafe(mesasProcesadas)}`;
         document.getElementById('contienda-mesas-incidencias').textContent = mesasIncidencias;
         document.getElementById('contienda-comisiones').textContent = comisiones;
+        const coverage = totalMesas > 0 ? (mesasProcesadas / totalMesas) * 100 : 0;
+        document.getElementById('contienda-cobertura').textContent = `${coverage.toFixed(1)}%`;
 
         // Contadores por nivel
         const critica = incidents.filter(i => getImportanceLevel(i) === 'critica').length;
@@ -5220,6 +5536,44 @@
         selectedIncidents.add(incidentId);
         escalarALitigio();
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadContiendaE14Stats();
+        loadAgentStatus();
+        loadAgentActions();
+        loadAgentBriefing();
+        loadAgentBatchStatus();
+        if (agentRefreshTimer) clearInterval(agentRefreshTimer);
+        agentRefreshTimer = setInterval(() => {
+            loadAgentStatus();
+            loadAgentActions();
+            loadAgentBriefing();
+            loadAgentBatchStatus();
+        }, 30000);
+
+        // Retry to sync contienda stats if incidents arrive after load
+        let retries = 0;
+        const retryTimer = setInterval(() => {
+            retries += 1;
+            if ((window.contiendaIncidencias || []).length > 0) {
+                updateContiendaStats();
+                clearInterval(retryTimer);
+            }
+            if (retries > 10) clearInterval(retryTimer);
+        }, 500);
+    });
+
+    window.addEventListener('contienda:incidents-updated', () => {
+        if (typeof updateContiendaStats === 'function') {
+            updateContiendaStats();
+        }
+    });
+
+    window.onContiendaIncidentsUpdated = () => {
+        if (typeof updateContiendaStats === 'function') {
+            updateContiendaStats();
+        }
+    };
     </script>
 
     <!-- Litigio Electoral Functions - Analisis Juridico CPACA -->
@@ -5235,48 +5589,42 @@
         tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem;"><div style="display: inline-block; width: 24px; height: 24px; border: 2px solid var(--accent); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div><br>Sincronizando incidencias...</td></tr>';
 
         try {
-            // Obtener alertas del tab Contienda (datos E-14 con problemas)
-            const response = await fetch('/api/e14/alerts');
-            const data = await response.json();
+            let incidents = (window.contiendaIncidencias || []);
+            if (!incidents.length) {
+                const response = await fetch('/api/incidents?status=OPEN,ASSIGNED&limit=200');
+                const data = await response.json();
+                incidents = data.incidents || [];
+            }
 
-            if (data.success && data.alerts) {
-                litigioIncidencias = data.alerts.map((alert, idx) => ({
+            if (incidents.length) {
+                litigioIncidencias = incidents.map((incident, idx) => ({
                     id: `INC-${String(idx + 1).padStart(4, '0')}`,
-                    mesa: alert.mesa_id || alert.id,
-                    comision: alert.corporacion || 'N/A',
-                    incidencia: alert.tipo_alerta || alert.issue,
-                    cpaca: mapToCPACA(alert.tipo_alerta || alert.issue),
-                    severidad: alert.severidad || calcSeveridad(alert),
-                    viabilidad: alert.viabilidad || calcViabilidad(alert),
-                    votos: alert.votos_afectados || 0,
-                    prioridad: alert.prioridad || calcPrioridad(alert),
-                    departamento: alert.departamento || 'N/A',
-                    ocr_data: alert.ocr_data || null,
-                    imagen_url: alert.imagen_url || null,
-                    observaciones: alert.observaciones || ''
+                    mesa: incident.mesa_id || incident.id,
+                    comision: incident.comision || incident.corporacion || 'N/A',
+                    incidencia: incident.description || incident.incident_type || incident.tipo_alerta || 'Incidencia',
+                    cpaca: mapToCPACA(incident.description || incident.incident_type || ''),
+                    severidad: (incident.severity || '').toLowerCase(),
+                    viabilidad: 0,
+                    votos: incident.votos_afectados || 0,
+                    prioridad: (incident.severity || '').toLowerCase(),
+                    departamento: incident.dept_name || incident.dept_code || 'N/A',
+                    ocr_data: null,
+                    imagen_url: null,
+                    observaciones: incident.resolution_notes || ''
                 }));
                 renderLitigioTable();
                 updateLitigioStats();
             } else {
-                // Demo data if no API
-                loadDemoLitigioData();
+                litigioIncidencias = [];
+                renderLitigioTable();
+                updateLitigioStats();
             }
         } catch (err) {
             console.error('Error syncing from Contienda:', err);
-            loadDemoLitigioData();
+            litigioIncidencias = [];
+            renderLitigioTable();
+            updateLitigioStats();
         }
-    }
-
-    function loadDemoLitigioData() {
-        litigioIncidencias = [
-            { id: 'INC-0001', mesa: '05-001-001-01-003', comision: 'SENADO', incidencia: 'Diferencia aritmetica en suma total', cpaca: '223', severidad: 'critica', viabilidad: 92, votos: 145, prioridad: 'alta', departamento: 'Antioquia' },
-            { id: 'INC-0002', mesa: '11-001-015-02-007', comision: 'PRESIDENCIA', incidencia: 'Votos nulos sin firmas de jurados', cpaca: '224', severidad: 'alta', viabilidad: 78, votos: 89, prioridad: 'alta', departamento: 'Bogota D.C.' },
-            { id: 'INC-0003', mesa: '76-001-008-01-012', comision: 'CAMARA', incidencia: 'Discrepancia con datos RNEC', cpaca: '226', severidad: 'media', viabilidad: 65, votos: 234, prioridad: 'media', departamento: 'Valle del Cauca' },
-            { id: 'INC-0004', mesa: '08-001-023-03-015', comision: 'SENADO', incidencia: 'Tachaduras y correcciones sospechosas', cpaca: '225', severidad: 'critica', viabilidad: 85, votos: 67, prioridad: 'alta', departamento: 'Atlantico' },
-            { id: 'INC-0005', mesa: '25-001-045-01-008', comision: 'PRESIDENCIA', incidencia: 'Campos obligatorios incompletos', cpaca: '224', severidad: 'baja', viabilidad: 45, votos: 12, prioridad: 'baja', departamento: 'Cundinamarca' }
-        ];
-        renderLitigioTable();
-        updateLitigioStats();
     }
 
     function mapToCPACA(incidencia) {
@@ -5285,6 +5633,15 @@
         if (lower.includes('firma') || lower.includes('campo') || lower.includes('incompleto') || lower.includes('forma')) return '224';
         if (lower.includes('tachadura') || lower.includes('alterac') || lower.includes('fraude') || lower.includes('sospech')) return '225';
         return '226'; // Default: Anomalias
+    }
+
+    function normalizeLitigioSeverity(sev) {
+        if (!sev) return 'baja';
+        const value = sev.toLowerCase();
+        if (value === 'p0' || value === 'critica' || value === 'critical') return 'alta';
+        if (value === 'p1' || value === 'alta' || value === 'high') return 'alta';
+        if (value === 'p2' || value === 'media' || value === 'medium') return 'media';
+        return 'baja';
     }
 
     function calcSeveridad(alert) {
@@ -5328,9 +5685,9 @@
         document.getElementById('cpaca-226-count').textContent = litigioIncidencias.filter(i => i.cpaca === '226').length;
 
         // Priority counts
-        document.getElementById('priority-alta').textContent = litigioIncidencias.filter(i => i.prioridad === 'alta').length;
-        document.getElementById('priority-media').textContent = litigioIncidencias.filter(i => i.prioridad === 'media').length;
-        document.getElementById('priority-baja').textContent = litigioIncidencias.filter(i => i.prioridad === 'baja').length;
+        document.getElementById('priority-alta').textContent = litigioIncidencias.filter(i => normalizeLitigioSeverity(i.prioridad) === 'alta').length;
+        document.getElementById('priority-media').textContent = litigioIncidencias.filter(i => normalizeLitigioSeverity(i.prioridad) === 'media').length;
+        document.getElementById('priority-baja').textContent = litigioIncidencias.filter(i => normalizeLitigioSeverity(i.prioridad) === 'baja').length;
 
         // Impact by corporation
         const byPres = litigioIncidencias.filter(i => i.comision === 'PRESIDENCIA').reduce((s, i) => s + (i.votos || 0), 0);
@@ -5342,7 +5699,7 @@
 
         // Update badge
         const badge = document.getElementById('litigio-badge');
-        const alta = litigioIncidencias.filter(i => i.prioridad === 'alta').length;
+        const alta = litigioIncidencias.filter(i => normalizeLitigioSeverity(i.prioridad) === 'alta').length;
         if (alta > 0) {
             badge.textContent = alta;
             badge.style.display = 'inline-block';
@@ -5509,7 +5866,7 @@
         document.querySelectorAll('[data-tab="litigio"]').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (litigioIncidencias.length === 0) {
-                    setTimeout(loadDemoLitigioData, 100);
+                    setTimeout(syncFromContienda, 100);
                 }
             });
         });

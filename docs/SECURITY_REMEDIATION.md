@@ -30,7 +30,7 @@ Las siguientes credenciales fueron expuestas en el repositorio y DEBEN ser rotad
 
 ### Database URL
 1. Cambiar contraseña de PostgreSQL
-2. Si usas Supabase, rotar las credenciales de conexión
+2. Actualizar DATABASE_URL en producción
 
 ---
 

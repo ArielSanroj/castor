@@ -100,7 +100,7 @@ services:
 #### Configuración Recomendada:
 - **Load Balancer**: ALB
 - **Auto Scaling**: Basado en CPU/Memoria
-- **RDS**: Para base de datos (si se migra de Supabase)
+- **RDS**: Para base de datos PostgreSQL
 - **ElastiCache**: Redis para caché
 
 ## Checklist Pre-Deployment
@@ -113,7 +113,7 @@ services:
 - [ ] Tests pasando
 - [ ] Logging configurado
 - [ ] Health check funcionando
-- [ ] Base de datos migrada (Supabase)
+- [ ] Base de datos PostgreSQL configurada
 - [ ] SSL/HTTPS configurado
 - [ ] Monitoring configurado
 
@@ -129,8 +129,7 @@ JWT_SECRET_KEY=<generar-con-secrets-token>
 # APIs
 TWITTER_BEARER_TOKEN=<token>
 OPENAI_API_KEY=<key>
-SUPABASE_URL=<url>
-SUPABASE_KEY=<key>
+DATABASE_URL=postgresql://user:pass@host:5432/db
 TWILIO_ACCOUNT_SID=<sid>
 TWILIO_AUTH_TOKEN=<token>
 ```

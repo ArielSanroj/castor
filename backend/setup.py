@@ -16,7 +16,6 @@ setup(
         'python-dotenv==1.0.0',
         'tweepy==4.14.0',
         'openai==1.3.0',
-        'supabase==2.0.0',
         'transformers==4.35.0',
         'torch==2.1.0',
         'pydantic==2.5.0',

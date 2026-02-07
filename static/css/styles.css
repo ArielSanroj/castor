@@ -1,41 +1,46 @@
-/* CASTOR Elecciones - Premium Political Branding */
-/* Elegant Gold & Black Theme for Political Leaders */
+/* CASTOR Elecciones - Manual de Marca UI/UX */
+/* Principio: El software no es un póster. Es una herramienta. */
+/* 80% neutros, 15% estructura, 5% acción. CASTOR no decora, ordena. */
 :root {
-    color-scheme: dark;
+    color-scheme: light;
 
-    /* === FONDOS === */
-    --bg: #0A0A0A;                    /* Negro profundo */
-    --panel: #141414;                  /* Negro panel */
-    --panel-alt: #1C1C1C;              /* Negro elevado */
+    /* === FONDOS (Colores Estructurales - 70-80% de la UI) === */
+    --bg: #FFFFFF;                     /* Blanco suave */
+    --bg-alt: #F7F4EE;                 /* Arena muy clara */
+    --panel: #FFFFFF;                  /* Panel principal */
+    --panel-alt: #F7F4EE;              /* Panel alternativo */
+    --sand: #E6E1D8;                   /* Superficies secundarias */
 
-    /* === DORADOS === */
-    --accent: #C9A227;                 /* Dorado principal */
-    --accent-strong: #D4AF37;          /* Dorado brillante */
-    --accent-light: #E8D48A;           /* Dorado claro */
-    --accent-muted: #8B7355;           /* Dorado apagado */
-    --gold-gradient: linear-gradient(135deg, #C9A227 0%, #E8D48A 50%, #C9A227 100%);
+    /* === COLOR DE ACCIÓN (Solo uno - Gris cálido profundo) === */
+    --accent: #6F6A63;                 /* Acción principal */
+    --accent-hover: #5E5A54;           /* Hover */
+    --accent-active: #4E4A45;          /* Active */
+    --accent-light: rgba(111, 106, 99, 0.1);  /* Fondo sutil */
 
     /* === TEXTOS === */
-    --text: #F5F5F0;                   /* Blanco hueso (más cálido) */
-    --text-secondary: #E0DED8;         /* Texto secundario */
-    --muted: #9A8F7C;                  /* Gris dorado */
+    --text: #111111;                   /* Negro profundo */
+    --text-secondary: #444444;         /* Gris oscuro */
+    --text-tertiary: #777777;          /* Labels */
+    --muted: #777777;                  /* Gris medio */
 
     /* === BORDES === */
-    --border: #2A2A2A;                 /* Borde sutil */
-    --border-gold: rgba(201, 162, 39, 0.3);  /* Borde dorado */
+    --border: #E6E1D8;                 /* Borde sutil arena */
+    --border-accent: rgba(111, 106, 99, 0.3);  /* Borde acento */
 
-    /* === ESTADOS === */
-    --success: #4A7C59;                /* Verde esmeralda elegante */
-    --success-light: #5D9A6D;
-    --warning: #D4A017;                /* Ámbar dorado */
-    --error: #8B3A3A;                  /* Rojo vino elegante */
-    --error-light: #A85454;
+    /* === ESTADOS (Claros pero sobrios - sin drama) === */
+    --success: #C2A96D;                /* Arena oscura / Verdencia */
+    --success-light: rgba(194, 169, 109, 0.15);
+    --warning: #8B7355;                /* Marrón cálido */
+    --error: #8F4A4A;                  /* Rojo profundo desaturado */
+    --danger: #8F4A4A;
+    --error-light: rgba(143, 74, 74, 0.15);
+    --info: #7A7F85;                   /* Gris frío */
 
-    /* === EFECTOS === */
-    --focus-ring: 0 0 0 3px rgba(201, 162, 39, 0.4);
-    --glow-gold: 0 0 20px rgba(201, 162, 39, 0.3);
-    --shadow-elegant: 0 4px 24px rgba(0, 0, 0, 0.4);
-    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* === EFECTOS (Sutiles, sin glow) === */
+    --focus-ring: 0 0 0 2px rgba(111, 106, 99, 0.4);
+    --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.12);
+    --transition-base: 0.2s ease;
 
     /* === TIPOGRAFÍA === */
     --font-display: "Playfair Display", "Georgia", serif;
@@ -108,7 +113,7 @@ a:focus-visible {
 body {
     margin: 0;
     font-family: var(--font-body);
-    background: radial-gradient(ellipse at top, rgba(201, 162, 39, 0.04), transparent 60%), var(--bg);
+    background: var(--bg);
     color: var(--text);
     line-height: 1.7;
     font-weight: 400;
@@ -145,9 +150,8 @@ h3 {
 }
 
 .text-gradient {
-    background: var(--gold-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--accent);
+    /* Gradientes prohibidos por manual de marca */
     background-clip: text;
 }
 
@@ -162,15 +166,15 @@ a {
     flex-direction: column;
 }
 
-/* Main Header */
+/* Main Header - Manual de Marca CASTOR */
 .main-header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(5, 6, 10, 0.95);
-    backdrop-filter: blur(10px);
+    background: var(--bg);
     border-bottom: 1px solid var(--border);
     padding: 1rem clamp(1.5rem, 4vw, 4rem);
+    box-shadow: var(--shadow-subtle);
 }
 
 .main-nav {
@@ -190,16 +194,19 @@ a {
     display: flex;
     align-items: center;
     gap: 1rem;
+    text-decoration: none;
+    color: var(--text);
 }
 
 .nav-left .brand strong {
     font-size: 1.1rem;
+    color: var(--text);
 }
 
 .nav-left .brand small {
     display: block;
     font-size: 0.75rem;
-    color: var(--muted);
+    color: var(--text-secondary);
 }
 
 .nav-center {
@@ -229,7 +236,7 @@ a {
 }
 
 .nav-center a.nav-highlight:hover {
-    background: var(--accent-strong);
+    background: var(--accent-hover);
     color: white;
 }
 
@@ -241,7 +248,7 @@ a {
 
 .nav-right .ghost-btn {
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border);
     padding: 0.6rem 1.4rem;
 }
 
@@ -251,17 +258,15 @@ a {
 
 .hero {
     padding: 6rem clamp(1.5rem, 4vw, 4rem) 5rem;
-    background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(10, 10, 10, 0.95));
-    border-bottom: 1px solid var(--border-gold);
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
     min-height: 70vh;
     display: flex;
     align-items: center;
 }
 
 .hero-unified {
-    background: radial-gradient(ellipse at 20% 20%, rgba(201, 162, 39, 0.08), transparent 50%),
-                radial-gradient(ellipse at 80% 30%, rgba(201, 162, 39, 0.05), transparent 55%),
-                linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.98));
+    background: var(--bg-alt);
 }
 
 .dashboard-intro .section-header {
@@ -289,8 +294,8 @@ a {
 }
 
 .kpi-card:hover {
-    border-color: var(--border-gold);
-    box-shadow: var(--shadow-elegant), 0 0 20px rgba(201, 162, 39, 0.08);
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-elegant), 0 0 20px rgba(111, 106, 99, 0.08);
 }
 
 .kpi-label {
@@ -342,7 +347,7 @@ a {
 }
 
 .summary-card:hover {
-    border-color: var(--border-gold);
+    border-color: var(--border-accent);
 }
 
 .summary-title {
@@ -372,8 +377,8 @@ a {
 }
 
 .stream-card {
-    background: linear-gradient(135deg, rgba(15, 19, 32, 0.85), rgba(15, 19, 32, 0.6));
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--panel);
+    border: 1px solid var(--border);
     border-radius: 16px;
 }
 
@@ -387,7 +392,7 @@ a {
 }
 
 .stream-campaign {
-    border-left: 3px solid rgba(201, 162, 39, 0.7);
+    border-left: 3px solid rgba(111, 106, 99, 0.7);
 }
 
 .stream-forecast {
@@ -402,8 +407,8 @@ a {
 }
 
 .game-primary {
-    background: linear-gradient(135deg, rgba(201, 162, 39, 0.06), rgba(201, 162, 39, 0.02));
-    border-left: 3px solid rgba(201, 162, 39, 0.6);
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
 }
 
 .game-controls {
@@ -483,7 +488,7 @@ a {
     height: 12px;
     border-radius: 999px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.06);
 }
 
 .sentiment-bar .pos {
@@ -491,11 +496,11 @@ a {
 }
 
 .sentiment-bar .neu {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.12);
 }
 
 .sentiment-bar .neg {
-    background: rgba(201, 162, 39, 0.9);
+    background: rgba(111, 106, 99, 0.9);
 }
 
 .sentiment-legend {
@@ -530,9 +535,9 @@ a {
     justify-content: space-between;
     gap: 1rem;
     padding: 0.85rem 1rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.02);
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .action-item span {
@@ -549,7 +554,7 @@ a {
 }
 
 .priority-high {
-    background: rgba(201, 162, 39, 0.2);
+    background: rgba(111, 106, 99, 0.2);
     color: #ffb19a;
 }
 
@@ -584,7 +589,7 @@ a {
 .brief-full {
     margin-top: 0.75rem;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(0, 0, 0, 0.03);
     border-radius: 12px;
     white-space: pre-wrap;
     color: var(--text);
@@ -655,7 +660,7 @@ a {
     padding: 1rem 1.25rem;
     border: 1px solid var(--border);
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.02);
 }
 
 .accordion-panel.active {
@@ -674,8 +679,8 @@ a {
     align-items: center;
     padding: 0.75rem 1rem;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .topics-row strong {
@@ -686,7 +691,7 @@ a {
     height: 8px;
     border-radius: 999px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.06);
     display: flex;
 }
 
@@ -700,11 +705,11 @@ a {
 }
 
 .sentiment-bar .neu {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.12);
 }
 
 .sentiment-bar .neg {
-    background: rgba(201, 162, 39, 0.85);
+    background: rgba(111, 106, 99, 0.85);
 }
 
 .dashboard-text {
@@ -727,10 +732,10 @@ a {
 }
 
 .dashboard-list li {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.02);
     border-radius: 10px;
     padding: 0.75rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .summary-tags {
@@ -741,12 +746,12 @@ a {
 }
 
 .summary-tag {
-    background: rgba(201, 162, 39, 0.18);
+    background: rgba(111, 106, 99, 0.18);
     color: var(--text);
     padding: 0.35rem 0.75rem;
     border-radius: 999px;
     font-size: 0.8rem;
-    border: 1px solid rgba(201, 162, 39, 0.3);
+    border: 1px solid rgba(111, 106, 99, 0.3);
 }
 
 .geo-panel {
@@ -784,10 +789,10 @@ a {
     min-height: 320px;
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 360'><path fill='none' stroke='rgba(255,255,255,0.18)' stroke-width='2' d='M116 16l18 18-8 16 12 14 22 6 4 22-10 16 10 22-6 22-18 16-4 20-18 18-22 8-18 14-16-6-4-18-20-8-10-20-14-10 2-18 16-12 2-20 14-16 8-18 12-12 8-18z'/></svg>") center/220px 320px no-repeat,
                 radial-gradient(circle at 30% 20%, rgba(10, 37, 64, 0.6), transparent 50%),
-                radial-gradient(circle at 60% 70%, rgba(201, 162, 39, 0.2), transparent 55%),
+                radial-gradient(circle at 60% 70%, rgba(111, 106, 99, 0.2), transparent 55%),
                 #0f1320;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     overflow: hidden;
 }
 
@@ -795,8 +800,8 @@ a {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
     background-size: 40px 40px;
     opacity: 0.4;
     pointer-events: none;
@@ -806,9 +811,9 @@ a {
     position: absolute;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(201, 162, 39, 0.9), rgba(201, 162, 39, 0.15));
-    box-shadow: 0 0 12px rgba(201, 162, 39, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: radial-gradient(circle, rgba(111, 106, 99, 0.9), rgba(111, 106, 99, 0.15));
+    box-shadow: 0 0 12px rgba(111, 106, 99, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .geo-footnote {
@@ -829,10 +834,10 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.02);
     border-radius: 10px;
     padding: 0.75rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .geo-context-card,
@@ -854,7 +859,7 @@ a {
     justify-content: space-between;
     align-items: center;
     padding: 0.6rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .geo-sentiment-row:last-child {
@@ -875,12 +880,12 @@ a {
 }
 
 .geo-tone-neutral {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.08);
     color: var(--muted);
 }
 
 .geo-tone-crítico {
-    background: rgba(201, 162, 39, 0.15);
+    background: rgba(111, 106, 99, 0.15);
     color: var(--accent);
 }
 
@@ -893,7 +898,7 @@ a {
 }
 
 .alert-high {
-    background: rgba(201, 162, 39, 0.15);
+    background: rgba(111, 106, 99, 0.15);
     border-left: 3px solid var(--accent);
     color: var(--accent);
 }
@@ -905,7 +910,7 @@ a {
 }
 
 .alert-low {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.04);
     border-left: 3px solid var(--muted);
     color: var(--muted);
 }
@@ -940,10 +945,10 @@ a {
 
 /* Decision block */
 .decision-block {
-    background: linear-gradient(135deg, rgba(201, 162, 39, 0.08), transparent);
+    background: var(--accent-light);
     border-radius: 16px;
     padding: 1.5rem;
-    border: 1px solid rgba(201, 162, 39, 0.2);
+    border: 1px solid rgba(111, 106, 99, 0.2);
     margin: 1.5rem 0;
 }
 
@@ -1019,7 +1024,7 @@ a {
 
 .plan-item {
     padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.02);
     border-radius: 8px;
     margin-bottom: 0.5rem;
 }
@@ -1118,8 +1123,8 @@ a {
 
 .stat {
     flex: 1 1 160px;
-    background: rgba(201, 162, 39, 0.03);
-    border: 1px solid var(--border-gold);
+    background: rgba(111, 106, 99, 0.03);
+    border: 1px solid var(--border-accent);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
 }
@@ -1148,23 +1153,23 @@ a {
 }
 
 .primary-btn {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+    background: var(--accent);
     border: 1px solid var(--accent);
-    color: #0A0A0A;
-    box-shadow: 0 4px 20px rgba(201, 162, 39, 0.25);
+    color: #FFFFFF;
+    box-shadow: var(--shadow-subtle);
     text-transform: uppercase;
     font-size: 0.85rem;
 }
 
 .primary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(201, 162, 39, 0.4), var(--glow-gold);
-    background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent-light) 100%);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-elevated);
+    background: var(--accent-hover);
 }
 
 .ghost-btn {
-    border: 1px solid var(--accent-muted);
-    color: var(--accent-light);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
     background: transparent;
     text-transform: uppercase;
     font-size: 0.85rem;
@@ -1173,7 +1178,7 @@ a {
 .ghost-btn:hover {
     border-color: var(--accent);
     color: var(--accent);
-    background: rgba(201, 162, 39, 0.08);
+    background: rgba(111, 106, 99, 0.08);
 }
 
 .hero__cta {
@@ -1192,8 +1197,8 @@ a {
 .hero__visual .card {
     padding: 1rem 1.25rem;
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -1235,17 +1240,17 @@ a {
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
-    background: rgba(201, 162, 39, 0.15);
+    background: rgba(111, 106, 99, 0.15);
     color: var(--accent);
     padding: 0.4rem 1rem;
     border-radius: 999px;
     font-size: 0.85rem;
     font-weight: 600;
-    border: 1px solid rgba(201, 162, 39, 0.3);
+    border: 1px solid rgba(111, 106, 99, 0.3);
 }
 
 .product-badge.featured {
-    background: rgba(201, 162, 39, 0.25);
+    background: rgba(111, 106, 99, 0.25);
     border-color: var(--accent);
 }
 
@@ -1286,7 +1291,7 @@ a {
 }
 
 .product-audience {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.02);
     border-radius: 12px;
     padding: 1rem 1.5rem;
     margin-top: auto;
@@ -1311,7 +1316,7 @@ a {
 }
 
 .featured-card {
-    background: linear-gradient(135deg, rgba(201, 162, 39, 0.1), rgba(232, 212, 138, 0.05));
+    background: var(--accent-light);
     border-color: var(--accent);
 }
 
@@ -1327,7 +1332,7 @@ a {
 }
 
 .workflow-step {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.02);
     border: 1px solid var(--border);
     border-radius: 18px;
     padding: 1.5rem;
@@ -1348,14 +1353,14 @@ a {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    background: var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
     font-weight: 700;
     color: #fff;
-    box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+    box-shadow: 0 4px 15px rgba(111, 106, 99, 0.3);
 }
 
 .step-icon {
@@ -1371,8 +1376,8 @@ a {
 }
 
 .tech-tag {
-    background: rgba(201, 162, 39, 0.15);
-    border: 1px solid rgba(201, 162, 39, 0.3);
+    background: rgba(111, 106, 99, 0.15);
+    border: 1px solid rgba(111, 106, 99, 0.3);
     color: var(--accent);
     padding: 0.3rem 0.8rem;
     border-radius: 999px;
@@ -1461,7 +1466,7 @@ a {
 .tech-card:hover {
     transform: translateY(-5px);
     border-color: var(--accent);
-    box-shadow: 0 15px 40px rgba(201, 162, 39, 0.15);
+    box-shadow: 0 15px 40px rgba(111, 106, 99, 0.15);
 }
 
 .tech-card-icon {
@@ -1535,7 +1540,7 @@ a {
 .cta {
     padding: 5rem clamp(1.5rem, 4vw, 4rem);
     text-align: center;
-    background: linear-gradient(135deg, rgba(201, 162, 39, 0.15), rgba(232, 212, 138, 0.08));
+    background: var(--accent-light);
     border: 1px solid var(--border);
     margin: 3rem clamp(1.5rem, 4vw, 4rem) 0;
     border-radius: 24px;
@@ -1549,10 +1554,7 @@ a {
 .cta h2 {
     font-size: clamp(2rem, 4vw, 2.8rem);
     margin: 0 0 1rem;
-    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text);
 }
 
 .cta p {
@@ -1588,7 +1590,7 @@ a {
 }
 
 .cta-link:hover {
-    color: var(--accent-strong);
+    color: var(--accent-hover);
     text-decoration: underline;
 }
 
@@ -1643,7 +1645,7 @@ a {
     padding: 0.75rem 1rem;
     border-radius: 12px;
     border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.04);
     color: var(--text);
 }
 
@@ -1684,10 +1686,7 @@ a {
     font-weight: 700;
     line-height: 1.1;
     margin: 0;
-    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text);
     max-width: 900px;
 }
 
@@ -1755,7 +1754,7 @@ a {
 }
 
 .hero-link a:hover {
-    color: var(--accent-strong);
+    color: var(--accent-hover);
 }
 
 .choice-section {
@@ -1820,7 +1819,7 @@ a {
 .metric-card:hover {
     transform: translateY(-4px);
     border-color: var(--accent);
-    box-shadow: 0 10px 30px rgba(201, 162, 39, 0.15);
+    box-shadow: 0 10px 30px rgba(111, 106, 99, 0.15);
 }
 
 .metric-icon {
@@ -1957,7 +1956,7 @@ a {
 .action-card {
     margin-top: 2rem;
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.02);
     border-radius: 20px;
     border: 1px solid var(--border);
     text-align: center;
@@ -1965,7 +1964,7 @@ a {
 }
 
 .restricted-section {
-    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 50%), #0b1423;
+    background: radial-gradient(circle at top, rgba(0, 0, 0, 0.04), transparent 50%), #0b1423;
 }
 
 .restricted-card {
@@ -2068,7 +2067,7 @@ a {
 
 .empower-section {
     text-align: center;
-    background: linear-gradient(135deg, rgba(201, 162, 39, 0.18), rgba(232, 212, 138, 0.1));
+    background: var(--accent-light);
     border: 1px solid var(--border);
     margin: 0 1.5rem;
     border-radius: 24px;
@@ -2089,7 +2088,7 @@ a {
 }
 
 .empower-list span {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.04);
     border: 1px solid var(--border);
     border-radius: 999px;
     padding: 0.6rem 1rem;
@@ -2108,7 +2107,7 @@ a {
 }
 
 .origins-card {
-    background: linear-gradient(135deg, var(--panel) 0%, var(--panel-alt) 100%);
+    background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 3rem 2.5rem;
@@ -2126,15 +2125,15 @@ a {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+    background: var(--accent);
     transform: scaleX(0);
     transition: transform 0.4s ease;
 }
 
 .origins-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(201, 162, 39, 0.2);
-    border-color: rgba(201, 162, 39, 0.3);
+    box-shadow: 0 20px 50px rgba(111, 106, 99, 0.2);
+    border-color: rgba(111, 106, 99, 0.3);
 }
 
 .origins-card:hover::before {
@@ -2149,7 +2148,7 @@ a {
     justify-content: center;
     width: 80px;
     height: 80px;
-    background: rgba(201, 162, 39, 0.1);
+    background: rgba(111, 106, 99, 0.1);
     border-radius: 20px;
     margin: 0 auto 1.5rem;
     transition: all 0.3s ease;
@@ -2157,7 +2156,7 @@ a {
 
 .origins-card:hover .origins-icon {
     transform: scale(1.1) rotate(5deg);
-    background: rgba(201, 162, 39, 0.2);
+    background: rgba(111, 106, 99, 0.2);
 }
 
 .origins-card h3 {
@@ -2238,7 +2237,7 @@ a {
 .intro-card:hover {
     transform: translateY(-5px);
     border-color: var(--accent);
-    box-shadow: 0 15px 40px rgba(201, 162, 39, 0.2);
+    box-shadow: 0 15px 40px rgba(111, 106, 99, 0.2);
 }
 
 .intro-icon {
@@ -2290,7 +2289,7 @@ a {
 }
 
 .primary-btn {
-    background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+    background: var(--accent);
     border: none;
     border-radius: 12px;
     padding: 0.9rem 1.4rem;
@@ -2380,7 +2379,7 @@ main {
     border-radius: 16px;
     padding: 1rem 1.2rem;
     margin-bottom: 1rem;
-    background: rgba(255, 255, 255, 0.01);
+    background: var(--panel);
 }
 
 .topic-card h4 {
@@ -2424,7 +2423,7 @@ main {
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(0, 0, 0, 0.02);
 }
 
 .badge {
@@ -2433,7 +2432,7 @@ main {
     padding: 0.2rem 0.75rem;
     border-radius: 999px;
     font-size: 0.8rem;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.06);
 }
 
 .badge.alta {
@@ -2499,10 +2498,7 @@ main {
 }
 
 .products .section-header h2 {
-    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 80%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text);
 }
 
 .intro-section .section-header h2 {
@@ -2611,7 +2607,7 @@ main {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+    background: var(--accent);
     color: #020409;
     font-size: 1.8rem;
     font-weight: 700;
@@ -2701,7 +2697,7 @@ main {
     top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+    background: var(--accent);
     color: #020409;
     padding: 0.4rem 1.2rem;
     border-radius: 999px;
@@ -2749,7 +2745,7 @@ main {
 .features-list li {
     padding: 0.75rem 0;
     color: var(--text);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .features-list li:last-child {
@@ -2907,7 +2903,7 @@ main {
 .cta {
     text-align: center;
     padding: 3rem 1rem;
-    background: linear-gradient(120deg, rgba(111, 125, 255, 0.2), rgba(85, 193, 255, 0.2));
+    background: var(--bg-alt);
     border-radius: 24px;
     border: 1px solid var(--border);
 }
@@ -2982,7 +2978,7 @@ footer {
 .spinner {
     width: 16px;
     height: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(0, 0, 0, 0.1);
     border-top-color: #020409;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
@@ -3003,7 +2999,7 @@ footer {
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+    background: var(--accent);
     width: 0%;
     transition: width 0.3s ease;
     animation: pulse 2s ease-in-out infinite;
@@ -3163,8 +3159,8 @@ html {
     justify-content: center;
     width: 16px;
     height: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 50%;
     font-size: 10px;
     font-weight: 600;
@@ -3176,7 +3172,7 @@ html {
 }
 
 .tooltip-icon:hover {
-    background: rgba(201, 162, 39, 0.2);
+    background: rgba(111, 106, 99, 0.2);
     border-color: var(--accent);
     color: var(--accent);
 }
@@ -3188,8 +3184,8 @@ html {
 
 /* Context bar styling */
 .context-bar {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 0.5rem;
     padding: 0.75rem 1rem;
     margin-bottom: 1.25rem;
@@ -3221,7 +3217,7 @@ html {
 
 .methodology-item {
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--panel-alt);
     border-radius: 0.5rem;
     border-left: 3px solid var(--accent);
 }
@@ -3492,7 +3488,7 @@ html {
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.08);
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
 }
@@ -3601,7 +3597,7 @@ textarea.error {
     display: inline-block;
     width: 14px;
     height: 14px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(0, 0, 0, 0.1);
     border-top-color: #fff;
     border-radius: 50%;
     animation: spin 0.6s linear infinite;
@@ -3669,7 +3665,7 @@ textarea.error {
     gap: 2rem;
     padding: 3rem clamp(1.5rem, 4vw, 4rem);
     background: #05070d;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .footer-column h3 {
@@ -3743,7 +3739,7 @@ textarea.error {
 .mobile-nav-right button {
     padding: 1rem;
     font-size: 1.1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     width: 100%;
     text-align: left;
 }
@@ -3778,8 +3774,8 @@ textarea.error {
 }
 
 .main-header.scrolled {
-    background: rgba(5, 6, 10, 0.98);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: var(--shadow-elevated);
 }
 
 .main-header.header-hidden {
@@ -3865,7 +3861,7 @@ section.animate-in {
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.08);
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
 }
@@ -3896,7 +3892,7 @@ section.animate-in {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(201, 162, 39, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(111, 106, 99, 0.1) 0%, transparent 70%);
     animation: pulse 4s ease-in-out infinite;
 }
 
@@ -3966,7 +3962,7 @@ html {
 
 .tab:hover {
     color: var(--text);
-    background: rgba(201, 162, 39, 0.05);
+    background: rgba(111, 106, 99, 0.05);
 }
 
 .tab.active {
@@ -4116,7 +4112,7 @@ button:focus-visible {
 .forecast-card:hover {
     transform: translateY(-4px);
     border-color: var(--accent);
-    box-shadow: 0 8px 24px rgba(201, 162, 39, 0.1);
+    box-shadow: 0 8px 24px rgba(111, 106, 99, 0.1);
 }
 
 .forecast-icon {
@@ -4295,7 +4291,7 @@ button:focus-visible {
 }
 
 #tab-summary .insight-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--panel-alt);
     border-radius: 0.5rem;
     padding: 1rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -4315,7 +4311,7 @@ button:focus-visible {
 }
 
 #unified-results .kpi-card {
-    background: linear-gradient(135deg, var(--panel-alt), rgba(201, 162, 39, 0.03));
+    background: var(--panel-alt);
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 1.25rem;
@@ -4329,7 +4325,7 @@ button:focus-visible {
 
 /* Action card styling */
 #unified-results .action-card {
-    background: linear-gradient(135deg, rgba(201, 162, 39, 0.05), transparent);
+    background: var(--accent-light);
     border-left: 4px solid var(--accent);
 }
 
@@ -4416,7 +4412,7 @@ button:focus-visible {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.08);
     font-size: 0.65rem;
     color: var(--muted);
     cursor: help;
@@ -4518,11 +4514,11 @@ button:focus-visible {
 }
 
 .electoral-progress-fill.gold {
-    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    background: var(--accent);
 }
 
 .electoral-progress-fill.success {
-    background: linear-gradient(90deg, var(--success), var(--success-light));
+    background: var(--success);
 }
 
 /* Data Cards for Electoral Results */
@@ -4535,7 +4531,7 @@ button:focus-visible {
 }
 
 .electoral-result-card:hover {
-    border-color: var(--border-gold);
+    border-color: var(--border-accent);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -4574,7 +4570,7 @@ button:focus-visible {
 
 .bg-priority-critical { background: rgba(139, 58, 58, 0.15); }
 .bg-priority-high { background: rgba(212, 160, 23, 0.15); }
-.bg-priority-medium { background: rgba(201, 162, 39, 0.15); }
+.bg-priority-medium { background: rgba(111, 106, 99, 0.15); }
 .bg-priority-low { background: rgba(74, 124, 89, 0.15); }
 
 /* Electoral Heatmap Legend */

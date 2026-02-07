@@ -21,7 +21,7 @@ castor-elecciones/
 │   │   ├── sentiment_service.py (BETO)
 │   │   ├── openai_service.py
 │   │   ├── twilio_service.py
-│   │   └── supabase_service.py
+│   │   └── database_service.py
 │   ├── models/                # Modelos Pydantic
 │   │   └── schemas.py
 │   ├── utils/                 # Utilidades
@@ -35,7 +35,7 @@ castor-elecciones/
 ├── docs/
 │   ├── CTO_REPORT.md          # Reporte técnico completo
 │   ├── DEPLOYMENT.md          # Guía de deployment
-│   └── supabase_schema.sql    # Schema de BD
+│   └── schema.sql             # Schema de BD
 ├── .env.example               # Variables de entorno
 ├── .gitignore
 ├── Makefile                   # Comandos útiles
@@ -57,7 +57,7 @@ castor-elecciones/
 - ✅ **SentimentService**: Análisis con modelo BETO (99% precisión)
 - ✅ **OpenAIService**: Generación de contenido con GPT-4o
 - ✅ **TwilioService**: Envío de WhatsApp con plantillas
-- ✅ **SupabaseService**: Gestión de usuarios y análisis
+- ✅ **DatabaseService**: Gestión de usuarios y análisis (SQLAlchemy)
 
 #### Endpoints API
 - ✅ `POST /api/analyze` - Análisis principal
@@ -72,7 +72,7 @@ castor-elecciones/
 - ✅ Autenticación JWT
 - ✅ Variables de entorno
 - ✅ CORS configurado
-- ✅ Row Level Security (Supabase)
+- ✅ Row Level Security (PostgreSQL)
 
 #### Documentación
 - ✅ README completo
@@ -156,7 +156,7 @@ castor-elecciones/
 
 1. **Inmediato** (Esta semana)
    - [ ] Configurar variables de entorno
-   - [ ] Ejecutar schema SQL en Supabase
+   - [ ] Ejecutar migraciones de base de datos
    - [ ] Probar endpoints con Postman
    - [ ] Implementar rate limiting
 
@@ -184,7 +184,7 @@ castor-elecciones/
    - `backend/services/sentiment_service.py`
    - `backend/services/openai_service.py`
    - `backend/services/twilio_service.py`
-   - `backend/services/supabase_service.py`
+   - `backend/services/database_service.py`
 
 3. **Endpoints**
    - `backend/app/routes/analysis.py`
@@ -195,7 +195,7 @@ castor-elecciones/
    - `README.md` - Documentación principal
    - `docs/CTO_REPORT.md` - Reporte técnico completo
    - `docs/DEPLOYMENT.md` - Guía de deployment
-   - `docs/supabase_schema.sql` - Schema de BD
+   - `docs/schema.sql` - Schema de BD
 
 ### 🎓 Mejores Prácticas Aplicadas
 

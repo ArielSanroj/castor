@@ -20,6 +20,7 @@ from .geography import geography_bp
 from .witness import witness_bp
 from .scraper import scraper_bp
 from .e14_data import e14_data_bp
+from .agent import agent_bp
 
 __all__ = [
     'analysis_bp',
@@ -41,4 +42,5 @@ __all__ = [
     'witness_bp',
     'scraper_bp',
     'e14_data_bp',
+    'agent_bp',
 ]

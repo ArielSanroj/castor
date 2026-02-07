@@ -108,3 +108,9 @@ backend/training_data/
 
 # CTO baseline
 .cto_baseline
+
+# Tokens electorales (sensibles)
+progreso_tokens.json
+tokens_mesas_congreso.json
+actas_e14_masivo/*.json
+e14_scraper/*.json

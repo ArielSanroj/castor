@@ -243,21 +243,105 @@ def get_municipios(departamento):
     return jsonify(results)
 
 
-@e14_data_bp.route('/party-totals', methods=['GET'])
-def get_party_totals():
-    """Get vote totals by party from OCR results."""
+@e14_data_bp.route('/puestos/<departamento>/<municipio>', methods=['GET'])
+def get_puestos(departamento, municipio):
+    """Get list of polling stations (puestos) for a department/municipality."""
     conn = get_db()
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT party_name, SUM(votes) as total_votes,
-               COUNT(DISTINCT form_id) as mesas_count,
-               AVG(confidence) as avg_confidence
-        FROM e14_scraper_votes
-        GROUP BY party_name
+        SELECT puesto_cod, COUNT(*) as cnt,
+               SUM(CASE WHEN ocr_processed = 1 THEN 1 ELSE 0 END) as ocr_done
+        FROM e14_scraper_forms
+        WHERE departamento = ? AND municipio = ?
+        GROUP BY puesto_cod
+        ORDER BY cnt DESC
+    """, (departamento, municipio))
+
+    results = [
+        {
+            'puesto_cod': row[0],
+            'total_mesas': row[1],
+            'ocr_completed': row[2]
+        }
+        for row in cursor.fetchall()
+    ]
+
+    conn.close()
+    return jsonify(results)
+
+
+@e14_data_bp.route('/mesas/<departamento>/<municipio>/<puesto>', methods=['GET'])
+def get_mesas(departamento, municipio, puesto):
+    """Get list of mesa numbers for a given puesto."""
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT mesa_num, COUNT(*) as cnt
+        FROM e14_scraper_forms
+        WHERE departamento = ? AND municipio = ? AND puesto_cod = ?
+        GROUP BY mesa_num
+        ORDER BY mesa_num ASC
+    """, (departamento, municipio, puesto))
+
+    results = [
+        {
+            'mesa_num': row[0],
+            'count': row[1]
+        }
+        for row in cursor.fetchall()
+    ]
+
+    conn.close()
+    return jsonify(results)
+
+
+@e14_data_bp.route('/party-totals', methods=['GET'])
+def get_party_totals():
+    """
+    Get vote totals by party from OCR results.
+
+    Query params:
+        - limit: Max parties to return (default: 30)
+        - departamento: Filter by department
+        - corporacion: Filter by SEN or CAM
+    """
+    limit = request.args.get('limit', 30, type=int)
+    departamento = request.args.get('departamento')
+    corporacion = request.args.get('corporacion')
+
+    conn = get_db()
+    cursor = conn.cursor()
+
+    # Build query with optional filters
+    where_clauses = []
+    params = []
+
+    if departamento:
+        where_clauses.append("f.departamento = ?")
+        params.append(departamento)
+
+    if corporacion:
+        where_clauses.append("f.corporacion = ?")
+        params.append(corporacion)
+
+    where_sql = " WHERE " + " AND ".join(where_clauses) if where_clauses else ""
+
+    query = f"""
+        SELECT v.party_name, SUM(v.votes) as total_votes,
+               COUNT(DISTINCT v.form_id) as mesas_count,
+               AVG(v.confidence) as avg_confidence
+        FROM e14_scraper_votes v
+        JOIN e14_scraper_forms f ON v.form_id = f.id
+        {where_sql}
+        GROUP BY v.party_name
         ORDER BY total_votes DESC
-        LIMIT 30
-    """)
+        LIMIT ?
+    """
+    params.append(limit)
+
+    cursor.execute(query, params)
 
     results = [
         {
@@ -268,6 +352,19 @@ def get_party_totals():
         }
         for row in cursor.fetchall()
     ]
+
+    # Get total votes for percentage calculation
+    cursor.execute("SELECT SUM(votes) FROM e14_scraper_votes")
+    total_all_votes = cursor.fetchone()[0] or 0
+
+    # Add percentage to each party
+    for party in results:
+        if total_all_votes > 0:
+            party['percentage'] = round(
+                (party['total_votes'] / total_all_votes) * 100, 2
+            )
+        else:
+            party['percentage'] = 0
 
     conn.close()
     return jsonify(results)

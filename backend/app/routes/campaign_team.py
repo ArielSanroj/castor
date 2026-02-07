@@ -3,7 +3,9 @@ Routes para el Dashboard de Equipo de Campaña Electoral.
 API para War Room, Reportes, Plan de Acción y Correlación E-14/Social.
 """
 import logging
+import os
 import random
+import sqlite3
 from datetime import datetime
 from typing import Optional
 
@@ -16,134 +18,27 @@ from utils.rate_limiter import limiter
 logger = logging.getLogger(__name__)
 
 # ============================================================
-# MOCK DATA - 8 CANDIDATOS CONSULTA NACIONAL
+# DATABASE CONNECTION FOR E-14 REAL DATA
 # ============================================================
 
-CANDIDATOS_CONSULTA = [
-    {
-        "id": 1,
-        "name": "Vicky Dávila",
-        "party": "Valientes",
-        "party_code": "VAL",
-        "color": "#E91E63",
-        "photo": "/static/images/candidates/vicky_davila.jpg"
-    },
-    {
-        "id": 2,
-        "name": "Juan Manuel Galán",
-        "party": "Nuevo Liberalismo",
-        "party_code": "NL",
-        "color": "#D32F2F",
-        "photo": "/static/images/candidates/juan_galan.jpg"
-    },
-    {
-        "id": 3,
-        "name": "Paloma Valencia",
-        "party": "Centro Democrático",
-        "party_code": "CD",
-        "color": "#1565C0",
-        "photo": "/static/images/candidates/paloma_valencia.jpg"
-    },
-    {
-        "id": 4,
-        "name": "Enrique Peñalosa",
-        "party": "Partido Verde Oxígeno",
-        "party_code": "PVO",
-        "color": "#388E3C",
-        "photo": "/static/images/candidates/enrique_penalosa.jpg"
-    },
-    {
-        "id": 5,
-        "name": "Juan Carlos Pinzón",
-        "party": "Partido Verde Oxígeno",
-        "party_code": "PVO",
-        "color": "#43A047",
-        "photo": "/static/images/candidates/jc_pinzon.jpg"
-    },
-    {
-        "id": 6,
-        "name": "Aníbal Gaviria",
-        "party": "Unidos - La Fuerza de las Regiones",
-        "party_code": "UFR",
-        "color": "#FF9800",
-        "photo": "/static/images/candidates/anibal_gaviria.jpg"
-    },
-    {
-        "id": 7,
-        "name": "Mauricio Cárdenas",
-        "party": "Avanza Colombia",
-        "party_code": "AC",
-        "color": "#7B1FA2",
-        "photo": "/static/images/candidates/mauricio_cardenas.jpg"
-    },
-    {
-        "id": 8,
-        "name": "David Luna",
-        "party": "Sí Hay Un Camino",
-        "party_code": "SHUC",
-        "color": "#00ACC1",
-        "photo": "/static/images/candidates/david_luna.jpg"
-    },
-    {
-        "id": 9,
-        "name": "Juan Daniel Oviedo",
-        "party": "Con Toda Por Colombia",
-        "party_code": "CTPC",
-        "color": "#5E35B1",
-        "photo": "/static/images/candidates/juan_oviedo.jpg"
-    }
+# Path to SQLite database with 225K E-14 forms
+E14_DB_PATH = os.path.expanduser(
+    "~/Downloads/Code/Proyectos/castor/backend/data/castor.db"
+)
+
+
+def get_e14_db():
+    """Get connection to E-14 scraper SQLite database."""
+    return sqlite3.connect(E14_DB_PATH)
+
+
+# Party colors for visualization (consistent across dashboard)
+PARTY_COLORS = [
+    "#E91E63", "#D32F2F", "#1565C0", "#388E3C", "#43A047",
+    "#FF9800", "#7B1FA2", "#00ACC1", "#5E35B1", "#F44336",
+    "#3F51B5", "#009688", "#795548", "#607D8B", "#673AB7"
 ]
 
-def generate_mock_e14_data():
-    """Generate realistic mock E-14 data for the 9 candidates (2026 elections)."""
-    import random
-
-    # Base votes with some randomization - realistic polling scenario
-    base_votes = {
-        "Vicky Dávila": random.randint(220000, 280000),        # Líder
-        "Juan Manuel Galán": random.randint(180000, 240000),   # Segundo
-        "Paloma Valencia": random.randint(150000, 200000),     # Tercera
-        "Enrique Peñalosa": random.randint(120000, 170000),    # Cuarto
-        "Juan Carlos Pinzón": random.randint(100000, 150000),  # Quinto
-        "Aníbal Gaviria": random.randint(80000, 130000),       # Sexto
-        "Mauricio Cárdenas": random.randint(70000, 120000),    # Séptimo
-        "David Luna": random.randint(50000, 90000),            # Octavo
-        "Juan Daniel Oviedo": random.randint(40000, 80000)     # Noveno
-    }
-
-    total_votes = sum(base_votes.values())
-
-    candidates_data = []
-    for cand in CANDIDATOS_CONSULTA:
-        votes = base_votes.get(cand["name"], 50000)
-        percentage = (votes / total_votes) * 100
-
-        # Random variations for E-14 data
-        mesas_processed = random.randint(4500, 5500)
-        mesas_total = 6200
-
-        candidates_data.append({
-            "id": cand["id"],
-            "name": cand["name"],
-            "party": cand["party"],
-            "party_code": cand["party_code"],
-            "color": cand["color"],
-            "votes": votes,
-            "percentage": round(percentage, 2),
-            "votes_last_hour": random.randint(1000, 5000),
-            "trend": random.choice(["up", "up", "stable", "down"]),
-            "trend_value": round(random.uniform(-2.5, 4.5), 1),
-            "mesas_processed": mesas_processed,
-            "mesas_total": mesas_total,
-            "coverage_pct": round((mesas_processed / mesas_total) * 100, 1),
-            "confidence": round(random.uniform(0.82, 0.95), 2),
-            "last_update": datetime.utcnow().isoformat()
-        })
-
-    # Sort by votes descending
-    candidates_data.sort(key=lambda x: x["votes"], reverse=True)
-
-    return candidates_data, total_votes
 
 def generate_mock_war_room_stats():
     """Generate mock War Room statistics."""
@@ -624,236 +519,203 @@ def get_dashboard_summary():
 
 
 # ============================================================
-# E-14 LIVE FORM DATA
+# E-14 LIVE FORM DATA - REAL DATA FROM SQLITE (225K FORMS)
 # ============================================================
 
 @campaign_team_bp.route('/e14-live', methods=['GET'])
 def get_e14_live_data():
     """
-    Get E-14 form data for live visualization.
+    Get real E-14 data from scraped SQLite database (225,702 forms).
 
     Query params:
-        mesa_id (optional): Specific mesa ID to get
-        limit (optional): Max forms to return (default 50)
-        source (optional): 'tesseract' or 'vision' (default: tesseract)
-        no_cache (optional): Skip cache and fetch fresh data
+        limit (optional): Max forms to return (default 100)
+        departamento (optional): Filter by department
+        corporacion (optional): Filter by SEN or CAM
 
     Returns:
-        E14 form data with candidates and OCR confidence
+        Real E-14 form data with party vote totals from Congreso 2022
     """
-    import os
-    import json
-    import glob
-
-    limit = request.args.get('limit', 50, type=int)
-    source = request.args.get('source', 'tesseract')
-    no_cache = request.args.get('no_cache', 'false').lower() == 'true'
-
-    # Try to get from cache first (unless no_cache is set)
-    if not no_cache:
-        try:
-            from services.e14_cache_service import get_e14_cache_service
-            cache = get_e14_cache_service()
-            cached_response = cache.get_full_response(limit)
-            if cached_response:
-                logger.info(f"Returning cached E-14 response (limit={limit})")
-                return jsonify(cached_response)
-        except Exception as e:
-            logger.warning(f"Cache lookup failed, falling back to file system: {e}")
+    limit = request.args.get('limit', 100, type=int)
+    dept_filter = request.args.get('departamento')
+    muni_filter = request.args.get('municipio')
+    puesto_filter = request.args.get('puesto')
+    mesa_filter = request.args.get('mesa')
+    risk_filter = request.args.get('risk')
+    corp_filter = request.args.get('corporacion')
 
     try:
-        # Primary source: Tesseract OCR results (486 PDFs processed)
-        # __file__ = backend/app/routes/campaign_team.py
-        # Go up: routes -> app -> backend -> castor
-        current_file = os.path.abspath(__file__)
-        routes_dir = os.path.dirname(current_file)      # backend/app/routes
-        app_dir = os.path.dirname(routes_dir)           # backend/app
-        backend_dir = os.path.dirname(app_dir)          # backend
-        project_root = os.path.dirname(backend_dir)     # castor
-        tesseract_dir = os.path.join(project_root, 'output', 'tesseract_results')
+        conn = get_e14_db()
+        conn.row_factory = sqlite3.Row
 
-        extraction_files = []
+        # Shared filters for all queries
+        where_clauses = ["f.ocr_processed = 1"]
+        params: list = []
 
-        if source == 'tesseract' and os.path.isdir(tesseract_dir):
-            pattern = os.path.join(tesseract_dir, '*_tesseract.json')
-            extraction_files = sorted(glob.glob(pattern))[:limit]
+        if dept_filter:
+            where_clauses.append("UPPER(f.departamento) = UPPER(?)")
+            params.append(dept_filter)
 
-        # Fallback: Vision API extractions
-        if not extraction_files:
-            backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-            pattern = os.path.join(backend_dir, 'e14_extraction_*.json')
-            extraction_files = glob.glob(pattern)
+        if muni_filter:
+            where_clauses.append("UPPER(f.municipio) = UPPER(?)")
+            params.append(muni_filter)
 
-        if not extraction_files:
-            return jsonify({
-                "success": True,
-                "forms": [],
-                "message": "No hay extracciones E-14 disponibles"
-            })
+        if puesto_filter:
+            where_clauses.append("f.puesto_cod = ?")
+            params.append(puesto_filter)
 
-        forms = []
-        aggregated_votes = {}  # Aggregate votes by party across all forms
+        if mesa_filter:
+            where_clauses.append("f.mesa_num = ?")
+            params.append(mesa_filter)
 
-        for filepath in extraction_files:
-            try:
-                with open(filepath, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
+        if corp_filter:
+            where_clauses.append("f.corporacion = ?")
+            params.append(corp_filter)
 
-                # Handle both Tesseract and Vision API formats
-                is_tesseract = '_tesseract.json' in filepath
+        if risk_filter:
+            risk = risk_filter.lower()
+            if risk == 'high':
+                where_clauses.append("f.ocr_confidence < 0.70")
+            elif risk == 'medium':
+                where_clauses.append("f.ocr_confidence >= 0.70 AND f.ocr_confidence < 0.85")
+            elif risk == 'low':
+                where_clauses.append("f.ocr_confidence >= 0.85")
 
-                if is_tesseract:
-                    # Tesseract format
-                    partidos = data.get('partidos', [])
-                    header = {
-                        'corporacion': data.get('corporacion', ''),
-                        'departamento_name': data.get('departamento', ''),
-                        'municipio_name': data.get('municipio', ''),
-                        'zona': data.get('zona', ''),
-                        'lugar': data.get('puesto', ''),
-                        'mesa': data.get('mesa', ''),
-                    }
-                    nivelacion = {}
-                    resumen = {
-                        'total_votos_validos': data.get('total_votos', 0),
-                        'votos_blanco': data.get('votos_blancos', 0),
-                        'votos_nulos': data.get('votos_nulos', 0),
-                    }
-                    overall_confidence = data.get('confidence', 0.5)
-                else:
-                    # Vision API format
-                    header = data.get('header', {})
-                    nivelacion = data.get('nivelacion', {})
-                    partidos = data.get('partidos', [])
-                    resumen = data.get('resumen', {})
-                    overall_confidence = data.get('overall_confidence', 0.85)
+        where_sql = " AND ".join(where_clauses)
 
-                # Build candidates list from all parties
-                candidates = []
-                for partido in partidos:
-                    party_name = partido.get('party_name', 'Sin partido')
-                    party_code = partido.get('party_code', '')
-                    votes = partido.get('votes', partido.get('total_votos', 0))
-                    confidence = partido.get('confidence', partido.get('confidence_total', 0.5))
-                    needs_review = partido.get('needs_review', confidence < 0.7)
-
-                    # Add to candidates list
-                    candidates.append({
-                        "party_code": party_code,
-                        "party_name": party_name,
-                        "candidate_number": "Lista",
-                        "candidate_name": f"{party_name}",
-                        "votes": votes,
-                        "confidence": confidence,
-                        "needs_review": needs_review,
-                        "is_party_vote": True
-                    })
-
-                    # Aggregate votes by party (for summary)
-                    if party_name not in aggregated_votes:
-                        aggregated_votes[party_name] = {"votes": 0, "mesas": 0, "confidence_sum": 0}
-                    aggregated_votes[party_name]["votes"] += votes
-                    aggregated_votes[party_name]["mesas"] += 1
-                    aggregated_votes[party_name]["confidence_sum"] += confidence
-
-                    # Add individual candidates if present (Vision API format)
-                    for cand in partido.get('votos_candidatos', []):
-                        if cand.get('votes', 0) > 0:
-                            candidates.append({
-                                "party_code": party_code,
-                                "party_name": party_name,
-                                "candidate_number": cand.get('candidate_number', ''),
-                                "candidate_name": f"Candidato #{cand.get('candidate_number', '')}",
-                                "votes": cand.get('votes', 0),
-                                "confidence": cand.get('confidence', 0.85),
-                                "needs_review": cand.get('needs_review', False),
-                                "is_party_vote": False
-                            })
-
-                # Sort by votes descending
-                candidates.sort(key=lambda x: x['votes'], reverse=True)
-
-                form_data = {
-                    "extraction_id": data.get('extraction_id', ''),
-                    "extracted_at": data.get('extracted_at', ''),
-                    "processing_time_ms": data.get('processing_time_ms', 0),
-                    "source": "tesseract" if is_tesseract else "vision",
-                    "header": {
-                        "election_name": header.get('election_name', 'CONGRESO 2022'),
-                        "election_date": header.get('election_date', '13 DE MARZO DE 2022'),
-                        "corporacion": header.get('corporacion', ''),
-                        "departamento": header.get('departamento_name', ''),
-                        "municipio": header.get('municipio_name', ''),
-                        "puesto": header.get('lugar', ''),
-                        "mesa": header.get('mesa', ''),
-                        "zona": header.get('zona', ''),
-                        "barcode": header.get('barcode', '')
-                    },
-                    "nivelacion": {
-                        "total_sufragantes": nivelacion.get('total_sufragantes_e11', 0),
-                        "total_votos_urna": nivelacion.get('total_votos_urna', 0),
-                        "confidence_sufragantes": nivelacion.get('confidence_sufragantes', 0),
-                        "confidence_urna": nivelacion.get('confidence_urna', 0)
-                    },
-                    "resumen": {
-                        "total_votos_validos": resumen.get('total_votos_validos', 0),
-                        "votos_blanco": resumen.get('votos_blanco', 0),
-                        "votos_nulos": resumen.get('votos_nulos', 0),
-                        "votos_no_marcados": resumen.get('votos_no_marcados', 0),
-                        "confidence_validos": resumen.get('confidence_validos', 0)
-                    },
-                    "candidates": candidates[:20],  # Top 20
-                    "partidos": partidos,  # All parties for this form
-                    "total_partidos": len(partidos),
-                    "overall_confidence": overall_confidence
-                }
-
-                forms.append(form_data)
-
-            except Exception as e:
-                logger.warning(f"Error reading E-14 file {filepath}: {e}")
-                continue
-
-        # Build aggregated summary by party
-        party_summary = []
-        total_all_votes = 0
-        for party_name, stats in sorted(aggregated_votes.items(), key=lambda x: x[1]["votes"], reverse=True):
-            avg_confidence = stats["confidence_sum"] / stats["mesas"] if stats["mesas"] > 0 else 0
-            party_summary.append({
-                "party_name": party_name,
-                "total_votes": stats["votes"],
-                "mesas_count": stats["mesas"],
-                "avg_confidence": round(avg_confidence, 2)
-            })
-            total_all_votes += stats["votes"]
-
-        response_data = {
-            "success": True,
-            "forms": forms[:limit],
-            "total_forms": len(extraction_files),
-            "forms_returned": len(forms),
-            "party_summary": party_summary[:30],  # Top 30 parties
-            "total_parties": len(party_summary),
-            "total_votes": total_all_votes,
-            "source": source,
-            "timestamp": datetime.utcnow().isoformat()
+        # 1. Get overall statistics
+        stats_query = f"""
+            SELECT
+                COUNT(*) as total_forms,
+                SUM(total_votos) as total_votes,
+                SUM(votos_blancos) as total_blancos,
+                SUM(votos_nulos) as total_nulos,
+                AVG(ocr_confidence) as avg_confidence
+            FROM e14_scraper_forms f
+            WHERE {where_sql}
+        """
+        stats_row = conn.execute(stats_query, params).fetchone()
+        stats = {
+            'total_forms': stats_row['total_forms'] or 0,
+            'total_votes': stats_row['total_votes'] or 0,
+            'total_blancos': stats_row['total_blancos'] or 0,
+            'total_nulos': stats_row['total_nulos'] or 0,
+            'avg_confidence': round(stats_row['avg_confidence'] or 0, 3)
         }
 
-        # Cache the response for future requests
-        try:
-            from services.e14_cache_service import get_e14_cache_service
-            cache = get_e14_cache_service()
-            cache.set_full_response(response_data, limit)
-        except Exception as cache_err:
-            logger.warning(f"Failed to cache response: {cache_err}")
+        # 2. Get party vote totals (top 30)
+        party_query = f"""
+            SELECT
+                v.party_name,
+                SUM(v.votes) as total_votes,
+                COUNT(DISTINCT v.form_id) as mesas_count,
+                AVG(v.confidence) as avg_confidence
+            FROM e14_scraper_votes v
+            JOIN e14_scraper_forms f ON f.id = v.form_id
+            WHERE {where_sql}
+            GROUP BY v.party_name
+            ORDER BY total_votes DESC
+            LIMIT 30
+        """
+        party_rows = conn.execute(party_query, params).fetchall()
 
-        return jsonify(response_data)
+        # Calculate total for percentages
+        total_party_votes = sum(row['total_votes'] or 0 for row in party_rows)
+
+        party_summary = []
+        for idx, row in enumerate(party_rows):
+            votes = row['total_votes'] or 0
+            percentage = (votes / total_party_votes * 100) if total_party_votes > 0 else 0
+            party_summary.append({
+                'id': idx + 1,
+                'party_name': row['party_name'],
+                'total_votes': votes,
+                'mesas_count': row['mesas_count'] or 0,
+                'avg_confidence': round(row['avg_confidence'] or 0, 2),
+                'percentage': round(percentage, 2),
+                'color': PARTY_COLORS[idx % len(PARTY_COLORS)],
+                'trend': 'stable'
+            })
+
+        # 3. Get sample forms with optional filters
+        forms_query = f"""
+            SELECT
+                id, mesa_id, filename, corporacion, departamento, municipio,
+                zona_cod, puesto_cod, mesa_num, total_votos, votos_blancos,
+                votos_nulos, ocr_confidence, ocr_at
+            FROM e14_scraper_forms f
+            WHERE {where_sql}
+            ORDER BY id DESC
+            LIMIT ?
+        """
+        params_with_limit = params + [limit]
+
+        form_rows = conn.execute(forms_query, params_with_limit).fetchall()
+        forms = []
+        for row in form_rows:
+            forms.append({
+                'id': row['id'],
+                'mesa_id': row['mesa_id'],
+                'filename': row['filename'],
+                'header': {
+                    'election_name': 'CONGRESO 2022',
+                    'election_date': '13 DE MARZO DE 2022',
+                    'corporacion': row['corporacion'],
+                    'departamento': row['departamento'],
+                    'municipio': row['municipio'],
+                    'zona': row['zona_cod'],
+                    'puesto': row['puesto_cod'],
+                    'mesa': row['mesa_num']
+                },
+                'resumen': {
+                    'total_votos_validos': row['total_votos'] or 0,
+                    'votos_blanco': row['votos_blancos'] or 0,
+                    'votos_nulos': row['votos_nulos'] or 0
+                },
+                'overall_confidence': round(row['ocr_confidence'] or 0, 3),
+                'ocr_at': row['ocr_at'],
+                'source': 'e14_scraper_db'
+            })
+
+        # 4. Get department breakdown
+        dept_query = f"""
+            SELECT departamento, COUNT(*) as cnt, SUM(total_votos) as votos
+            FROM e14_scraper_forms f
+            WHERE {where_sql}
+            GROUP BY departamento
+            ORDER BY cnt DESC
+            LIMIT 10
+        """
+        dept_rows = conn.execute(dept_query, params).fetchall()
+        top_departamentos = [
+            {
+                'departamento': row['departamento'],
+                'mesas': row['cnt'],
+                'votos': row['votos'] or 0
+            }
+            for row in dept_rows
+        ]
+
+        conn.close()
+
+        return jsonify({
+            'success': True,
+            'source': 'e14_scraper_db',
+            'stats': stats,
+            'party_summary': party_summary,
+            'forms': forms,
+            'top_departamentos': top_departamentos,
+            'total_forms': stats['total_forms'],
+            'forms_returned': len(forms),
+            'total_votes': stats['total_votes'],
+            'total_parties': len(party_summary),
+            'timestamp': datetime.utcnow().isoformat()
+        })
 
     except Exception as e:
         logger.error(f"Error getting E-14 live data: {e}", exc_info=True)
         return jsonify({
-            "success": False,
-            "error": str(e)
+            'success': False,
+            'error': str(e)
         }), 500
 
 

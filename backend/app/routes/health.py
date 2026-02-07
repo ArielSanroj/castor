@@ -6,7 +6,10 @@ from datetime import datetime
 from typing import Dict, Any
 import logging
 import time
-import psutil
+try:
+    import psutil
+except Exception:  # pragma: no cover - optional dependency in dev
+    psutil = None
 import os
 from sqlalchemy import text
 
@@ -105,6 +108,8 @@ def _check_redis() -> Dict[str, Any]:
 def _check_system_resources() -> Dict[str, Any]:
     """Check system resources (CPU, Memory, Disk)."""
     try:
+        if psutil is None:
+            return {"status": "unavailable", "error": "psutil not installed"}
         cpu_percent = psutil.cpu_percent(interval=0.1)
         memory = psutil.virtual_memory()
         disk = psutil.disk_usage('/')
@@ -443,4 +448,3 @@ def record_request_metric(latency_ms: float, success: bool = True):
     # Keep only last 10000 latencies to avoid memory issues
     if len(_metrics["latencies"]) > 10000:
         _metrics["latencies"] = _metrics["latencies"][-5000:]
-

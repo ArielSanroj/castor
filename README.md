@@ -18,13 +18,13 @@ CASTOR ELECCIONES es una plataforma web full-stack que permite a candidatos, ger
 ### Backend (Flask + Python)
 - **Framework**: Flask 3.0.0
 - **API**: RESTful con validación Pydantic
-- **Autenticación**: JWT + Supabase Auth
+- **Autenticación**: JWT (SQLAlchemy)
 - **ML/AI**: 
   - BETO (Transformers) para análisis de sentimiento
   - OpenAI GPT-4o para generación de contenido
 - **Integraciones**:
   - Twitter API (Tweepy) para búsqueda de tweets
-  - Supabase para base de datos y autenticación
+  - PostgreSQL para base de datos
   - Twilio para envío de WhatsApp
 
 ### Frontend (React + Next.js)
@@ -50,7 +50,7 @@ castor-elecciones/
 │   │   ├── sentiment_service.py  # Análisis BETO
 │   │   ├── openai_service.py    # Generación GPT-4o
 │   │   ├── twilio_service.py    # WhatsApp
-│   │   └── supabase_service.py  # Base de datos
+│   │   └── database_service.py  # Base de datos
 │   ├── models/                   # Modelos Pydantic
 │   │   └── schemas.py           # Validación de datos
 │   ├── utils/                    # Utilidades
@@ -75,7 +75,7 @@ castor-elecciones/
 - Cuentas de:
   - Twitter Developer (API v2)
   - OpenAI (API key)
-  - Supabase (proyecto)
+  - PostgreSQL (local o Docker)
   - Twilio (opcional, para WhatsApp)
 
 ### Backend
